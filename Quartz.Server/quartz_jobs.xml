@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains job definitions in schema version 2.0 format -->
+
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+
+    <job>
+        <name>sampleJob</name>
+        <group>sampleGroup</group>
+        <description>Sample job for Quartz Server</description>
+        <job-type>Quartz.Server.SampleJob, 环节质量实时监测后台服务</job-type>
+        <durable>true</durable>
+        <recover>false</recover>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>sampleSimpleTrigger</name>
+        <group>sampleSimpleGroup</group>
+        <description>测试工作任务</description>
+        <job-name>sampleJob</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>50000</repeat-interval>
+      </simple>
+    </trigger>
+  </schedule>
+  <schedule>
+
+    <job>
+      <name>sampleJob2</name>
+      <group>sampleGroup</group>
+      <description>Sample job for Quartz Server</description>
+      <job-type>Quartz.Server.SampleJob2, 环节质量实时监测后台服务</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>sampleSimpleTrigger1</name>
+        <group>sampleSimpleGroup</group>
+        <description>测试工作任务1</description>
+        <job-name>sampleJob2</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+  </schedule>
+  
+  <schedule>
+    <job>
+      <name>JobCheckPoint</name>
+      <group>sampleGroup</group>
+      <description>全院运行病历缺陷分析</description>
+      <job-type>Quartz.Server.JobCheckPoint, 环节质量实时监测后台服务</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>sampleSimpleTrigger2</name>
+        <group>sampleSimpleGroup</group>
+        <description>全院运行病历缺陷分析</description>
+        <job-name>JobCheckPoint</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
+  </schedule>
+</job-scheduling-data>

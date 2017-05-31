@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{791AC2E7-46BA-4C41-BF11-5B936CC78E31}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Heren.MedQC.Statistic</RootNamespace>
+    <AssemblyName>MedQC.Statistic</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.DockSuite, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.DockSuite.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Libraries, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.PrintLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.PrintLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Report, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.RestSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Ribbon, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.RichEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.RichEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.ScriptEngine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.ScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.TextEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.VectorEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.VectorEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.WinApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.WinApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.ZipLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.ZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Include\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Forms\StatByBugsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByBugsForm.Designer.cs">
+      <DependentUpon>StatByBugsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByBugTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByBugTypeForm.Designer.cs">
+      <DependentUpon>StatByBugTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByCheckerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByCheckerForm.Designer.cs">
+      <DependentUpon>StatByCheckerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByClassifyQcCheckResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByClassifyQcCheckResultForm.Designer.cs">
+      <DependentUpon>StatByClassifyQcCheckResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByDeptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByDeptForm.Designer.cs">
+      <DependentUpon>StatByDeptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByDeptQcCheckResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByDeptQcCheckResultForm.Designer.cs">
+      <DependentUpon>StatByDeptQcCheckResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByDeptWorkLoadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByDeptWorkLoadForm.designer.cs">
+      <DependentUpon>StatByDeptWorkLoadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByDocScoreCompreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByDocScoreCompreForm.Designer.cs">
+      <DependentUpon>StatByDocScoreCompreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByDocScoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByDocScoreForm.Designer.cs">
+      <DependentUpon>StatByDocScoreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByJobDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByJobDetailForm.Designer.cs">
+      <DependentUpon>StatByJobDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByModifyTimesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByModifyTimesForm.Designer.cs">
+      <DependentUpon>StatByModifyTimesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByQcCheckResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByQcCheckResultForm.designer.cs">
+      <DependentUpon>StatByQcCheckResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByQCContentRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByQCContentRecordForm.Designer.cs">
+      <DependentUpon>StatByQCContentRecordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByQuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByQuestionForm.Designer.cs">
+      <DependentUpon>StatByQuestionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByTimeCheckDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByTimeCheckDetailForm.designer.cs">
+      <DependentUpon>StatByTimeCheckDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByTimeCheckTimeOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByTimeCheckTimeOutForm.designer.cs">
+      <DependentUpon>StatByTimeCheckTimeOutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatByWorkloadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatByWorkloadForm.Designer.cs">
+      <DependentUpon>StatByWorkloadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\StatByBugsForm.resx">
+      <DependentUpon>StatByBugsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByBugTypeForm.resx">
+      <DependentUpon>StatByBugTypeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByCheckerForm.resx">
+      <DependentUpon>StatByCheckerForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByClassifyQcCheckResultForm.resx">
+      <DependentUpon>StatByClassifyQcCheckResultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByDeptForm.resx">
+      <DependentUpon>StatByDeptForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByDeptQcCheckResultForm.resx">
+      <DependentUpon>StatByDeptQcCheckResultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByDeptWorkLoadForm.resx">
+      <DependentUpon>StatByDeptWorkLoadForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByDocScoreCompreForm.resx">
+      <DependentUpon>StatByDocScoreCompreForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByDocScoreForm.resx">
+      <DependentUpon>StatByDocScoreForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByJobDetailForm.resx">
+      <DependentUpon>StatByJobDetailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByModifyTimesForm.resx">
+      <DependentUpon>StatByModifyTimesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByQcCheckResultForm.resx">
+      <DependentUpon>StatByQcCheckResultForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByQCContentRecordForm.resx">
+      <DependentUpon>StatByQCContentRecordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByQuestionForm.resx">
+      <DependentUpon>StatByQuestionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByTimeCheckDetailForm.resx">
+      <DependentUpon>StatByTimeCheckDetailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByTimeCheckTimeOutForm.resx">
+      <DependentUpon>StatByTimeCheckTimeOutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatByWorkloadForm.resx">
+      <DependentUpon>StatByWorkloadForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EMRDBLib\MedQC.DAL.csproj">
+      <Project>{b84cc211-4f0b-4dbc-9ac9-991e55933745}</Project>
+      <Name>MedQC.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
+      <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
+      <Name>MedQC.Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
+      <Project>{1bfc8232-0b92-4928-96ed-c0cb701b9c0b}</Project>
+      <Name>MedQC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
+      <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
+      <Name>MedQC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Utilities\MedQC.Utilities.csproj">
+      <Project>{1c3e0f8c-8b38-4dfd-b789-ed3dd45c6a37}</Project>
+      <Name>MedQC.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQCSys\MedQC.Frame.csproj">
+      <Project>{1281f60e-a8bd-4fee-9300-e6d90dbc56e8}</Project>
+      <Name>MedQC.Frame</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\authority.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\query.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\question2.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

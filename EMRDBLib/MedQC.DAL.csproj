@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B84CC211-4F0B-4DBC-9AC9-991E55933745}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EMRDBLib</RootNamespace>
+    <AssemblyName>EMRDBLib</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Libraries, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=10.2.0.100, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MedDoc\MedQCEntryAccess.cs" />
+    <Compile Include="MedDoc\MedQCRuleAccess.cs" />
+    <Compile Include="MedDoc\TempletAccess.cs" />
+    <Compile Include="MedDoc\RightAccess.cs" />
+    <Compile Include="MedQC\CommonAccess.cs" />
+    <Compile Include="MedDoc\ConfigAccess.cs" />
+    <Compile Include="DBAccessBase.cs" />
+    <Compile Include="MedDoc\DocTypeAccess.cs" />
+    <Compile Include="MedDoc\EmrDocAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpParameterAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpUIConfigAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpRoleUserAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpProductAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpRoleGrantAccess.cs" />
+    <Compile Include="MedQC\HDP\HdpRoleAccess.cs" />
+    <Compile Include="MedQC\His\DeptAccess.cs" />
+    <Compile Include="MedQC\His\ExamResultAccess.cs" />
+    <Compile Include="MedQC\His\ExamMasterAccess.cs" />
+    <Compile Include="MedQC\His\LabResultAccess.cs" />
+    <Compile Include="MedQC\His\LabMasterAccess.cs" />
+    <Compile Include="MedQC\His\OrdersAccess.cs" />
+    <Compile Include="MedQC\His\InpVisitAccess.cs" />
+    <Compile Include="MedQC\His\MrIndexAccess.cs" />
+    <Compile Include="MedQC\MedQCAccess.cs" />
+    <Compile Include="MedDoc\MedXMLAccess.cs" />
+    <Compile Include="MedQC\His\OperationAccess.cs" />
+    <Compile Include="MedQC\His\OperationDictAccess.cs" />
+    <Compile Include="MedQC\His\OperationNameAccess.cs" />
+    <Compile Include="MedQC\His\OperationMasterAccess.cs" />
+    <Compile Include="MedQC\His\PatVisitAccess.cs" />
+    <Compile Include="MedQC\QcAdminDeptsAccess.cs" />
+    <Compile Include="MedQC\His\MrArchiveAccess.cs" />
+    <Compile Include="MedQC\KeyValueDataAccess.cs" />
+    <Compile Include="MedQC\TempletTypeAccess.cs" />
+    <Compile Include="MedQC\ReportTypeAccess.cs" />
+    <Compile Include="MedQC\RecPackAccess.cs" />
+    <Compile Include="MedQC\RecPrintLogAccess.cs" />
+    <Compile Include="MedQC\RecPaperAccess.cs" />
+    <Compile Include="MedQC\RecMrBatchAccess.cs" />
+    <Compile Include="MedQC\QcMrIndexAccess.cs" />
+    <Compile Include="MedQC\QcModifyNoticeAccess.cs" />
+    <Compile Include="MedQC\QcScoreAccess.cs" />
+    <Compile Include="MedQC\QcCheckResultAccess.cs" />
+    <Compile Include="MedQC\MedicalQcLogAccess.cs" />
+    <Compile Include="MedQC\QcMsgDictAccess.cs" />
+    <Compile Include="MedQC\QaEventTypeDictAccess.cs" />
+    <Compile Include="MedQC\MedicalQcMsgAccess.cs" />
+    <Compile Include="MedQC\QcMsgChatAccess.cs" />
+    <Compile Include="MedQC\QcTimeCheckAccess.cs" />
+    <Compile Include="MedQC\QcCheckPointAccess.cs" />
+    <Compile Include="MedQC\QcTimeRecordAccess.cs" />
+    <Compile Include="MedQC\SpecialAccess.cs" />
+    <Compile Include="MedDoc\TimeQCRuleAccess.cs" />
+    <Compile Include="MedDoc\TimeQCEventAccess.cs" />
+    <Compile Include="MedDoc\UserAccess.cs" />
+    <Compile Include="MedDoc\EMRDBAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MedQC\QCContentRecordAccess.cs" />
+    <Compile Include="SystemParam.cs" />
+    <Compile Include="LocalConfigOption.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
+      <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
+      <Name>MedQC.Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
+      <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
+      <Name>MedQC.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

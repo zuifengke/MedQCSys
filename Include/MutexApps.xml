@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="gbk"?>
+<MutexApps>
+  <App Name="QChat"
+       MutexMode="MappingName"/>
+
+  <App Name="mrqc"
+       MutexMode="MappingName"/>
+
+  <App Name="质控后台监控服务程序"
+       MutexMode="MappingName"/>
+
+</MutexApps>

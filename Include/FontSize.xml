@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="gbk"?>
+<FontSize>
+	<Item Name="初号" Size="42"/>
+	<Item Name="小初" Size="36"/>
+	<Item Name="一号" Size="26"/>
+	<Item Name="小一" Size="24"/>
+	<Item Name="二号" Size="21"/>
+	<Item Name="小二" Size="18"/>
+	<Item Name="三号" Size="16"/>
+	<Item Name="小三" Size="15"/>
+	<Item Name="四号" Size="14"/>
+	<Item Name="小四" Size="12"/>
+  	<Item Name="五号" Size="10.5"/>
+	<Item Name="小五" Size="9"/>
+	<Item Name="六号" Size="7.5"/>
+	<Item Name="10" Size="10"/>
+	<Item Name="11" Size="11"/>
+	<Item Name="14" Size="14"/>
+	<Item Name="16" Size="16"/>
+	<Item Name="20" Size="20"/>
+	<Item Name="22" Size="22"/>
+	<Item Name="28" Size="28"/>
+	<Item Name="48" Size="48"/>
+	<Item Name="72" Size="72"/>
+</FontSize>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+<SystemConfig>
+  <key name="MedQCSys.MainForm.Maximized" value="True" />
+  <key name="MedQCSys.MainForm.Left" value="-8" />
+  <key name="MedQCSys.MainForm.Top" value="0" />
+  <key name="MedQCSys.MainForm.Width" value="839" />
+  <key name="MedQCSys.MainForm.Height" value="559" />
+  <key name="MedDocumentForm.DisplayByCombin" value="true" />
+  <key name="MdsDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
+  <key name="MdsDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
+  <key name="MdsDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJWH6iz1xWUJt/Uz8Mp8Zc7l2GIAh2AXKvgx4tAM/lCpVb0EMyEd/SkmqCIBiLIGn3d" />
+  <key name="MedEditorConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJWH6iz1xWUJt/Uz8Mp8Zc7l2GIAh2AXKvgx4tAM/lCpVb0EMyEd/SkmqCIBiLIGn3d" />
+  <key name="EmrDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
+  <key name="EmrDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
+  <key name="EmrDbConnString" value="YvwWkLkgN692cF1MDiNQu+XzWlqp0NTLVOUThxQ8KXGQ2KF6qST5IwRcOpW8/eEwphiK220xgaYc0uQwxE7mpToVOHKGAB7DmsCWmvC5/rZbhORF3l7CqHqP4qEfh3wbhBk7UFC/vc+fAAIczYOuYsh5ZOzaZa00lI4FCG3X/OwAqLpDw11+e2XIw+8Y+iwV" />
+  <key name="RestrictSearchType.Enabled" value="false" />
+  <key name="MainForm.ShowPatsDocList" value="false" />
+  <key name="SeriousPatListByAdtLog.Enabled" value="false" />
+  <key name="HosptailName" value="" />
+  <key value="" name="Current.Version" />
+  <key name="MedTask.DefaultUserID" value="ZHQS" />
+  <key name="Document.ReadOnly" value="true" />
+  <key name="LoginForm.DefaultUserID" value="ZHQS" />
+  <key name="Readme.ZHQS" value="20170112130841" />
+  <key name="PatientList.DeptCode" value="210501" />
+  <key name="PatientList.AdmissionTimeBegin" value="1990/1/1 0:00:00" />
+  <key name="PatientList.AdmissionTimeEnd" value="2017/4/21 23:59:59" />
+  <key name="MainForm.ShowToolStrip" value="True" />
+  <key name="Designers.MainForm.Maximized" value="True" />
+  <key name="Readme.WWX" value="20170112130841" />
+  <key name="win8.1-02040847.Baodian.ModifyTime" value="20170112130846" />
+  <key name="MainForm.ShowStatusStrip" value="True" />
+  <key name="MainForm.DocumentFormEmbed" value="True" />
+  <key name="MedQCSys.Document.HerenDocForm.Left" value="425" />
+  <key name="MedQCSys.Document.HerenDocForm.Top" value="93" />
+  <key name="MedQCSys.Document.HerenDocForm.Maximized" value="False" />
+  <key name="PatientList.PatientID" value="201209111" />
+  <key name="MedQCSys.DockForms.DocumentBugsForm.Left" value="151" />
+  <key name="MedQCSys.DockForms.DocumentBugsForm.Top" value="330" />
+  <key name="MedQCSys.DockForms.DocumentBugsForm.Maximized" value="False" />
+  <key name="XmlDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="XmlDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="XmlDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="NdsDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="NdsDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="NdsDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="HisDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="HisDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="HisDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="QcDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
+  <key name="QcDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
+  <key name="QcDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJW6/trfy6Jy6ycuBWVSd3Iw3neBv/EaU/Ik64lt21rFRSBc27rla7ooovN3DA2wMXL" />
+  <key name="Readme.WANGW" value="20170112130841" />
+  <key name="Readme.PJJ" value="20170112130841" />
+</SystemConfig>

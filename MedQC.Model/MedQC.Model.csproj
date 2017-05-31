@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B98DABD0-AB92-4876-8EB1-BA5032061CF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Heren.MedQC.Model</RootNamespace>
+    <AssemblyName>MedQC.Model</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Libraries, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Heren.HDPMP\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbTypeBase.cs" />
+    <Compile Include="MedQC\HdpParameter.cs" />
+    <Compile Include="MedQC\KeyValueData.cs" />
+    <Compile Include="MedQC\MrArchive.cs" />
+    <Compile Include="MedQC\RecPack.cs" />
+    <Compile Include="MedQC\RecPrintLog.cs" />
+    <Compile Include="MedQC\RecPaper.cs" />
+    <Compile Include="MedQC\RecMrBatch.cs" />
+    <Compile Include="MedQC\QcModifyNotice.cs" />
+    <Compile Include="MedQC\QcMrIndex.cs" />
+    <Compile Include="MedQC\TempletType.cs" />
+    <Compile Include="QCEventTypeTemplate.cs" />
+    <Compile Include="DocRecordModifyApply.cs" />
+    <Compile Include="FtpConfig.cs" />
+    <Compile Include="His\ChargeTypeDictInfo.cs" />
+    <Compile Include="His\ExamResult.cs" />
+    <Compile Include="His\ExamMaster.cs" />
+    <Compile Include="His\LabResult.cs" />
+    <Compile Include="His\LabMaster.cs" />
+    <Compile Include="His\MrIndex.cs" />
+    <Compile Include="His\DeptDocScoreInfo.cs" />
+    <Compile Include="His\DiagnosisDictInfo.cs" />
+    <Compile Include="His\DiagnosisInfo.cs" />
+    <Compile Include="His\ExamResultInfo.cs" />
+    <Compile Include="His\IDentityDictInfo.cs" />
+    <Compile Include="His\LabReportDict.cs" />
+    <Compile Include="His\Operation.cs" />
+    <Compile Include="His\BlloodTransfusion.cs" />
+    <Compile Include="His\OperationDict.cs" />
+    <Compile Include="His\OperationMaster.cs" />
+    <Compile Include="His\DeptDict.cs" />
+    <Compile Include="His\OperationName.cs" />
+    <Compile Include="MedDoc\MedOrderInfo.cs" />
+    <Compile Include="MedDoc\RightInfo.cs" />
+    <Compile Include="MedDoc\UserRight.cs" />
+    <Compile Include="MedDoc\UserRightBase.cs" />
+    <Compile Include="MedDoc\QCUserRight.cs" />
+    <Compile Include="MedDoc\ConfigInfo.cs" />
+    <Compile Include="MedDoc\TempletInfo.cs" />
+    <Compile Include="MedDoc\DeptInfo.cs" />
+    <Compile Include="MedDoc\ElementBugInfo.cs" />
+    <Compile Include="MedDoc\DocStatusInfo.cs" />
+    <Compile Include="MedDoc\DocTypeInfo.cs" />
+    <Compile Include="MedDoc\MedQCEntry.cs" />
+    <Compile Include="MedDoc\MedDocList.cs" />
+    <Compile Include="MedDoc\VisitInfo.cs" />
+    <Compile Include="MedDoc\PatientInfo.cs" />
+    <Compile Include="MedDoc\MedQCRule.cs" />
+    <Compile Include="MedDoc\MedDocInfo.cs" />
+    <Compile Include="MedDoc\PatDoctorInfo.cs" />
+    <Compile Include="MedDoc\UserInfo.cs" />
+    <Compile Include="MedQC\HdpRoleUser.cs" />
+    <Compile Include="MedQC\HdpRole.cs" />
+    <Compile Include="MedQC\HdpProduct.cs" />
+    <Compile Include="MedQC\HdpRoleGrant.cs" />
+    <Compile Include="MedQC\HdpUIConfig.cs" />
+    <Compile Include="MedQC\QcMsgDict.cs" />
+    <Compile Include="MedQC\PatVisitInfo.cs" />
+    <Compile Include="MedQC\QcCheckPoint.cs" />
+    <Compile Include="MedQC\QcCheckResult.cs" />
+    <Compile Include="MedQC\QcCheckScript.cs" />
+    <Compile Include="MedQC\QcContentRecord.cs" />
+    <Compile Include="MedQC\QCDeptStatInfo.cs" />
+    <Compile Include="MedQC\QCEventType.cs" />
+    <Compile Include="MedQC\QChatArgs.cs" />
+    <Compile Include="MedQC\MedicalQcLog.cs" />
+    <Compile Include="MedQC\MedicalQcMsg.cs" />
+    <Compile Include="MedQC\QcMsgChatLog.cs" />
+    <Compile Include="MedQC\QCScore.cs" />
+    <Compile Include="MedQC\QcAdminDepts.cs" />
+    <Compile Include="MedQC\QcSpecialCheck.cs" />
+    <Compile Include="MedQC\QcSpecialDetail.cs" />
+    <Compile Include="MedQC\QCTimeCheck.cs" />
+    <Compile Include="MedQC\QcTimeRecord.cs" />
+    <Compile Include="MedQC\QcTimeRecordStatByDept.cs" />
+    <Compile Include="MedQC\QCTypeStatInfo.cs" />
+    <Compile Include="MedQC\QCWorkloadStatInfo.cs" />
+    <Compile Include="MedQC\Specialist.cs" />
+    <Compile Include="MedQC\TimeQCEvent.cs" />
+    <Compile Include="MedQC\TimeQCEventResult.cs" />
+    <Compile Include="MedQC\TimeQCRule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MedQC\ReportType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
+      <Project>{A000F560-D5B6-4BD9-8566-348376DCCD5F}</Project>
+      <Name>MedQC.Const</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

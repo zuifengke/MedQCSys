@@ -1,0 +1,757 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0" CodePage="1251">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1281F60E-A8BD-4FEE-9300-E6D90DBC56E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MedQCSys</RootNamespace>
+    <AssemblyName>MedQC.Frame</AssemblyName>
+    <ApplicationIcon>Resources\medical.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>false</SignAssembly>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Debug\</OutputPath>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.MedXML2Lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\AxInterop.MedXML2Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.DockSuite, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.DockSuite.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Libraries, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.PrintLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.PrintLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Report, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.RichEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.RichEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.VectorEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.VectorEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DataLayer, Version=3.4.76.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MedXML2Lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Interop.MedXML2Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="MDSDBLib, Version=3.4.76.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\MDSDBLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="PadWrapper, Version=3.4.69.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\PadWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Controls\LogoPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PatInfoCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PatInfoList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PatSearchPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PatSearchPane.Designer.cs">
+      <DependentUpon>PatSearchPane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\IcdQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\IcdQueryForm.designer.cs">
+      <DependentUpon>IcdQueryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InsertCommentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InsertCommentForm.Designer.cs">
+      <DependentUpon>InsertCommentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LargeTextEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LargeTextEditForm.designer.cs">
+      <DependentUpon>LargeTextEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ModifyNoticeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ModifyNoticeForm.Designer.cs">
+      <DependentUpon>ModifyNoticeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\RollbackDocument.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\RollbackDocument.Designer.cs">
+      <DependentUpon>RollbackDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SelectDoctorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectDoctorForm.Designer.cs">
+      <DependentUpon>SelectDoctorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SelectPrinterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectPrinterForm.Designer.cs">
+      <DependentUpon>SelectPrinterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SystemAboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SystemAboutForm.Designer.cs">
+      <DependentUpon>SystemAboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TempletSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TempletSelectForm.Designer.cs">
+      <DependentUpon>TempletSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocScoreNewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocScoreNewForm.Designer.cs">
+      <DependentUpon>DocScoreNewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\OperationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\OperationForm.Designer.cs">
+      <DependentUpon>OperationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\EventArgs.cs" />
+    <Compile Include="PatPage\PatientInfoStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PatPage\PatientInfoStrip.Designer.cs">
+      <DependentUpon>PatientInfoStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\PatientPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PatPage\PatientPageControl.Designer.cs">
+      <DependentUpon>PatientPageControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\PatientPageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\PatientPageForm.Designer.cs">
+      <DependentUpon>PatientPageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DiagnosisListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DiagnosisListForm.Designer.cs">
+      <DependentUpon>DiagnosisListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocScoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocScoreForm.Designer.cs">
+      <DependentUpon>DocScoreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\QuestionTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\QuestionTypeForm.Designer.cs">
+      <DependentUpon>QuestionTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SelectQuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectQuestionForm.Designer.cs">
+      <DependentUpon>SelectQuestionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\DocumentBugsFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockForms\DocumentBugsFrom.designer.cs">
+      <DependentUpon>DocumentBugsFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocumentListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocumentListForm.Designer.cs">
+      <DependentUpon>DocumentListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocumentListNewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocumentListNewForm.Designer.cs">
+      <DependentUpon>DocumentListNewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\PatientIndexForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\PatientIndexForm.Designer.cs">
+      <DependentUpon>PatientIndexForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\PatientInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\PatientInfoForm.Designer.cs">
+      <DependentUpon>PatientInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\PatsDocmentListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockForms\PatsDocmentListForm.Designer.cs">
+      <DependentUpon>PatsDocmentListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuBars\SearchMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StatusBars\MainStatusStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatPage\OrdersListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\OrdersListForm.Designer.cs">
+      <DependentUpon>OrdersListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\DockContentBase.Designer.cs">
+      <DependentUpon>DockContentBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocumentTimeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocumentTimeForm.Designer.cs">
+      <DependentUpon>DocumentTimeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\ExamResultListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\ExamResultListForm.Designer.cs">
+      <DependentUpon>ExamResultListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\PatientListFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockForms\PatientListFrom.Designer.cs">
+      <DependentUpon>PatientListFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\QuestionListFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockForms\QuestionListFrom.Designer.cs">
+      <DependentUpon>QuestionListFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockForms\DockContentBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\TestResultListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\TestResultListForm.Designer.cs">
+      <DependentUpon>TestResultListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\VitalSignsGraphForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\VitalSignsGraphForm.designer.cs">
+      <DependentUpon>VitalSignsGraphForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\BaodianDocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\BaodianDocForm.Designer.cs">
+      <DependentUpon>BaodianDocForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\ChenPadDocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\ChenPadDocForm.Designer.cs">
+      <DependentUpon>ChenPadDocForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\DocFormFactory.cs" />
+    <Compile Include="Document\EMRPadXDocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\EMRPadXDocForm.Designer.cs">
+      <DependentUpon>EMRPadXDocForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\IDocumentForm.cs" />
+    <Compile Include="Document\WinWordDocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\WinWordDocForm.designer.cs">
+      <DependentUpon>WinWordDocForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\HerenDocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\HerenDocForm.Designer.cs">
+      <DependentUpon>HerenDocForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFrom.Designer.cs">
+      <DependentUpon>MainFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuBars\HelpMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\MaintenanceMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\MenuRenderer.cs" />
+    <Compile Include="MenuBars\MqsMainMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\MqsMenuItemBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\SettingsMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\StatisticMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MenuBars\SystemMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolBars\MainToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolBars\MqsToolStripBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolBars\ToolBarRenderer.cs" />
+    <Compile Include="Controls\QueryHelper.cs" />
+    <EmbeddedResource Include="Controls\PatSearchPane.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PatSearchPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\IcdQueryForm.resx">
+      <DependentUpon>IcdQueryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InsertCommentForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InsertCommentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LargeTextEditForm.resx">
+      <DependentUpon>LargeTextEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ModifyNoticeForm.resx">
+      <DependentUpon>ModifyNoticeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\RollbackDocument.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RollbackDocument.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectDoctorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SelectDoctorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectPrinterForm.resx">
+      <DependentUpon>SelectPrinterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SystemAboutForm.resx">
+      <DependentUpon>SystemAboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TempletSelectForm.resx">
+      <DependentUpon>TempletSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocScoreNewForm.resx">
+      <DependentUpon>DocScoreNewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\OperationForm.resx">
+      <DependentUpon>OperationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\PatientInfoStrip.resx">
+      <DependentUpon>PatientInfoStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\PatientPageControl.resx">
+      <DependentUpon>PatientPageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\PatientPageForm.resx">
+      <DependentUpon>PatientPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DiagnosisListForm.resx">
+      <DependentUpon>DiagnosisListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocScoreForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DocScoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\QuestionTypeForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QuestionTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectQuestionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SelectQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockForms\DocumentBugsFrom.resx">
+      <DependentUpon>DocumentBugsFrom.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocumentListForm.resx">
+      <DependentUpon>DocumentListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocumentListNewForm.resx">
+      <DependentUpon>DocumentListNewForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocumentTimeForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DocumentTimeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\ExamResultListForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ExamResultListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\PatientInfoForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PatientInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockForms\PatsDocmentListForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PatsDocmentListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\OrdersListForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OrdersListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockForms\PatientListFrom.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PatientListFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockForms\QuestionListFrom.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QuestionListFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockForms\DockContentBase.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DockContentBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\TestResultListForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TestResultListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\VitalSignsGraphForm.resx">
+      <DependentUpon>VitalSignsGraphForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\BaodianDocForm.resx">
+      <DependentUpon>BaodianDocForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\ChenPadDocForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChenPadDocForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\EMRPadXDocForm.resx">
+      <DependentUpon>EMRPadXDocForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\WinWordDocForm.resx">
+      <DependentUpon>WinWordDocForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\HerenDocForm.resx">
+      <DependentUpon>HerenDocForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFrom.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\LoginIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoginBgImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckDocTime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExitSys.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HideAllDockWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QuestionList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QCEventTypes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QCMsgTemplet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StatByBugs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PatientList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Male2.png" />
+    <None Include="Resources\Female2.png" />
+    <None Include="Resources\medical.ico" />
+    <None Include="Resources\BookClose.png" />
+    <None Include="Resources\BookOpen.png" />
+    <None Include="Resources\CheckDocBugs.png" />
+    <None Include="Resources\Cancel.png" />
+    <None Include="Resources\combindoc.png" />
+    <None Include="Resources\CompanyLogo.png" />
+    <None Include="Resources\ClinicDept.png" />
+    <None Include="Resources\action.png">
+    </None>
+    <None Include="Resources\chat.png" />
+    <Content Include="..\Include\MedQCConfig.xml">
+      <Link>MedQCConfig.xml</Link>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Resources\DisplayColumn.png" />
+    <None Include="Resources\document_12px.png" />
+    <None Include="Resources\empty.png" />
+    <None Include="Resources\cancle.png" />
+    <None Include="Resources\Edit.png" />
+    <None Include="Resources\Edit1.png" />
+    <None Include="Resources\down.png" />
+    <None Include="Resources\Collapse.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\copy1.png" />
+    <Content Include="Resources\Error.png" />
+    <None Include="Resources\SysIcon.ico" />
+    <None Include="Resources\ICDItem.png" />
+    <None Include="Resources\MedDocIcon.ico" />
+    <None Include="Resources\Male.png" />
+    <None Include="Resources\Female.png" />
+    <None Include="Resources\Login.png" />
+    <None Include="Resources\ICDIcon.ico" />
+    <None Include="Resources\Share.png" />
+    <None Include="Resources\Send.png" />
+    <None Include="Resources\Status.png" />
+    <None Include="Resources\rollback.png" />
+    <None Include="Resources\Query.png" />
+    <None Include="Resources\question.png" />
+    <None Include="Resources\question2.png" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Refresh.png" />
+    <None Include="Resources\Undo.png" />
+    <None Include="Resources\Patient_Male.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\unlock.png" />
+    <None Include="Resources\get_16.png" />
+    <None Include="Resources\MoveDown.png" />
+    <None Include="Resources\MoveUp.png" />
+    <None Include="Resources\loginNew.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\password.png" />
+    <None Include="Resources\loginbtn.png" />
+    <None Include="Resources\ToRight.png" />
+    <None Include="Resources\Excel.png" />
+    <None Include="Resources\up.png" />
+    <None Include="Resources\Expand.png" />
+    <None Include="Resources\patientList2.png" />
+    <None Include="Resources\jietu.png" />
+    <Content Include="Resources\Warn.png" />
+    <None Include="Resources\WordDocIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EMRDBLib\MedQC.DAL.csproj">
+      <Project>{B84CC211-4F0B-4DBC-9AC9-991E55933745}</Project>
+      <Name>MedQC.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.CheckPoint\MedQC.CheckPoint.csproj">
+      <Project>{e50fdb80-74ef-48d7-9529-71a13ec814c8}</Project>
+      <Name>MedQC.CheckPoint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
+      <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
+      <Name>MedQC.Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
+      <Project>{1BFC8232-0B92-4928-96ED-C0CB701B9C0B}</Project>
+      <Name>MedQC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
+      <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
+      <Name>MedQC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Upgrade\MedQC.Upgrade.csproj">
+      <Project>{3d025d48-2a5b-4eb8-ab3c-ffbc917e1a7e}</Project>
+      <Name>MedQC.Upgrade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Utilities\MedQC.Utilities.csproj">
+      <Project>{1c3e0f8c-8b38-4dfd-b789-ed3dd45c6a37}</Project>
+      <Name>MedQC.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QCEngine\MedQC.QCEngine.csproj">
+      <Project>{1d8fa739-12d7-4c09-9927-b28ccb31d9dc}</Project>
+      <Name>MedQC.QCEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>XCopy ..\Include\*.*  $(OutDir) /d /e /r /y</PostBuildEvent>
+  </PropertyGroup>
+</Project>

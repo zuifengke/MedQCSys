@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A000F560-D5B6-4BD9-8566-348376DCCD5F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Heren.MedQC.Const</RootNamespace>
+    <AssemblyName>MedQC.Const</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Libraries, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Heren.HDPMP\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataGroup.cs" />
+    <Compile Include="DataTable\HdpParameterTable.cs" />
+    <Compile Include="DataTable\KeyValueDataTable.cs" />
+    <Compile Include="DataTable\TempletTypeTable.cs" />
+    <Compile Include="DataTable\ReportTypeTable.cs" />
+    <Compile Include="DataTable\QcAdminDeptsTable.cs" />
+    <Compile Include="DataTable\RecPackTable.cs" />
+    <Compile Include="DataTable\RecPrintLogTable.cs" />
+    <Compile Include="DataTable\RecPaperTable.cs" />
+    <Compile Include="DataTable\RecMrBatchTable.cs" />
+    <Compile Include="DataTable\QcModifyNoticeTable.cs" />
+    <Compile Include="DataView\MrArchiveView.cs" />
+    <Compile Include="DocTypeApplyEnv.cs" />
+    <Compile Include="ReportTypeApplyEnv.cs" />
+    <Compile Include="PaperState.cs" />
+    <Compile Include="PaperReceive.cs" />
+    <Compile Include="NotifyStatus.cs" />
+    <Compile Include="PointType.cs" />
+    <Compile Include="QcResult.cs" />
+    <Compile Include="ConfigKey.cs" />
+    <Compile Include="DatabaseType.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="DataTable.cs" />
+    <Compile Include="DataTable\HdpUIConfigTable.cs" />
+    <Compile Include="DataTable\HdpRoleUserTable.cs" />
+    <Compile Include="DataTable\HdpProductTable.cs" />
+    <Compile Include="DataTable\HdpRoleGrantTable.cs" />
+    <Compile Include="DataTable\HdpRoleTable.cs" />
+    <Compile Include="DataTable\DocTempletTable.cs" />
+    <Compile Include="DataTable\QCEntryTable.cs" />
+    <Compile Include="DataTable\QcMrIndexTable.cs" />
+    <Compile Include="DataTable\QCRuleTable.cs" />
+    <Compile Include="DataTable\AdtLogTable.cs" />
+    <Compile Include="DataTable\ConfigDictTable.cs" />
+    <Compile Include="DataTable\DocStatusTable.cs" />
+    <Compile Include="DataTable\DocTypeTable.cs" />
+    <Compile Include="DataTable\MedDocTable.cs" />
+    <Compile Include="DataTable\QcCheckPointTable.cs" />
+    <Compile Include="DataTable\QcCheckResultTable.cs" />
+    <Compile Include="DataTable\QCMsgChatTable.cs" />
+    <Compile Include="DataTable\QcScoreCheckTable.cs" />
+    <Compile Include="DataTable\QcSpecialCheckTable.cs" />
+    <Compile Include="DataTable\QcSpecialDetailTable.cs" />
+    <Compile Include="DataTable\QcTimeCheckTable.cs" />
+    <Compile Include="DataTable\QcTimeRecordStatByDeptTable.cs" />
+    <Compile Include="DataTable\QcTimeRecordTable.cs" />
+    <Compile Include="DataTable\TimeEventTable.cs" />
+    <Compile Include="DataTable\TimeRuleTable.cs" />
+    <Compile Include="DataTable\UserRightTable.cs" />
+    <Compile Include="DataView.cs" />
+    <Compile Include="DataView\AdtLogView.cs" />
+    <Compile Include="DataView\DeptView.cs" />
+    <Compile Include="DataView\DiagnosisView.cs" />
+    <Compile Include="DataView\DictView.cs" />
+    <Compile Include="DataView\DocRecordModifyApplyView.cs" />
+    <Compile Include="DataView\DoctorGroupView.cs" />
+    <Compile Include="DataView\ExamMasterView.cs" />
+    <Compile Include="DataView\ExamResultView.cs" />
+    <Compile Include="DataView\His\MrIndexView.cs" />
+    <Compile Include="DataView\His\BloodTransfusionView.cs" />
+    <Compile Include="DataView\InpVisitView.cs" />
+    <Compile Include="DataView\LabMasterView.cs" />
+    <Compile Include="DataView\LabResultView.cs" />
+    <Compile Include="DataView\His\OperationDictView.cs" />
+    <Compile Include="DataView\His\OperationMasterView.cs" />
+    <Compile Include="DataView\His\OperationNameView.cs" />
+    <Compile Include="DataView\OperationView.cs" />
+    <Compile Include="DataView\OrdersView.cs" />
+    <Compile Include="DataView\PastDocView.cs" />
+    <Compile Include="DataView\PatDoctorView.cs" />
+    <Compile Include="DataView\PatVisitView.cs" />
+    <Compile Include="DataTable\MedicalQCLogTable.cs" />
+    <Compile Include="DataTable\QcMsgDictTable.cs" />
+    <Compile Include="DataTable\QaEventTypeDictTable.cs" />
+    <Compile Include="DataTable\MedicalQcMsgTable.cs" />
+    <Compile Include="DataTable\QCScoreTable.cs" />
+    <Compile Include="DataView\UserView.cs" />
+    <Compile Include="BugClass.cs" />
+    <Compile Include="DocStatus.cs" />
+    <Compile Include="Enum\UserLevel.cs" />
+    <Compile Include="Enum\UserPower.cs" />
+    <Compile Include="Enum\DocLevelEnum.cs" />
+    <Compile Include="Enum\UserRole.cs" />
+    <Compile Include="Enum\OperatorType.cs" />
+    <Compile Include="Enum\ElementType.cs" />
+    <Compile Include="Enum\UserRightType.cs" />
+    <Compile Include="Enum\TempletCheckStatus.cs" />
+    <Compile Include="Enum\VisitType.cs" />
+    <Compile Include="Enum\PatientType.cs" />
+    <Compile Include="Enum\PatSearchType.cs" />
+    <Compile Include="Enum\SearchThreadState.cs" />
+    <Compile Include="Enum\StorageMode.cs" />
+    <Compile Include="FileExt.cs" />
+    <Compile Include="QcLevel.cs" />
+    <Compile Include="UIDisplayStyle.cs" />
+    <Compile Include="UIType.cs" />
+    <Compile Include="ShortcutKeys.cs" />
+    <Compile Include="ShareLevel.cs" />
+    <Compile Include="FileType.cs" />
+    <Compile Include="IssuedType.cs" />
+    <Compile Include="SignType.cs" />
+    <Compile Include="Operator.cs" />
+    <Compile Include="QCRule.cs" />
+    <Compile Include="MappingName.cs" />
+    <Compile Include="MedQCStatus.cs" />
+    <Compile Include="SignState.cs" />
+    <Compile Include="MrStatus.cs" />
+    <Compile Include="MsgChatDataType.cs" />
+    <Compile Include="IsolationFlag.cs" />
+    <Compile Include="MsgStatus.cs" />
+    <Compile Include="OrderStatus.cs" />
+    <Compile Include="PatientCondition.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatType.cs" />
+    <Compile Include="QCDocType.cs" />
+    <Compile Include="ReturnValue.cs" />
+    <Compile Include="SQL.cs" />
+    <Compile Include="StartupArgs.cs" />
+    <Compile Include="VisitType.cs" />
+    <Compile Include="WrittenState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataView\Meddoc\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

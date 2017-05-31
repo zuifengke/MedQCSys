@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B84CC211-4F0B-4DBC-9AC9-991E55933745}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EMRDBLib</RootNamespace>
+    <AssemblyName>EMRDBLib</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Libraries, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="MDSDBLib, Version=3.4.76.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\MDSDBLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=10.2.0.100, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enum\SearchThreadState.cs" />
+    <Compile Include="Enum\OperatorType.cs" />
+    <Compile Include="Enum\PatientType.cs" />
+    <Compile Include="Enum\PatSearchType.cs" />
+    <Compile Include="Enum\StorageMode.cs" />
+    <Compile Include="Model\ChargeTypeDictInfo.cs" />
+    <Compile Include="Model\IDentityDictInfo.cs" />
+    <Compile Include="Model\Specialist.cs" />
+    <Compile Include="Model\QcSpecialCheck.cs" />
+    <Compile Include="Model\ConfigInfo.cs" />
+    <Compile Include="Model\QCScoreCheck.cs" />
+    <Compile Include="Model\QcSpecialDetail.cs" />
+    <Compile Include="Model\DocRecordModifyApply.cs" />
+    <Compile Include="Model\ReportTypeInfo.cs" />
+    <Compile Include="Model\WardReportType.cs" />
+    <Compile Include="Model\DocTypeInfo.cs" />
+    <Compile Include="Model\FtpConfig.cs" />
+    <Compile Include="Model\DbTypeBase.cs" />
+    <Compile Include="Model\PatVisitLog.cs" />
+    <Compile Include="Model\PatDoctorInfo.cs" />
+    <Compile Include="Model\DiagnosisInfo.cs" />
+    <Compile Include="Model\QCTimeCheckInfo.cs" />
+    <Compile Include="Model\QCEventType.cs" />
+    <Compile Include="Model\QCMessageTemplet.cs" />
+    <Compile Include="Model\QCScore.cs" />
+    <Compile Include="Model\QCTypeStatInfo.cs" />
+    <Compile Include="Model\QCDeptStatInfo.cs" />
+    <Compile Include="Model\QCWorkloadStatInfo.cs" />
+    <Compile Include="Model\DeptDocScoreInfo.cs" />
+    <Compile Include="Model\OperationDict.cs" />
+    <Compile Include="Model\MedDocInfo.cs" />
+    <Compile Include="Model\DocStatusInfo.cs" />
+    <Compile Include="Model\UserInfo.cs" />
+    <Compile Include="Model\DiagnosisDictInfo.cs" />
+    <Compile Include="SystemData\DataView\AdtLogView.cs" />
+    <Compile Include="SystemData\DataView\DiagnosisView.cs" />
+    <Compile Include="SystemData\DataView\QCMessageView.cs" />
+    <Compile Include="SystemData\DataView\QCMessageTypeView.cs" />
+    <Compile Include="SystemData\DataView\QCMessageTempletView.cs" />
+    <Compile Include="SystemData\DataView\QCLogView.cs" />
+    <Compile Include="SystemData\DataView\OperationDictView.cs" />
+    <Compile Include="SystemData\DataView\OperationView.cs" />
+    <Compile Include="SystemData\DataTable\QcSpecialCheckTable.cs" />
+    <Compile Include="SystemData\DataTable\QcTimeRecordStatByDeptTable.cs" />
+    <Compile Include="SystemData\DataTable\QcTimeCheckTable.cs" />
+    <Compile Include="SystemData\DataTable\AdtLogTable.cs" />
+    <Compile Include="SystemData\DataView\QCScoreView.cs" />
+    <Compile Include="SystemData\DataView\PatVisitView.cs" />
+    <Compile Include="SystemData\DataView\InpVisitView.cs" />
+    <Compile Include="SystemData\DataView\PatDoctorView.cs" />
+    <Compile Include="SystemData\DataView\DictView.cs" />
+    <Compile Include="SystemData\DataView\UserView.cs" />
+    <Compile Include="SystemData\DataView\DoctorGroupView.cs" />
+    <Compile Include="SystemData\DataView\DeptView.cs" />
+    <Compile Include="SystemData\DataTable\QcScoreCheckTable.cs" />
+    <Compile Include="SystemData\DataTable\MedDocTable.cs" />
+    <Compile Include="SystemData\DataTable\TimeEventTable.cs" />
+    <Compile Include="SystemData\DataTable\TimeRuleTable.cs" />
+    <Compile Include="SystemData\DataTable\DocStatusTable.cs" />
+    <Compile Include="SystemData\DataTable\QcSpecialDetailTable.cs" />
+    <Compile Include="SystemData\DataView\DocRecordModifyApplyView.cs" />
+    <Compile Include="SystemData\DataTable\QCMsgChatTable.cs" />
+    <Compile Include="SystemData\DataTable\QcCheckResultTable.cs" />
+    <Compile Include="SystemData\DataTable\QcCheckPointTable.cs" />
+    <Compile Include="SystemData\DataTable\UserRightTable.cs" />
+    <Compile Include="SystemData\DataTable.cs" />
+    <Compile Include="SystemData\DataTable\QcTimeRecordTable.cs" />
+    <Compile Include="SystemData\DataView\ExamResultView.cs" />
+    <Compile Include="SystemData\DataView\ExamMasterView.cs" />
+    <Compile Include="SystemData\DataView\LabResultView.cs" />
+    <Compile Include="SystemData\DataView\LabMasterView.cs" />
+    <Compile Include="SystemData\DataView\OrdersView.cs" />
+    <Compile Include="SystemData\DataView\PastDocView.cs" />
+    <Compile Include="SystemData\DataTable\ConfigDictTable.cs" />
+    <Compile Include="SystemData\DataTable\DocTypeTable.cs" />
+    <Compile Include="SystemData\DatabaseType.cs" />
+    <Compile Include="SystemData\MsgChatDataType.cs" />
+    <Compile Include="SystemData\DataView.cs" />
+    <Compile Include="SystemData\FileExt.cs" />
+    <Compile Include="SystemData\MappingName.cs" />
+    <Compile Include="SystemData\ReturnValue.cs" />
+    <Compile Include="SystemData\StartupArgs.cs" />
+    <Compile Include="SystemData\DataProvider.cs" />
+    <Compile Include="SystemData\FileType.cs" />
+    <Compile Include="SystemData\ConfigKey.cs" />
+    <Compile Include="SystemData\SQL.cs" />
+    <Compile Include="SystemData\VisitType.cs" />
+    <Compile Include="SystemData\MrStatus.cs" />
+    <Compile Include="SystemData\IssuedType.cs" />
+    <Compile Include="SystemData\QCDocType.cs" />
+    <Compile Include="SystemData\MedQCStatus.cs" />
+    <Compile Include="SystemData\PatientCondition.cs" />
+    <Compile Include="SystemData\OrderStatus.cs" />
+    <Compile Include="SystemData\DocStatus.cs" />
+    <Compile Include="SystemData\MsgStatus.cs" />
+    <Compile Include="SystemData\WrittenState.cs" />
+    <Compile Include="DataCache.cs" />
+    <Compile Include="DbAccess\CommonAccess.cs" />
+    <Compile Include="DbAccess\ConfigAccess.cs" />
+    <Compile Include="DbAccess\DBAccessBase.cs" />
+    <Compile Include="DbAccess\DocTypeAccess.cs" />
+    <Compile Include="DbAccess\MedDocAccess.cs" />
+    <Compile Include="DbAccess\MedQCAccess.cs" />
+    <Compile Include="DbAccess\MedXMLAccess.cs" />
+    <Compile Include="DbAccess\OperationAccess.cs" />
+    <Compile Include="DbAccess\OperationMasterAccess.cs" />
+    <Compile Include="DbAccess\PatientAccess.cs" />
+    <Compile Include="DbAccess\QcCheckResultAccess.cs" />
+    <Compile Include="DbAccess\QcLogAccess.cs" />
+    <Compile Include="DbAccess\QcMsgTempletAccess.cs" />
+    <Compile Include="DbAccess\QcMsgTypeAccess.cs" />
+    <Compile Include="DbAccess\QcMsgAccess.cs" />
+    <Compile Include="DbAccess\QcMsgChatAccess.cs" />
+    <Compile Include="DbAccess\QcTimeCheckAccess.cs" />
+    <Compile Include="DbAccess\QcCheckPointAccess.cs" />
+    <Compile Include="DbAccess\QcTimeRecordAccess.cs" />
+    <Compile Include="DbAccess\SpecialAccess.cs" />
+    <Compile Include="DbAccess\RightAccess.cs" />
+    <Compile Include="DbAccess\TimeQCRuleAccess.cs" />
+    <Compile Include="DbAccess\TimeQCEventAccess.cs" />
+    <Compile Include="DbAccess\UserAccess.cs" />
+    <Compile Include="DbAccess\EMRDBAccess.cs" />
+    <Compile Include="Model\Addin.cs" />
+    <Compile Include="Model\ExamResultInfo.cs" />
+    <Compile Include="Model\LabReportDict.cs" />
+    <Compile Include="Model\LocalConfigOption.cs" />
+    <Compile Include="Model\Operation.cs" />
+    <Compile Include="Model\QcLog.cs" />
+    <Compile Include="Model\QcCheckPoint.cs" />
+    <Compile Include="Model\QcCheckResult.cs" />
+    <Compile Include="Model\QChatArgs.cs" />
+    <Compile Include="Model\QcMsgChatLog.cs" />
+    <Compile Include="Model\QcContentRecord.cs" />
+    <Compile Include="Model\QCQuestionInfo.cs" />
+    <Compile Include="Model\QCRxRight.cs" />
+    <Compile Include="Model\QcTimeRecord.cs" />
+    <Compile Include="Model\QcTimeRecordStatByDept.cs" />
+    <Compile Include="Model\TimeQCEvent.cs" />
+    <Compile Include="Model\TimeQCRule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DbAccess\QCContentRecordAccess.cs" />
+    <Compile Include="SystemParam.cs" />
+    <Compile Include="SystemParam\LocalConfigOption.cs" />
+    <Compile Include="SystemTypes.cs" />
+    <Compile Include="SystemData.cs" />
+    <Compile Include="SysTimeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
