@@ -137,35 +137,6 @@ namespace MedQCSys.DockForms
             }
             this.m_bIsShow = true;
 
-            //string szTempletPath = string.Format(@"{0}\{1}\{2}\{3}"
-            //    , GlobalMethods.Misc.GetWorkingPath()
-            //    , "Templet"
-            //    , SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME
-            //    , "病案首页1.hrdt"
-            //    );
-            //if (!File.Exists(szTempletPath))
-            //    szTempletPath = string.Format(@"{0}\{1}\{2}\{3}"
-            //    , GlobalMethods.Misc.GetWorkingPath()
-            //    , "Templet"
-            //    , "某某某某医院"
-            //    , "病案首页1.hrdt"
-            //    );
-            //this.LoadPatProfileTemplet(szTempletPath, 1);
-            //szTempletPath = string.Format(@"{0}\{1}\{2}\{3}"
-            //       , GlobalMethods.Misc.GetWorkingPath()
-            //       , "Templet"
-            //       , SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME
-            //       , "病案首页2.hrdt"
-            //       );
-            //if (!File.Exists(szTempletPath))
-            //    szTempletPath = string.Format(@"{0}\{1}\{2}\{3}"
-            //    , GlobalMethods.Misc.GetWorkingPath()
-            //    , "Templet"
-            //    , "某某某某医院"
-            //    , "病案首页2.hrdt"
-            //    );
-            //this.LoadPatProfileTemplet(szTempletPath, 2);
-
             ShowReportDesignerIndex(this.m_nPageIndex);
         }
 

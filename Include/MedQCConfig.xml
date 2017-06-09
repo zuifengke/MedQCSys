@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!--浙医健杭刚医院-->
 <SystemConfig>
   <!--是否开启专家质控-->
   <key name="IsShowSpecialCheck" value="true" default="false" />
@@ -59,7 +60,7 @@
   <!--是否启用消息工具 true:启用 false:不启用 默认为不启用-->
   <key name="IsShowChat" value="false" default="false"/>
   <!--新版界面风格 true:启用 false:不启用-->
-  <key name="IsNewTheme" value="true" default="true"/>
+  <key name="IsNewTheme" value="true" default="false"/>
   <!--是否开启单患者模式 true:单患者模式 false:多患者模式-->
   <key name="SinglePatientMode" value="true" default="false"/>
   <!--是否开启终末质控 该功能以评分表格形式展现，参考掌握科技功能-->
@@ -71,18 +72,17 @@
   <!--医院名称-->
   <key name="HOSPITAL_NAME" value="某某某某医院" default="某某某某医院"/>
   <!--启用HDP管理平台-->
-  <key name="HdpUse" value="true" default="true"/>
+  <key name="HdpUse" value="true" default="false"/>
   <!--绘制患者标识 新入、军人、手术、用血-->
-  <key name ="IsDrawingPatientIdentification" value="true" default="true"/>
+  <key name ="IsDrawingPatientIdentification" value="true" default="false"/>
   <!--启用起始页功能-->
   <key name ="IsOpenHomePage" value="true" default="false"/>
   <!--是否开启终末评分新界面 -->
   <key name="IsNewScore" value="true" default="false"/>
   <!--评分界面默认右侧显示-->
   <key name="IsScoreRightShow" value="false" default="false"/>
-  <!--省人民复印登记-->
-  <key name="RecPrintLog" value="true" default="false"/>
-  <!--省人民医院 病案接口库连接配置开启-->
-  <key name="BAJK_DBConfig" value ="true" default="false" />
-  
+  <!--患者手签病历标题关键词-->
+  <key name="SignKeyName" value="告知书|同意书|选择书" default="告知书|同意书"/>
+  <!--省人民复印登记 -->
+  <key name="RecPrintLog" value="false" default="false"/>
 </SystemConfig>

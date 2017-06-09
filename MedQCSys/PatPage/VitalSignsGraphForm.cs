@@ -260,46 +260,7 @@ namespace MedQCSys.DockForms
             this.reportDesigner1.UpdateReport("显示数据", week);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
-
-        ///// <summary>
-        ///// 加载体温单报表模板
-        ///// </summary>
-        //private void LoadBodyTemperatureTemplet()
-        //{
-        //    this.m_byteReportData = null;
-        //    if ( SystemParam.Instance.PatVisitInfo == null)
-        //        return;
-        //    this.Update();
-        //    //判断是否显示体温单窗口
-        //    //模板目录下有该医院体温单
-
-        //    string szTempletPath = string.Format(@"{0}\Templet\\{1}\\{2}"
-        //        , GlobalMethods.Misc.GetWorkingPath()
-        //        , SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME
-        //        , "体温单.hrdt"
-        //        );
-
-        //    if (!File.Exists(string.Format(szTempletPath)))
-        //    {
-        //        //个性话体温单模板不存在，启用标准体温单模板
-        //        szTempletPath = string.Format(@"{0}\Templet\\{1}\\{2}"
-        //        , GlobalMethods.Misc.GetWorkingPath()
-        //        , "某某某某医院"
-        //        , "体温单.hrdt"
-        //        );
-        //    }
-        //    byte[] byteTempletData = null;
-        //    if (!GlobalMethods.IO.GetFileBytes(szTempletPath, ref byteTempletData))
-        //    {
-        //        MessageBoxEx.Show("体温单模板加载失败");
-        //        return;
-        //    }
-        //    this.reportDesigner1.OpenDocument(byteTempletData);
-        //    this.m_byteReportData = byteTempletData;
-        //}
-
-
-
+        
         private ReportExplorerForm GetReportExplorerForm()
         {
             ReportExplorerForm reportExplorerForm = new ReportExplorerForm();
