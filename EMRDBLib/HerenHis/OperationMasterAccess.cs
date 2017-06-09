@@ -29,12 +29,12 @@ namespace EMRDBLib.DbAccess
         {
             DateTime operationBeginTime = DateTime.Parse("1900-01-01");
             IDataReader dataReader = null;
-            string szSQL = string.Format("select start_date_time from operation_master@link_emr  t where t.patient_id ='{0}' and t.visit_id ={1}"
+            string szSQL = string.Format("select start_date_time from operation_master  t where t.patient_id ='{0}' and t.visit_id ={1}"
                    , szPatientID
                    , szVisitID);
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return operationBeginTime;
@@ -48,83 +48,83 @@ namespace EMRDBLib.DbAccess
                         , new object[] { szSQL }, "查询失败!", ex);
                 return operationBeginTime;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.HerenHisAccess.CloseConnnection(false); }
         }
         public short GetOperationMasters(string szPatientID, string szVisitID, ref List<OperationMaster> lstOperationMaster)
         {
-            if (base.QCAccess == null)
+            if (base.HerenHisAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (string.IsNullOrEmpty(szPatientID) && string.IsNullOrEmpty(szVisitID))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34},{35},{36},{37},{38},{39},{40},{41},{42},{43},{44},{45},{46},{47},{48},{49},{50},{51},{52},{53},{54},{55},{56},{57},{58},{59},{60},{61},{62},{63},{64},{65}"
-                , SystemData.OperationMasterView.ACK_DIRECTION
-                , SystemData.OperationMasterView.ANAESTHESIA_METHOD
-                , SystemData.OperationMasterView.ANESTHESIA_DOCTOR
-                , SystemData.OperationMasterView.ANESTHESIA_DOCTOR_ID
-                , SystemData.OperationMasterView.APPLY_STATUS
-                , SystemData.OperationMasterView.BLOOD_DOCTOR
-                , SystemData.OperationMasterView.BLOOD_DOCTOR_ID
-                , SystemData.OperationMasterView.BLOOD_LOSSED
-                , SystemData.OperationMasterView.BLOOD_TRANSFERED
-                , SystemData.OperationMasterView.CANCEL_DATE_TIME
-                , SystemData.OperationMasterView.CANCEL_DOCTOR
-                , SystemData.OperationMasterView.CANCEL_MEMO
-                , SystemData.OperationMasterView.CHARGE_INDICATOR
-                , SystemData.OperationMasterView.CLINIC_CATE
-                , SystemData.OperationMasterView.DEPT_STAYED
-                , SystemData.OperationMasterView.DIAG_AFTER_OPERATION
-                , SystemData.OperationMasterView.DIAG_BEFORE_OPERATION
-                , SystemData.OperationMasterView.EMERGENCY_FLAG
-                , SystemData.OperationMasterView.END_DATE_TIME
-                , SystemData.OperationMasterView.ENTERED_BY
-                , SystemData.OperationMasterView.ENTERED_BY_ID
-                , SystemData.OperationMasterView.ENTERED_DATE
-                , SystemData.OperationMasterView.FIRST_ANESTHESIA
-                , SystemData.OperationMasterView.FIRST_ANESTHESIA_ID
-                , SystemData.OperationMasterView.FIRST_ASSISTANT
-                , SystemData.OperationMasterView.FIRST_ASSISTANT_ID
-                , SystemData.OperationMasterView.FIRST_OPERATION_NURSE
-                , SystemData.OperationMasterView.FIRST_OPERATION_NURSE_ID
-                , SystemData.OperationMasterView.FIRST_SUPPLY_NURSE
-                , SystemData.OperationMasterView.FIRST_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterView.FOUR_ASSISTANT
-                , SystemData.OperationMasterView.FOUR_ASSISTANT_ID
-                , SystemData.OperationMasterView.IN_FLUIDS_AMOUNT
-                , SystemData.OperationMasterView.ISOLATION_FLAG
-                , SystemData.OperationMasterView.NOTES_ON_OPERATION
-                , SystemData.OperationMasterView.NURSE_SHIFT_INDICATOR
-                , SystemData.OperationMasterView.OPERATING_DEPT
-                , SystemData.OperationMasterView.OPERATING_ROOM
-                , SystemData.OperationMasterView.OPERATING_SCALE
-                , SystemData.OperationMasterView.OPERATION_ROOM_NO
-                , SystemData.OperationMasterView.OPERATION_SEQUENCE
-                , SystemData.OperationMasterView.OPERATOR_DOCTOR
-                , SystemData.OperationMasterView.OPERATOR_DOCTOR_ID
-                , SystemData.OperationMasterView.OPER_NO
-                , SystemData.OperationMasterView.ORDER_ID
-                , SystemData.OperationMasterView.OUT_FLUIDS_AMOUNT
-                , SystemData.OperationMasterView.PATIENT_CONDITION
-                , SystemData.OperationMasterView.PATIENT_ID
-                , SystemData.OperationMasterView.REQ_DATE_TIME
-                , SystemData.OperationMasterView.SATISFACTION_DEGREE
-                , SystemData.OperationMasterView.SCHEDULED_DATE_TIME
-                , SystemData.OperationMasterView.SCHEDULE_ID
-                , SystemData.OperationMasterView.SECOND_ANESTHESIA
-                , SystemData.OperationMasterView.SECOND_ANESTHESIA_ID
-                , SystemData.OperationMasterView.SECOND_ASSISTANT
-                , SystemData.OperationMasterView.SECOND_ASSISTANT_ID
-                , SystemData.OperationMasterView.SECOND_OPERATION_NURSE
-                , SystemData.OperationMasterView.SECOND_OPERATION_NURSE_ID
-                , SystemData.OperationMasterView.SECOND_SUPPLY_NURSE
-                , SystemData.OperationMasterView.SECOND_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterView.SMOOTH_INDICATOR
-                , SystemData.OperationMasterView.START_DATE_TIME
-                , SystemData.OperationMasterView.THREE_ASSISTANT
-                , SystemData.OperationMasterView.THREE_ASSISTANT_ID
-                , SystemData.OperationMasterView.VISIT_ID
-                , SystemData.OperationMasterView.VISIT_NO);
+                , SystemData.OperationMasterTable.ACK_DIRECTION
+                , SystemData.OperationMasterTable.ANAESTHESIA_METHOD
+                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR
+                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR_ID
+                , SystemData.OperationMasterTable.APPLY_STATUS
+                , SystemData.OperationMasterTable.BLOOD_DOCTOR
+                , SystemData.OperationMasterTable.BLOOD_DOCTOR_ID
+                , SystemData.OperationMasterTable.BLOOD_LOSSED
+                , SystemData.OperationMasterTable.BLOOD_TRANSFERED
+                , SystemData.OperationMasterTable.CANCEL_DATE_TIME
+                , SystemData.OperationMasterTable.CANCEL_DOCTOR
+                , SystemData.OperationMasterTable.CANCEL_MEMO
+                , SystemData.OperationMasterTable.CHARGE_INDICATOR
+                , SystemData.OperationMasterTable.CLINIC_CATE
+                , SystemData.OperationMasterTable.DEPT_STAYED
+                , SystemData.OperationMasterTable.DIAG_AFTER_OPERATION
+                , SystemData.OperationMasterTable.DIAG_BEFORE_OPERATION
+                , SystemData.OperationMasterTable.EMERGENCY_FLAG
+                , SystemData.OperationMasterTable.END_DATE_TIME
+                , SystemData.OperationMasterTable.ENTERED_BY
+                , SystemData.OperationMasterTable.ENTERED_BY_ID
+                , SystemData.OperationMasterTable.ENTERED_DATE
+                , SystemData.OperationMasterTable.FIRST_ANESTHESIA
+                , SystemData.OperationMasterTable.FIRST_ANESTHESIA_ID
+                , SystemData.OperationMasterTable.FIRST_ASSISTANT
+                , SystemData.OperationMasterTable.FIRST_ASSISTANT_ID
+                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE
+                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE_ID
+                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE
+                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE_ID
+                , SystemData.OperationMasterTable.FOUR_ASSISTANT
+                , SystemData.OperationMasterTable.FOUR_ASSISTANT_ID
+                , SystemData.OperationMasterTable.IN_FLUIDS_AMOUNT
+                , SystemData.OperationMasterTable.ISOLATION_FLAG
+                , SystemData.OperationMasterTable.NOTES_ON_OPERATION
+                , SystemData.OperationMasterTable.NURSE_SHIFT_INDICATOR
+                , SystemData.OperationMasterTable.OPERATING_DEPT
+                , SystemData.OperationMasterTable.OPERATING_ROOM
+                , SystemData.OperationMasterTable.OPERATING_SCALE
+                , SystemData.OperationMasterTable.OPERATION_ROOM_NO
+                , SystemData.OperationMasterTable.OPERATION_SEQUENCE
+                , SystemData.OperationMasterTable.OPERATOR_DOCTOR
+                , SystemData.OperationMasterTable.OPERATOR_DOCTOR_ID
+                , SystemData.OperationMasterTable.OPER_NO
+                , SystemData.OperationMasterTable.ORDER_ID
+                , SystemData.OperationMasterTable.OUT_FLUIDS_AMOUNT
+                , SystemData.OperationMasterTable.PATIENT_CONDITION
+                , SystemData.OperationMasterTable.PATIENT_ID
+                , SystemData.OperationMasterTable.REQ_DATE_TIME
+                , SystemData.OperationMasterTable.SATISFACTION_DEGREE
+                , SystemData.OperationMasterTable.SCHEDULED_DATE_TIME
+                , SystemData.OperationMasterTable.SCHEDULE_ID
+                , SystemData.OperationMasterTable.SECOND_ANESTHESIA
+                , SystemData.OperationMasterTable.SECOND_ANESTHESIA_ID
+                , SystemData.OperationMasterTable.SECOND_ASSISTANT
+                , SystemData.OperationMasterTable.SECOND_ASSISTANT_ID
+                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE
+                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE_ID
+                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE
+                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE_ID
+                , SystemData.OperationMasterTable.SMOOTH_INDICATOR
+                , SystemData.OperationMasterTable.START_DATE_TIME
+                , SystemData.OperationMasterTable.THREE_ASSISTANT
+                , SystemData.OperationMasterTable.THREE_ASSISTANT_ID
+                , SystemData.OperationMasterTable.VISIT_ID
+                , SystemData.OperationMasterTable.VISIT_NO);
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID))
                 szCondition = string.Format("{0} AND A.{1}='{2}'"
@@ -132,14 +132,14 @@ namespace EMRDBLib.DbAccess
                 , SystemData.OperationView.PATIENT_ID
                 , szPatientID
                 );
-            string szTable = string.Format("{0} A,{1} B", SystemData.DataView.OPERATION_MASTER_V, SystemData.DataView.PAT_VISIT_V);
+            string szTable = string.Format("{0} A,{1} B", SystemData.DataTable_HerenHis.OPERATION_MASTER, SystemData.DataView.PAT_VISIT_V);
             string szOrderBy = string.Format("OPERATION_NO");
 
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition, szOrderBy);
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -233,102 +233,102 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.HerenHisAccess.CloseConnnection(false);
             }
 
         }
 
         public short GetOperationMaster(string szOperNo, ref OperationMaster operationMaster)
         {
-            if (base.QCAccess == null)
+            if (base.HerenHisAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (string.IsNullOrEmpty(szOperNo))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34},{35},{36},{37},{38},{39},{40},{41},{42},{43},{44},{45},{46},{47},{48},{49},{50},{51},{52},{53},{54},{55},{56},{57},{58},{59},{60},{61},{62},{63},{64},{65}"
-                , SystemData.OperationMasterView.ACK_DIRECTION
-                , SystemData.OperationMasterView.ANAESTHESIA_METHOD
-                , SystemData.OperationMasterView.ANESTHESIA_DOCTOR
-                , SystemData.OperationMasterView.ANESTHESIA_DOCTOR_ID
-                , SystemData.OperationMasterView.APPLY_STATUS
-                , SystemData.OperationMasterView.BLOOD_DOCTOR
-                , SystemData.OperationMasterView.BLOOD_DOCTOR_ID
-                , SystemData.OperationMasterView.BLOOD_LOSSED
-                , SystemData.OperationMasterView.BLOOD_TRANSFERED
-                , SystemData.OperationMasterView.CANCEL_DATE_TIME
-                , SystemData.OperationMasterView.CANCEL_DOCTOR
-                , SystemData.OperationMasterView.CANCEL_MEMO
-                , SystemData.OperationMasterView.CHARGE_INDICATOR
-                , SystemData.OperationMasterView.CLINIC_CATE
-                , SystemData.OperationMasterView.DEPT_STAYED
-                , SystemData.OperationMasterView.DIAG_AFTER_OPERATION
-                , SystemData.OperationMasterView.DIAG_BEFORE_OPERATION
-                , SystemData.OperationMasterView.EMERGENCY_FLAG
-                , SystemData.OperationMasterView.END_DATE_TIME
-                , SystemData.OperationMasterView.ENTERED_BY
-                , SystemData.OperationMasterView.ENTERED_BY_ID
-                , SystemData.OperationMasterView.ENTERED_DATE
-                , SystemData.OperationMasterView.FIRST_ANESTHESIA
-                , SystemData.OperationMasterView.FIRST_ANESTHESIA_ID
-                , SystemData.OperationMasterView.FIRST_ASSISTANT
-                , SystemData.OperationMasterView.FIRST_ASSISTANT_ID
-                , SystemData.OperationMasterView.FIRST_OPERATION_NURSE
-                , SystemData.OperationMasterView.FIRST_OPERATION_NURSE_ID
-                , SystemData.OperationMasterView.FIRST_SUPPLY_NURSE
-                , SystemData.OperationMasterView.FIRST_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterView.FOUR_ASSISTANT
-                , SystemData.OperationMasterView.FOUR_ASSISTANT_ID
-                , SystemData.OperationMasterView.IN_FLUIDS_AMOUNT
-                , SystemData.OperationMasterView.ISOLATION_FLAG
-                , SystemData.OperationMasterView.NOTES_ON_OPERATION
-                , SystemData.OperationMasterView.NURSE_SHIFT_INDICATOR
-                , SystemData.OperationMasterView.OPERATING_DEPT
-                , SystemData.OperationMasterView.OPERATING_ROOM
-                , SystemData.OperationMasterView.OPERATING_SCALE
-                , SystemData.OperationMasterView.OPERATION_ROOM_NO
-                , SystemData.OperationMasterView.OPERATION_SEQUENCE
-                , SystemData.OperationMasterView.OPERATOR_DOCTOR
-                , SystemData.OperationMasterView.OPERATOR_DOCTOR_ID
-                , SystemData.OperationMasterView.OPER_NO
-                , SystemData.OperationMasterView.ORDER_ID
-                , SystemData.OperationMasterView.OUT_FLUIDS_AMOUNT
-                , SystemData.OperationMasterView.PATIENT_CONDITION
-                , SystemData.OperationMasterView.PATIENT_ID
-                , SystemData.OperationMasterView.REQ_DATE_TIME
-                , SystemData.OperationMasterView.SATISFACTION_DEGREE
-                , SystemData.OperationMasterView.SCHEDULED_DATE_TIME
-                , SystemData.OperationMasterView.SCHEDULE_ID
-                , SystemData.OperationMasterView.SECOND_ANESTHESIA
-                , SystemData.OperationMasterView.SECOND_ANESTHESIA_ID
-                , SystemData.OperationMasterView.SECOND_ASSISTANT
-                , SystemData.OperationMasterView.SECOND_ASSISTANT_ID
-                , SystemData.OperationMasterView.SECOND_OPERATION_NURSE
-                , SystemData.OperationMasterView.SECOND_OPERATION_NURSE_ID
-                , SystemData.OperationMasterView.SECOND_SUPPLY_NURSE
-                , SystemData.OperationMasterView.SECOND_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterView.SMOOTH_INDICATOR
-                , SystemData.OperationMasterView.START_DATE_TIME
-                , SystemData.OperationMasterView.THREE_ASSISTANT
-                , SystemData.OperationMasterView.THREE_ASSISTANT_ID
-                , SystemData.OperationMasterView.VISIT_ID
-                , SystemData.OperationMasterView.VISIT_NO);
+                , SystemData.OperationMasterTable.ACK_DIRECTION
+                , SystemData.OperationMasterTable.ANAESTHESIA_METHOD
+                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR
+                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR_ID
+                , SystemData.OperationMasterTable.APPLY_STATUS
+                , SystemData.OperationMasterTable.BLOOD_DOCTOR
+                , SystemData.OperationMasterTable.BLOOD_DOCTOR_ID
+                , SystemData.OperationMasterTable.BLOOD_LOSSED
+                , SystemData.OperationMasterTable.BLOOD_TRANSFERED
+                , SystemData.OperationMasterTable.CANCEL_DATE_TIME
+                , SystemData.OperationMasterTable.CANCEL_DOCTOR
+                , SystemData.OperationMasterTable.CANCEL_MEMO
+                , SystemData.OperationMasterTable.CHARGE_INDICATOR
+                , SystemData.OperationMasterTable.CLINIC_CATE
+                , SystemData.OperationMasterTable.DEPT_STAYED
+                , SystemData.OperationMasterTable.DIAG_AFTER_OPERATION
+                , SystemData.OperationMasterTable.DIAG_BEFORE_OPERATION
+                , SystemData.OperationMasterTable.EMERGENCY_FLAG
+                , SystemData.OperationMasterTable.END_DATE_TIME
+                , SystemData.OperationMasterTable.ENTERED_BY
+                , SystemData.OperationMasterTable.ENTERED_BY_ID
+                , SystemData.OperationMasterTable.ENTERED_DATE
+                , SystemData.OperationMasterTable.FIRST_ANESTHESIA
+                , SystemData.OperationMasterTable.FIRST_ANESTHESIA_ID
+                , SystemData.OperationMasterTable.FIRST_ASSISTANT
+                , SystemData.OperationMasterTable.FIRST_ASSISTANT_ID
+                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE
+                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE_ID
+                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE
+                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE_ID
+                , SystemData.OperationMasterTable.FOUR_ASSISTANT
+                , SystemData.OperationMasterTable.FOUR_ASSISTANT_ID
+                , SystemData.OperationMasterTable.IN_FLUIDS_AMOUNT
+                , SystemData.OperationMasterTable.ISOLATION_FLAG
+                , SystemData.OperationMasterTable.NOTES_ON_OPERATION
+                , SystemData.OperationMasterTable.NURSE_SHIFT_INDICATOR
+                , SystemData.OperationMasterTable.OPERATING_DEPT
+                , SystemData.OperationMasterTable.OPERATING_ROOM
+                , SystemData.OperationMasterTable.OPERATING_SCALE
+                , SystemData.OperationMasterTable.OPERATION_ROOM_NO
+                , SystemData.OperationMasterTable.OPERATION_SEQUENCE
+                , SystemData.OperationMasterTable.OPERATOR_DOCTOR
+                , SystemData.OperationMasterTable.OPERATOR_DOCTOR_ID
+                , SystemData.OperationMasterTable.OPER_NO
+                , SystemData.OperationMasterTable.ORDER_ID
+                , SystemData.OperationMasterTable.OUT_FLUIDS_AMOUNT
+                , SystemData.OperationMasterTable.PATIENT_CONDITION
+                , SystemData.OperationMasterTable.PATIENT_ID
+                , SystemData.OperationMasterTable.REQ_DATE_TIME
+                , SystemData.OperationMasterTable.SATISFACTION_DEGREE
+                , SystemData.OperationMasterTable.SCHEDULED_DATE_TIME
+                , SystemData.OperationMasterTable.SCHEDULE_ID
+                , SystemData.OperationMasterTable.SECOND_ANESTHESIA
+                , SystemData.OperationMasterTable.SECOND_ANESTHESIA_ID
+                , SystemData.OperationMasterTable.SECOND_ASSISTANT
+                , SystemData.OperationMasterTable.SECOND_ASSISTANT_ID
+                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE
+                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE_ID
+                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE
+                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE_ID
+                , SystemData.OperationMasterTable.SMOOTH_INDICATOR
+                , SystemData.OperationMasterTable.START_DATE_TIME
+                , SystemData.OperationMasterTable.THREE_ASSISTANT
+                , SystemData.OperationMasterTable.THREE_ASSISTANT_ID
+                , SystemData.OperationMasterTable.VISIT_ID
+                , SystemData.OperationMasterTable.VISIT_NO);
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szOperNo))
                 szCondition = string.Format("{0} AND {1}='{2}'"
                 , szCondition
-                , SystemData.OperationMasterView.OPER_NO
+                , SystemData.OperationMasterTable.OPER_NO
                 , szOperNo
                 );
             string szTable = string.Format("{0} "
-                , SystemData.DataView.OPERATION_MASTER_V);
+                , SystemData.DataTable_HerenHis.OPERATION_MASTER);
 
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
                 , szField, szTable, szCondition);
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -418,7 +418,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.HerenHisAccess.CloseConnnection(false);
             }
 
         }

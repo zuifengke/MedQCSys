@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="BAJK\BAJK08.cs" />
     <Compile Include="BAJK\BaIcdDM.cs" />
+    <Compile Include="BAJK\BAJK11.cs" />
     <Compile Include="BAJK\BAJK09.cs" />
     <Compile Include="BAJK\GyGydm.cs" />
     <Compile Include="DbTypeBase.cs" />

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SystemConfig>
+  <!--是否开启专家质控-->
+  <key name="IsShowSpecialCheck" value="true" default="false" />
+  <!--搜索面板【入院日期】，【出院日期】，【危重病历】，【死亡病历】时间间隔天数-->
+  <key name="SearchTimeSpanDays" value="0" default="0"/>
+  <!--搜索面板【入院日期】，【出院日期】，【危重病历】，【死亡病历】时间间隔月数-->
+  <key name="SearchTimeSpanMonths" value="2"  default="2"/>
+  <!--搜索面板【入院日期】，【出院日期】默认起始开始时间提前天数-->
+  <key name="SpecialStartTime" value="3" default="3"/>
+  <!--搜索面板【入院日期】，【出院日期】默认结束开始时间提前天数-->
+  <key name="SpecialEndTime" value="0" default="0"/>
+  <!--南总检查问题清单显示格式value=3-->
+  <key name="ShowBugListMode" value="1" default="1"/>
+  <!--允许给病历类型的父类型添加质检问题 默认为false-->
+  <key name="AllowAddQuestionToParDocType" value="false" default="false"/>
+  <!--是否显示体温单,需要后台开通医生查看权限-->
+  <key name="IsShowVitalSignsGraph" value="false" default="false"/>
+  <!--是否开启模板管理菜单显示-->
+  <key name="IsShowMedTemplet" value="false" default="false"/>
+  <!--是否显示病案首页 默认为false-->
+  <key name="IsShowPatientIndex" value="false" default="false"/>
+  <!--是否在质控系统开启全院时效统计查询功能，需要运行时效生成小工具 默认为false-->
+  <key name="IsShowHospitalTimeCheckStatic" value="true" default="false"/>
+  <!--是否显示相同患者的ID,住院次和姓名列【此配置适用于检查问题清单、按科室统计、按检查者统计、按质检问题统计、工作详细内容统计】 默认为true-->
+  <key name="IsShowSameColumn" value="false" default="true"/>
+  <!--是否显示系统病历内容检查详情，默认false，需要后台运行产生数据-->
+  <key name="IsShowQCContentRecord" value="false" default="false"/>
+  <!--是否显示病历强制锁定,默认false-->
+  <key name="IsShowDocLock" value="true" default="false"/>
+  <!--工作量统计界面是否按照姓名查询【新增了质检者ID,之后统计不会被重名者影响，但是现在直接换ID统计会造成之前的数据统计错误，等历史数据不再需要时，可以换成按照ID统计】,默认false[按姓名统计]，true[按ID]-->
+  <key name="IsSearchByID" value="false" default="false"/>
+  <!--是否在患者列表床卡中显示就诊次数，默认为true-->
+  <key name="IsShowVisitID" value="true" default="true"/>
+  <!--检验记录值标红值，默认为高|低|危机-->
+  <key name="AbnormalIndecator" value="高|低|危机"  default="高|低|危机"/>
+  <!--病案评分统计默认展示是否是精简版，默认为false-->
+  <key name="IsShowScoreAsSimple" value="true" default="false"/>
+  <!--定时分析病历内容缺陷时跳过以下DocTypeID列表,拼接sql用，注意格式加上引号和逗号-->
+  <key name="IgnoreDocTypeIDs" value="'34763-3','34130'" default=""/>
+  <!--从质控系统本地配置文件读取评分标准-->
+  <key name="GradingStandard" value ="90|75" default="90|75"/>
+  <!--含有单项否定时计算甲乙丙的规则,1个为乙病历，2个及2个以上丙病历-->
+  <key name="VetoStandard" value ="1|2" default="1|2"/>
+  <!--右键病人列表显示召回病人菜单项，默认false（不显示）-->
+  <key name="RightClickCallback" value="false"  default="false"/>
+  <!--新军卫版本是否显示患者信息打印和导出excel功能，true:显示，false:隐藏-->
+  <key name="PrintAndExcel" value="true"  default="true"/>
+  <!--新军卫版本时效规则配置放到质控系统中，true:开启，false:关闭 默认为true-->
+  <key name="TimeCheckRuleConfig" value="true" default="true" />
+  <!--编辑器版本0：地方 1：军队 2：和仁-->
+  <key name="DefaultEditor" value="2" default="1"/>
+  <!--开启缺陷点自动核查功能 暂时默认为false-->
+  <key name="IsCheckPoint" value="true" default="false"/>
+  <!--开启质控追踪功能 暂时默认为false-->
+  <key name="IsOpenQcTrack" value="true" default="false"/>
+  <!--判断是默认验证方式，还是数据库验证方式 1:默认登录 2:数据库链接登录-->
+  <key name="LoginType" value="1" default="1"/>
+  <!--是否启用消息工具 true:启用 false:不启用 默认为不启用-->
+  <key name="IsShowChat" value="false" default="false"/>
+  <!--新版界面风格 true:启用 false:不启用-->
+  <key name="IsNewTheme" value="true" default="false"/>
+  <!--是否开启单患者模式 true:单患者模式 false:多患者模式-->
+  <key name="SinglePatientMode" value="true" default="false"/>
+  <!--是否开启终末质控 该功能以评分表格形式展现，参考掌握科技功能-->
+  <key name="IsOpenFinalQC" value="false" default="false"/>
+  <!--是否开启手术信息 该功能用于查看单患者手术页签-->
+  <key name="IsOpenOperation" value="true" default="false"/>
+  <!--质控库通过DBLINK连接到HIS库-->
+  <key name="DBLINK" value="LINK_EMR" default="LINK_EMR"/>
+  <!--医院名称-->
+  <key name="HOSPITAL_NAME" value="某某某某医院" default="某某某某医院"/>
+  <!--启用HDP管理平台-->
+  <key name="HdpUse" value="true" default="false"/>
+  <!--绘制患者标识 新入、军人、手术、用血-->
+  <key name ="IsDrawingPatientIdentification" value="true" default="false"/>
+  <!--启用起始页功能-->
+  <key name ="IsOpenHomePage" value="true" default="false"/>
+  <!--是否开启终末评分新界面 -->
+  <key name="IsNewScore" value="true" default="false"/>
+  <!--评分界面默认右侧显示-->
+  <key name="IsScoreRightShow" value="false" default="false"/>
+  <!--患者手签病历标题关键词-->
+  <key name="SignKeyName" value="告知书|同意书|选择书" default="告知书|同意书"/>
+  <!--省人民复印登记 -->
+  <key name="RecPrintLog" value="true" default="false"/>
+</SystemConfig>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Text;
 
 namespace EMRDBLib.DbAccess
@@ -11,6 +12,7 @@ namespace EMRDBLib.DbAccess
     /// </summary>
     public class OperationNameAccess : DBAccessBase
     {
+        private const string TableName = SystemData.DataTable_HerenHis.OPERATION_NAME;
         private static OperationNameAccess m_Instance = null;
 
         /// <summary>
@@ -25,6 +27,51 @@ namespace EMRDBLib.DbAccess
                 return OperationNameAccess.m_Instance;
             }
         }
+
+
+        public short GetModel(string szOperNO, ref OperationName model)
+        {
+            if (base.HerenHisAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("*");
+            string szCondition = string.Format("1=1");
+            szCondition = string.Format("{0} AND {1} = '{2}' "
+                , szCondition
+                , SystemData.OperationNameTable.OPER_NO
+                , szOperNO);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
+                    , sbField.ToString(), TableName, szCondition);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (model == null)
+                    model = new OperationName();
+
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    if (dataReader.IsDBNull(i))
+                        continue;
+                    PropertyInfo property = Reflect.GetPropertyInfo(typeof(OperationName), dataReader.GetName(i));
+                    bool result = Reflect.SetPropertyValue(model, property, dataReader.GetValue(i));
+                }
+
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+}, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.HerenHisAccess.CloseConnnection(false); }
+        }
+
         /// <summary>
         /// 获取手术名称
         /// </summary>
@@ -34,33 +81,33 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetOperationNames(string szPatientID, string szVisitNo, ref List<OperationName> lstOperationNames)
         {
-            if (base.QCAccess == null)
+            if (base.HerenHisAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (string.IsNullOrEmpty(szPatientID) && string.IsNullOrEmpty(szVisitNo))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2}"
-                , SystemData.OperationNameView.OPERATION
-                , SystemData.OperationNameView.OPERATION_SCALE
-                , SystemData.OperationNameView.OPER_NO);
+                , SystemData.OperationNameTable.OPERATION
+                , SystemData.OperationNameTable.OPERATION_SCALE
+                , SystemData.OperationNameTable.OPER_NO);
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID))
                 szCondition = string.Format("{0} AND {1}='{2}' AND {3}='{4}'"
                 , szCondition
-                , SystemData.OperationNameView.PATIENT_ID
+                , SystemData.OperationNameTable.PATIENT_ID
                 , szPatientID
-                , SystemData.OperationNameView.VISIT_NO
+                , SystemData.OperationNameTable.VISIT_NO
                 , szVisitNo
                 );
-            string szTable = string.Format("{0}", SystemData.DataView.OPERATION_NAME_V);
+            string szTable = string.Format("{0}", SystemData.DataTable_HerenHis.OPERATION_NAME);
             string szOrderBy = string.Format("OPERATION_NO");
 
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition, szOrderBy);
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -90,7 +137,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.HerenHisAccess.CloseConnnection(false);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace EMRDBLib
         /// <summary>
         /// 病人手术信息视图数据字段
         /// </summary>
-        public struct OperationMasterView
+        public struct OperationMasterTable
         {
             /// <summary>
             /// 手术申请号

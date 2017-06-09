@@ -8,7 +8,14 @@ namespace EMRDBLib
     {
         public struct DataTable_HerenHis
         {
-
+            /// <summary>
+            /// 手术信息
+            /// </summary>
+            public const string OPERATION_MASTER = "OPERATION_MASTER";
+            /// <summary>
+            /// 手术名称
+            /// </summary>
+            public const string OPERATION_NAME = "OPERATION_NAME";
             /// <summary>
             /// 疾病字典库
             /// </summary>
@@ -45,6 +52,10 @@ namespace EMRDBLib
             /// 诊断情况
             /// </summary>
             public const string BAJK09 = "BAJK09";
+            /// <summary>
+            /// 手术情况
+            /// </summary>
+            public const string BAJK11 = "BAJK11";
             /// <summary>
             /// 公用代码库
             /// </summary>

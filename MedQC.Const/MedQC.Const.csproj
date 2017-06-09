@@ -135,8 +135,8 @@
     <Compile Include="DataView\LabMasterView.cs" />
     <Compile Include="DataView\LabResultView.cs" />
     <Compile Include="DataView\OperationDictView.cs" />
-    <Compile Include="DataView\OperationMasterView.cs" />
-    <Compile Include="DataView\OperationNameView.cs" />
+    <Compile Include="HerenHis\OperationMasterTable.cs" />
+    <Compile Include="HerenHis\OperationNameTable.cs" />
     <Compile Include="DataView\OperationView.cs" />
     <Compile Include="DataView\OrdersView.cs" />
     <Compile Include="DataView\PastDocView.cs" />

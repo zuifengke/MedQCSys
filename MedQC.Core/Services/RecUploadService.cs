@@ -454,6 +454,22 @@ namespace Heren.MedQC.Core.Services
                         shRet = BAJK09Access.Instance.Insert(bajk09);
                     }
                 }
+                //获取和仁His手术情况
+                List<OperationMaster> lstOperationMasters = null;
+                shRet = OperationMasterAccess.Instance.GetOperationMasters(patientID, szVisitID, ref lstOperationMasters);
+                if (lstOperationMasters != null)
+                {
+                    foreach (var item in lstOperationMasters)
+                    {
+                        BAJK11 bajk11 = new BAJK11();
+                        OperationName operationName = null;
+                        shRet = OperationNameAccess.Instance.GetModel(item.OPER_NO, ref operationName);
+                        if (operationName != null)
+                        {
+                           
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

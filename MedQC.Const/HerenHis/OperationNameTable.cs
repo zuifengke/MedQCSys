@@ -9,7 +9,7 @@ namespace EMRDBLib
         /// <summary>
         /// 新系统手术名称视图数据字段
         /// </summary>
-        public struct OperationNameView
+        public struct OperationNameTable
         {
             /// <summary>
             /// 手术申请号

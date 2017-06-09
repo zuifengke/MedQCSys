@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BAJK\BaIcdDMAccess.cs" />
+    <Compile Include="BAJK\BAJK11Access.cs" />
     <Compile Include="BAJK\BAJK09Access.cs" />
     <Compile Include="BAJK\BAJK08Access.cs" />
     <Compile Include="BAJK\GyGydmAccess.cs" />
@@ -99,8 +100,8 @@
     <Compile Include="MedDoc\MedXMLAccess.cs" />
     <Compile Include="MedQC\View\OperationAccess.cs" />
     <Compile Include="MedQC\View\OperationDictAccess.cs" />
-    <Compile Include="MedQC\View\OperationNameAccess.cs" />
-    <Compile Include="MedQC\View\OperationMasterAccess.cs" />
+    <Compile Include="HerenHis\OperationNameAccess.cs" />
+    <Compile Include="HerenHis\OperationMasterAccess.cs" />
     <Compile Include="MedQC\View\PatVisitAccess.cs" />
     <Compile Include="MedQC\Table\QcAdminDeptsAccess.cs" />
     <Compile Include="MedQC\View\MrArchiveAccess.cs" />
@@ -145,7 +146,14 @@
       <Name>MedQC.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\include\MedQCConfig.xml">
+      <Link>Config\MedQCConfig.xml</Link>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\MedQCConfig.浙医健杭刚医院.xml" />
+    <Content Include="Config\MedQCConfig.省人民.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

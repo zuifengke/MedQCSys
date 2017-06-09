@@ -819,7 +819,7 @@ namespace EMRDBLib.DbAccess
                 if (index != lstPatVisitLogs.Count - 1)
                     sb.Append(" or ");
             }
-            string szField = string.Format("{0},{1}", SystemData.OperationNameView.PATIENT_ID, SystemData.OperationNameView.VISIT_ID);
+            string szField = string.Format("{0},{1}", SystemData.OperationNameTable.PATIENT_ID, SystemData.OperationNameTable.VISIT_ID);
             string szCondition = string.Format("{0}", sb.ToString());
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataView.OPERATION_NAME_V, szCondition);
 
