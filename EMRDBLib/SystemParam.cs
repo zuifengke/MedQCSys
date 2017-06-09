@@ -267,9 +267,68 @@ namespace EMRDBLib
                 return this.m_QCUserRight;
             }
         }
+        private Hashtable m_htDMLB = null;
+        public Hashtable HtDMLB
+        {
+            get {
+                if (this.m_htDMLB == null)
+                {
+                    this.m_htDMLB = new Hashtable();
+                    m_htDMLB.Add("性别", "1");
+                    m_htDMLB.Add("婚姻", "7");
+                    m_htDMLB.Add("职业", "3");
+                    m_htDMLB.Add("国籍", "4");
+                    m_htDMLB.Add("籍贯/住址/行政区", "6");
+                    m_htDMLB.Add("民族", "8");
+                    m_htDMLB.Add("关系", "2");
+                    m_htDMLB.Add("病案质量", "21");
+                    m_htDMLB.Add("入院情况", "20");
+                    m_htDMLB.Add("入出符合标志", "");
+                    m_htDMLB.Add("门出符合标志", "");
+                    m_htDMLB.Add("是否尸检", "");
+                    //m_htDMLB.Add("疾病代码库", "");
+                    m_htDMLB.Add("肿瘤M编码", "");
+                    m_htDMLB.Add("损伤E编码", "");
+                    m_htDMLB.Add("科室代码", "");
+                    m_htDMLB.Add("ABO血型", "30");
+                    m_htDMLB.Add("RH血型", "RH血型");
+                    m_htDMLB.Add("入院方式", "23");
+                    m_htDMLB.Add("出院方式", "");
+                    m_htDMLB.Add("诊断类别", "");
+                    m_htDMLB.Add("转归情况/治疗结果", "28");
+                }
+                return m_htDMLB;
+            }
+        }
 
-
-
+        private Hashtable m_htBaseCodeDict = null;
+        public Hashtable HtBaseCodeDict
+        {
+            get
+            {
+                if (this.m_htBaseCodeDict == null)
+                {
+                    this.m_htBaseCodeDict = new Hashtable();
+                    m_htBaseCodeDict.Add("性别", "SEX_DICT");
+                    m_htBaseCodeDict.Add("婚姻", "MARITAL_STATUS_DICT");
+                    m_htBaseCodeDict.Add("职业", "OCCUPATION_DICT");
+                    m_htBaseCodeDict.Add("国籍", "COUNTRY_DICT");
+                    m_htBaseCodeDict.Add("籍贯/住址/行政区", "AREA_DICT");
+                    m_htBaseCodeDict.Add("民族", "NATION_DICT");
+                    m_htBaseCodeDict.Add("关系", "RELATIONSHIP_DICT");
+                    m_htBaseCodeDict.Add("病案质量", "MR_QUALITY_DICT");
+                    m_htBaseCodeDict.Add("入院情况", "PAT_ADM_CONDITION_DICT");
+                    m_htBaseCodeDict.Add("入出符合标志", "");
+                    m_htBaseCodeDict.Add("ABO血型", "BLOOD_ABO_TYPE_DICT");
+                    m_htBaseCodeDict.Add("RH血型", "BLOOD_RH_TYPE_DICT");
+                    m_htBaseCodeDict.Add("入院方式", "PATIENT_CLASS_DICT");
+                    m_htBaseCodeDict.Add("出院方式", "DISCHARGE_DISPOSITION_DICT");
+                    m_htBaseCodeDict.Add("诊断类别", "DIAGNOSIS_TYPE_DICT");
+                    m_htBaseCodeDict.Add("转归情况/治疗结果", "TREATING_RESULT_DICT");
+                }
+                return m_htBaseCodeDict;
+            }
+        }
 
         /// <summary>
         /// 获取质控系统配置文件全路径

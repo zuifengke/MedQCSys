@@ -59,9 +59,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAJK\BAJK08Table.cs" />
+    <Compile Include="BAJK\BaIcdDMTable.cs" />
+    <Compile Include="BAJK\BAJK11Table.cs" />
+    <Compile Include="BAJK\BAJK09Table.cs" />
+    <Compile Include="BAJK\GyGydmTable.cs" />
     <Compile Include="DataGroup.cs" />
     <Compile Include="DataTable\HdpParameterTable.cs" />
+    <Compile Include="DataTable\RecCodeCompasionTable.cs" />
     <Compile Include="DataTable\KeyValueDataTable.cs" />
+    <Compile Include="DataTable\RecUploadTable.cs" />
     <Compile Include="DataTable\TempletTypeTable.cs" />
     <Compile Include="DataTable\ReportTypeTable.cs" />
     <Compile Include="DataTable\QcAdminDeptsTable.cs" />
@@ -72,6 +79,11 @@
     <Compile Include="DataTable\QcModifyNoticeTable.cs" />
     <Compile Include="DataView\MrArchiveView.cs" />
     <Compile Include="DocTypeApplyEnv.cs" />
+    <Compile Include="HerenHis\DiagnosisDictTable.cs" />
+    <Compile Include="HerenHis\DiagnosisTable.cs" />
+    <Compile Include="HerenHis\PatMasterIndexTable.cs" />
+    <Compile Include="HerenHis\BaseCodeDictTable.cs" />
+    <Compile Include="HerenHis\InpVisitTable.cs" />
     <Compile Include="ReportTypeApplyEnv.cs" />
     <Compile Include="PaperState.cs" />
     <Compile Include="PaperReceive.cs" />
@@ -117,14 +129,14 @@
     <Compile Include="DataView\DoctorGroupView.cs" />
     <Compile Include="DataView\ExamMasterView.cs" />
     <Compile Include="DataView\ExamResultView.cs" />
-    <Compile Include="DataView\His\MrIndexView.cs" />
-    <Compile Include="DataView\His\BloodTransfusionView.cs" />
+    <Compile Include="DataView\MrIndexView.cs" />
+    <Compile Include="DataView\BloodTransfusionView.cs" />
     <Compile Include="DataView\InpVisitView.cs" />
     <Compile Include="DataView\LabMasterView.cs" />
     <Compile Include="DataView\LabResultView.cs" />
-    <Compile Include="DataView\His\OperationDictView.cs" />
-    <Compile Include="DataView\His\OperationMasterView.cs" />
-    <Compile Include="DataView\His\OperationNameView.cs" />
+    <Compile Include="DataView\OperationDictView.cs" />
+    <Compile Include="DataView\OperationMasterView.cs" />
+    <Compile Include="DataView\OperationNameView.cs" />
     <Compile Include="DataView\OperationView.cs" />
     <Compile Include="DataView\OrdersView.cs" />
     <Compile Include="DataView\PastDocView.cs" />
@@ -180,9 +192,7 @@
     <Compile Include="VisitType.cs" />
     <Compile Include="WrittenState.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataView\Meddoc\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

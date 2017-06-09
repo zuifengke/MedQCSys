@@ -87,6 +87,21 @@ namespace Heren.MedQC.DbConfig
         /// </summary>
         private const string QC_CONN_STRING = "QcDbConnString";
 
+
+        /// <summary>
+        /// 病案接口数据库类型
+        /// </summary>
+        private const string BAJK_DB_TYPE = "BajkDbType";
+        /// <summary>
+        /// 病案接口数据库驱动类型
+        /// </summary>
+        private const string BAJK_PROVIDER_TYPE = "BajkDbProvider";
+        /// <summary>
+        /// 病案接口数据库连接串
+        /// </summary>
+        private const string BAJK_CONN_STRING = "BajkDbConnString";
+
+
         public MainForm()
         {
             this.InitializeComponent();
@@ -109,36 +124,39 @@ namespace Heren.MedQC.DbConfig
         private bool ReadConfigFile(string szConfigFile)
         {
             this.txtConfigFile.Text = szConfigFile;
-            this.tpNds.TabPages.Remove(this.tpMdsConfig);
-            this.tpNds.TabPages.Remove(this.tpXdbConfig);
-            this.tpNds.TabPages.Remove(this.tpNdsConfig);
-            this.tpNds.TabPages.Remove(this.tpHisConfig);
-            this.tpNds.TabPages.Remove(this.tpMedQC);
+            this.tp.TabPages.Remove(this.tpMdsConfig);
+            this.tp.TabPages.Remove(this.tpXdbConfig);
+            this.tp.TabPages.Remove(this.tpNdsConfig);
+            this.tp.TabPages.Remove(this.tpHisConfig);
+            this.tp.TabPages.Remove(this.tpMedQC);
+            this.tp.TabPages.Remove(this.tpBAJK);
             if (!System.IO.File.Exists(szConfigFile))
                 return false;
 
             string szFileName = GlobalMethods.IO.GetFileName(szConfigFile, true).ToLower();
             if (szFileName == "meddocsys.xml" )
             {
-                this.tpNds.TabPages.Add(this.tpMdsConfig);
+                this.tp.TabPages.Add(this.tpMdsConfig);
             }
             else if (szFileName == "medqcsys.xml")
             {
-                this.tpNds.TabPages.Add(this.tpMedQC);
-                this.tpNds.TabPages.Add(this.tpMdsConfig);
+                this.tp.TabPages.Add(this.tpMedQC);
+                this.tp.TabPages.Add(this.tpMdsConfig);
+                this.tp.TabPages.Add(this.tpBAJK);
+                this.tp.TabPages.Add(this.tpHisConfig);
             }
             else if (szFileName == "mdsdblib.xml")
             {
-                this.tpNds.TabPages.Add(this.tpMdsConfig);
-                this.tpNds.TabPages.Add(this.tpXdbConfig);
+                this.tp.TabPages.Add(this.tpMdsConfig);
+                this.tp.TabPages.Add(this.tpXdbConfig);
             }
             else
             {
                 return false;
             }
-
+            
             SystemConfig.Instance.ConfigFile = szConfigFile;
-            if (this.tpNds.TabPages.Contains(this.tpMdsConfig))
+            if (this.tp.TabPages.Contains(this.tpMdsConfig))
             {
                 string szDbType = SystemConfig.Instance.Get(MainForm.MDS_DB_TYPE, string.Empty);
                 this.cboMdsDbType.Text = GlobalMethods.Security.DecryptText(szDbType, CONFIG_ENCRYPT_KEY);
@@ -153,7 +171,7 @@ namespace Heren.MedQC.DbConfig
                 this.cboOcxConnString.Text = GlobalMethods.Security.DecryptText(szOcxConnectionString, CONFIG_ENCRYPT_KEY);
             }
 
-            if (this.tpNds.TabPages.Contains(this.tpXdbConfig))
+            if (this.tp.TabPages.Contains(this.tpXdbConfig))
             {
                 string szDbType = SystemConfig.Instance.Get(MainForm.XDB_DB_TYPE, string.Empty);
                 this.cboXdbDbType.Text = GlobalMethods.Security.DecryptText(szDbType, CONFIG_ENCRYPT_KEY);
@@ -165,7 +183,7 @@ namespace Heren.MedQC.DbConfig
                 this.cboXdbConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
             }
 
-            if (this.tpNds.TabPages.Contains(this.tpNdsConfig))
+            if (this.tp.TabPages.Contains(this.tpNdsConfig))
             {
 
                 string szDbType = SystemConfig.Instance.Get(MainForm.NDS_DB_TYPE, string.Empty);
@@ -177,7 +195,7 @@ namespace Heren.MedQC.DbConfig
                 string szConnectionString = SystemConfig.Instance.Get(MainForm.NDS_CONN_STRING, string.Empty);
                 this.cboNdsConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
             }
-            if (this.tpNds.TabPages.Contains(this.tpHisConfig))
+            if (this.tp.TabPages.Contains(this.tpHisConfig))
             {
 
                 string szDbType = SystemConfig.Instance.Get(MainForm.HIS_DB_TYPE, string.Empty);
@@ -189,7 +207,7 @@ namespace Heren.MedQC.DbConfig
                 string szConnectionString = SystemConfig.Instance.Get(MainForm.HIS_CONN_STRING, string.Empty);
                 this.cboHisConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
             }
-            if (this.tpNds.TabPages.Contains(this.tpMedQC))
+            if (this.tp.TabPages.Contains(this.tpMedQC))
             {
                 string szDbType = SystemConfig.Instance.Get(MainForm.QC_DB_TYPE, string.Empty);
                 this.cboQcDbType.Text = GlobalMethods.Security.DecryptText(szDbType, CONFIG_ENCRYPT_KEY);
@@ -200,6 +218,18 @@ namespace Heren.MedQC.DbConfig
                 string szConnectionString = SystemConfig.Instance.Get(MainForm.QC_CONN_STRING, string.Empty);
                 this.cboQcConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
             }
+            if (this.tp.TabPages.Contains(this.tpBAJK))
+            {
+                string szDbType = SystemConfig.Instance.Get(MainForm.BAJK_DB_TYPE, string.Empty);
+                this.cboBAJKDbType.Text = GlobalMethods.Security.DecryptText(szDbType, CONFIG_ENCRYPT_KEY);
+
+                string szDbDriverType = SystemConfig.Instance.Get(MainForm.BAJK_PROVIDER_TYPE, string.Empty);
+                this.cboBAJKDbProvider.Text = GlobalMethods.Security.DecryptText(szDbDriverType, CONFIG_ENCRYPT_KEY);
+
+                string szConnectionString = SystemConfig.Instance.Get(MainForm.BAJK_CONN_STRING, string.Empty);
+                this.cboBAJKConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
+            }
+            this.tp.SelectedIndex = 0;
             return true;
         }
 
@@ -219,7 +249,7 @@ namespace Heren.MedQC.DbConfig
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (this.tpNds.TabPages.Contains(this.tpMdsConfig))
+            if (this.tp.TabPages.Contains(this.tpMdsConfig))
             {
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboMdsDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboMdsDbProvider.Text, CONFIG_ENCRYPT_KEY);
@@ -230,7 +260,7 @@ namespace Heren.MedQC.DbConfig
                 SystemConfig.Instance.Write(MainForm.MDS_CONN_STRING, szConnectionString);
                 SystemConfig.Instance.Write(MainForm.OCX_CONNECTION_STRING, szOcxConnectionString);
             }
-            if (this.tpNds.TabPages.Contains(this.tpXdbConfig))
+            if (this.tp.TabPages.Contains(this.tpXdbConfig))
             {
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboXdbDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboXdbDbProvider.Text, CONFIG_ENCRYPT_KEY);
@@ -239,7 +269,7 @@ namespace Heren.MedQC.DbConfig
                 SystemConfig.Instance.Write(MainForm.XDB_PROVIDER_TYPE, szDbDriverType);
                 SystemConfig.Instance.Write(MainForm.XDB_CONN_STRING, szConnectionString);
             }
-            if (this.tpNds.TabPages.Contains(this.tpNdsConfig))
+            if (this.tp.TabPages.Contains(this.tpNdsConfig))
             {
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboNdsDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboNdsDbProvider.Text, CONFIG_ENCRYPT_KEY);
@@ -249,7 +279,7 @@ namespace Heren.MedQC.DbConfig
                 SystemConfig.Instance.Write(MainForm.NDS_PROVIDER_TYPE, szDbDriverType);
                 SystemConfig.Instance.Write(MainForm.NDS_CONN_STRING, szConnectionString);
             }
-            if (this.tpNds.TabPages.Contains(this.tpHisConfig))
+            if (this.tp.TabPages.Contains(this.tpHisConfig))
             {
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboHisDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboHisDbProvider.Text, CONFIG_ENCRYPT_KEY);
@@ -259,7 +289,7 @@ namespace Heren.MedQC.DbConfig
                 SystemConfig.Instance.Write(MainForm.HIS_PROVIDER_TYPE, szDbDriverType);
                 SystemConfig.Instance.Write(MainForm.HIS_CONN_STRING, szConnectionString);
             }
-            if (this.tpNds.TabPages.Contains(this.tpMedQC))
+            if (this.tp.TabPages.Contains(this.tpMedQC))
             {
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboQcDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboQcProvider.Text, CONFIG_ENCRYPT_KEY);
@@ -268,6 +298,17 @@ namespace Heren.MedQC.DbConfig
                 SystemConfig.Instance.Write(MainForm.QC_DB_TYPE, szDbType);
                 SystemConfig.Instance.Write(MainForm.QC_PROVIDER_TYPE, szDbDriverType);
                 SystemConfig.Instance.Write(MainForm.QC_CONN_STRING, szConnectionString);
+            }
+
+            if (this.tp.TabPages.Contains(this.tpBAJK))
+            {
+                string szDbType = GlobalMethods.Security.EncryptText(this.cboBAJKDbType.Text, CONFIG_ENCRYPT_KEY);
+                string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboBAJKDbProvider.Text, CONFIG_ENCRYPT_KEY);
+                string szConnectionString = GlobalMethods.Security.EncryptText(this.cboBAJKConnString.Text, CONFIG_ENCRYPT_KEY);
+
+                SystemConfig.Instance.Write(MainForm.BAJK_DB_TYPE, szDbType);
+                SystemConfig.Instance.Write(MainForm.BAJK_PROVIDER_TYPE, szDbDriverType);
+                SystemConfig.Instance.Write(MainForm.BAJK_CONN_STRING, szConnectionString);
             }
             MessageBox.Show("配置保存完成!", "系统配置", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

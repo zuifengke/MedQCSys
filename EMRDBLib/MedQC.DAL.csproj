@@ -60,6 +60,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAJK\BaIcdDMAccess.cs" />
+    <Compile Include="BAJK\BAJK09Access.cs" />
+    <Compile Include="BAJK\BAJK08Access.cs" />
+    <Compile Include="BAJK\GyGydmAccess.cs" />
+    <Compile Include="BAJK\BAJKCommonAccess.cs" />
+    <Compile Include="HerenHis\DiagnosisDictAccess.cs" />
+    <Compile Include="HerenHis\DiagnosisAccess.cs" />
+    <Compile Include="HerenHis\PatMasterIndexAccess.cs" />
+    <Compile Include="HerenHis\HerenHisCommonAccess.cs" />
+    <Compile Include="HerenHis\BaseCodeDictAccess.cs" />
+    <Compile Include="HerenHis\InpVisitAccess.cs" />
     <Compile Include="MedDoc\MedQCEntryAccess.cs" />
     <Compile Include="MedDoc\MedQCRuleAccess.cs" />
     <Compile Include="MedDoc\TempletAccess.cs" />
@@ -75,49 +86,52 @@
     <Compile Include="MedQC\HDP\HdpProductAccess.cs" />
     <Compile Include="MedQC\HDP\HdpRoleGrantAccess.cs" />
     <Compile Include="MedQC\HDP\HdpRoleAccess.cs" />
-    <Compile Include="MedQC\His\DeptAccess.cs" />
-    <Compile Include="MedQC\His\ExamResultAccess.cs" />
-    <Compile Include="MedQC\His\ExamMasterAccess.cs" />
-    <Compile Include="MedQC\His\LabResultAccess.cs" />
-    <Compile Include="MedQC\His\LabMasterAccess.cs" />
-    <Compile Include="MedQC\His\OrdersAccess.cs" />
-    <Compile Include="MedQC\His\InpVisitAccess.cs" />
-    <Compile Include="MedQC\His\MrIndexAccess.cs" />
-    <Compile Include="MedQC\MedQCAccess.cs" />
+    <Compile Include="MedQC\Table\RecCodeCompasionAccess.cs" />
+    <Compile Include="MedQC\View\DeptAccess.cs" />
+    <Compile Include="MedQC\View\ExamResultAccess.cs" />
+    <Compile Include="MedQC\View\ExamMasterAccess.cs" />
+    <Compile Include="MedQC\View\LabResultAccess.cs" />
+    <Compile Include="MedQC\View\LabMasterAccess.cs" />
+    <Compile Include="MedQC\View\OrdersAccess.cs" />
+    <Compile Include="MedQC\View\InpVisitAccess.cs" />
+    <Compile Include="MedQC\View\MrIndexAccess.cs" />
+    <Compile Include="MedQC\Table\MedQCAccess.cs" />
     <Compile Include="MedDoc\MedXMLAccess.cs" />
-    <Compile Include="MedQC\His\OperationAccess.cs" />
-    <Compile Include="MedQC\His\OperationDictAccess.cs" />
-    <Compile Include="MedQC\His\OperationNameAccess.cs" />
-    <Compile Include="MedQC\His\OperationMasterAccess.cs" />
-    <Compile Include="MedQC\His\PatVisitAccess.cs" />
-    <Compile Include="MedQC\QcAdminDeptsAccess.cs" />
-    <Compile Include="MedQC\His\MrArchiveAccess.cs" />
-    <Compile Include="MedQC\KeyValueDataAccess.cs" />
-    <Compile Include="MedQC\TempletTypeAccess.cs" />
-    <Compile Include="MedQC\ReportTypeAccess.cs" />
-    <Compile Include="MedQC\RecPackAccess.cs" />
-    <Compile Include="MedQC\RecPrintLogAccess.cs" />
-    <Compile Include="MedQC\RecPaperAccess.cs" />
-    <Compile Include="MedQC\RecMrBatchAccess.cs" />
-    <Compile Include="MedQC\QcMrIndexAccess.cs" />
-    <Compile Include="MedQC\QcModifyNoticeAccess.cs" />
-    <Compile Include="MedQC\QcScoreAccess.cs" />
-    <Compile Include="MedQC\QcCheckResultAccess.cs" />
-    <Compile Include="MedQC\MedicalQcLogAccess.cs" />
-    <Compile Include="MedQC\QcMsgDictAccess.cs" />
-    <Compile Include="MedQC\QaEventTypeDictAccess.cs" />
-    <Compile Include="MedQC\MedicalQcMsgAccess.cs" />
-    <Compile Include="MedQC\QcMsgChatAccess.cs" />
-    <Compile Include="MedQC\QcTimeCheckAccess.cs" />
-    <Compile Include="MedQC\QcCheckPointAccess.cs" />
-    <Compile Include="MedQC\QcTimeRecordAccess.cs" />
-    <Compile Include="MedQC\SpecialAccess.cs" />
+    <Compile Include="MedQC\View\OperationAccess.cs" />
+    <Compile Include="MedQC\View\OperationDictAccess.cs" />
+    <Compile Include="MedQC\View\OperationNameAccess.cs" />
+    <Compile Include="MedQC\View\OperationMasterAccess.cs" />
+    <Compile Include="MedQC\View\PatVisitAccess.cs" />
+    <Compile Include="MedQC\Table\QcAdminDeptsAccess.cs" />
+    <Compile Include="MedQC\View\MrArchiveAccess.cs" />
+    <Compile Include="MedQC\Table\KeyValueDataAccess.cs" />
+    <Compile Include="MedQC\Table\RecUploadAccess.cs" />
+    <Compile Include="MedQC\Table\TempletTypeAccess.cs" />
+    <Compile Include="MedQC\Table\ReportTypeAccess.cs" />
+    <Compile Include="MedQC\Table\RecPackAccess.cs" />
+    <Compile Include="MedQC\Table\RecPrintLogAccess.cs" />
+    <Compile Include="MedQC\Table\RecPaperAccess.cs" />
+    <Compile Include="MedQC\Table\RecMrBatchAccess.cs" />
+    <Compile Include="MedQC\Table\QcMrIndexAccess.cs" />
+    <Compile Include="MedQC\Table\QcModifyNoticeAccess.cs" />
+    <Compile Include="MedQC\Table\QcScoreAccess.cs" />
+    <Compile Include="MedQC\Table\QcCheckResultAccess.cs" />
+    <Compile Include="MedQC\Table\MedicalQcLogAccess.cs" />
+    <Compile Include="MedQC\Table\QcMsgDictAccess.cs" />
+    <Compile Include="MedQC\Table\QaEventTypeDictAccess.cs" />
+    <Compile Include="MedQC\Table\MedicalQcMsgAccess.cs" />
+    <Compile Include="MedQC\Table\QcMsgChatAccess.cs" />
+    <Compile Include="MedQC\Table\QcTimeCheckAccess.cs" />
+    <Compile Include="MedQC\Table\QcCheckPointAccess.cs" />
+    <Compile Include="MedQC\Table\QcTimeRecordAccess.cs" />
+    <Compile Include="MedQC\Table\SpecialAccess.cs" />
     <Compile Include="MedDoc\TimeQCRuleAccess.cs" />
     <Compile Include="MedDoc\TimeQCEventAccess.cs" />
     <Compile Include="MedDoc\UserAccess.cs" />
     <Compile Include="MedDoc\EMRDBAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MedQC\QCContentRecordAccess.cs" />
+    <Compile Include="MedQC\Table\QCContentRecordAccess.cs" />
+    <Compile Include="Reflect.cs" />
     <Compile Include="SystemParam.cs" />
     <Compile Include="LocalConfigOption.cs" />
   </ItemGroup>
@@ -131,6 +145,7 @@
       <Name>MedQC.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

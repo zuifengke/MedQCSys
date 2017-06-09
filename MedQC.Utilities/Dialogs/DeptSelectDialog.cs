@@ -71,6 +71,12 @@ namespace Heren.MedQC.Utilities.Dialogs
                 this.listView1.MultiSelect = false;
                 this.chkCheckAll.Visible = false;
             }
+            else
+            {
+                this.listView1.CheckBoxes = true;
+                this.listView1.MultiSelect = true;
+                this.chkCheckAll.Visible = true;
+            }
             if (this.m_defaultDeptType >= 0
                 && this.m_defaultDeptType < this.cboDeptType.Items.Count)
                 this.cboDeptType.SelectedIndex = this.m_defaultDeptType;

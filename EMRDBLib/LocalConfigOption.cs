@@ -339,7 +339,9 @@ namespace EMRDBLib
         public bool IsOpenHomePage { get; set; }
         public bool IsNewScore { get; set; }
         public bool RecPrintLog { get; set; }
-      
+        public bool BAJK_DBConfig { get; set; }
+
+
         public LocalConfigOption()
         {
             this.HdpUse = false;
@@ -777,9 +779,17 @@ namespace EMRDBLib
                     else
                         option.HdpUse = false;
                 }
+                else if (szName == "BAJK_DBConfig")
+                {
+                    if (szValue.Trim().ToUpper() == "TRUE")
+                        option.BAJK_DBConfig = true;
+                    else
+                        option.BAJK_DBConfig = false;
+                }
+                
             }
             return option;
         }
-        
+
     }
 }

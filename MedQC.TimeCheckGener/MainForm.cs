@@ -18,7 +18,7 @@ namespace MedQC.TimeCheckGener
         public MainForm()
         {
             InitializeComponent();
-
+            SystemConfig.Instance.ConfigFile= SystemParam.Instance.ConfigFile;
         }
         protected override void OnShown(EventArgs e)
         {

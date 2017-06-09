@@ -6,11 +6,61 @@ namespace EMRDBLib
 {
     public partial struct SystemData
     {
-        /// <summary>
-        /// RDB数据表
-        /// </summary>
+        public struct DataTable_HerenHis
+        {
+
+            /// <summary>
+            /// 疾病字典库
+            /// </summary>
+            public const string diagnosis_dict = "diagnosis_dict";
+            /// <summary>
+            /// 患者主索引
+            /// </summary>
+            public const string PAT_MASTER_INDEX = "PAT_MASTER_INDEX";
+            /// <summary>
+            /// 病案首页信息表
+            /// </summary>
+            public const string INP_VISIT = "INP_VISIT";
+            /// <summary>
+            /// 码表
+            /// </summary>
+            public const string BASE_CODE_DICT = "BASE_CODE_DICT";
+            /// <summary>
+            /// 诊断信息表
+            /// </summary>
+            public const string DIAGNOSIS = "DIAGNOSIS";
+        }
+
+        public struct DataTable_BAJK
+        {
+            /// <summary>
+            /// 疾病代码    
+            /// </summary>
+            public const string BA_ICDDM = "BA_ICDDM";
+            /// <summary>
+            /// 病人基本信息库
+            /// </summary>
+            public const string BAJK08 = "BAJK08";
+            /// <summary>
+            /// 诊断情况
+            /// </summary>
+            public const string BAJK09 = "BAJK09";
+            /// <summary>
+            /// 公用代码库
+            /// </summary>
+            public const string gy_gydm = "gy_gydm";
+
+        }
         public struct DataTable
         {
+            /// <summary>
+            /// 病案上传编码对照表
+            /// </summary>
+            public const string REC_CODE_COMPASION = "REC_CODE_COMPASION";
+            /// <summary>
+            /// 病案上传记录
+            /// </summary>
+            public const string REC_UPLOAD = "REC_UPLOAD";
             /// <summary>
             /// 键值对表
             /// </summary>

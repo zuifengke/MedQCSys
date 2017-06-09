@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EMRDBLib;
+using Heren.Common.Libraries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,9 +15,11 @@ namespace MedQC.Test
         [STAThread]
         static void Main()
         {
+            SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+            
         }
     }
 }

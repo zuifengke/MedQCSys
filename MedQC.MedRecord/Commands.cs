@@ -448,14 +448,14 @@ namespace Heren.MedQC.MedRecord
                 return false;
             foreach (DockContentBase item in form.DockPanel.Contents)
             {
-                if (item is RecUploadForm)
+                if (item is RecUploadNewForm)
                 {
                     item.Activate();
                     item.OnRefreshView();
                     return true;
                 }
             }
-            RecUploadForm role = new RecUploadForm(form);
+            RecUploadNewForm role = new RecUploadNewForm(form);
             role.Show(form.DockPanel, DockState.Document);
             role.Activate();
             role.OnRefreshView();

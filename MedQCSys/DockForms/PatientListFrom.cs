@@ -118,7 +118,6 @@ namespace MedQCSys.DockForms
             //更新病情
             this.UpdatePatientsCondition(lstPatVisitLogs);
             //获取三级医生信息
-
             int currentIndex = 0;
             for (int index = lstPatVisitLogs.Count - 1; index >= 0; index--)
             {

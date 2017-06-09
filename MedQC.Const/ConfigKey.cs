@@ -126,7 +126,6 @@ namespace EMRDBLib
             /// 任务提醒系统任务列表刷新后是否弹出消息提示
             /// </summary>
             public const string TASK_POPUP_TIP = "MedTask.ShowPopupTip";
-
             /// <summary>
             /// EMR数据库类型
             /// </summary>
@@ -143,6 +142,18 @@ namespace EMRDBLib
             /// EMR数据库连接串加密key
             /// </summary>
             public const string CONFIG_ENCRYPT_KEY = "SUPCON.MEDDOC.ENCRYPT.KEY";
+            /// <summary>
+            /// HIS数据库类型
+            /// </summary>
+            public const string HIS_DB_TYPE = "HisDbType";
+            /// <summary>
+            /// HIS数据库驱动类型
+            /// </summary>
+            public const string HIS_PROVIDER_TYPE = "HisDbProvider";
+            /// <summary>
+            /// HIS数据库连接串
+            /// </summary>
+            public const string HIS_CONN_STRING = "HisDbConnString";
             /// <summary>
             /// 病历数据库类型
             /// </summary>
@@ -167,6 +178,18 @@ namespace EMRDBLib
             /// 新版质控数据库连接串
             /// </summary>
             public const string QC_CONN_STRING = "QcDbConnString";
+            /// <summary>
+            /// 联众病案接口数据库类型
+            /// </summary>
+            public const string BAJK_DB_TYPE = "BajkDbType";
+            /// <summary>
+            /// 联众病案接口数据库驱动类型
+            /// </summary>
+            public const string BAJK_PROVIDER_TYPE = "BajkDbProvider";
+            /// <summary>
+            /// 联众病案接口数据库连接串
+            /// </summary>
+            public const string BAJK_CONN_STRING = "BajkDbConnString";
             /// <summary>
             /// 宝典控件数据库连接串
             /// </summary>

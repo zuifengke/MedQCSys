@@ -80,7 +80,9 @@
   <key name="IsNewScore" value="true" default="false"/>
   <!--评分界面默认右侧显示-->
   <key name="IsScoreRightShow" value="false" default="false"/>
- 
   <!--省人民复印登记-->
   <key name="RecPrintLog" value="true" default="false"/>
+  <!--省人民医院 病案接口库连接配置开启-->
+  <key name="BAJK_DBConfig" value ="true" default="false" />
+  
 </SystemConfig>

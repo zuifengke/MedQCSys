@@ -15,6 +15,7 @@ namespace EMRDBLib.DbAccess
     {
         private DataAccess m_DbAccess = null;
         private DataAccess m_QCAccess = null;
+        private DataAccess m_HerenHisAccess = null;
         private DataAccess m_NursringDbAccess = null;
         private DataAccess m_HisLoginAccess = null;
         public DBAccessBase()
@@ -113,6 +114,70 @@ namespace EMRDBLib.DbAccess
             this.m_QCAccess.DataProvider = this.GetDataProvider(szDBDriverType);
             return this.m_QCAccess;
         }
+
+        /// <summary>
+        /// 获取数据库访问对象
+        /// </summary>
+        /// <returns></returns>
+        public DataAccess GetHerenHisAccess()
+        {
+            if (this.m_HerenHisAccess != null)
+                return this.m_HerenHisAccess;
+
+            //读取配置文件中数据库配置
+            string szDBType = SystemConfig.Instance.Get(SystemData.ConfigKey.HIS_DB_TYPE, string.Empty);
+            string szDBDriverType = SystemConfig.Instance.Get(SystemData.ConfigKey.HIS_PROVIDER_TYPE, string.Empty);
+            string szConnectionString = SystemConfig.Instance.Get(SystemData.ConfigKey.HIS_CONN_STRING, string.Empty);
+            szDBType = GlobalMethods.Security.DecryptText(szDBType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szDBDriverType = GlobalMethods.Security.DecryptText(szDBDriverType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szConnectionString = GlobalMethods.Security.DecryptText(szConnectionString, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+
+            if (GlobalMethods.Misc.IsEmptyString(szDBType) || GlobalMethods.Misc.IsEmptyString(szDBDriverType)
+                || GlobalMethods.Misc.IsEmptyString(szConnectionString))
+            {
+                LogManager.Instance.WriteLog("SystemParam.GetHerenHisAccess", new string[] { "ConfigFile" }
+                    , new object[] { SystemConfig.Instance.ConfigFile }, "数据库配置参数中包含非法的值!");
+                return null;
+            }
+            this.m_HerenHisAccess = new DataAccess();
+            this.m_HerenHisAccess.ConnectionString = szConnectionString;
+            this.m_HerenHisAccess.ClearPoolEnabled = this.m_bAutoClearPool;
+            this.m_HerenHisAccess.DatabaseType = this.GetDatabaseType(szDBType);
+            this.m_HerenHisAccess.DataProvider = this.GetDataProvider(szDBDriverType);
+            return this.m_HerenHisAccess;
+        }
+
+        /// <summary>
+        /// 获取数据库访问对象
+        /// </summary>
+        /// <returns></returns>
+        public DataAccess GetBAJKAccess()
+        {
+            if (this.m_BAJKAccess != null)
+                return this.m_BAJKAccess;
+
+            //读取配置文件中数据库配置
+            string szDBType = SystemConfig.Instance.Get(SystemData.ConfigKey.BAJK_DB_TYPE, string.Empty);
+            string szDBDriverType = SystemConfig.Instance.Get(SystemData.ConfigKey.BAJK_PROVIDER_TYPE, string.Empty);
+            string szConnectionString = SystemConfig.Instance.Get(SystemData.ConfigKey.BAJK_CONN_STRING, string.Empty);
+            szDBType = GlobalMethods.Security.DecryptText(szDBType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szDBDriverType = GlobalMethods.Security.DecryptText(szDBDriverType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szConnectionString = GlobalMethods.Security.DecryptText(szConnectionString, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+
+            if (GlobalMethods.Misc.IsEmptyString(szDBType) || GlobalMethods.Misc.IsEmptyString(szDBDriverType)
+                || GlobalMethods.Misc.IsEmptyString(szConnectionString))
+            {
+                LogManager.Instance.WriteLog("SystemParam.GetBAJKAccess", new string[] { "ConfigFile" }
+                    , new object[] { SystemConfig.Instance.ConfigFile }, "数据库配置参数中包含非法的值!");
+                return null;
+            }
+            this.m_BAJKAccess = new DataAccess();
+            this.m_BAJKAccess.ConnectionString = szConnectionString;
+            this.m_BAJKAccess.ClearPoolEnabled = this.m_bAutoClearPool;
+            this.m_BAJKAccess.DatabaseType = this.GetDatabaseType(szDBType);
+            this.m_BAJKAccess.DataProvider = this.GetDataProvider(szDBDriverType);
+            return this.m_BAJKAccess;
+        }
         /// <summary>
         /// 将数据库类型字符串转换为数据库类型枚举
         /// </summary>
@@ -169,6 +234,18 @@ namespace EMRDBLib.DbAccess
         }
 
         /// <summary>
+        /// 获取His数据库访问对象实例
+        /// </summary>
+        protected DataAccess HerenHisAccess
+        {
+            get
+            {
+                if (this.m_HerenHisAccess == null)
+                    this.m_HerenHisAccess = this.GetHerenHisAccess();
+                return this.m_HerenHisAccess;
+            }
+        }
+        /// <summary>
         /// 获取质控数据库访问对象实例
         /// </summary>
         protected DataAccess QCAccess
@@ -178,6 +255,19 @@ namespace EMRDBLib.DbAccess
                 if (this.m_QCAccess == null)
                     this.m_QCAccess = this.GetQCAccess();
                 return this.m_QCAccess;
+            }
+        }
+        private DataAccess m_BAJKAccess = null;
+        /// <summary>
+        /// 获取病案接口数据库访问对象实例
+        /// </summary>
+        protected DataAccess BAJKDataAccess
+        {
+            get
+            {
+                if (this.m_BAJKAccess == null)
+                    this.m_BAJKAccess = this.GetBAJKAccess();
+                return this.m_BAJKAccess;
             }
         }
 

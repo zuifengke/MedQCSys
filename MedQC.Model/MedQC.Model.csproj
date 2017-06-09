@@ -62,11 +62,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAJK\BAJK08.cs" />
+    <Compile Include="BAJK\BaIcdDM.cs" />
+    <Compile Include="BAJK\BAJK09.cs" />
+    <Compile Include="BAJK\GyGydm.cs" />
     <Compile Include="DbTypeBase.cs" />
+    <Compile Include="HerenHis\Diagnosis.cs" />
+    <Compile Include="HerenHis\DiagnosisDict.cs" />
+    <Compile Include="HerenHis\PatMasterIndex.cs" />
+    <Compile Include="HerenHis\BaseCodeDict.cs" />
+    <Compile Include="HerenHis\InpVisit.cs" />
     <Compile Include="MedQC\HdpParameter.cs" />
+    <Compile Include="MedQC\RecCodeCompasion.cs" />
     <Compile Include="MedQC\KeyValueData.cs" />
     <Compile Include="MedQC\MrArchive.cs" />
     <Compile Include="MedQC\RecPack.cs" />
+    <Compile Include="MedQC\RecUpload.cs" />
     <Compile Include="MedQC\RecPrintLog.cs" />
     <Compile Include="MedQC\RecPaper.cs" />
     <Compile Include="MedQC\RecMrBatch.cs" />

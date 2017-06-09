@@ -32,7 +32,14 @@ namespace Heren.MedQC.DbConfig
             this.txtConfigFile = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.tpNds = new System.Windows.Forms.TabControl();
+            this.tp = new System.Windows.Forms.TabControl();
+            this.tpMedQC = new System.Windows.Forms.TabPage();
+            this.cboQcConnString = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cboQcProvider = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cboQcDbType = new System.Windows.Forms.ComboBox();
             this.tpMdsConfig = new System.Windows.Forms.TabPage();
             this.cboOcxConnString = new System.Windows.Forms.ComboBox();
             this.cboMdsConnString = new System.Windows.Forms.ComboBox();
@@ -63,20 +70,21 @@ namespace Heren.MedQC.DbConfig
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cboHisDbType = new System.Windows.Forms.ComboBox();
-            this.tpMedQC = new System.Windows.Forms.TabPage();
-            this.cboQcConnString = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.cboQcProvider = new System.Windows.Forms.ComboBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.cboQcDbType = new System.Windows.Forms.ComboBox();
+            this.tpBAJK = new System.Windows.Forms.TabPage();
+            this.cboBAJKConnString = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cboBAJKDbProvider = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cboBAJKDbType = new System.Windows.Forms.ComboBox();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tpNds.SuspendLayout();
+            this.tp.SuspendLayout();
+            this.tpMedQC.SuspendLayout();
             this.tpMdsConfig.SuspendLayout();
             this.tpXdbConfig.SuspendLayout();
             this.tpNdsConfig.SuspendLayout();
             this.tpHisConfig.SuspendLayout();
-            this.tpMedQC.SuspendLayout();
+            this.tpBAJK.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -121,21 +129,114 @@ namespace Heren.MedQC.DbConfig
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // tpNds
+            // tp
             // 
-            this.tpNds.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tpNds.Controls.Add(this.tpMedQC);
-            this.tpNds.Controls.Add(this.tpMdsConfig);
-            this.tpNds.Controls.Add(this.tpXdbConfig);
-            this.tpNds.Controls.Add(this.tpNdsConfig);
-            this.tpNds.Controls.Add(this.tpHisConfig);
-            this.tpNds.Location = new System.Drawing.Point(15, 46);
-            this.tpNds.Name = "tpNds";
-            this.tpNds.SelectedIndex = 0;
-            this.tpNds.Size = new System.Drawing.Size(657, 302);
-            this.tpNds.TabIndex = 34;
+            this.tp.Controls.Add(this.tpMedQC);
+            this.tp.Controls.Add(this.tpMdsConfig);
+            this.tp.Controls.Add(this.tpXdbConfig);
+            this.tp.Controls.Add(this.tpNdsConfig);
+            this.tp.Controls.Add(this.tpHisConfig);
+            this.tp.Controls.Add(this.tpBAJK);
+            this.tp.Location = new System.Drawing.Point(15, 46);
+            this.tp.Name = "tp";
+            this.tp.SelectedIndex = 0;
+            this.tp.Size = new System.Drawing.Size(657, 302);
+            this.tp.TabIndex = 34;
+            // 
+            // tpMedQC
+            // 
+            this.tpMedQC.Controls.Add(this.cboQcConnString);
+            this.tpMedQC.Controls.Add(this.label15);
+            this.tpMedQC.Controls.Add(this.cboQcProvider);
+            this.tpMedQC.Controls.Add(this.label16);
+            this.tpMedQC.Controls.Add(this.label17);
+            this.tpMedQC.Controls.Add(this.cboQcDbType);
+            this.tpMedQC.Location = new System.Drawing.Point(4, 22);
+            this.tpMedQC.Name = "tpMedQC";
+            this.tpMedQC.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMedQC.Size = new System.Drawing.Size(649, 276);
+            this.tpMedQC.TabIndex = 5;
+            this.tpMedQC.Text = "质控数据库配置";
+            this.tpMedQC.UseVisualStyleBackColor = true;
+            // 
+            // cboQcConnString
+            // 
+            this.cboQcConnString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboQcConnString.FormattingEnabled = true;
+            this.cboQcConnString.Items.AddRange(new object[] {
+            "provider=msdaora.1;data source=meddoc;user id=meddoc;password=meddoc;",
+            "provider=oraoledb.oracle.1;data source=meddoc;user id=meddoc;password=meddoc;",
+            "provider=sqloledb.1;server=.;database=meddoc;user id=sa;password=;",
+            "data source=meddoc;user id=meddoc;password=meddoc;",
+            "server=.;database=meddoc;user id=sa;password=;",
+            "dsn=meddoc;uid=meddoc;pwd=meddoc;"});
+            this.cboQcConnString.Location = new System.Drawing.Point(146, 148);
+            this.cboQcConnString.Name = "cboQcConnString";
+            this.cboQcConnString.Size = new System.Drawing.Size(486, 20);
+            this.cboQcConnString.TabIndex = 44;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(16, 112);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(113, 12);
+            this.label15.TabIndex = 49;
+            this.label15.Text = "数据提供程序类型：";
+            // 
+            // cboQcProvider
+            // 
+            this.cboQcProvider.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.cboQcProvider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboQcProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboQcProvider.FormattingEnabled = true;
+            this.cboQcProvider.Items.AddRange(new object[] {
+            "System.Data.OracleClient",
+            "System.Data.SqlClient",
+            "System.Data.OleDb",
+            "System.Data.Odbc",
+            "Oracle.DataAccess.Client"});
+            this.cboQcProvider.Location = new System.Drawing.Point(146, 107);
+            this.cboQcProvider.Name = "cboQcProvider";
+            this.cboQcProvider.Size = new System.Drawing.Size(486, 20);
+            this.cboQcProvider.TabIndex = 43;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(17, 153);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(113, 12);
+            this.label16.TabIndex = 48;
+            this.label16.Text = "数据库连接字符串：";
+            // 
+            // label17
+            // 
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(17, 71);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(77, 12);
+            this.label17.TabIndex = 46;
+            this.label17.Text = "数据库类型：";
+            // 
+            // cboQcDbType
+            // 
+            this.cboQcDbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboQcDbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboQcDbType.FormattingEnabled = true;
+            this.cboQcDbType.Items.AddRange(new object[] {
+            "ORACLE",
+            "SQLSERVER"});
+            this.cboQcDbType.Location = new System.Drawing.Point(146, 68);
+            this.cboQcDbType.Name = "cboQcDbType";
+            this.cboQcDbType.Size = new System.Drawing.Size(486, 20);
+            this.cboQcDbType.TabIndex = 42;
             // 
             // tpMdsConfig
             // 
@@ -526,97 +627,97 @@ namespace Heren.MedQC.DbConfig
             this.cboHisDbType.Size = new System.Drawing.Size(486, 20);
             this.cboHisDbType.TabIndex = 48;
             // 
-            // tpMedQC
+            // tpBAJK
             // 
-            this.tpMedQC.Controls.Add(this.cboQcConnString);
-            this.tpMedQC.Controls.Add(this.label15);
-            this.tpMedQC.Controls.Add(this.cboQcProvider);
-            this.tpMedQC.Controls.Add(this.label16);
-            this.tpMedQC.Controls.Add(this.label17);
-            this.tpMedQC.Controls.Add(this.cboQcDbType);
-            this.tpMedQC.Location = new System.Drawing.Point(4, 22);
-            this.tpMedQC.Name = "tpMedQC";
-            this.tpMedQC.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMedQC.Size = new System.Drawing.Size(649, 276);
-            this.tpMedQC.TabIndex = 5;
-            this.tpMedQC.Text = "质控数据库配置";
-            this.tpMedQC.UseVisualStyleBackColor = true;
+            this.tpBAJK.Controls.Add(this.cboBAJKConnString);
+            this.tpBAJK.Controls.Add(this.label18);
+            this.tpBAJK.Controls.Add(this.cboBAJKDbProvider);
+            this.tpBAJK.Controls.Add(this.label19);
+            this.tpBAJK.Controls.Add(this.label20);
+            this.tpBAJK.Controls.Add(this.cboBAJKDbType);
+            this.tpBAJK.Location = new System.Drawing.Point(4, 22);
+            this.tpBAJK.Name = "tpBAJK";
+            this.tpBAJK.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBAJK.Size = new System.Drawing.Size(649, 276);
+            this.tpBAJK.TabIndex = 6;
+            this.tpBAJK.Text = "联众病案接口库";
+            this.tpBAJK.UseVisualStyleBackColor = true;
             // 
-            // cboQcConnString
+            // cboBAJKConnString
             // 
-            this.cboQcConnString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboQcConnString.FormattingEnabled = true;
-            this.cboQcConnString.Items.AddRange(new object[] {
+            this.cboBAJKConnString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboBAJKConnString.FormattingEnabled = true;
+            this.cboBAJKConnString.Items.AddRange(new object[] {
             "provider=msdaora.1;data source=meddoc;user id=meddoc;password=meddoc;",
             "provider=oraoledb.oracle.1;data source=meddoc;user id=meddoc;password=meddoc;",
             "provider=sqloledb.1;server=.;database=meddoc;user id=sa;password=;",
             "data source=meddoc;user id=meddoc;password=meddoc;",
             "server=.;database=meddoc;user id=sa;password=;",
             "dsn=meddoc;uid=meddoc;pwd=meddoc;"});
-            this.cboQcConnString.Location = new System.Drawing.Point(146, 148);
-            this.cboQcConnString.Name = "cboQcConnString";
-            this.cboQcConnString.Size = new System.Drawing.Size(486, 20);
-            this.cboQcConnString.TabIndex = 44;
+            this.cboBAJKConnString.Location = new System.Drawing.Point(146, 168);
+            this.cboBAJKConnString.Name = "cboBAJKConnString";
+            this.cboBAJKConnString.Size = new System.Drawing.Size(486, 20);
+            this.cboBAJKConnString.TabIndex = 52;
             // 
-            // label15
+            // label18
             // 
-            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(16, 112);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(113, 12);
-            this.label15.TabIndex = 49;
-            this.label15.Text = "数据提供程序类型：";
+            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(16, 132);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(113, 12);
+            this.label18.TabIndex = 55;
+            this.label18.Text = "数据提供程序类型：";
             // 
-            // cboQcProvider
+            // cboBAJKDbProvider
             // 
-            this.cboQcProvider.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.cboQcProvider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboQcProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboQcProvider.FormattingEnabled = true;
-            this.cboQcProvider.Items.AddRange(new object[] {
+            this.cboBAJKDbProvider.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.cboBAJKDbProvider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboBAJKDbProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBAJKDbProvider.FormattingEnabled = true;
+            this.cboBAJKDbProvider.Items.AddRange(new object[] {
             "System.Data.OracleClient",
             "System.Data.SqlClient",
             "System.Data.OleDb",
             "System.Data.Odbc",
             "Oracle.DataAccess.Client"});
-            this.cboQcProvider.Location = new System.Drawing.Point(146, 107);
-            this.cboQcProvider.Name = "cboQcProvider";
-            this.cboQcProvider.Size = new System.Drawing.Size(486, 20);
-            this.cboQcProvider.TabIndex = 43;
+            this.cboBAJKDbProvider.Location = new System.Drawing.Point(146, 127);
+            this.cboBAJKDbProvider.Name = "cboBAJKDbProvider";
+            this.cboBAJKDbProvider.Size = new System.Drawing.Size(486, 20);
+            this.cboBAJKDbProvider.TabIndex = 51;
             // 
-            // label16
+            // label19
             // 
-            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(17, 153);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(113, 12);
-            this.label16.TabIndex = 48;
-            this.label16.Text = "数据库连接字符串：";
+            this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(17, 173);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(113, 12);
+            this.label19.TabIndex = 54;
+            this.label19.Text = "数据库连接字符串：";
             // 
-            // label17
+            // label20
             // 
-            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(17, 71);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(77, 12);
-            this.label17.TabIndex = 46;
-            this.label17.Text = "数据库类型：";
+            this.label20.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(17, 91);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(77, 12);
+            this.label20.TabIndex = 53;
+            this.label20.Text = "数据库类型：";
             // 
-            // cboQcDbType
+            // cboBAJKDbType
             // 
-            this.cboQcDbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboQcDbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboQcDbType.FormattingEnabled = true;
-            this.cboQcDbType.Items.AddRange(new object[] {
+            this.cboBAJKDbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboBAJKDbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBAJKDbType.FormattingEnabled = true;
+            this.cboBAJKDbType.Items.AddRange(new object[] {
             "ORACLE",
             "SQLSERVER"});
-            this.cboQcDbType.Location = new System.Drawing.Point(146, 68);
-            this.cboQcDbType.Name = "cboQcDbType";
-            this.cboQcDbType.Size = new System.Drawing.Size(486, 20);
-            this.cboQcDbType.TabIndex = 42;
+            this.cboBAJKDbType.Location = new System.Drawing.Point(146, 88);
+            this.cboBAJKDbType.Name = "cboBAJKDbType";
+            this.cboBAJKDbType.Size = new System.Drawing.Size(486, 20);
+            this.cboBAJKDbType.TabIndex = 50;
             // 
             // btnClose
             // 
@@ -635,7 +736,7 @@ namespace Heren.MedQC.DbConfig
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 405);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.tpNds);
+            this.Controls.Add(this.tp);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtConfigFile);
@@ -645,7 +746,9 @@ namespace Heren.MedQC.DbConfig
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "电子病历系统数据库配置";
-            this.tpNds.ResumeLayout(false);
+            this.tp.ResumeLayout(false);
+            this.tpMedQC.ResumeLayout(false);
+            this.tpMedQC.PerformLayout();
             this.tpMdsConfig.ResumeLayout(false);
             this.tpMdsConfig.PerformLayout();
             this.tpXdbConfig.ResumeLayout(false);
@@ -654,8 +757,8 @@ namespace Heren.MedQC.DbConfig
             this.tpNdsConfig.PerformLayout();
             this.tpHisConfig.ResumeLayout(false);
             this.tpHisConfig.PerformLayout();
-            this.tpMedQC.ResumeLayout(false);
-            this.tpMedQC.PerformLayout();
+            this.tpBAJK.ResumeLayout(false);
+            this.tpBAJK.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -667,7 +770,7 @@ namespace Heren.MedQC.DbConfig
         private System.Windows.Forms.TextBox txtConfigFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnOpen;
-        private System.Windows.Forms.TabControl tpNds;
+        private System.Windows.Forms.TabControl tp;
         private System.Windows.Forms.TabPage tpMdsConfig;
         private System.Windows.Forms.ComboBox cboOcxConnString;
         private System.Windows.Forms.ComboBox cboMdsConnString;
@@ -706,5 +809,12 @@ namespace Heren.MedQC.DbConfig
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cboQcDbType;
+        private System.Windows.Forms.TabPage tpBAJK;
+        private System.Windows.Forms.ComboBox cboBAJKConnString;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cboBAJKDbProvider;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox cboBAJKDbType;
     }
 }
