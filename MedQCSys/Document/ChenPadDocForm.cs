@@ -36,25 +36,16 @@ namespace MedQCSys.Document
             this.DockAreas = DockAreas.Document;
             this.Icon = MedQCSys.Properties.Resources.MedDocIcon;
 
-            //读配置文件判断是否需要添加【新增质检问题】按钮,如果为true则显示全部右键菜单。
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-            {
-                this.medEditor1.ShowInternalPopupMenu = true;
-                this.medEditor1.ShowInternalToolStrip = true;
-                this.medEditor1.ShowInternalMenuStrip = true;
-                this.medEditor1.PopupMenu.InsertMenuItem("新增质检问题", new EventHandler(mnuAddFeedInfo_Click));
-                this.medEditor1.PopupMenu.InsertMenuItem("自动检查缺陷", new EventHandler(this.CheckDocBugButton_Click));
-                this.medEditor1.PopupMenu.InsertMenuItem("检索标准诊断", new EventHandler(mnuShowStandardTermForm_Click));
-                this.medEditor1.PopupMenu.InsertMenuItem("插入批注...", new EventHandler(mnuInsertCommentForm_Click));
-                this.medEditor1.PopupMenu.InsertMenuItem("退回病历...", new EventHandler(mnuRollbackDocument_Click));
-                this.medEditor1.PopupMenu.InsertMenuItem("-");
-            }
-            else
-            {
-                this.medEditor1.ShowInternalPopupMenu = false;
-                this.medEditor1.ShowInternalToolStrip = false;
-                this.medEditor1.ShowInternalMenuStrip = false;
-            }
+            this.medEditor1.ShowInternalPopupMenu = true;
+            this.medEditor1.ShowInternalToolStrip = true;
+            this.medEditor1.ShowInternalMenuStrip = true;
+            this.medEditor1.PopupMenu.InsertMenuItem("新增质检问题", new EventHandler(mnuAddFeedInfo_Click));
+            this.medEditor1.PopupMenu.InsertMenuItem("自动检查缺陷", new EventHandler(this.CheckDocBugButton_Click));
+            this.medEditor1.PopupMenu.InsertMenuItem("检索标准诊断", new EventHandler(mnuShowStandardTermForm_Click));
+            this.medEditor1.PopupMenu.InsertMenuItem("插入批注...", new EventHandler(mnuInsertCommentForm_Click));
+            this.medEditor1.PopupMenu.InsertMenuItem("退回病历...", new EventHandler(mnuRollbackDocument_Click));
+            this.medEditor1.PopupMenu.InsertMenuItem("-");
+
             this.medEditor1.BeforeCopy += new CancelEventHandler(this.medEditor1_BeforeCopy);
             this.medEditor1.SaveButtonClick += new CancelEventHandler(medEditor1_SaveButtonClick);
             this.medEditor1.PrintButtonClick += new EventHandler(this.medEditor1_PrintButtonClick);
@@ -100,8 +91,7 @@ namespace MedQCSys.Document
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.InitCheckDocBugButton();
+            this.InitCheckDocBugButton();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -189,7 +179,7 @@ namespace MedQCSys.Document
         /// </summary>
         /// <param name="document">文档信息</param>
         /// <returns>DataLayer.SystemData.ReturnValue</returns>
-        public short OpenDocument( MedDocInfo document)
+        public short OpenDocument(MedDocInfo document)
         {
             this.m_documents = new MedDocList();
             this.m_documents.Add(document);
@@ -229,7 +219,7 @@ namespace MedQCSys.Document
             if (documents == null || documents.Count <= 0)
                 return SystemData.ReturnValue.CANCEL;
 
-             MedDocInfo firstDocInfo = documents[0];
+            MedDocInfo firstDocInfo = documents[0];
             this.RefreshFormTitle(null);
 
             WorkProcess.Instance.Initialize(this, documents.Count
@@ -261,13 +251,13 @@ namespace MedQCSys.Document
                 return SystemData.ReturnValue.FAILED;
             }
 
-             DocTypeInfo prevDocTypeInfo = null;
+            DocTypeInfo prevDocTypeInfo = null;
             DataCache.Instance.GetDocTypeInfo(firstDocInfo.DOC_TYPE, ref prevDocTypeInfo);
 
             //循环打开其余的文档
             for (int index = 1; index < documents.Count; index++)
             {
-                 MedDocInfo docInfo = documents[index];
+                MedDocInfo docInfo = documents[index];
 
                 if (WorkProcess.Instance.Canceled)
                     break;
@@ -288,7 +278,7 @@ namespace MedQCSys.Document
                 WorkProcess.Instance.Show(string.Format("正在打开“{0}”，请稍候...", docInfo.DOC_TITLE), index + 1);
 
                 //当前文档或前一文档是需要独立打印的,那么插入一个或两个硬分页符
-                 DocTypeInfo docTypeInfo = null;
+                DocTypeInfo docTypeInfo = null;
                 DataCache.Instance.GetDocTypeInfo(docInfo.DOC_TYPE, ref docTypeInfo);
                 if ((docTypeInfo != null && docTypeInfo.IsTotalPage)
                     || (prevDocTypeInfo != null && prevDocTypeInfo.IsEndEmpty))
@@ -321,7 +311,7 @@ namespace MedQCSys.Document
                 }
             }
             this.medEditor1.RefreshCombinDisplay();
-            
+
             WorkProcess.Instance.Close();
             return SystemData.ReturnValue.OK;
         }
@@ -431,19 +421,16 @@ namespace MedQCSys.Document
 
         private void mnuInsertCommentForm_Click(object sender, EventArgs e)
         {
-            //如果质控人员没有修改病历权限，当执行插入批注之前修改了文档，那么插入批注时提示将撤销之前所做的修改。
-            if (!SystemParam.Instance.QCUserRight.EditAbleDoc.Value)
+            if (this.medEditor1.IsModified)
             {
-                if (this.medEditor1.IsModified)
+                do
                 {
-                    do
-                    {
-                        this.medEditor1.Undo();
-                    } while (this.medEditor1.IsModified);
-                    MessageBoxEx.Show("因为您没有修改病历权限，系统已撤回您之前所做的更改。\r\n请重新选择需要插入批注的位置");
-                    return;
-                }
+                    this.medEditor1.Undo();
+                } while (this.medEditor1.IsModified);
+                MessageBoxEx.Show("因为您没有修改病历权限，系统已撤回您之前所做的更改。\r\n请重新选择需要插入批注的位置");
+                return;
             }
+
             if (this.Documents.Count > 1)
             {
                 MessageBoxEx.ShowMessage("合并打开的文档不能插入批注");
@@ -494,7 +481,7 @@ namespace MedQCSys.Document
             if (rbForm.ShowDialog() == DialogResult.OK)
             {
                 //获取文档信息
-               MedDocInfo docInfo = this.Document;
+                MedDocInfo docInfo = this.Document;
                 string szOldDocID = this.Document.DOC_ID;
                 this.Document.DOC_VERSION = this.Document.DOC_VERSION + 1;
                 this.Document.DOC_ID = this.Document.DOC_SETID + "_" + this.Document.DOC_VERSION;
@@ -568,7 +555,7 @@ namespace MedQCSys.Document
         private void medEditor1_SaveButtonClick(object sender, CancelEventArgs e)
         {
             bool bQCSaveDocEnable = EmrDocAccess.Instance.CheckQCSaveDocEnable();
-            bool bEditAbleDoc = SystemParam.Instance.QCUserRight.EditAbleDoc.Value;
+            bool bEditAbleDoc = false;
             if (bQCSaveDocEnable && bEditAbleDoc)
             {
                 byte[] temp = new byte[] { };

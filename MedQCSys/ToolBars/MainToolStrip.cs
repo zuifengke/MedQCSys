@@ -186,12 +186,7 @@ namespace MedQCSys.ToolBars
             : base(parent)
         {
             this.InitializeComponent();
-            //判断是否显示病历时效按钮
-            if (!SystemParam.Instance.QCUserRight.BrowseDocumentTime.Value)
-                this.toolbtnCheckDocTime.Visible = false;
-            //读取配置文件判断是否显示质检问题按钮
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.toolbtnShowQuestionList.Visible = false;
+          
         }
 
         private void toolbtnShowQuestionList_Click(object sender, System.EventArgs e)

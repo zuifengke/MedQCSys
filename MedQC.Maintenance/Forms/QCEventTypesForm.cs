@@ -349,16 +349,6 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
             
             EMRDBLib.QaEventTypeDict qcEventInfo = null;
             DataTableViewRow currRow = this.dataGridView1.CurrentRow;
@@ -388,16 +378,6 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限修改病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (this.dataGridView1.IsNormalRow(row))
             {
@@ -424,16 +404,6 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限删除病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限删除病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (this.dataGridView1.IsDeletedRow(row))
             {
@@ -455,31 +425,16 @@ namespace Heren.MedQC.Maintenance
 
         private void toolbtnNew_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionType.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质控问题类型！", MessageBoxIcon.Information);
-                return;
-            }
             this.AddNewItem();
         }
 
         private void toolbtnModify_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionType.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改质控问题类型！", MessageBoxIcon.Information);
-                return;
-            }
             this.ModifySelectedItem();
         }
 
         private void toolbtnDelete_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionType.Value)
-            {
-                MessageBoxEx.Show("您没有权限删除质控问题类型！", MessageBoxIcon.Information);
-                return;
-            }
             this.DeleteSelectedItem();
         }
 
@@ -488,16 +443,6 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限保存质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限保存质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
             this.Focus();
             this.CommitModify();
         }
@@ -604,11 +549,7 @@ namespace Heren.MedQC.Maintenance
 
         private void toolBtnSecNew_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionType.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质控问题类型！", MessageBoxIcon.Information);
-                return;
-            }
+            
             this.AddSecNewItem();
         }
         /// <summary>
@@ -619,16 +560,7 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加病案质量问题分类！", MessageBoxIcon.Warning);
-                return;
-            }
+           
             //判断当前选中行是否是一级问题类型
             DataTableViewRow selectedRow = this.dataGridView1.SelectedRows[0];
             if (selectedRow == null)

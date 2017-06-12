@@ -408,8 +408,6 @@ namespace MedQCSys.Utility
             try
             {
                 string szDeptCode = null;
-                if (!SystemParam.Instance.QCUserRight.ManageAllQC.Value)
-                    szDeptCode = SystemParam.Instance.UserInfo.DeptCode;
                 List<EMRDBLib.PatVisitInfo> lstPatVisitLog = null;
                 if (this.m_PatSearchType == EMRDBLib.PatSearchType.Department)
                     PatVisitAccess.Instance.GetPatVisitList(this.m_szDeptCode, this.m_PatientType, this.m_dtBeginTime, this.m_dtEndTime, ref lstPatVisitLog);

@@ -146,17 +146,9 @@ namespace Heren.MedQC.Statistic
             row.Cells[this.colPARENT_DOCTOR.Index].Value = questionInfo.PARENT_DOCTOR;
             row.Cells[this.colQaEventType.Index].Value = questionInfo.QA_EVENT_TYPE;
             row.Cells[this.colMessage.Index].Value = questionInfo.MESSAGE;
-            //显示权限改到质控权限控制
-            //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-            if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
-            {
+          
                 row.Cells[this.colCheckerName.Index].Value = questionInfo.ISSUED_BY;
-            }
-            else
-            {
-                if (questionInfo.ISSUED_BY == SystemParam.Instance.UserInfo.Name)
-                    row.Cells[this.colCheckerName.Index].Value = questionInfo.ISSUED_BY;
-            }
+            
             row.Cells[this.colCheckDataTime.Index].Value = questionInfo.ISSUED_DATE_TIME;
             row.Cells[this.colMsgStatus.Index].Value = questionInfo.MSG_STATUS;
             if (questionInfo.ASK_DATE_TIME != questionInfo.DefaultTime)

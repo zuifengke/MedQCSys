@@ -876,10 +876,7 @@ namespace MedQCSys.DockForms
                 GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
                 this.Update();
                 this.MainForm.OpenDocument(docInfo);
-                //有审核病历权限用户查看病例后需要记录下来，表示审核人员已经查阅了该份病历
-                //非审核人员查阅病历病历审核状态不改变，依然为未审阅。
-                if (SystemParam.Instance.CurrentUserHasQCCheckRight)
-                {
+               
                     //提示已经被质控过，确认后才更新质控阅读记录
                     //提示文档被质控过的信息，如果最新质控记录为当前用户，则不提示，如果为其他用户，则提示。
                     MedicalQcLog qcActionLog = null;
@@ -904,7 +901,7 @@ namespace MedQCSys.DockForms
                 this.ShowStatusMessage(null);
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
                 return;
-            }
+           
 
             //打开合并病历
             if (COMBIN_NODE_TAG.Equals(e.Node.Data))
@@ -981,16 +978,6 @@ namespace MedQCSys.DockForms
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
             VirtualNode selectedNode = this.virtualTree1.SelectedNode;
             if (selectedNode == null)
             {
@@ -1037,8 +1024,7 @@ namespace MedQCSys.DockForms
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.mnuAddFeedInfo.Visible = false;
+          
         }
 
         public void SelectDocNodeByDocSetID(VirtualNode node, string szDocSetId)

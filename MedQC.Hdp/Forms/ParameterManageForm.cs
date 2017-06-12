@@ -155,6 +155,7 @@ namespace Heren.MedQC.Hdp
             int index = 0;
             int count = 0;
             short shRet = SystemData.ReturnValue.OK;
+            this.dataGridView1.EndEdit();
             while (index < this.dataGridView1.Rows.Count)
             {
                 DataTableViewRow row = this.dataGridView1.Rows[index];
@@ -554,6 +555,7 @@ namespace Heren.MedQC.Hdp
         }
         private void toolbtnSave_Click(object sender, EventArgs e)
         {
+            this.Focus();
             this.CommitModify();
         }
 

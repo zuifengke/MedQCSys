@@ -332,11 +332,7 @@ namespace MedQCSys.DockForms
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.PrintLabTestList.Value)
-            {
-                MessageBoxEx.Show("您没有权限打印检验记录！", MessageBoxIcon.Information);
-                return;
-            }
+            
             if (this.m_lstTestInfo == null)
                 this.m_lstTestInfo = new List<DataTable>();
             else
@@ -482,11 +478,6 @@ namespace MedQCSys.DockForms
             if (this.LabTestInfoList.Rows.Count <= 0)
             {
                 MessageBoxEx.Show("当前没有可导出的内容！", MessageBoxIcon.Information);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.PrintLabTestList.Value)
-            {
-                MessageBoxEx.Show("您没有权限导出检验记录！", MessageBoxIcon.Information);
                 return;
             }
             if (SystemParam.Instance.PatVisitInfo == null)

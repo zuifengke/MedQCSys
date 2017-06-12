@@ -597,8 +597,7 @@ namespace MedQCSys.DockForms
             short shRet = SystemData.ReturnValue.OK;
             List<EMRDBLib.PatVisitInfo> lstPatVisitLogs = null;
             string szDeptCode = null;
-            if (!SystemParam.Instance.QCUserRight.ManageAllQC.Value)
-                szDeptCode = SystemParam.Instance.UserInfo.DeptCode;
+            szDeptCode = SystemParam.Instance.UserInfo.DeptCode;
 
             //科室检索
             if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.Department)
@@ -1024,65 +1023,22 @@ namespace MedQCSys.DockForms
             SystemParam.Instance.PatVisitInfo = patVisitLog;
             this.m_lastSelectedPatVisitLog = patVisitLog;
 
-            if (SystemParam.Instance.QCUserRight.BrowseDocumentList.Value)
-                this.mnuDocumentList.Enabled = true;
-            else
-                this.mnuDocumentList.Visible = false;
 
-            if (SystemParam.Instance.QCUserRight.BrowseOrdersList.Value)
-                this.mnuOrderList.Enabled = true;
-            else
-                this.mnuOrderList.Visible = false;
+            this.mnuDocumentList.Enabled = true;
 
-            if (SystemParam.Instance.QCUserRight.BrowseExamList.Value)
-                this.mnuExamList.Enabled = true;
-            else
-                this.mnuExamList.Visible = false;
+            this.mnuOrderList.Enabled = true;
 
-            if (SystemParam.Instance.QCUserRight.BrowseLabTestList.Value)
-                this.mnuTestList.Enabled = true;
-            else
-                this.mnuTestList.Visible = false;
+            this.mnuExamList.Enabled = true;
 
-            if (SystemParam.Instance.QCUserRight.BrowseDocumentTime.Value)
-                this.mnuDocumentTime.Enabled = true;
-            else
-                this.mnuDocumentTime.Visible = false;
+            this.mnuTestList.Enabled = true;
 
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.mnuQuestionList.Enabled = true;
-            else
-                this.mnuQuestionList.Visible = false;
-            if (SystemParam.Instance.QCUserRight.BrowsePatientInfo.Value)
-                this.mnuPatientInfo.Enabled = true;
-            else
-            {
-                this.mnuPatientInfo.Visible = false;
-                this.toolStripSeparator2.Visible = false;
-            }
-            if (SystemParam.Instance.QCUserRight.BrowseDiagnosisList.Value)
-                this.mnuDiagnosisList.Enabled = true;
-            else
-                this.mnuDiagnosisList.Visible = false;
-            if (SystemParam.Instance.QCUserRight.BrowseMRScore.Value
-                && SystemParam.Instance.QCUserRight.ManageAllQC.Value)
-                this.mnuDocScore.Enabled = true;
-            else
-                this.mnuDocScore.Visible = false;
-            if (SystemParam.Instance.QCUserRight.ManageRollbackSubmitDoc.Value
-                && SystemParam.Instance.QCUserRight.ManageAllQC.Value)
-            {
-                this.mnuRollBackDoc.Enabled = true;
-                if (EMRDBLib.SystemParam.Instance.LocalConfigOption.RightClickCallback)
-                {
-                    this.mnuRollBackDoc.Text = "病历召回";
-                }
-            }
-            else
-            {
-                this.toolStripSeparator3.Visible = false;
-                this.mnuRollBackDoc.Visible = false;
-            }
+            this.mnuDocumentTime.Enabled = true;
+
+            this.mnuQuestionList.Enabled = true;
+            this.mnuPatientInfo.Enabled = true;
+            this.mnuDiagnosisList.Enabled = true;
+            this.mnuDocScore.Enabled = true;
+            this.mnuRollBackDoc.Enabled = true;
 
             if (this.patSearchPane1.SearchType != EMRDBLib.PatSearchType.Unknown &&
                 this.patSearchPane1.SearchType != EMRDBLib.PatSearchType.PatientID &&
@@ -1090,16 +1046,12 @@ namespace MedQCSys.DockForms
             {
                 this.mnuHistoryVisit.Enabled = true;
             }
-            //是否显示体温单
-            if (SystemParam.Instance.LocalConfigOption.IsShowVitalSignsGraph && SystemParam.Instance.QCUserRight.BrowsTemperatureChart.Value)
-                this.mnuVitalSignsGraph.Visible = true;
-            //是否显示病案首页
-            if (!SystemParam.Instance.LocalConfigOption.IsShowPatientIndex)
-            {
-                this.mnuPatientIndex.Visible = false;
-            }
+            this.mnuVitalSignsGraph.Visible = true;
+
+            this.mnuPatientIndex.Visible = false;
+
             //检索方式是专家质控且当前用户有专家质控权限才显示扫描病历
-            if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.SpecialQC && SystemParam.Instance.QCUserRight.IsSpecialDoc.Value)
+            if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.SpecialQC)
             {
                 this.mnuIEDoc.Visible = true;
             }

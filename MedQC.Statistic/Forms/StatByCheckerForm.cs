@@ -82,15 +82,9 @@ namespace Heren.MedQC.Statistic
             row.Cells[this.colPARENT_DOCTOR.Index].Value = qcQuestionInfo.PARENT_DOCTOR;
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-            if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
-            {
+           
                 row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.ISSUED_BY;
-            }
-            else
-            {
-                if (qcQuestionInfo.ISSUED_BY == SystemParam.Instance.UserInfo.Name)
-                    row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.ISSUED_BY;
-            }
+            
             if (qcQuestionInfo.ISSUED_DATE_TIME != qcQuestionInfo.DefaultTime)
                 row.Cells[this.dateCheckedDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.ISSUED_DATE_TIME;
             if (qcQuestionInfo.ASK_DATE_TIME != qcQuestionInfo.DefaultTime)

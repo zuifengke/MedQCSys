@@ -37,16 +37,15 @@ namespace MedQCSys.Document
             this.Icon = MedQCSys.Properties.Resources.MedDocIcon;
 
             //读配置文件判断是否需要添加【新增质检问题】按钮,如果为true则显示全部右键菜单。
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-            {
-                this.InsertMenuItem("新增质检问题", new EventHandler(mnuAddFeedInfo_Click));
-                this.InsertMenuItem("保存", new EventHandler(textEditor1_SaveButtonClick));
-                this.InsertMenuItem("自动检查缺陷", new EventHandler(this.CheckDocBugButton_Click));
-                this.InsertMenuItem("插入批注", new EventHandler(mnuInsertCommentForm_Click));
-                this.InsertMenuItem("删除批注", new EventHandler(mnuDeleteCommentForm_Click));
-                this.InsertMenuItem("检索标准诊断", new EventHandler(mnuShowStandardTermForm_Click));
-                this.InsertMenuItem("退回病历", new EventHandler(mnuRollbackDocument_Click));
-            }
+
+            this.InsertMenuItem("新增质检问题", new EventHandler(mnuAddFeedInfo_Click));
+            this.InsertMenuItem("保存", new EventHandler(textEditor1_SaveButtonClick));
+            this.InsertMenuItem("自动检查缺陷", new EventHandler(this.CheckDocBugButton_Click));
+            this.InsertMenuItem("插入批注", new EventHandler(mnuInsertCommentForm_Click));
+            this.InsertMenuItem("删除批注", new EventHandler(mnuDeleteCommentForm_Click));
+            this.InsertMenuItem("检索标准诊断", new EventHandler(mnuShowStandardTermForm_Click));
+            this.InsertMenuItem("退回病历", new EventHandler(mnuRollbackDocument_Click));
+
 
             this.textEditor1.BeforeCopy += new CancelEventHandler(this.textEditor1_BeforeCopy);
 
@@ -124,11 +123,11 @@ namespace MedQCSys.Document
         {
             get
             {
-               return this.Document;
+                return this.Document;
             }
         }
 
-       
+
 
         MedDocSys.PadWrapper.IMedEditor IDocumentForm.MedEditor
         {
@@ -139,8 +138,7 @@ namespace MedQCSys.Document
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.InitCheckDocBugButton();
+            this.InitCheckDocBugButton();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

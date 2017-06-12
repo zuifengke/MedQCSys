@@ -291,7 +291,7 @@ namespace MedQCSys.DockForms
                 //增加质控人员病案检查记录
                 EMRDBLib.MedicalQcLog actionLog = new EMRDBLib.MedicalQcLog();
                 bool bOK = QuestionListForm.MakeQCActionLog(ref actionLog);
-              
+
                 //获取选中的病历的DocID记录到medical_qc_log表
                 if (this.MainForm.ActiveDocument is IDocumentForm)
                 {
@@ -314,7 +314,7 @@ namespace MedQCSys.DockForms
                 if (bOK)
                 {
                     actionLog.LOG_DESC = "质控者添加质检问题";
-                    
+
                     this.SaveQCActionLog(actionLog);
                 }
             }
@@ -373,15 +373,8 @@ namespace MedQCSys.DockForms
             row.Cells[this.colDept_Code.Index].Value = medicalQcMsg.DEPT_STAYED;
             //质检者姓名显示权限，有权利或者是自己添加的
             //显示权限改到质控权限控制
-            if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
-            {
-                row.Cells[this.colIssusdBy.Index].Value = medicalQcMsg.ISSUED_BY;
-            }
-            else
-            {
-                if (medicalQcMsg.ISSUED_BY == SystemParam.Instance.UserInfo.Name)
-                    row.Cells[this.colIssusdBy.Index].Value = medicalQcMsg.ISSUED_BY;
-            }
+            row.Cells[this.colIssusdBy.Index].Value = medicalQcMsg.ISSUED_BY;
+
             row.Cells[this.colMsgStatus.Index].Value = SystemData.MsgStatus.GetCnMsgState(medicalQcMsg.MSG_STATUS);
             if (medicalQcMsg.MSG_STATUS == SystemData.MsgStatus.UnCheck) //0为未接收、未确认状态
             {
@@ -392,11 +385,11 @@ namespace MedQCSys.DockForms
             {
                 row.Cells[this.colMsgStatus.Index].Style.ForeColor = Color.Yellow;
             }
-            else if (medicalQcMsg.MSG_STATUS== SystemData.MsgStatus.Modified)//2为已修改状态
+            else if (medicalQcMsg.MSG_STATUS == SystemData.MsgStatus.Modified)//2为已修改状态
             {
                 row.Cells[this.colMsgStatus.Index].Style.ForeColor = Color.Blue;
             }
-            else if (medicalQcMsg.MSG_STATUS ==SystemData.MsgStatus.Pass)
+            else if (medicalQcMsg.MSG_STATUS == SystemData.MsgStatus.Pass)
             {
                 row.Cells[this.colMsgStatus.Index].Style.ForeColor = Color.Green;
             }
@@ -479,7 +472,7 @@ namespace MedQCSys.DockForms
             qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
             qcQuestionInfo.POINT_TYPE = 0;
             qcQuestionInfo.QCDOC_TYPE = oldQCQuestionInfo.QCDOC_TYPE;
-            qcQuestionInfo.ISSUED_TYPE = SystemParam.Instance.QCUserRight.IsSpecialDoc.Value ? SystemData.IssuedType.SPECIAL : SystemData.IssuedType.NORMAL;
+            qcQuestionInfo.ISSUED_TYPE = SystemData.IssuedType.NORMAL;
             if (row.Cells[this.colScore.Index].Tag != null)
                 qcQuestionInfo.POINT = float.Parse(row.Cells[this.colScore.Index].Tag.ToString());
             return true;
@@ -688,7 +681,7 @@ namespace MedQCSys.DockForms
             //如果有存在未确认的质检问题，则不允许标志为合格
             List<EMRDBLib.MedicalQcMsg> lstQCQuestionInfos = null;
             short shRet = SystemData.ReturnValue.OK;
-            shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID,ref lstQCQuestionInfos);
+            shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstQCQuestionInfos);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -722,16 +715,6 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限审核病历！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限审核病历！", MessageBoxIcon.Warning);
-                return;
-            }
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (!this.IsAllowSetAsPassed())
@@ -758,21 +741,15 @@ namespace MedQCSys.DockForms
             }
             this.RefreshQCResultStatus();
             DialogResult reslut = DialogResult.OK;
-            if (!SystemParam.Instance.QCUserRight.ManageAllQC.Value)
+            reslut = MessageBoxEx.Show("病案已成功标志为合格！现在是否对病历进行评分？", MessageBoxButtons.OKCancel
+                , MessageBoxIcon.Question);
+            if (reslut != DialogResult.OK)
             {
-                reslut = MessageBoxEx.Show("病案已成功标志为合格！", MessageBoxIcon.Warning);
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                return;
             }
-            else
-            {
-                reslut = MessageBoxEx.Show("病案已成功标志为合格！现在是否对病历进行评分？", MessageBoxButtons.OKCancel
-                    , MessageBoxIcon.Question);
-                if (reslut != DialogResult.OK)
-                {
-                    GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                    return;
-                }
-                this.MainForm.ShowDocScoreForm();
-            }
+            this.MainForm.ShowDocScoreForm();
+
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
         /// <summary>
@@ -832,16 +809,6 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限修改质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (row.Cells[this.colQCEventType.Index].Value == null)
                 return;
@@ -916,10 +883,8 @@ namespace MedQCSys.DockForms
             EMRDBLib.MedicalQcMsg questionInfo = selectedRow.Tag as EMRDBLib.MedicalQcMsg;
             if (questionInfo == null)
                 return;
-            //如果有无条件删除的，直接删除,没有则再判断其它权限
-            if (!SystemParam.Instance.QCUserRight.DeleteQCQutionNoLimit.Value)
-            {
-                if (!SystemParam.Instance.QCUserRight.DeleteConfirmMsg.Value && selectedRow.Cells[this.colConfirmTime.Index].Value != null)
+            
+                if ( selectedRow.Cells[this.colConfirmTime.Index].Value != null)
                 {
                     MessageBoxEx.Show("该质检问题已被确认，不能删除！", MessageBoxIcon.Warning);
                     return;
@@ -930,7 +895,7 @@ namespace MedQCSys.DockForms
                     MessageBoxEx.Show("该质检问题不是您添加的，不允许您删除！", MessageBoxIcon.Warning);
                     return;
                 }
-            }
+           
 
             selectedRow.Cells[this.colQCEventType.Index].Tag = STATUS_DELETE;
             string szDocTitle = (string)selectedRow.Cells[this.colDocTitle.Index].Value;
@@ -1035,16 +1000,7 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.UserRight == null)
                 return false;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return false;
-            }
+           
             return true;
         }
 
@@ -1059,12 +1015,6 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.PatVisitInfo == null)
             {
                 MessageBoxEx.Show("请选择一个患者！", MessageBoxIcon.Warning);
-                return;
-            }
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
                 return;
             }
             //先刷新下病历列表
@@ -1104,12 +1054,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnModify_Click(object sender, EventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+            
             this.ModifySelectedItem();
         }
 
@@ -1125,12 +1070,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnPass_Click(object sender, EventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+            
             this.SetMedRecordPassed();
         }
 
@@ -1161,23 +1101,13 @@ namespace MedQCSys.DockForms
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+            
             this.ModifySelectedItem();
         }
 
         private void toolbtnRollback_Click(object sender, EventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+           
         }
         /// <summary>
         /// 显示当前病历的质检问题，为空显示全部
@@ -1239,12 +1169,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnQCPass_Click(object sender, EventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+            
             this.PassSelectedItem();
         }
 
@@ -1259,16 +1184,6 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限修改质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (row.Cells[this.colQCEventType.Index].Value == null)
                 return;
@@ -1372,12 +1287,7 @@ namespace MedQCSys.DockForms
         }
         private void mnuPassItem_Click(object sender, EventArgs e)
         {
-            //判断用户是否有权限审核病案
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.ShowMessage("您没有审核该患者病案权限，无法进行此操作");
-                return;
-            }
+            
             this.PassSelectedItem();
         }
 

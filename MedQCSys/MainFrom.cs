@@ -376,7 +376,6 @@ namespace MedQCSys
                 LogManager.Instance.WriteLog("MainForm.MainForm_Shown", ex);
             }
 
-            if (!SystemParam.Instance.QCUserRight.BrowseQCStatistics.Value)
                 this.menuStrip1.StatisticMenu.Visible = false;
             this.Update();
             this.SaveWindowState = true;
@@ -449,7 +448,7 @@ namespace MedQCSys
             if (SystemParam.Instance.UserInfo == null)
                 szUserName = "未登录";
             else
-                szUserName = SystemParam.Instance.UserInfo.Name + (SystemParam.Instance.QCUserRight.IsSpecialDoc.Value ? "(专家)" : "(普通)");
+                szUserName = SystemParam.Instance.UserInfo.Name ;
             string szPatientName = string.Empty;
             if (SystemParam.Instance.PatVisitInfo == null)
                 szPatientName = "未选择";
@@ -476,10 +475,6 @@ namespace MedQCSys
             }
             else if (szPersistString == typeof(DocumentListForm).ToString() || szPersistString == typeof(PatsDocmentListForm).ToString())
             {
-                //判断是否显示病程记录窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseDocumentList.Value)
-                    return null;
-
                 if (SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_MANY_PATIENT_DOCLIST, false))
                 {
                     if (this.m_PatDocListForm == null || this.m_PatDocListForm.IsDisposed)
@@ -496,9 +491,6 @@ namespace MedQCSys
             }
             else if (szPersistString == typeof(QuestionListForm).ToString())
             {
-                //判断是否显示质检问题窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                    return null;
 
                 if (this.m_QuestionListForm == null || this.m_QuestionListForm.IsDisposed)
                     this.m_QuestionListForm = new QuestionListForm(this);
@@ -506,70 +498,47 @@ namespace MedQCSys
             }
             else if (szPersistString == typeof(DocumentTimeForm).ToString())
             {
-                //判断是否显示病历时效窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseDocumentTime.Value)
-                    return null;
-
                 if (this.m_DocumentTimeForm == null || this.m_DocumentTimeForm.IsDisposed)
                     this.m_DocumentTimeForm = new DocumentTimeForm(this);
                 return this.m_DocumentTimeForm;
             }
             else if (szPersistString == typeof(ExamResultListForm).ToString())
             {
-                //判断是否显示检查记录窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseExamList.Value)
-                    return null;
-
                 if (this.m_ExamResultForm == null || this.m_ExamResultForm.IsDisposed)
                     this.m_ExamResultForm = new ExamResultListForm(this);
                 return this.m_ExamResultForm;
             }
             else if (szPersistString == typeof(TestResultListForm).ToString())
             {
-                //判断是否显示检验记录窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseLabTestList.Value)
-                    return null;
-
+              
                 if (this.m_TestResultForm == null || this.m_TestResultForm.IsDisposed)
                     this.m_TestResultForm = new TestResultListForm(this);
                 return this.m_TestResultForm;
             }
             else if (szPersistString == typeof(OrdersListForm).ToString())
             {
-                //判断是否显示医嘱列表窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseOrdersList.Value)
-                    return null;
-
+               
                 if (this.m_OrdersListForm == null || this.m_OrdersListForm.IsDisposed)
                     this.m_OrdersListForm = new OrdersListForm(this);
                 return this.m_OrdersListForm;
             }
             else if (szPersistString == typeof(DiagnosisListForm).ToString())
             {
-                //判断是否显示患者诊断信息窗口
-                if (!SystemParam.Instance.QCUserRight.BrowseDiagnosisList.Value)
-                    return null;
-
+               
                 if (this.m_DiagnosisListForm == null || this.m_DiagnosisListForm.IsDisposed)
                     this.m_DiagnosisListForm = new DiagnosisListForm(this);
                 return this.m_DiagnosisListForm;
             }
             else if (szPersistString == typeof(PatientInfoForm).ToString())
             {
-                //判断是否显示患者信息窗口
-                if (!SystemParam.Instance.QCUserRight.BrowsePatientInfo.Value)
-                    return null;
-
+               
                 if (this.m_PatientInfoForm == null || this.m_PatientInfoForm.IsDisposed)
                     this.m_PatientInfoForm = new PatientInfoForm(this);
                 return this.m_PatientInfoForm;
             }
             else if (szPersistString == typeof(DocScoreForm).ToString())
             {
-                //判断是否显示病案评分
-                if (!SystemParam.Instance.QCUserRight.BrowseMRScore.Value)
-                    return null;
-
+              
                 if (this.m_DocScoreForm == null || this.m_DocScoreForm.IsDisposed)
                     this.m_DocScoreForm = new DocScoreForm(this);
                 return this.m_DocScoreForm;
@@ -619,10 +588,7 @@ namespace MedQCSys
 
         internal void ShowDocumentListForm()
         {
-            //判断是否显示病程记录窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseDocumentList.Value)
-                return;
-
+           
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
 
             if (this.m_DocumentListForm == null || this.m_DocumentListForm.IsDisposed)
@@ -651,9 +617,7 @@ namespace MedQCSys
 
         internal void ShowPatsDocumentListForm()
         {
-            //判断是否显示病程记录窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseDocumentList.Value)
-                return;
+          
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_PatDocListForm == null || this.m_PatDocListForm.IsDisposed)
             {
@@ -709,9 +673,7 @@ namespace MedQCSys
 
         internal void ShowQuestionListForm()
         {
-            //判断是否显示质检问题窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                return;
+            
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_QuestionListForm == null || this.m_QuestionListForm.IsDisposed)
@@ -759,9 +721,7 @@ namespace MedQCSys
 
         internal void ShowDocumentTimeForm()
         {
-            //判断是否显示病历时效窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseDocumentTime.Value)
-                return;
+          
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_DocumentTimeForm == null || this.m_DocumentTimeForm.IsDisposed)
@@ -779,10 +739,7 @@ namespace MedQCSys
 
         internal void ShowExamResultListForm()
         {
-            //判断是否显示检查记录窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseExamList.Value)
-                return;
-
+            
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_ExamResultForm == null || this.m_ExamResultForm.IsDisposed)
             {
@@ -799,9 +756,7 @@ namespace MedQCSys
 
         internal void ShowDiagnosisResultForm()
         {
-            //判断是否显示诊断信息窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseDiagnosisList.Value)
-                return;
+            
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_DiagnosisListForm == null || this.m_DiagnosisListForm.IsDisposed)
             {
@@ -911,9 +866,6 @@ namespace MedQCSys
 
         internal void ShowTestResultListForm()
         {
-            //判断是否显示检验记录窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseLabTestList.Value)
-                return;
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_TestResultForm == null || this.m_TestResultForm.IsDisposed)
@@ -948,9 +900,6 @@ namespace MedQCSys
 
         internal void ShowOrdersListForm()
         {
-            //判断是否显示医嘱列表窗口
-            if (!SystemParam.Instance.QCUserRight.BrowseOrdersList.Value)
-                return;
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_OrdersListForm == null || this.m_OrdersListForm.IsDisposed)
@@ -976,10 +925,6 @@ namespace MedQCSys
 
         internal void ShowPatientInfoForm()
         {
-            //判断是否显示患者信息窗口
-            if (!SystemParam.Instance.QCUserRight.BrowsePatientInfo.Value)
-                return;
-
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.Update();
             if (this.m_PatientInfoForm == null || this.m_PatientInfoForm.IsDisposed)

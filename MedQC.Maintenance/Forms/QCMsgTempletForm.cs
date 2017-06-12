@@ -400,16 +400,6 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
             ////创建数据
             //EMRDBLib.QCMessageTemplet qcMessageInfo = new EMRDBLib.QCMessageTemplet();
             ////创建行
@@ -453,16 +443,7 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限修改质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改反质检息模板！", MessageBoxIcon.Warning);
-                return;
-            }
+           
 
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (this.dataGridView1.IsNormalRow(row))
@@ -489,16 +470,7 @@ namespace Heren.MedQC.Maintenance
 
             if (SystemParam.Instance.UserRight == null)
                 return;
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限删除质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限删除质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
+           
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
             if (this.dataGridView1.IsDeletedRow(row))
             {
@@ -520,31 +492,17 @@ namespace Heren.MedQC.Maintenance
 
         private void toolbtnNew_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionTemplet.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质控问题模板！", MessageBoxIcon.Information);
-                return;
-            }
             this.AddNewItem();
         }
 
         private void toolbtnModify_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionTemplet.Value)
-            {
-                MessageBoxEx.Show("您没有权限修改质控问题模板！", MessageBoxIcon.Information);
-                return;
-            }
+            
             this.ModifySelectedItem();
         }
 
         private void toolbtnDelete_Click(object sender, EventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.ManageQCQuestionTemplet.Value)
-            {
-                MessageBoxEx.Show("您没有权限删除质控问题模板！", MessageBoxIcon.Information);
-                return;
-            }
             this.DeleteSelectedItem();
         }
 
@@ -553,16 +511,7 @@ namespace Heren.MedQC.Maintenance
             if (SystemParam.Instance.UserRight == null)
                 return;
 
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限保存质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限保存质检问题模板！", MessageBoxIcon.Warning);
-                return;
-            }
+           
             this.Focus();
             this.CommitModify();
         }

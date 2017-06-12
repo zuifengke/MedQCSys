@@ -122,7 +122,7 @@ namespace Heren.MedQC.Statistic
                 Color backColor = Color.FromArgb(235, 235, 235);
                 if (iRowCount % 2 == 0)
                     backColor = Color.White;
-                if(!chboxSimple.Checked)//不是精简版就不区别颜色
+                if (!chboxSimple.Checked)//不是精简版就不区别颜色
                     backColor = Color.White;
                 bNeedChange = this.LoadQCQuestionInfo(lstPatVisitLogList[index], backColor);
                 if (bNeedChange)
@@ -144,7 +144,7 @@ namespace Heren.MedQC.Statistic
         {
             List<EMRDBLib.MedicalQcMsg> lstQCQuestionInfo = null;
             short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(patVisitLog.PATIENT_ID, patVisitLog.VISIT_ID, ref lstQCQuestionInfo);
-            if (shRet != SystemData.ReturnValue.OK && shRet!=SystemData.ReturnValue.RES_NO_FOUND)
+            if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
                 return false;
             #region 是否需要被过滤判断
             //获取患者的病历得分
@@ -212,13 +212,9 @@ namespace Heren.MedQC.Statistic
                     row.Cells[this.colDischargeDate.Index].Value = patVisitLog.DISCHARGE_TIME;
                 //显示权限改到质控权限控制
                 //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-                if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
-                    row.Cells[this.colDocChecker.Index].Value = qcScore.HOS_QCMAN;
-                else
-                {
-                    if (qcScore.HOS_QCMAN == SystemParam.Instance.UserInfo.Name)
-                        row.Cells[this.colDocChecker.Index].Value = SystemParam.Instance.UserInfo.Name;
-                }
+
+                row.Cells[this.colDocChecker.Index].Value = qcScore.HOS_QCMAN;
+
                 row.Cells[this.colScore.Index].Value = fScore >= 0 ? fScore.ToString() : string.Empty;
                 row.Cells[this.colDocLevel.Index].Value = qcScore.DOC_LEVEL;
                 row.Tag = patVisitLog;
@@ -255,17 +251,7 @@ namespace Heren.MedQC.Statistic
                     if (!chboxSimple.Checked)
                         break;
                 }
-                //显示权限改到质控权限控制
-                //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-                if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
-                {
-                    row.Cells[this.colDocChecker.Index].Value = lstQCQuestionInfo[index].ISSUED_BY;
-                }
-                else
-                {
-                    if (lstQCQuestionInfo[index].ISSUED_BY == SystemParam.Instance.UserInfo.Name)
-                        row.Cells[this.colDocChecker.Index].Value = lstQCQuestionInfo[index].ISSUED_BY;
-                }
+                row.Cells[this.colDocChecker.Index].Value = lstQCQuestionInfo[index].ISSUED_BY;
                 row.Cells[this.colDocName.Index].Value = lstQCQuestionInfo[index].TOPIC;
                 row.Cells[this.colQuestionList.Index].Value = lstQCQuestionInfo[index].MESSAGE;
                 row.Cells[this.colDocSetID.Index].Value = lstQCQuestionInfo[index].TOPIC_ID;
@@ -273,7 +259,7 @@ namespace Heren.MedQC.Statistic
             #endregion
             return true;
         }
-       
+
 
         private ReportExplorerForm GetReportExplorerForm()
         {
@@ -375,8 +361,7 @@ namespace Heren.MedQC.Statistic
                 return;
 
             SystemParam.Instance.PatVisitInfo = patVisitLog;
-            if (!SystemParam.Instance.QCUserRight.ManageAllQC.Value)
-                return;
+
 
             this.MainForm.ShowDocScoreForm();
             if (this.MainForm.DocScoreForm != null)
@@ -532,6 +517,6 @@ namespace Heren.MedQC.Statistic
                 : string.Empty;
             this.MainForm.OpenDocument(szDocSetID, patVisitLog.PATIENT_ID, patVisitLog.VISIT_ID);
         }
-        
+
     }
 }

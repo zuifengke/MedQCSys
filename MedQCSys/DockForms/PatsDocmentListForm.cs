@@ -703,17 +703,7 @@ namespace MedQCSys.DockForms
         {
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
-
-            if (!SystemParam.Instance.CurrentUserHasQCCheckRight)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
-            if (!SystemParam.Instance.QCUserRight.CommitQCQuestion.Value)
-            {
-                MessageBoxEx.Show("您没有权限添加质检问题！", MessageBoxIcon.Warning);
-                return;
-            }
+            
             VirtualNode selectedNode = this.virtualTree1.SelectedNode;
             if (selectedNode == null)
                 return;
@@ -732,8 +722,6 @@ namespace MedQCSys.DockForms
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-                this.mnuAddFeedInfo.Visible = false;
         }
 
     }

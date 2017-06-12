@@ -438,7 +438,7 @@ namespace EMRDBLib
         }
         private bool m_RecPrintLog = false;
         /// <summary>
-        /// 省人民复印登记
+        /// 省人民复印登记 默认为false
         /// </summary>
         public bool RecPrintLog
         {
@@ -491,7 +491,7 @@ namespace EMRDBLib
                 option.IsScoreRightShow = true;
                 option.IsOpenOperation = true;
             }
-            else if (option.HOSPITAL_NAME.IndexOf("杭钢") >= 0)
+            else if (option.HOSPITAL_NAME.IndexOf("浙医健") >= 0)
             {
                 option.IsShowPatientIndex = false;
             }

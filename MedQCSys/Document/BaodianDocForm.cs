@@ -33,8 +33,7 @@ namespace MedQCSys.Document
             this.Icon = MedQCSys.Properties.Resources.MedDocIcon;
 
             //读配置文件判断是否需要添加【新增质检问题】按钮,如果为true则显示全部右键菜单。
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
-            {
+ 
                 this.medEditor1.ShowInternalPopupMenu = true;
                 this.medEditor1.ShowInternalMenuStrip = true;
                 this.medEditor1.ShowInternalToolStrip = true;
@@ -44,13 +43,7 @@ namespace MedQCSys.Document
                 this.medEditor1.PopupMenu.InsertMenuItem("检索标准诊断", new EventHandler(mnuShowStandardTermForm_Click));
                 this.medEditor1.PopupMenu.InsertMenuItem("退回病历...", new EventHandler(mnuRollbackDocument_Click));
                 this.medEditor1.PopupMenu.InsertMenuItem("-");
-            }
-            else
-            {
-                this.medEditor1.ShowInternalPopupMenu = false;
-                this.medEditor1.ShowInternalMenuStrip = false;
-                this.medEditor1.ShowInternalToolStrip = false;
-            }
+          
             this.medEditor1.BeforeCopy += new CancelEventHandler(this.medEditor1_BeforeCopy);
             this.medEditor1.SaveButtonClick += new CancelEventHandler(medEditor1_SaveButtonClick);
             this.medEditor1.PrintButtonClick += new EventHandler(medEditor1_PrintButtonClick);
@@ -141,7 +134,7 @@ namespace MedQCSys.Document
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (SystemParam.Instance.QCUserRight.BrowseQCQuestion.Value)
+           
                 this.InitCheckDocBugButton();
            
             this.medEditor1.ElementTagColor = MedDocSys.DataLayer.SystemParam.Instance.ElementTagColor;
@@ -577,7 +570,7 @@ namespace MedQCSys.Document
         private void medEditor1_SaveButtonClick(object sender, CancelEventArgs e)
         {
             bool bQCSaveDocEnable = EmrDocAccess.Instance.CheckQCSaveDocEnable();
-            bool bEditAbleDoc = SystemParam.Instance.QCUserRight.EditAbleDoc.Value;
+            bool bEditAbleDoc = true;
             if (bQCSaveDocEnable && bEditAbleDoc)
             {
                 byte[] temp = new byte[] { };

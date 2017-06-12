@@ -54,7 +54,14 @@ namespace MedQCSys.PatPage
         {
             this.RefreshView(SystemParam.Instance.PatVisitInfo);
         }
-
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            if (!SystemParam.Instance.LocalConfigOption.RecPrintLog)
+                fbtnPrintLog.Visible = false;
+            else
+                fbtnPrintLog.Visible = true;
+        }
         private void RefreshView(PatVisitInfo patientVisit)
         {
             this.PatVisitInfo = patientVisit;
@@ -84,10 +91,6 @@ namespace MedQCSys.PatPage
             this.lblDiagnosis.Text = "诊断：" + patientVisit.DIAGNOSIS;
             this.lblAllergyDrugs.Text = "过敏：" + patientVisit.ALLERGY_DRUGS;
             this.lblChargeType.Text = "费别：" + patientVisit.CHARGE_TYPE;
-            if (!SystemParam.Instance.LocalConfigOption.RecPrintLog)
-                fbtnPrintLog.Visible = false;
-            else
-                fbtnPrintLog.Visible = true;
         }
         private void flatButton1_Click(object sender, EventArgs e)
         {

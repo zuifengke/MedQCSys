@@ -244,29 +244,7 @@ namespace EMRDBLib
 
         private QCUserRight m_QCUserRight = null;
 
-        /// <summary>
-        /// 获取当前质控用户的权限信息(该对象不会为空)
-        /// </summary>
-        public QCUserRight QCUserRight
-        {
-            get
-            {
-                if (this.m_userInfo == null)
-                    return new QCUserRight();
-
-                //用户权限为空时或用户ID已改变时,重新获取
-                if (this.m_QCUserRight == null || this.m_QCUserRight.UserID != this.m_userInfo.ID)
-                {
-                    UserRightBase userRight = null;
-                    RightAccess.Instance.GetUserRight(this.m_userInfo.ID, UserRightType.MedQC,
-                        ref userRight);
-                    this.m_QCUserRight = userRight as QCUserRight;
-                }
-                if (this.m_QCUserRight == null)
-                    return new QCUserRight();
-                return this.m_QCUserRight;
-            }
-        }
+     
         private Hashtable m_htDMLB = null;
         public Hashtable HtDMLB
         {
@@ -368,48 +346,7 @@ namespace EMRDBLib
             return sbDocPath.ToString();
         }
 
-        /// <summary>
-        /// 当前用户是否有审核权限 
-        /// </summary>
-        public bool CurrentUserHasQCCheckRight
-        {
-            get
-            {
-                bool bRight = false;
-                if (!QCUserRight.ManageAllQC.Value)
-                {
-                    if (QCUserRight.ManageAdminDeptsQC.Value)
-                    {
-                        //判断是否用户管辖科室包括病人科室
-                        if (UserAdminDepts != null && UserAdminDepts.Count > 0)
-                        {
-                            foreach (DeptInfo deptInfo in UserAdminDepts)
-                            {
-                                if (deptInfo.DEPT_CODE == PatVisitInfo.DEPT_CODE)
-                                {
-                                    bRight = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else if (QCUserRight.ManageDeptQC.Value)
-                    {
-                        //判断是否用户科室与病人科室一致
-                        if (UserInfo.DeptCode == PatVisitInfo.DEPT_CODE)
-                        {
-                            bRight = true;
-                        }
-                    }
-                }
-                else
-                {
-                    bRight = true;
-                }
-                return bRight;
-            }
-        }
-
+      
 
     }
 }

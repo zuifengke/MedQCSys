@@ -309,11 +309,6 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.Show("当前没有可导出的内容！", MessageBoxIcon.Information);
                 return;
             }
-            if (!SystemParam.Instance.QCUserRight.PrintExamList.Value)
-            {
-                MessageBoxEx.Show("您没有权限导出检查记录！", MessageBoxIcon.Information);
-                return;
-            }
             Hashtable htNoExportColunms = new Hashtable();
             StatExpExcelHelper.Instance.HtNoExportColIndex = htNoExportColunms;
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);

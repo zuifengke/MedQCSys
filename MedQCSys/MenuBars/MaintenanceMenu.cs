@@ -165,24 +165,7 @@ namespace MedQCSys.MenuBars
         {
             base.OnDropDownOpened(e);
            
-            //读取配置文件判断是否显示【修改问题类别字典】菜单
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestionType.Value)
-                this.mnuQCEventTypes.Visible = false;
-
-            //读取配置文件判断是否显示【修改质检问题字典】菜单
-            if (!SystemParam.Instance.QCUserRight.BrowseQCQuestionTemplet.Value)
-            {
-                this.mnuQCMsgTemplet.Visible = false;
-                this.toolStripSeparator2.Visible = false;
-            }
-            if (!SystemParam.Instance.LocalConfigOption.TimeCheckRuleConfig) {
-                this.mnuTimeCheckRuleConfig.Visible = false;
-                this.mnuTimeEventEdit.Visible = false;
-            }
-            if (!SystemParam.Instance.LocalConfigOption.IsCheckPoint)
-            {
-                this.mnuQcCheckPoint.Visible = false;
-            }
+            
         }
     }
 }

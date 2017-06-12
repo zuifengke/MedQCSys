@@ -113,13 +113,9 @@ namespace Heren.MedQC.Statistic
 
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-            if (SystemParam.Instance.QCUserRight.BrowsChecker.Value)
+           
                 row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = qcDeptStatInfo.CheckerName;
-            else
-            {
-                if (qcDeptStatInfo.CheckerName == SystemParam.Instance.UserInfo.Name)
-                    row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = qcDeptStatInfo.CheckerName;
-            }
+           
             if (qcDeptStatInfo.CheckTime != qcDeptStatInfo.DefaultTime)
                 row.Cells[this.dateCheckedDataGridViewTextBoxColumn.Index].Value = qcDeptStatInfo.CheckTime;
             if (qcDeptStatInfo.ConfirmTime != qcDeptStatInfo.DefaultTime)

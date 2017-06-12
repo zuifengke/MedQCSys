@@ -35,22 +35,29 @@ namespace MedQCSys
         [STAThread]
         public static void Main(string[] args)
         {
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.EnableVisualStyles();
-            LogManager.Instance.TextLogOnly = true;
-            SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
-            CommandHandler.Instance.Initialize();
-            Startup.FileMapping = new FileMapping(SINGLE_INSTANCE_MONIKER_NAME);
-            //  版本更新检查
-            string arg = (args != null && args.Length > 0) ? args[0] : null;
-            Heren.MedQC.Upgrade.UpgradeHandler.Instance.Execute(arg);
-            if (Startup.FileMapping.IsFirstInstance)
+            try
             {
-                Startup.StartNewInstance(args);
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.EnableVisualStyles();
+                LogManager.Instance.TextLogOnly = true;
+                SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
+                CommandHandler.Instance.Initialize();
+                Startup.FileMapping = new FileMapping(SINGLE_INSTANCE_MONIKER_NAME);
+                //  版本更新检查
+                string arg = (args != null && args.Length > 0) ? args[0] : null;
+                Heren.MedQC.Upgrade.UpgradeHandler.Instance.Execute(arg);
+                if (Startup.FileMapping.IsFirstInstance)
+                {
+                    Startup.StartNewInstance(args);
+                }
+                else
+                {
+                    Startup.HandleRunningInstance(args, 30);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Startup.HandleRunningInstance(args, 30);
+                LogManager.Instance.WriteLog("启动失败", ex);
             }
         }
 

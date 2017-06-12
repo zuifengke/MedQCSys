@@ -332,8 +332,7 @@ namespace Heren.MedQC.Statistic
 
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
-            if (SystemParam.Instance.QCUserRight.BrowsChecker.Value
-                || qcQuestionInfo.ISSUED_BY == "系统自动")
+            if (qcQuestionInfo.ISSUED_BY == "系统自动")
             {
                 row.Cells[this.colCheckName.Index].Value = qcQuestionInfo.ISSUED_BY;
             }
