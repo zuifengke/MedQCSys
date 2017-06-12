@@ -89,12 +89,12 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.QCAccess.CloseConnnection(false);
             }
         }
         public short GetQcMsgDictList(string szQaEventType, string szMessageTitle, ref List<QcMsgDict> lstQCMessageTemplets)
         {
-            if (base.DataAccess == null)
+            if (base.QCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
@@ -121,7 +121,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -156,12 +156,12 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.QCAccess.CloseConnnection(false);
             }
         }
         public short GetQcMsgDict(string szQcMsgCode, ref QcMsgDict msgTemplet)
         {
-            if (base.DataAccess == null)
+            if (base.QCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
                , SystemData.QcMsgDictTable.SERIAL_NO
@@ -180,7 +180,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -210,7 +210,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.QCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -221,7 +221,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>MedDocSys.Common.SystemData.ReturnValue</returns>
         public short GetQcMsgDictList(string szQuestionType, ref List<EMRDBLib.QcMsgDict> lstQCMessageTemplets)
         {
-            if (base.DataAccess == null)
+            if (base.QCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
@@ -236,7 +236,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -271,7 +271,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.QCAccess.CloseConnnection(false);
             }
         }
         /// <summary>

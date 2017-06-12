@@ -508,7 +508,7 @@ namespace EMRDBLib
             option.IsOpenHomePage = true;
             option.IsOpenFinalQC = true;
             option.IsOpenOperation = true;
-            option.IsNewScore = true;
+            option.IsNewScore = false;
             option.IsShowPatientIndex = true;
             option.IsShowVitalSignsGraph = true;
             option.DefaultEditor = "2";
