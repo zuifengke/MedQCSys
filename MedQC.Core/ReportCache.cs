@@ -28,6 +28,7 @@ namespace Heren.MedQC.Core
                 if (m_instance == null)
                     m_instance = new ReportCache();
                 return m_instance;
+
             }
         }
 
@@ -60,6 +61,7 @@ namespace Heren.MedQC.Core
         /// <returns>报表类型信息列表</returns>
         public List<ReportType> GetReportTypeList(string szApplyEnv)
         {
+
             if (GlobalMethods.Misc.IsEmptyString(szApplyEnv))
                 return null;
             if (this.m_htReportClassTable != null

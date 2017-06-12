@@ -65,9 +65,9 @@ namespace MedQCSys.Dialogs
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            if (!SystemParam.Instance.LocalConfigOption.HdpUse)
-                DrawProductInfo(e);
-            else
+            //if (!SystemParam.Instance.LocalConfigOption.HdpUse)
+            //    DrawProductInfo(e);
+            //else
                 DrawProductInfoNew(e);
         }
         /// <summary>
@@ -219,32 +219,31 @@ namespace MedQCSys.Dialogs
             string szProduct = (this.cboProduct.SelectedItem as HdpProduct).NAME_SHORT;
             SystemConfig.Instance.Write(SystemData.ConfigKey.DEFAULT_LOGIN_PRODUCT, szProduct);
             DataCache.Instance.HdpProduct = this.cboProduct.SelectedItem as HdpProduct;
-            if (SystemParam.Instance.LocalConfigOption.HdpUse)
+
+            //查找用户角色
+            List<HdpRoleUser> lstHdpRoleUser = null;
+            shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(szUserID, ref lstHdpRoleUser);
+            if (shRet != SystemData.ReturnValue.OK)
             {
-                //查找用户角色
-                List<HdpRoleUser> lstHdpRoleUser = null;
-                shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(szUserID, ref lstHdpRoleUser);
-                if (shRet != SystemData.ReturnValue.OK)
-                {
-                    MessageBoxEx.Show("登录失败,系统无法获取用户权限!");
-                    this.Cursor = Cursors.Default;
-                    return;
-                }
-                //缓存用户角色权限信息
-                List<HdpRoleGrant> lstHdpAllRoleGrant = new List<HdpRoleGrant>();
-                foreach (HdpRoleUser item in lstHdpRoleUser)
-                {
-                    List<HdpRoleGrant> lstHdpRoleGrant = new List<HdpRoleGrant>();
-                    shRet = HdpRoleGrantAccess.Instance.GetHdpRoleGrantList(item.RoleCode, string.Empty, ref lstHdpRoleGrant);
-                    if (shRet == SystemData.ReturnValue.OK)
-                    {
-                        lstHdpAllRoleGrant.AddRange(lstHdpRoleGrant);
-                    }
-                }
-                DataCache.Instance.QcAdminDepts = null;
-                DataCache.Instance.DicHdpParameter = null;
-                RightHandler.Instance.LstHdpRoleGrant = lstHdpAllRoleGrant;
+                MessageBoxEx.Show("登录失败,系统无法获取用户权限!");
+                this.Cursor = Cursors.Default;
+                return;
             }
+            //缓存用户角色权限信息
+            List<HdpRoleGrant> lstHdpAllRoleGrant = new List<HdpRoleGrant>();
+            foreach (HdpRoleUser item in lstHdpRoleUser)
+            {
+                List<HdpRoleGrant> lstHdpRoleGrant = new List<HdpRoleGrant>();
+                shRet = HdpRoleGrantAccess.Instance.GetHdpRoleGrantList(item.RoleCode, string.Empty, ref lstHdpRoleGrant);
+                if (shRet == SystemData.ReturnValue.OK)
+                {
+                    lstHdpAllRoleGrant.AddRange(lstHdpRoleGrant);
+                }
+            }
+            DataCache.Instance.QcAdminDepts = null;
+            DataCache.Instance.DicHdpParameter = null;
+            RightHandler.Instance.LstHdpRoleGrant = lstHdpAllRoleGrant;
+
             this.DialogResult = DialogResult.OK;
         }
     }

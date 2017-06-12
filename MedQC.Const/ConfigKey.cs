@@ -279,10 +279,7 @@ namespace EMRDBLib
             /// 外部程序调用结构化病历检索工具授权码
             /// </summary>
             public const string SYSTEM_OPTION_MEDSEARCH_CODE = "MEDSEARCH_CODE";
-            /// <summary>
-            /// 病历编辑器系统产品授权医院名称
-            /// </summary>
-            public const string SYSTEM_OPTION_HOSPITAL_NAME = "HOSPITAL_NAME";
+            
             /// <summary>
             /// 编辑器系统缺省文本编辑器
             /// </summary>
@@ -452,6 +449,10 @@ namespace EMRDBLib
             /// 患者手签病历标题关键词
             /// </summary>
             public const string SignKeyName = "SignKeyName";
+            /// <summary>
+            /// 病案质控系统产品授权医院名称
+            /// </summary>
+            public const string HOSPITAL_NAME = "HOSPITAL_NAME";
         }
     }
 }

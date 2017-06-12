@@ -69,17 +69,7 @@ namespace MedQCSys.MenuBars
             this.Text = "MqsMainMenu";
             if (SystemParam.Instance.LocalConfigOption == null)
                 return;
-            if (!SystemParam.Instance.LocalConfigOption.HdpUse)
-            {
-                this.Items.Clear();
-                this.Items.AddRange(new ToolStripItem[] {
-                this.menuSystem,
-                this.menuStatistic,
-                this.menuSearch,
-                this.menuMaintenance,
-                this.menuSettings,
-                this.menuHelp});
-            }
+            
             this.Location = new System.Drawing.Point(0, 0);
         }
         #endregion

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EMRDBLib</RootNamespace>
     <AssemblyName>EMRDBLib</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -38,6 +38,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -72,6 +73,7 @@
     <Compile Include="HerenHis\HerenHisCommonAccess.cs" />
     <Compile Include="HerenHis\BaseCodeDictAccess.cs" />
     <Compile Include="HerenHis\InpVisitAccess.cs" />
+    <Compile Include="LocalConfigOption.cs" />
     <Compile Include="MedDoc\MedQCEntryAccess.cs" />
     <Compile Include="MedDoc\MedQCRuleAccess.cs" />
     <Compile Include="MedDoc\TempletAccess.cs" />
@@ -134,7 +136,6 @@
     <Compile Include="MedQC\Table\QCContentRecordAccess.cs" />
     <Compile Include="Reflect.cs" />
     <Compile Include="SystemParam.cs" />
-    <Compile Include="LocalConfigOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
@@ -145,14 +146,6 @@
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\include\MedQCConfig.xml">
-      <Link>Config\MedQCConfig.xml</Link>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Config\MedQCConfig.浙医健杭刚医院.xml" />
-    <Content Include="Config\MedQCConfig.省人民.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

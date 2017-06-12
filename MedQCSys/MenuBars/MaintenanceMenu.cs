@@ -183,12 +183,6 @@ namespace MedQCSys.MenuBars
             {
                 this.mnuQcCheckPoint.Visible = false;
             }
-            if (!SystemParam.Instance.LocalConfigOption.HdpUse)
-            {
-                this.mnuRoleManage.Visible = false ;
-                this.mnuUserManage.Visible = false;
-                this.mnuProductManage.Visible = false;
-            }
         }
     }
 }

@@ -295,7 +295,7 @@ namespace MedQCSys
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            bool r= CommandHandler.Instance.SendCommand("切换账号", this, null);
+            bool r = CommandHandler.Instance.SendCommand("切换账号", this, null);
             if (!r)
             {
                 this.Close();
@@ -306,8 +306,7 @@ namespace MedQCSys
 
         public void InitMainForm()
         {
-            if (SystemParam.Instance.LocalConfigOption.HdpUse)
-                this.menuStrip1.RefreshUIConfig();
+            this.menuStrip1.RefreshUIConfig();
             this.RefreshWindowTitle();
             this.RestoreWindowState();
             this.Icon = MedQCSys.Properties.Resources.medical;
@@ -456,8 +455,7 @@ namespace MedQCSys
                 szPatientName = "未选择";
             else
                 szPatientName = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
-            if (SystemParam.Instance.LocalConfigOption.HdpUse
-                && DataCache.Instance.HdpProduct!=null)
+            if (DataCache.Instance.HdpProduct != null)
                 this.Text = string.Format("{0} - 当前用户：{1}，当前患者：{2}", DataCache.Instance.HdpProduct.CN_NAME, szUserName, szPatientName);
             else
                 this.Text = string.Format("{0} - 当前用户：{1}，当前患者：{2}", Application.ProductName, szUserName, szPatientName);
@@ -891,8 +889,7 @@ namespace MedQCSys
             PatPage.PatientPageForm patientPageForm = this.GetPatientPageForm(patVisit);
             if (patientPageForm == null || patientPageForm.IsDisposed)
             {
-                if (SystemParam.Instance.LocalConfigOption.SinglePatientMode)
-                    patientPageForm = this.GetPatientPageForm();
+                patientPageForm = this.GetPatientPageForm();
             }
             if (patientPageForm == null || patientPageForm.IsDisposed)
             {
