@@ -157,7 +157,10 @@ namespace MedQCSys.PatPage
         private List<DockContentBase> GetPatPageModule()
         {
             List<MedQCSys.DockForms.DockContentBase> contents = new List<MedQCSys.DockForms.DockContentBase>();
-            contents.Add(new DocumentListNewForm(this.MainForm, this));
+            if (SystemParam.Instance.LocalConfigOption.DefaultEditor == "2")
+                contents.Add(new DocumentListNewForm(this.MainForm, this));
+            else
+                contents.Add(new DocumentListForm(this.MainForm, this));
             contents.Add(new PatientInfoForm(this.MainForm, this));
             contents.Add(new DiagnosisListForm(this.MainForm, this));
             contents.Add(new OrdersListForm(this.MainForm, this));
@@ -210,7 +213,7 @@ namespace MedQCSys.PatPage
                 OpenDocument(moduleName);
             }
             else if (moduleName == "医嘱单及辅助检查"
-                || moduleName=="医嘱单")
+                || moduleName == "医嘱单")
             {
                 foreach (DockContent item in this.dockPanel1.Contents)
                 {
@@ -224,7 +227,7 @@ namespace MedQCSys.PatPage
             {
                 OpenDocument(moduleName);
             }
-            
+
         }
 
         private void OpenDocument(string szDocTitle)

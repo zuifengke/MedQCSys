@@ -67,8 +67,8 @@ namespace MedQCSys.MenuBars
             // MqsMainMenu
             // 
             this.Text = "MqsMainMenu";
-            if (SystemParam.Instance.LocalConfigOption == null)
-                return;
+            //if (SystemParam.Instance.LocalConfigOption == null)
+            //    return;
             
             this.Location = new System.Drawing.Point(0, 0);
         }

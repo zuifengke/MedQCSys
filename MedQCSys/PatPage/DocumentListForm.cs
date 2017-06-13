@@ -78,8 +78,8 @@ namespace MedQCSys.DockForms
             this.DockAreas = DockAreas.Document;
         }
 
-        public DocumentListForm(MainForm parent,PatPage.PatientPageControl patientPageControl)
-            : base(parent,patientPageControl)
+        public DocumentListForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
+            : base(parent, patientPageControl)
         {
             this.InitializeComponent();
             this.HideOnClose = true;
@@ -159,7 +159,7 @@ namespace MedQCSys.DockForms
             string szDocSetID = string.Empty;
             if (this.m_SelectedNode != null)
             {
-                 MedDocInfo docInfo = this.m_SelectedNode.Data as  MedDocInfo;
+                MedDocInfo docInfo = this.m_SelectedNode.Data as MedDocInfo;
                 if (docInfo != null)
                 {
                     szDocSetID = docInfo.DOC_SETID;
@@ -167,7 +167,7 @@ namespace MedQCSys.DockForms
             }
             this.m_SelectedNode = null;
             //新版和仁编辑器加载方式和老版本有差别
-            if (SystemParam.Instance.LocalConfigOption.DefaultEditor=="2")
+            if (SystemParam.Instance.LocalConfigOption.DefaultEditor == "2")
                 this.LoadHerenMedDocList();
             else
                 this.LoadMedDocList();
@@ -272,7 +272,7 @@ namespace MedQCSys.DockForms
             //加载已有文档列表到指定的容器
             for (int index = 0; index < lstDocInfos.Count; index++)
             {
-                 MedDocInfo docInfo = lstDocInfos[index];
+                MedDocInfo docInfo = lstDocInfos[index];
                 if (docInfo == null)
                     continue;
 
@@ -409,7 +409,7 @@ namespace MedQCSys.DockForms
             this.virtualTree1.PerformLayout();
 
             string szVisitType = MedDocSys.DataLayer.SystemData.VisitType.IP;
-             MedDocList lstDocInfos = null;
+            MedDocList lstDocInfos = null;
             short shRet = EmrDocAccess.Instance.GetDocInfos(szPatientID, szVisitID, szVisitType, DateTime.Now, string.Empty, ref lstDocInfos);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
@@ -455,7 +455,7 @@ namespace MedQCSys.DockForms
             //加载已有文档列表到指定的容器
             for (int index = 0; index < lstDocInfos.Count; index++)
             {
-                 MedDocInfo docInfo = lstDocInfos[index];
+                MedDocInfo docInfo = lstDocInfos[index];
                 if (docInfo == null)
                     continue;
 
@@ -554,7 +554,7 @@ namespace MedQCSys.DockForms
                     continue;
                 }
 
-                 DocTypeInfo hostDocType = null;
+                DocTypeInfo hostDocType = null;
                 DocTypeAccess.Instance.GetDocTypeInfo(currDocType.HostTypeID, ref hostDocType);
                 if (hostDocType == null)
                     hostDocType = currDocType;
@@ -593,7 +593,7 @@ namespace MedQCSys.DockForms
             {
                 if (node.Parent != null)
                     continue;
-                 MedDocInfo docInfo = node.Data as  MedDocInfo;
+                MedDocInfo docInfo = node.Data as MedDocInfo;
                 if (docInfo == null)
                     continue;
 
@@ -616,7 +616,7 @@ namespace MedQCSys.DockForms
             this.virtualTree1.PerformLayout();
         }
 
-        private static void GetCnNameSignCode( MedDocInfo docInfo, VirtualSubItem subItem)
+        private static void GetCnNameSignCode(MedDocInfo docInfo, VirtualSubItem subItem)
         {
             if (string.IsNullOrEmpty(docInfo.SIGN_CODE))
             {
@@ -770,7 +770,7 @@ namespace MedQCSys.DockForms
         private void GetSelectedNodeInfo(VirtualNode selectedNode, ref string szDocTitle, ref string szDocSetID
             , ref string szCreatorName, ref string szDeptCode, ref byte[] byteDocData)
         {
-             MedDocInfo docInfo = selectedNode.Data as  MedDocInfo;
+            MedDocInfo docInfo = selectedNode.Data as MedDocInfo;
             if (docInfo != null)
             {
                 szDocTitle = docInfo.DOC_TITLE;
@@ -801,7 +801,7 @@ namespace MedQCSys.DockForms
         /// <param name="lstDocInfo">病历文档信息列表</param>
         /// <param name="dtCheckTime">检查时间</param>
         /// <param name="node">当前节点</param>
-        private void SaveReadLogInfo( MedDocInfo docInfo, DateTime dtCheckTime, VirtualNode node)
+        private void SaveReadLogInfo(MedDocInfo docInfo, DateTime dtCheckTime, VirtualNode node)
         {
             if (string.IsNullOrEmpty(docInfo.DOC_SETID))
                 return;
@@ -866,7 +866,7 @@ namespace MedQCSys.DockForms
             this.ShowStatusMessage("正在下载并打开病历，请稍候...");
 
             DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-             MedDocInfo docInfo = e.Node.Data as  MedDocInfo;
+            MedDocInfo docInfo = e.Node.Data as MedDocInfo;
             //如果是和仁编辑器，暂不支持合并打开
             if ((SystemParam.Instance.LocalConfigOption.DefaultEditor == "2")
                 && docInfo == null)
@@ -876,32 +876,32 @@ namespace MedQCSys.DockForms
                 GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
                 this.Update();
                 this.MainForm.OpenDocument(docInfo);
-               
-                    //提示已经被质控过，确认后才更新质控阅读记录
-                    //提示文档被质控过的信息，如果最新质控记录为当前用户，则不提示，如果为其他用户，则提示。
-                    MedicalQcLog qcActionLog = null;
-                    short shRet = MedicalQcLogAccess.Instance.GetQCLogInfo(docInfo.DOC_SETID, 1, ref qcActionLog);
-                    if (shRet == SystemData.ReturnValue.OK)
+
+                //提示已经被质控过，确认后才更新质控阅读记录
+                //提示文档被质控过的信息，如果最新质控记录为当前用户，则不提示，如果为其他用户，则提示。
+                MedicalQcLog qcActionLog = null;
+                short shRet = MedicalQcLogAccess.Instance.GetQCLogInfo(docInfo.DOC_SETID, 1, ref qcActionLog);
+                if (shRet == SystemData.ReturnValue.OK)
+                {
+                    if (qcActionLog.CHECKED_ID != SystemParam.Instance.UserInfo.ID)
                     {
-                        if (qcActionLog.CHECKED_ID != SystemParam.Instance.UserInfo.ID)
+                        string msg = string.Format("当前病历已经被{0}于{1}质控阅读过!\t\n如需重新质控，请单击【确定】按钮"
+                            , qcActionLog.CHECKED_BY
+                            , qcActionLog.CHECK_DATE.ToString("yyyy-MM-dd HH:mm:ss"));
+                        if (MessageBoxEx.ShowConfirm(msg) != DialogResult.OK)
                         {
-                            string msg = string.Format("当前病历已经被{0}于{1}质控阅读过!\t\n如需重新质控，请单击【确定】按钮"
-                                , qcActionLog.CHECKED_BY
-                                , qcActionLog.CHECK_DATE.ToString("yyyy-MM-dd HH:mm:ss"));
-                            if (MessageBoxEx.ShowConfirm(msg) != DialogResult.OK)
-                            {
-                                this.ShowStatusMessage(null);
-                                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                                return;
-                            }
+                            this.ShowStatusMessage(null);
+                            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                            return;
                         }
                     }
-                    this.SaveReadLogInfo(docInfo, dtCheckTime, e.Node);
                 }
-                this.ShowStatusMessage(null);
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                return;
-           
+                this.SaveReadLogInfo(docInfo, dtCheckTime, e.Node);
+            }
+            this.ShowStatusMessage(null);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            return;
+
 
             //打开合并病历
             if (COMBIN_NODE_TAG.Equals(e.Node.Data))
@@ -911,10 +911,10 @@ namespace MedQCSys.DockForms
                     return;
 
                 GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-                 MedDocList lstDocInfos = new  MedDocList();
+                MedDocList lstDocInfos = new MedDocList();
                 for (int index = 0; index < count; index++)
                 {
-                    docInfo = e.Node.Nodes[index].Data as  MedDocInfo;
+                    docInfo = e.Node.Nodes[index].Data as MedDocInfo;
                     if (docInfo == null)
                         continue;
                     if (index > 0)
@@ -947,7 +947,7 @@ namespace MedQCSys.DockForms
             if (parentNode == null || parentNode.Nodes.Count <= 0)
                 return;
 
-             MedDocList lstDocInfos = new  MedDocList();
+            MedDocList lstDocInfos = new MedDocList();
             DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
             for (int index = 0; index < parentNode.Nodes.Count; index++)
             {
@@ -959,7 +959,7 @@ namespace MedQCSys.DockForms
                 for (int ii = 0; ii < parentNode.Nodes[index].Nodes.Count; ii++)
                 {
                     VirtualNode childNode = parentNode.Nodes[index].Nodes[ii];
-                     MedDocInfo docInfo = childNode.Data as  MedDocInfo;
+                    MedDocInfo docInfo = childNode.Data as MedDocInfo;
                     if (docInfo == null)
                         continue;
 
@@ -990,7 +990,7 @@ namespace MedQCSys.DockForms
             string szDocCreator = string.Empty;
             string szDeptCode = string.Empty;
             byte[] byteDocData = null;
-             MedDocInfo docInfo = selectedNode.Data as  MedDocInfo;
+            MedDocInfo docInfo = selectedNode.Data as MedDocInfo;
             if (docInfo == null && !SystemParam.Instance.LocalConfigOption.AllowAddQuestionToParDocType)
             {
                 MessageBoxEx.Show("没有选中病历文书中任何一份病历，无法添加质检问题！", MessageBoxIcon.Warning);
@@ -1018,13 +1018,13 @@ namespace MedQCSys.DockForms
                 return;
             if (e.Node == null || e.Type == HitTestType.None)
                 return;
-             MedDocInfo docInfo = e.Node.Data as  MedDocInfo;
+            MedDocInfo docInfo = e.Node.Data as MedDocInfo;
             this.MainForm.ShowQuestionListByDocInfo(docInfo);
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-          
+
         }
 
         public void SelectDocNodeByDocSetID(VirtualNode node, string szDocSetId)
@@ -1051,7 +1051,7 @@ namespace MedQCSys.DockForms
                     }
                 else
                 {
-                     MedDocInfo docInfo = node.Data as  MedDocInfo;
+                    MedDocInfo docInfo = node.Data as MedDocInfo;
                     if (docInfo == null)
                         return;
                     if (docInfo.DOC_SETID == szDocSetId)

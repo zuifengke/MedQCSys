@@ -22,6 +22,7 @@ using EMRDBLib.DbAccess;
 using EMRDBLib;
 using MedQCSys.PatPage;
 using Heren.MedQC.Core;
+using System.Drawing;
 
 namespace MedQCSys
 {
@@ -268,6 +269,13 @@ namespace MedQCSys
             //…Ë÷√≈‰÷√Œƒº˛
             MessageBoxEx.Caption = Application.ProductName;
             this.InitializeComponent();
+            if (!string.IsNullOrEmpty(SystemParam.Instance.LocalConfigOption.HospitalLogo) &&
+                File.Exists(SystemParam.Instance.LocalConfigOption.HospitalLogo))
+            {
+                Image logoImage = new Bitmap(SystemParam.Instance.LocalConfigOption.HospitalLogo);
+                this.logoPanel1.LogoImage = logoImage;
+
+            }
             this.menuStrip1.MainForm = this;
             this.toolStrip1.MainForm = this;
             this.statusStrip1.MainForm = this;
@@ -376,7 +384,7 @@ namespace MedQCSys
                 LogManager.Instance.WriteLog("MainForm.MainForm_Shown", ex);
             }
 
-                this.menuStrip1.StatisticMenu.Visible = false;
+            this.menuStrip1.StatisticMenu.Visible = false;
             this.Update();
             this.SaveWindowState = true;
             if (this.m_PatientListForm != null) this.m_PatientListForm.OnRefreshView();
@@ -448,7 +456,7 @@ namespace MedQCSys
             if (SystemParam.Instance.UserInfo == null)
                 szUserName = "Œ¥µ«¬º";
             else
-                szUserName = SystemParam.Instance.UserInfo.Name ;
+                szUserName = SystemParam.Instance.UserInfo.Name;
             string szPatientName = string.Empty;
             if (SystemParam.Instance.PatVisitInfo == null)
                 szPatientName = "Œ¥—°‘Ò";
@@ -510,35 +518,35 @@ namespace MedQCSys
             }
             else if (szPersistString == typeof(TestResultListForm).ToString())
             {
-              
+
                 if (this.m_TestResultForm == null || this.m_TestResultForm.IsDisposed)
                     this.m_TestResultForm = new TestResultListForm(this);
                 return this.m_TestResultForm;
             }
             else if (szPersistString == typeof(OrdersListForm).ToString())
             {
-               
+
                 if (this.m_OrdersListForm == null || this.m_OrdersListForm.IsDisposed)
                     this.m_OrdersListForm = new OrdersListForm(this);
                 return this.m_OrdersListForm;
             }
             else if (szPersistString == typeof(DiagnosisListForm).ToString())
             {
-               
+
                 if (this.m_DiagnosisListForm == null || this.m_DiagnosisListForm.IsDisposed)
                     this.m_DiagnosisListForm = new DiagnosisListForm(this);
                 return this.m_DiagnosisListForm;
             }
             else if (szPersistString == typeof(PatientInfoForm).ToString())
             {
-               
+
                 if (this.m_PatientInfoForm == null || this.m_PatientInfoForm.IsDisposed)
                     this.m_PatientInfoForm = new PatientInfoForm(this);
                 return this.m_PatientInfoForm;
             }
             else if (szPersistString == typeof(DocScoreForm).ToString())
             {
-              
+
                 if (this.m_DocScoreForm == null || this.m_DocScoreForm.IsDisposed)
                     this.m_DocScoreForm = new DocScoreForm(this);
                 return this.m_DocScoreForm;
@@ -588,7 +596,7 @@ namespace MedQCSys
 
         internal void ShowDocumentListForm()
         {
-           
+
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
 
             if (this.m_DocumentListForm == null || this.m_DocumentListForm.IsDisposed)
@@ -617,7 +625,7 @@ namespace MedQCSys
 
         internal void ShowPatsDocumentListForm()
         {
-          
+
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_PatDocListForm == null || this.m_PatDocListForm.IsDisposed)
             {
@@ -673,7 +681,7 @@ namespace MedQCSys
 
         internal void ShowQuestionListForm()
         {
-            
+
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_QuestionListForm == null || this.m_QuestionListForm.IsDisposed)
@@ -721,7 +729,7 @@ namespace MedQCSys
 
         internal void ShowDocumentTimeForm()
         {
-          
+
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_DocumentTimeForm == null || this.m_DocumentTimeForm.IsDisposed)
@@ -739,7 +747,7 @@ namespace MedQCSys
 
         internal void ShowExamResultListForm()
         {
-            
+
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_ExamResultForm == null || this.m_ExamResultForm.IsDisposed)
             {
@@ -756,7 +764,7 @@ namespace MedQCSys
 
         internal void ShowDiagnosisResultForm()
         {
-            
+
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_DiagnosisListForm == null || this.m_DiagnosisListForm.IsDisposed)
             {

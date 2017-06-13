@@ -102,6 +102,7 @@ namespace MedQCSys.Controls
             SolidBrush brush = new SolidBrush(Color.DarkBlue);
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Far;
+            this.Font = new Font("Microsoft YaHei UI", 9.5f);
             RectangleF rect = new RectangleF(0, 6, this.Width - 8, 24);
             e.Graphics.DrawString(SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME, this.Font, brush, rect, format);
             brush.Dispose();

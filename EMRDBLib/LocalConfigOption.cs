@@ -38,7 +38,17 @@ namespace EMRDBLib
             get { return szAllowAddOtherQuestion; }
             set { szAllowAddOtherQuestion = value; }
         }
-
+        private string m_HospitalLogo = string.Empty;
+        /// <summary>
+        /// 医院logo
+        /// </summary>
+        public string HospitalLogo
+        {
+            get { return this.m_HospitalLogo; }
+            set {
+                this.m_HospitalLogo = value;
+            }
+        }
         private string szShowBugListMode = string.Empty;
 
         /// <summary>
@@ -491,8 +501,9 @@ namespace EMRDBLib
                 option.IsScoreRightShow = true;
                 option.IsOpenOperation = true;
             }
-            else if (option.HOSPITAL_NAME.IndexOf("浙医健") >= 0)
+            else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
+                option.HospitalLogo =string.Format("{0}/HospitalLogo/{1}",GlobalMethods.Misc.GetWorkingPath(), "ZYJHZYY_SysIcon.ico");
                 option.IsShowPatientIndex = false;
             }
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)
@@ -511,7 +522,7 @@ namespace EMRDBLib
             option.IsNewScore = false;
             option.IsShowPatientIndex = true;
             option.IsShowVitalSignsGraph = true;
-            option.DefaultEditor = "2";
+            option.DefaultEditor = "1";
             option.RecPrintLog = true;
 #endif
             return option;
