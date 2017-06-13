@@ -123,7 +123,7 @@ namespace EMRDBLib.DbAccess
             string szValue = string.Format("'{0}','{1}',{2},'{3}','{4}'"
                 , hdpParameter.GROUP_NAME, hdpParameter.CONFIG_NAME
                 , base.QCAccess.GetSqlParamName("ConfigValue"), hdpParameter.CONFIG_DESC
-                , hdpParameter.PRODUCT==null?"":hdpParameter.PRODUCT);
+                , hdpParameter.PRODUCT==null?"MedQC":hdpParameter.PRODUCT);
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.HDP_PARAMETER_T, szField, szValue);
 
             DbParameter[] pmi = new DbParameter[1];
@@ -156,7 +156,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.HdpParameterTable.CONFIG_NAME, hdpParameter.CONFIG_NAME
                 , SystemData.HdpParameterTable.CONFIG_VALUE, base.QCAccess.GetSqlParamName("ConfigValue")
                 , SystemData.HdpParameterTable.CONFIG_DESC, hdpParameter.CONFIG_DESC
-                , SystemData.HdpParameterTable.PRODUCT, hdpParameter.PRODUCT);
+                , SystemData.HdpParameterTable.PRODUCT, hdpParameter.PRODUCT == null ? "MedQC" : hdpParameter.PRODUCT);
             string szCondition = string.Format("{0}='{1}' and {2}='{3}' "
                 , SystemData.HdpParameterTable.GROUP_NAME, szGroupName
                 , SystemData.HdpParameterTable.CONFIG_NAME, szConfigName);

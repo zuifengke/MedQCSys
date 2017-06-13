@@ -500,6 +500,9 @@ namespace EMRDBLib
                 option.RecPrintLog = true;
                 option.IsScoreRightShow = true;
                 option.IsOpenOperation = true;
+                option.IsShowVitalSignsGraph = true;
+                option.IsShowPatientIndex = true;
+                option.IsOpenOperation = true;
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
@@ -509,6 +512,8 @@ namespace EMRDBLib
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)
             {
                 option.DefaultEditor = "1";
+                option.IsShowVitalSignsGraph = true;
+                option.IsShowPatientIndex = true;
             }
             else if (option.HOSPITAL_NAME.IndexOf("胸科") >= 0)
             {
@@ -522,7 +527,7 @@ namespace EMRDBLib
             option.IsNewScore = false;
             option.IsShowPatientIndex = true;
             option.IsShowVitalSignsGraph = true;
-            option.DefaultEditor = "2";
+            option.DefaultEditor = "1";
             option.RecPrintLog = true;
 #endif
             return option;

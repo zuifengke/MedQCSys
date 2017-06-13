@@ -216,7 +216,7 @@ namespace MedQCSys.DockForms
                 return;
 
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_NO;//ÐÂ¾üÎÀvisit_id=visit_no
             if (GlobalMethods.Misc.IsEmptyString(szPatientID) || GlobalMethods.Misc.IsEmptyString(szVisitID))
                 return;
 
