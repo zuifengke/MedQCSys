@@ -41,6 +41,7 @@ namespace Quartz.Server
             this.timer1.Interval = 10000;
             SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
             CommandHandler.Instance.Initialize();
+            this.button1_Click(null, null);//自动触发启动
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -90,6 +91,8 @@ namespace Quartz.Server
                 byte[] byData = new byte[100];
                 char[] charData = new char[1000];
                 string fileName = string.Format("{0}\\Logs\\Server\\{1}.txt", SystemParam.Instance.WorkPath, DateTime.Now.ToString("yyyyMMdd"));
+                if (!File.Exists(fileName))
+                    return;
                 System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite);
                 fs.Seek(0, SeekOrigin.Begin);
                 //fs.Read(byData, 0, 100); //byData传进来的字节数组,用以接受FileStream对象中的数据,第2个参数是字节数组中开始写入数据的位置,它通常是0,表示从数组的开端文件中向数组写数据,最后一个参数规定从文件读多少字符.

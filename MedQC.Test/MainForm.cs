@@ -12,6 +12,8 @@ using EMRDBLib;
 using Heren.MedQC.MedRecord;
 using EMRDBLib.BAJK;
 using Heren.MedQC.Core.Services;
+using Quartz.Server;
+using MedDocSys.QCEngine.TimeCheck;
 
 namespace MedQC.Test
 {
@@ -74,6 +76,17 @@ namespace MedQC.Test
             string szVisitID = "1";
             RecUploadService.Instance.InitializeDict();
             bool result= RecUploadService.Instance.Upload(szPatientID, szVisitID);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            PatVisitInfo patVisitInfo = new PatVisitInfo();
+            patVisitInfo.PATIENT_ID = "P101210";
+            patVisitInfo.VISIT_NO = "20170300005";
+            patVisitInfo.VISIT_ID = "2";
+            patVisitInfo.PATIENT_NAME = "孔明";
+            
+            short shRet = TimeCheckHelper.Instance.GenerateTimeRecord(patVisitInfo, DateTime.Now);
         }
     }
 }

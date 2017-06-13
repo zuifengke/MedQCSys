@@ -98,6 +98,7 @@
     <Compile Include="BugCheck\ReflectionEntryHandler.cs" />
     <Compile Include="BugCheck\DocuemntBugInfo.cs" />
     <Compile Include="BugCheck\BugCheckRuleManager.cs" />
+    <Compile Include="TimeCheck\TimeCheckHelper.cs" />
     <Compile Include="TimeCheck\TimeEventHandler.cs">
       <SubType>Code</SubType>
     </Compile>

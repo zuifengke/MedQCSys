@@ -79,4 +79,27 @@
       </simple>
     </trigger>
   </schedule>
+
+  <schedule>
+    <job>
+      <name>JobTimeCheck</name>
+      <group>sampleGroup</group>
+      <description>全院运行病历时效分析</description>
+      <job-type>Quartz.Server.JobTimeCheck, 环节质量实时监测后台服务</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>sampleSimpleTrigger3</name>
+        <group>sampleSimpleGroup</group>
+        <description>全院运行病历时效分析</description>
+        <job-name>JobTimeCheck</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
+  </schedule>
 </job-scheduling-data>

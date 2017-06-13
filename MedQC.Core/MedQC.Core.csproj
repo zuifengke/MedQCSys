@@ -83,6 +83,7 @@
     <Compile Include="FormCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportCache.cs" />
+    <Compile Include="Services\TimeCheckService.cs" />
     <Compile Include="Services\RecUploadService.cs" />
     <Compile Include="Services\RecPaperService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

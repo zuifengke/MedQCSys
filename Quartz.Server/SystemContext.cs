@@ -25,8 +25,12 @@ namespace Quartz.Server
             }
         }
         /// <summary>
-        /// 
+        /// 缺陷检查患者队列
         /// </summary>
         public Queue<PatVisitInfo> QueuePatVisit { get; set; }
+        /// <summary>
+        /// 时效检查患者队列
+        /// </summary>
+        public Queue<PatVisitInfo> QueueTimeCheckPatVisit { get; set; }
     }
 }

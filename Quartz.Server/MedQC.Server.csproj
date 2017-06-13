@@ -165,6 +165,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="JobTimeCheck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="JobCheckPoint.cs" />
     <Compile Include="SampleJob2.cs" />
@@ -238,6 +239,10 @@
     <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QCEngine\MedQC.QCEngine.csproj">
+      <Project>{1d8fa739-12d7-4c09-9927-b28ccb31d9dc}</Project>
+      <Name>MedQC.QCEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

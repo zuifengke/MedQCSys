@@ -165,6 +165,14 @@
       <Project>{1c3e0f8c-8b38-4dfd-b789-ed3dd45c6a37}</Project>
       <Name>MedQC.Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QCEngine\MedQC.QCEngine.csproj">
+      <Project>{1D8FA739-12D7-4C09-9927-B28CCB31D9DC}</Project>
+      <Name>MedQC.QCEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quartz.Server\MedQC.Server.csproj">
+      <Project>{09082b9a-906c-4a17-a2e5-6c947dac7c85}</Project>
+      <Name>MedQC.Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
