@@ -88,52 +88,47 @@ namespace Heren.MedQC.Core.Services
         /// 治疗结果
         /// </summary>
         private List<RecCodeCompasion> TreatingResultDict = null;
-
+        /// <summary>
+        /// 麻醉方法
+        /// </summary>
+        private List<RecCodeCompasion> ANAESTHESIA_DICT = null;
+        /// <summary>
+        /// 切口等级
+        /// </summary>
+        private List<RecCodeCompasion> WOUND_GRADE_DICT = null;
+        /// <summary>
+        /// 愈合情况
+        /// </summary>
+        private List<RecCodeCompasion> HEAL_DICT = null;
+        /// <summary>
+        /// 手术等级
+        /// </summary>
+        private List<RecCodeCompasion> OPERATION_SCALE_DICT = null;
+        /// <summary>
+        /// 过敏药物
+        /// </summary>
+        private List<RecCodeCompasion> ALLERGEN_DRUG_DICT = null;
         public bool InitializeDict()
         {
-            short shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("SEX_DICT", ref this.SexDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MARITAL_STATUS_DICT", ref this.MaritalStatusDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("OCCUPATION_DICT", ref this.OccupationDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("AREA_DICT", ref this.AreaDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("NATION_DICT", ref this.NationDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("RELATIONSHIP_DICT", ref this.RelationShipDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("BLOOD_ABO_TYPE_DICT", ref this.BloodABOTypeDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("BLOOD_RH_TYPE_DICT", ref this.BloodRHTypeDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MR_QUALITY_DICT", ref this.MrQualityDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("PATIENT_CLASS_DICT", ref this.PatientClassDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("COUNTRY_DICT", ref this.CountryDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DISCHARGE_DISPOSITION_DICT", ref this.DischargeDisPositionDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DIAGNOSIS_TYPE_DICT", ref this.DiagnosisTypeDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-            shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions("TREATING_RESULT_DICT", ref this.TreatingResultDict);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
-
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("SEX_DICT", ref this.SexDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MARITAL_STATUS_DICT", ref this.MaritalStatusDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("OCCUPATION_DICT", ref this.OccupationDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("AREA_DICT", ref this.AreaDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("NATION_DICT", ref this.NationDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("RELATIONSHIP_DICT", ref this.RelationShipDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("BLOOD_ABO_TYPE_DICT", ref this.BloodABOTypeDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("BLOOD_RH_TYPE_DICT", ref this.BloodRHTypeDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MR_QUALITY_DICT", ref this.MrQualityDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("PATIENT_CLASS_DICT", ref this.PatientClassDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("COUNTRY_DICT", ref this.CountryDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DISCHARGE_DISPOSITION_DICT", ref this.DischargeDisPositionDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DIAGNOSIS_TYPE_DICT", ref this.DiagnosisTypeDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("TREATING_RESULT_DICT", ref this.TreatingResultDict);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("ANAESTHESIA_DICT", ref this.ANAESTHESIA_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("WOUND_GRADE_DICT", ref this.WOUND_GRADE_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("HEAL_DICT", ref this.HEAL_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("OPERATION_SCALE_DICT", ref this.OPERATION_SCALE_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("ALLERGEN_DRUG_DICT", ref this.ALLERGEN_DRUG_DICT);
             return true;
         }
         public bool Upload(string szPatientID, string szVisitID)
@@ -150,7 +145,7 @@ namespace Heren.MedQC.Core.Services
                     return false;
                 string patientID = inpVisit.PATIENT_ID;
                 string visitNo = inpVisit.VISIT_NO;
-
+                string visitID = inpVisit.VISIT_ID.ToString();
                 List<RecCodeCompasion> lstRecCodeCompasion = null;
                 shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions(null, ref lstRecCodeCompasion);
                 if (inpVisit == null)
@@ -455,21 +450,136 @@ namespace Heren.MedQC.Core.Services
                     }
                 }
                 //获取和仁His手术情况
-                List<OperationMaster> lstOperationMasters = null;
-                shRet = OperationMasterAccess.Instance.GetOperationMasters(patientID, szVisitID, ref lstOperationMasters);
-                if (lstOperationMasters != null)
+                List<OperationName> lstOperationNames = null;
+                shRet = OperationNameAccess.Instance.GetOperationNames(patientID, visitID, ref lstOperationNames);
+                //2、获取联众已经上传的手术情况
+                List<EMRDBLib.BAJK.BAJK11> lstBajk11 = null;
+                shRet = BAJK11Access.Instance.GetBAJK11s(bajk08.KEY0801, ref lstBajk11);
+                //3、清理已经上传的手术情况
+                if (lstBajk11 != null && lstBajk11.Count > 0)
                 {
-                    foreach (var item in lstOperationMasters)
+                    shRet = BAJK11Access.Instance.Delete(bajk08.KEY0801);
+                }
+                if (lstOperationNames != null)
+                {
+                    foreach (var item in lstOperationNames)
                     {
-                        BAJK11 bajk11 = new BAJK11();
-                        OperationName operationName = null;
-                        shRet = OperationNameAccess.Instance.GetModel(item.OPER_NO, ref operationName);
-                        if (operationName != null)
+                        EMRDBLib.HerenHis.Operation operation = null;
+                        shRet = EMRDBLib.DbAccess.HerenHis.OperationAccess.Instance.GetModel(item.PATIENT_ID, item.VISIT_ID.ToString(), item.OPERATION_NO.ToString(), ref operation);
+                        OperationMaster operationMaster = null;
+                        shRet = OperationMasterAccess.Instance.GetOperationMaster(item.OPER_NO, ref operationMaster);
+                        if (operation != null && operationMaster != null)
                         {
-                           
+                            BAJK11 bajk11 = new BAJK11();
+                            bajk11.COL1101 = operation.OPERATING_DATE.Date;
+                            bajk11.COL1102 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, operation.OPERATING_DATE);
+                            if (this.ANAESTHESIA_DICT != null)
+                            {
+                                var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == operation.ANAESTHESIA_METHOD).FirstOrDefault();
+                                if (result != null)
+                                {
+                                    bajk11.COL1104 = decimal.Parse(result.DM);
+                                }
+                            }
+                            if (this.WOUND_GRADE_DICT != null)
+                            {
+                                var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_ID == operation.WOUND_GRADE).FirstOrDefault();
+                                if (result != null)
+                                {
+                                    bajk11.COL1105 = decimal.Parse(result.DM);
+                                }
+                            }
+                            if (this.HEAL_DICT != null)
+                            {
+                                var result = this.HEAL_DICT.Where(m => m.CODE_ID == operation.HEAL).FirstOrDefault();
+                                if (result != null)
+                                {
+                                    bajk11.COL1106 = decimal.Parse(result.DM);
+                                }
+                            }
+                            bajk11.COL1107 = operationMaster.OPERATOR_DOCTOR_ID;
+                            bajk11.COL1108 = operationMaster.FIRST_ANESTHESIA_ID;
+                            bajk11.COL1109 = operationMaster.SECOND_ANESTHESIA_ID;
+                            bajk11.COL1110 = operationMaster.ANESTHESIA_DOCTOR_ID;
+                            //bajk11.COL1111=符合标志未获取
+                            //bajk11.COL1112 手术组号未获取
+                            //bajk11.COL1113
+                            bajk11.COL1114 = operationMaster.DIAG_BEFORE_OPERATION;
+                            bajk11.COL1115 = operationMaster.DIAG_AFTER_OPERATION;
+                            if (this.OPERATION_SCALE_DICT != null)
+                            {
+                                var result = this.OPERATION_SCALE_DICT.Where(m => m.CODE_ID == item.OPERATION_SCALE).FirstOrDefault();
+                                if (result != null)
+                                {
+                                    bajk11.COL1116 = decimal.Parse(result.DM);
+                                }
+                            }
+                            bajk11.KEY1101 = bajk08.BRXH;
+                            bajk11.KEY1102 = operation.OPERATION_NO;
+                            //bajk11.COL1106
+                            shRet = BAJK11Access.Instance.Insert(bajk11);
                         }
                     }
                 }
+                //上传过敏药物
+                //获取和仁his过敏史
+                List<PatientAllergy> lstPatientAllergy = null;
+                shRet = PatientAllergyAccess.Instance.GetList(patientID, visitNo, ref lstPatientAllergy);
+                //获取已经上传给联众接口库的过敏情况信息
+                List<BAJK12> lstBAJK12 = null;
+                shRet = BAJK12Access.Instance.GetBAJK12s(bajk08.BRXH, ref lstBAJK12);
+                if (lstBAJK12 != null)
+                {
+                    BAJK12Access.Instance.Delete(bajk08.BRXH);
+                }
+                //上传过敏药物
+                if (lstPatientAllergy != null)
+                {
+                    foreach (var item in lstPatientAllergy)
+                    {
+                        //查找过敏药物序号
+                        if (string.IsNullOrEmpty(item.ALLERGEN_DRUG_CODE))
+                            continue;
+                        var result = ALLERGEN_DRUG_DICT.Where(m => m.CODE_ID == item.ALLERGEN_DRUG_CODE).FirstOrDefault();
+                        if (result != null)
+                        {
+                            BAJK12 bajk12 = new BAJK12();
+                            bajk12.KEY1201 = bajk08.KEY0801;
+                            bajk12.KEY1202 = decimal.Parse(result.DM);
+                            shRet = BAJK12Access.Instance.Insert(bajk12);
+                        }
+                    }
+                }
+                //上传转科情况
+                List<Transfer> lstTransfers = null;
+                shRet = TransferAccess.Instance.GetList(patientID, visitNo, ref lstTransfers);
+                List<BAJK13> lstBAJK13 = null;
+                shRet = BAJK13Access.Instance.GetBAJK13s(bajk08.KEY0801, ref lstBAJK13);
+                if (lstBAJK13 != null && lstBAJK13.Count > 0)
+                {
+                    //清空已上传记录
+                    BAJK13Access.Instance.Delete(bajk08.KEY0801);
+                }
+                if (lstTransfers != null && lstTransfers.Count > 0)
+                {
+                    int orderNo = 1;
+                    lstTransfers = lstTransfers.OrderBy(m => m.ADMISSION_DATE_TIME).ToList();
+                    foreach (var item in lstTransfers)
+                    {
+                        BAJK13 bajk13 = new BAJK13();
+                        bajk13.COL1301 = item.ADMISSION_DATE_TIME;
+                        bajk13.COL1302 = item.DEPT_TRANSFER_TO;
+                        bajk13.COL1303 = item.DISCHARGE_DATE_TIME;
+                        bajk13.KEY1301 = bajk08.KEY0801;
+                        bajk13.KEY1302 = orderNo;
+                        shRet = BAJK13Access.Instance.Insert(bajk13);
+                        orderNo++;
+                    }
+                }
+                //上传费用
+                List<InpBillDetail> lstInpBillDetail = null;
+                shRet = InpBillDetailAccess.Instance.GetList(patientID, visitNo, ref lstInpBillDetail);
+
             }
             catch (Exception ex)
             {

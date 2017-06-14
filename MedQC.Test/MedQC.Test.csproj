@@ -81,6 +81,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenerateCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerateCode.Designer.cs">
+      <DependentUpon>GenerateCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="IDReadForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     <Compile Include="SplitterForm.Designer.cs">
       <DependentUpon>SplitterForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="GenerateCode.resx">
+      <DependentUpon>GenerateCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IDReadForm.resx">
       <DependentUpon>IDReadForm.cs</DependentUpon>
     </EmbeddedResource>

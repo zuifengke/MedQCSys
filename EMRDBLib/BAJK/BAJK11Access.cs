@@ -15,7 +15,9 @@ using System.Reflection;
 
 namespace EMRDBLib
 {
-
+    /// <summary>
+    /// 手术情况
+    /// </summary>
     public class BAJK11Access : DBAccessBase
     {
         public const string TableName = SystemData.DataTable_BAJK.BAJK11;
@@ -143,7 +145,7 @@ namespace EMRDBLib
             return SystemData.ReturnValue.OK;
         }
         /// <summary>
-        /// 清楚患者所有上传诊断记录
+        /// 清除患者所有已上传的手术情况
         /// </summary>
         /// <param name="brxh"></param>
         /// <returns></returns>

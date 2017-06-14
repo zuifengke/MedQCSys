@@ -64,12 +64,19 @@
   <ItemGroup>
     <Compile Include="BAJK\BAJK08.cs" />
     <Compile Include="BAJK\BaIcdDM.cs" />
+    <Compile Include="BAJK\BAJK15.cs" />
+    <Compile Include="BAJK\BAJK13.cs" />
+    <Compile Include="BAJK\BAJK12.cs" />
     <Compile Include="BAJK\BAJK11.cs" />
     <Compile Include="BAJK\BAJK09.cs" />
     <Compile Include="BAJK\GyGydm.cs" />
     <Compile Include="DbTypeBase.cs" />
+    <Compile Include="HerenHis\InpBillDetail.cs" />
+    <Compile Include="HerenHis\Transfer.cs" />
     <Compile Include="HerenHis\Diagnosis.cs" />
     <Compile Include="HerenHis\DiagnosisDict.cs" />
+    <Compile Include="HerenHis\Operation.cs" />
+    <Compile Include="HerenHis\PatientAllergy.cs" />
     <Compile Include="HerenHis\PatMasterIndex.cs" />
     <Compile Include="HerenHis\BaseCodeDict.cs" />
     <Compile Include="HerenHis\InpVisit.cs" />
@@ -103,9 +110,9 @@
     <Compile Include="His\Operation.cs" />
     <Compile Include="His\BlloodTransfusion.cs" />
     <Compile Include="His\OperationDict.cs" />
-    <Compile Include="His\OperationMaster.cs" />
+    <Compile Include="HerenHis\OperationMaster.cs" />
     <Compile Include="His\DeptDict.cs" />
-    <Compile Include="His\OperationName.cs" />
+    <Compile Include="HerenHis\OperationName.cs" />
     <Compile Include="MedDoc\MedOrderInfo.cs" />
     <Compile Include="MedDoc\RightInfo.cs" />
     <Compile Include="MedDoc\UserRight.cs" />

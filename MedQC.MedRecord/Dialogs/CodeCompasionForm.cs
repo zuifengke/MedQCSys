@@ -48,13 +48,23 @@ namespace Heren.MedQC.MedRecord
 
         List<BaseCodeDict> m_lstBaseCodeDicts = null;
         List<GyGydm> m_lstGyGydm = null;
-        private void LoadBaseCodeDict(RecCodeCompasion recCodeCompasion)
+        private void LoadBaseCodeDict(RecCodeCompasion recCodeCompasion,string codeName)
         {
+            if (recCodeCompasion == null)
+            {
+                MessageBoxEx.ShowMessage("请先选择分类");
+                return;
+            }
             this.Text = string.Format("病案上传编码对照-{0}", recCodeCompasion.CONFIG_NAME);
             this.dataTableView1.Rows.Clear();
 
 
             string codeTypeName = recCodeCompasion.CODETYPE_NAME;
+            if (string.IsNullOrEmpty(codeTypeName))
+            {
+                MessageBoxEx.ShowError("字典类型代码为空");
+                return;
+            }
             if (this.m_lstBaseCodeDicts == null)
                 this.m_lstBaseCodeDicts = new List<BaseCodeDict>();
             this.m_lstBaseCodeDicts.Clear();
@@ -76,6 +86,8 @@ namespace Heren.MedQC.MedRecord
                     this.m_lstBaseCodeDicts.Add(item);
                 }
             }
+            if (this.m_lstBaseCodeDicts != null && !string.IsNullOrEmpty(codeName))
+                this.m_lstBaseCodeDicts = this.m_lstBaseCodeDicts.Where(m => m.CODE_NAME.Contains(codeName)).ToList();
             if (this.m_lstBaseCodeDicts != null && m_lstBaseCodeDicts.Count > 0)
             {
                 Pagination(1);
@@ -382,7 +394,7 @@ namespace Heren.MedQC.MedRecord
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_RecCodeCompasion = this.listBox1.SelectedItem as RecCodeCompasion;
-            this.LoadBaseCodeDict(m_RecCodeCompasion);
+            this.LoadBaseCodeDict(m_RecCodeCompasion,null);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -393,19 +405,7 @@ namespace Heren.MedQC.MedRecord
         private void textBoxButton1_ButtonClick(object sender, EventArgs e)
         {
             string codeName = this.textBoxButton1.Text.Trim();
-            string codeTypeName = this.m_RecCodeCompasion.CODETYPE_NAME;
-            m_lstBaseCodeDicts = null;
-            this.dataTableView1.Rows.Clear();
-            short shRet = BaseCodeDictAccess.Instance.GetBaseCodeDicts(codeName, codeTypeName, ref m_lstBaseCodeDicts);
-            if (m_lstBaseCodeDicts == null)
-            {
-                return;
-            }
-            LoadMC(this.m_RecCodeCompasion);
-            if (m_lstBaseCodeDicts != null && m_lstBaseCodeDicts.Count > 0)
-            {
-                Pagination(1);
-            }
+            this.LoadBaseCodeDict(m_RecCodeCompasion, codeName);
         }
 
         private void btnALL_Click(object sender, EventArgs e)

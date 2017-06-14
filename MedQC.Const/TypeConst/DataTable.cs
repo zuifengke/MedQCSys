@@ -9,6 +9,10 @@ namespace EMRDBLib
         public struct DataTable_HerenHis
         {
             /// <summary>
+            /// 手术记录
+            /// </summary>
+            public const string OPERATION = "OPERATION";
+            /// <summary>
             /// 手术信息
             /// </summary>
             public const string OPERATION_MASTER = "OPERATION_MASTER";
@@ -36,6 +40,18 @@ namespace EMRDBLib
             /// 诊断信息表
             /// </summary>
             public const string DIAGNOSIS = "DIAGNOSIS";
+            /// <summary>
+            /// 过敏史
+            /// </summary>
+            public const string PATIENT_ALLERGY = "PATIENT_ALLERGY";
+            /// <summary>
+            /// 转科表
+            /// </summary>
+            public const string TRANSFER = "TRANSFER";
+            /// <summary>
+            /// 费用表
+            /// </summary>
+            public const string INP_BILL_DETAIL = "INP_BILL_DETAIL";
         }
 
         public struct DataTable_BAJK
@@ -56,6 +72,18 @@ namespace EMRDBLib
             /// 手术情况
             /// </summary>
             public const string BAJK11 = "BAJK11";
+            /// <summary>
+            /// 过敏药物情况
+            /// </summary>
+            public const string BAJK12 = "BAJK12";
+            /// <summary>
+            /// 转科情况
+            /// </summary>
+            public const string BAJK13 = "BAJK13";
+            /// <summary>
+            /// 费用情况
+            /// </summary>
+            public const string BAJK15 = "BAJK15";
             /// <summary>
             /// 公用代码库
             /// </summary>

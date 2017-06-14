@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Text;
 
 namespace EMRDBLib.DbAccess
@@ -58,73 +59,7 @@ namespace EMRDBLib.DbAccess
             if (string.IsNullOrEmpty(szPatientID) && string.IsNullOrEmpty(szVisitID))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34},{35},{36},{37},{38},{39},{40},{41},{42},{43},{44},{45},{46},{47},{48},{49},{50},{51},{52},{53},{54},{55},{56},{57},{58},{59},{60},{61},{62},{63},{64},{65}"
-                , SystemData.OperationMasterTable.ACK_DIRECTION
-                , SystemData.OperationMasterTable.ANAESTHESIA_METHOD
-                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR
-                , SystemData.OperationMasterTable.ANESTHESIA_DOCTOR_ID
-                , SystemData.OperationMasterTable.APPLY_STATUS
-                , SystemData.OperationMasterTable.BLOOD_DOCTOR
-                , SystemData.OperationMasterTable.BLOOD_DOCTOR_ID
-                , SystemData.OperationMasterTable.BLOOD_LOSSED
-                , SystemData.OperationMasterTable.BLOOD_TRANSFERED
-                , SystemData.OperationMasterTable.CANCEL_DATE_TIME
-                , SystemData.OperationMasterTable.CANCEL_DOCTOR
-                , SystemData.OperationMasterTable.CANCEL_MEMO
-                , SystemData.OperationMasterTable.CHARGE_INDICATOR
-                , SystemData.OperationMasterTable.CLINIC_CATE
-                , SystemData.OperationMasterTable.DEPT_STAYED
-                , SystemData.OperationMasterTable.DIAG_AFTER_OPERATION
-                , SystemData.OperationMasterTable.DIAG_BEFORE_OPERATION
-                , SystemData.OperationMasterTable.EMERGENCY_FLAG
-                , SystemData.OperationMasterTable.END_DATE_TIME
-                , SystemData.OperationMasterTable.ENTERED_BY
-                , SystemData.OperationMasterTable.ENTERED_BY_ID
-                , SystemData.OperationMasterTable.ENTERED_DATE
-                , SystemData.OperationMasterTable.FIRST_ANESTHESIA
-                , SystemData.OperationMasterTable.FIRST_ANESTHESIA_ID
-                , SystemData.OperationMasterTable.FIRST_ASSISTANT
-                , SystemData.OperationMasterTable.FIRST_ASSISTANT_ID
-                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE
-                , SystemData.OperationMasterTable.FIRST_OPERATION_NURSE_ID
-                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE
-                , SystemData.OperationMasterTable.FIRST_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterTable.FOUR_ASSISTANT
-                , SystemData.OperationMasterTable.FOUR_ASSISTANT_ID
-                , SystemData.OperationMasterTable.IN_FLUIDS_AMOUNT
-                , SystemData.OperationMasterTable.ISOLATION_FLAG
-                , SystemData.OperationMasterTable.NOTES_ON_OPERATION
-                , SystemData.OperationMasterTable.NURSE_SHIFT_INDICATOR
-                , SystemData.OperationMasterTable.OPERATING_DEPT
-                , SystemData.OperationMasterTable.OPERATING_ROOM
-                , SystemData.OperationMasterTable.OPERATING_SCALE
-                , SystemData.OperationMasterTable.OPERATION_ROOM_NO
-                , SystemData.OperationMasterTable.OPERATION_SEQUENCE
-                , SystemData.OperationMasterTable.OPERATOR_DOCTOR
-                , SystemData.OperationMasterTable.OPERATOR_DOCTOR_ID
-                , SystemData.OperationMasterTable.OPER_NO
-                , SystemData.OperationMasterTable.ORDER_ID
-                , SystemData.OperationMasterTable.OUT_FLUIDS_AMOUNT
-                , SystemData.OperationMasterTable.PATIENT_CONDITION
-                , SystemData.OperationMasterTable.PATIENT_ID
-                , SystemData.OperationMasterTable.REQ_DATE_TIME
-                , SystemData.OperationMasterTable.SATISFACTION_DEGREE
-                , SystemData.OperationMasterTable.SCHEDULED_DATE_TIME
-                , SystemData.OperationMasterTable.SCHEDULE_ID
-                , SystemData.OperationMasterTable.SECOND_ANESTHESIA
-                , SystemData.OperationMasterTable.SECOND_ANESTHESIA_ID
-                , SystemData.OperationMasterTable.SECOND_ASSISTANT
-                , SystemData.OperationMasterTable.SECOND_ASSISTANT_ID
-                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE
-                , SystemData.OperationMasterTable.SECOND_OPERATION_NURSE_ID
-                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE
-                , SystemData.OperationMasterTable.SECOND_SUPPLY_NURSE_ID
-                , SystemData.OperationMasterTable.SMOOTH_INDICATOR
-                , SystemData.OperationMasterTable.START_DATE_TIME
-                , SystemData.OperationMasterTable.THREE_ASSISTANT
-                , SystemData.OperationMasterTable.THREE_ASSISTANT_ID
-                , SystemData.OperationMasterTable.VISIT_ID
-                , SystemData.OperationMasterTable.VISIT_NO);
+            string szField = string.Format("*");
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID))
                 szCondition = string.Format("{0} AND A.{1}='{2}'"
@@ -132,8 +67,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.OperationView.PATIENT_ID
                 , szPatientID
                 );
-            string szTable = string.Format("{0} A,{1} B", SystemData.DataTable_HerenHis.OPERATION_MASTER, SystemData.DataView.PAT_VISIT_V);
-            string szOrderBy = string.Format("OPERATION_NO");
+            string szTable = string.Format("{0} A", SystemData.DataTable_HerenHis.OPERATION_MASTER);
+            string szOrderBy = string.Format(SystemData.OperationMasterTable.OPER_NO);
 
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition, szOrderBy);
             IDataReader dataReader = null;
@@ -148,75 +83,15 @@ namespace EMRDBLib.DbAccess
                     lstOperationMaster = new List<OperationMaster>();
                 do
                 {
-                    OperationMaster operation = new OperationMaster();
-                    if (!dataReader.IsDBNull(0)) operation.ACK_DIRECTION = int.Parse(dataReader.GetValue(0).ToString());
-                    if (!dataReader.IsDBNull(1)) operation.ANAESTHESIA_METHOD = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) operation.ANESTHESIA_DOCTOR = dataReader.GetString(2);
-                    if (!dataReader.IsDBNull(3)) operation.ANESTHESIA_DOCTOR_ID = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) operation.APPLY_STATUS = dataReader.GetValue(4).ToString();
-                    if (!dataReader.IsDBNull(5)) operation.BLOOD_DOCTOR = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) operation.BLOOD_DOCTOR_ID = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) operation.BLOOD_LOSSED = int.Parse(dataReader.GetValue(7).ToString());
-                    if (!dataReader.IsDBNull(8)) operation.BLOOD_TRANSFERED = int.Parse(dataReader.GetValue(8).ToString());
-                    if (!dataReader.IsDBNull(9)) operation.CANCEL_DATE_TIME = dataReader.GetDateTime(9);
-                    if (!dataReader.IsDBNull(10)) operation.CANCEL_DOCTOR = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) operation.CANCEL_MEMO = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) operation.CHARGE_INDICATOR = int.Parse
-                            (dataReader.GetValue(12).ToString());
-                    if (!dataReader.IsDBNull(13)) operation.CLINIC_CATE = int.Parse(dataReader.GetValue(0).ToString());
-                    if (!dataReader.IsDBNull(14)) operation.DEPT_STAYED = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) operation.DIAG_AFTER_OPERATION = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) operation.DIAG_BEFORE_OPERATION = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) operation.EMERGENCY_FLAG = dataReader.GetString(17);
-                    if (!dataReader.IsDBNull(18)) operation.END_DATE_TIME = dataReader.GetDateTime(18);
-                    if (!dataReader.IsDBNull(19)) operation.ENTERED_BY = dataReader.GetString(19);
-                    if (!dataReader.IsDBNull(20)) operation.ENTERED_BY_ID = dataReader.GetString(20);
-                    if (!dataReader.IsDBNull(21)) operation.ENTERED_DATE = dataReader.GetDateTime(21);
-                    if (!dataReader.IsDBNull(22)) operation.FIRST_ANESTHESIA = dataReader.GetString(22);
-                    if (!dataReader.IsDBNull(23)) operation.FIRST_ANESTHESIA_ID = dataReader.GetString(23);
-                    if (!dataReader.IsDBNull(24)) operation.FIRST_ASSISTANT = dataReader.GetString(24);
-                    if (!dataReader.IsDBNull(25)) operation.FIRST_ASSISTANT_ID = dataReader.GetString(25);
-                    if (!dataReader.IsDBNull(26)) operation.FIRST_OPERATION_NURSE = dataReader.GetString(26);
-                    if (!dataReader.IsDBNull(27)) operation.FIRST_OPERATION_NURSE_ID = dataReader.GetString(27);
-                    if (!dataReader.IsDBNull(28)) operation.FIRST_SUPPLY_NURSE = dataReader.GetString(28);
-                    if (!dataReader.IsDBNull(29)) operation.FIRST_SUPPLY_NURSE_ID = dataReader.GetString(29);
-                    if (!dataReader.IsDBNull(30)) operation.FOUR_ASSISTANT = dataReader.GetString(30);
-                    if (!dataReader.IsDBNull(31)) operation.FOUR_ASSISTANT_ID = dataReader.GetString(31);
-                    if (!dataReader.IsDBNull(32)) operation.IN_FLUIDS_AMOUNT = int.Parse(dataReader.GetValue(32).ToString());
-                    if (!dataReader.IsDBNull(33)) operation.ISOLATION_FLAG = dataReader.GetString(33);
-                    if (!dataReader.IsDBNull(34)) operation.NOTES_ON_OPERATION = dataReader.GetString(34);
-                    if (!dataReader.IsDBNull(35)) operation.NURSE_SHIFT_INDICATOR = int.Parse(dataReader.GetValue(35).ToString());
-                    if (!dataReader.IsDBNull(36)) operation.OPERATING_DEPT = dataReader.GetString(36);
-                    if (!dataReader.IsDBNull(37)) operation.OPERATING_ROOM = dataReader.GetString(37);
-                    if (!dataReader.IsDBNull(38)) operation.OPERATING_SCALE = dataReader.GetString(38);
-                    if (!dataReader.IsDBNull(39)) operation.OPERATION_ROOM_NO = dataReader.GetString(39);
-                    if (!dataReader.IsDBNull(40)) operation.OPERATION_SEQUENCE = int.Parse(dataReader.GetValue(40).ToString());
-                    if (!dataReader.IsDBNull(41)) operation.OPERATOR_DOCTOR = dataReader.GetString(41);
-                    if (!dataReader.IsDBNull(42)) operation.OPERATOR_DOCTOR_ID = dataReader.GetString(42);
-                    if (!dataReader.IsDBNull(43)) operation.OPER_NO = dataReader.GetString(43);
-                    if (!dataReader.IsDBNull(44)) operation.ORDER_ID = dataReader.GetString(44);
-                    if (!dataReader.IsDBNull(45)) operation.OUT_FLUIDS_AMOUNT = int.Parse(dataReader.GetValue(45).ToString());
-                    if (!dataReader.IsDBNull(46)) operation.PATIENT_CONDITION = dataReader.GetString(46);
-                    if (!dataReader.IsDBNull(47)) operation.PATIENT_ID = dataReader.GetString(47);
-                    if (!dataReader.IsDBNull(48)) operation.REQ_DATE_TIME = dataReader.GetDateTime(48);
-                    if (!dataReader.IsDBNull(49)) operation.SATISFACTION_DEGREE = int.Parse(dataReader.GetValue(49).ToString());
-                    if (!dataReader.IsDBNull(50)) operation.SCHEDULED_DATE_TIME = dataReader.GetDateTime(50);
-                    if (!dataReader.IsDBNull(51)) operation.SCHEDULE_ID = int.Parse(dataReader.GetValue(51).ToString());
-                    if (!dataReader.IsDBNull(52)) operation.SECOND_ANESTHESIA = dataReader.GetString(52);
-                    if (!dataReader.IsDBNull(53)) operation.SECOND_ANESTHESIA_ID = dataReader.GetString(53);
-                    if (!dataReader.IsDBNull(54)) operation.SECOND_ASSISTANT = dataReader.GetString(54);
-                    if (!dataReader.IsDBNull(55)) operation.SECOND_ASSISTANT_ID = dataReader.GetString(55);
-                    if (!dataReader.IsDBNull(56)) operation.SECOND_OPERATION_NURSE = dataReader.GetString(56);
-                    if (!dataReader.IsDBNull(57)) operation.SECOND_OPERATION_NURSE_ID = dataReader.GetString(57);
-                    if (!dataReader.IsDBNull(58)) operation.SECOND_SUPPLY_NURSE = dataReader.GetString(58);
-                    if (!dataReader.IsDBNull(59)) operation.SECOND_SUPPLY_NURSE_ID = dataReader.GetString(59);
-                    if (!dataReader.IsDBNull(60)) operation.SMOOTH_INDICATOR = int.Parse(dataReader.GetValue(60).ToString());
-                    if (!dataReader.IsDBNull(61)) operation.START_DATE_TIME = dataReader.GetDateTime(61);
-                    if (!dataReader.IsDBNull(62)) operation.THREE_ASSISTANT = dataReader.GetString(62);
-                    if (!dataReader.IsDBNull(63)) operation.THREE_ASSISTANT_ID = dataReader.GetString(63);
-                    if (!dataReader.IsDBNull(64)) operation.VISIT_ID = int.Parse(dataReader.GetValue(64).ToString());
-                    if (!dataReader.IsDBNull(65)) operation.VISIT_NO = dataReader.GetString(65);
-                    lstOperationMaster.Add(operation);
+                    OperationMaster model = new OperationMaster();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(OperationMaster), dataReader.GetName(i));
+                        bool result = Reflect.SetPropertyValue(model, property, dataReader.GetValue(i));
+                    }
+                    lstOperationMaster.Add(model);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }

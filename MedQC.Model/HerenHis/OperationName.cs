@@ -28,15 +28,15 @@ namespace EMRDBLib
         /// <summary>
         /// 病人本次住院标识
         /// </summary>
-        public int VISIT_ID { get; set; }
+        public decimal VISIT_ID { get; set; }
         /// <summary>
         /// 手术安排标识
         /// </summary>
-        public int SCHEDULE_ID { get; set; }
+        public decimal SCHEDULE_ID { get; set; }
         /// <summary>
         /// 手术序号
         /// </summary>
-        public int OPERATION_NO { get; set; }
+        public decimal OPERATION_NO { get; set; }
         /// <summary>
         /// 手术
         /// </summary>

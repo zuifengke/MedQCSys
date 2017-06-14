@@ -20,7 +20,7 @@ namespace EMRDBLib
         /// <summary>
         /// 医疗类别
         /// </summary>
-        public int CLINIC_CATE { get; set; }
+        public decimal CLINIC_CATE { get; set; }
         /// <summary>
         /// 患者标识
         /// </summary>
@@ -32,11 +32,11 @@ namespace EMRDBLib
         /// <summary>
         /// 病人本次住院标识
         /// </summary>
-        public int VISIT_ID { get; set; }
+        public decimal VISIT_ID { get; set; }
         /// <summary>
         /// 手术安排标识
         /// </summary>
-        public int SCHEDULE_ID { get; set; }
+        public decimal SCHEDULE_ID { get; set; }
         /// <summary>
         /// 病人所在科室
         /// </summary>
@@ -56,7 +56,7 @@ namespace EMRDBLib
         /// <summary>
         /// 手术台次
         /// </summary>
-        public int OPERATION_SEQUENCE { get; set; }
+        public decimal OPERATION_SEQUENCE { get; set; }
         /// <summary>
         /// 术前主要诊断描述
         /// </summary>
@@ -214,7 +214,7 @@ namespace EMRDBLib
         /// <summary>
         /// 申请来源方向
         /// </summary>
-        public int ACK_DIRECTION { get; set; }
+        public decimal ACK_DIRECTION { get; set; }
         /// <summary>
         /// 急诊标志
         /// </summary>
@@ -238,7 +238,7 @@ namespace EMRDBLib
         /// <summary>
         /// 手术护士换班标志
         /// </summary>
-        public int NURSE_SHIFT_INDICATOR { get; set; }
+        public decimal NURSE_SHIFT_INDICATOR { get; set; }
         /// <summary>
         /// 手术开始日期及时间
         /// </summary>
@@ -250,27 +250,27 @@ namespace EMRDBLib
         /// <summary>
         /// 麻醉满意程度
         /// </summary>
-        public int SATISFACTION_DEGREE { get; set; }
+        public decimal SATISFACTION_DEGREE { get; set; }
         /// <summary>
         /// 手术过程顺利标志
         /// </summary>
-        public int SMOOTH_INDICATOR { get; set; }
+        public decimal SMOOTH_INDICATOR { get; set; }
         /// <summary>
         /// 总入量
         /// </summary>
-        public int IN_FLUIDS_AMOUNT { get; set; }
+        public decimal IN_FLUIDS_AMOUNT { get; set; }
         /// <summary>
         /// 总出量
         /// </summary>
-        public int OUT_FLUIDS_AMOUNT { get; set; }
+        public decimal OUT_FLUIDS_AMOUNT { get; set; }
         /// <summary>
         /// 失血量
         /// </summary>
-        public int BLOOD_LOSSED { get; set; }
+        public decimal BLOOD_LOSSED { get; set; }
         /// <summary>
         /// 输血量
         /// </summary>
-        public int BLOOD_TRANSFERED { get; set; }
+        public decimal BLOOD_TRANSFERED { get; set; }
         /// <summary>
         /// 录入者ID
         /// </summary>
@@ -286,7 +286,7 @@ namespace EMRDBLib
         /// <summary>
         /// 计费标志
         /// </summary>
-        public int CHARGE_INDICATOR { get; set; }
+        public decimal CHARGE_INDICATOR { get; set; }
         public OperationMaster(){
             this.START_DATE_TIME = this.DefaultTime;
             this.END_DATE_TIME = this.DefaultTime;

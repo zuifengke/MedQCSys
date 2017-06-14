@@ -15,38 +15,38 @@ using System.Reflection;
 
 namespace EMRDBLib
 {
-
-    public class BAJK08Access : DBAccessBase
+    /// <summary>
+    /// 手术情况
+    /// </summary>
+    public class BAJK12Access : DBAccessBase
     {
-        public const string TableName = SystemData.DataTable_BAJK.BAJK08;
-        private static BAJK08Access m_Instance = null;
+        public const string TableName = SystemData.DataTable_BAJK.BAJK12;
+        private static BAJK12Access m_Instance = null;
 
         /// <summary>
         /// 获取系统运行上下文实例
         /// </summary>
-        public static BAJK08Access Instance
+        public static BAJK12Access Instance
         {
             get
             {
                 if (m_Instance == null)
-                    m_Instance = new BAJK08Access();
+                    m_Instance = new BAJK12Access();
                 return m_Instance;
             }
         }
 
-        public short GetBAJK08s(string patientID, string visitID, ref BAJK08 bAJK08)
+        public short GetBAJK12s(decimal brxh, ref List<BAJK12> lstBAJK12s)
         {
             if (base.BAJKDataAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("*");
             string szCondition = string.Format("1=1");
-            szCondition = string.Format("{0} AND {1} = '{2}' AND {3}={4} "
+            szCondition = string.Format("{0} AND {1} = {2} "
                 , szCondition
-                , SystemData.BAJK08Table.COL0801
-                , patientID
-                , SystemData.BAJK08Table.COL0804
-                , visitID);
+                , SystemData.BAJK12Table.KEY1201
+                , brxh);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
                     , sbField.ToString(), TableName, szCondition);
             IDataReader dataReader = null;
@@ -57,16 +57,20 @@ namespace EMRDBLib
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (bAJK08 == null)
-                    bAJK08 = new BAJK08();
-
-                for (int i = 0; i < dataReader.FieldCount; i++)
+                if (lstBAJK12s == null)
+                    lstBAJK12s = new List<BAJK12>();
+                do
                 {
-                    if (dataReader.IsDBNull(i))
-                        continue;
-                    PropertyInfo property = Reflect.GetPropertyInfo(typeof(BAJK08), dataReader.GetName(i));
-                    bool result = Reflect.SetPropertyValue(bAJK08, property, dataReader.GetValue(i));
-                }
+                    BAJK12 BAJK12 = new BAJK12();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(BAJK12), dataReader.GetName(i));
+                        bool result = Reflect.SetPropertyValue(BAJK12, property, dataReader.GetValue(i));
+                    }
+                    lstBAJK12s.Add(BAJK12);
+                } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
             catch (Exception ex)
@@ -78,7 +82,7 @@ namespace EMRDBLib
             finally { base.BAJKDataAccess.CloseConnnection(false); }
         }
 
-        public short Insert(BAJK08 model)
+        public short Insert(BAJK12 model)
         {
             if (model == null)
             {
@@ -86,13 +90,13 @@ namespace EMRDBLib
                     , new object[] { model }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (model.KEY0801 == 0)
+            if (model.KEY1201 == 0 || model.KEY1201 == 0)
             {
                 return SystemData.ReturnValue.EXCEPTION;
             }
             StringBuilder sbField = new StringBuilder();
             StringBuilder sbValue = new StringBuilder();
-            PropertyInfo[] PropertyList = Reflect.GetProperties<BAJK08>(model);
+            PropertyInfo[] PropertyList = Reflect.GetProperties<BAJK12>(model);
             foreach (var item in PropertyList)
             {
                 string name = item.Name;
@@ -120,7 +124,7 @@ namespace EMRDBLib
             string szField = sbField.ToString().Substring(0, sbField.Length - 1);
             string szValue = sbValue.ToString().Substring(0, sbValue.Length - 1);
             string szSQL = string.Format(SystemData.SQL.INSERT
-                , SystemData.DataTable_BAJK.BAJK08
+                , SystemData.DataTable_BAJK.BAJK12
                 , szField
                 , szValue);
             int nCount = 0;
@@ -140,109 +144,24 @@ namespace EMRDBLib
             }
             return SystemData.ReturnValue.OK;
         }
-
-        public bool Exist(decimal key0801)
-        {
-            string sql = string.Format("select * from {0} where {1}={2}"
-                , TableName
-                , SystemData.BAJK08Table.KEY0801
-                , key0801);
-            try
-            {
-                DataSet ds = base.BAJKDataAccess.ExecuteDataSet(sql);
-                if (ds != null && ds.Tables[0].Rows.Count > 0)
-                    return true;
-                return false;
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.WriteLog("", new string[] { "sql" }, new object[] { sql }, ex);
-                return false;
-            }
-        }
-
-        //未了解规则前，按随机数生成,去重
-        public decimal MakeKey0801()
-        {
-            decimal key0801 = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                Random random = new Random((int)DateTime.Now.Ticks);
-                key0801 = random.Next(10000000, 99999999);
-                if (!this.Exist(key0801))
-                    break;
-            }
-            return key0801;
-        }
-        public short Update(BAJK08 model)
-        {
-            if (model == null)
-            {
-                LogManager.Instance.WriteLog("", new string[] { "" }
-                    , new object[] { model }, "参数不能为空");
-                return SystemData.ReturnValue.PARAM_ERROR;
-            }
-            if (base.BAJKDataAccess == null)
-                return SystemData.ReturnValue.PARAM_ERROR;
-            StringBuilder sbField = new StringBuilder();
-            PropertyInfo[] PropertyList = Reflect.GetProperties<BAJK08>(model);
-            foreach (var item in PropertyList)
-            {
-                string name = item.Name;
-                object value = item.GetValue(model, null);
-
-                switch (item.PropertyType.Name)
-                {
-                    case "Decimal":
-                        sbField.AppendFormat("{0}={1},", name, value);
-                        break;
-                    case "int":
-                        sbField.AppendFormat("{0}={1},", name, value);
-                        break;
-                    case "DateTime":
-                        DateTime dt = DateTime.Parse(value.ToString());
-                        if (dt == model.DefaultTime || dt == model.DefaultTime2)
-                            break;
-                        sbField.AppendFormat("{0}={1},", name, base.BAJKDataAccess.GetSqlTimeFormat(dt));
-                        break;
-                    default:
-                        sbField.AppendFormat("{0}='{1}',", name, value);
-                        break;
-                }
-            }
-            string szField = sbField.ToString().Substring(0, sbField.Length - 1);
-            string szCondition = string.Format("{0}={1}", SystemData.BAJK08Table.KEY0801, model.KEY0801);
-            string szSQL = string.Format(SystemData.SQL.UPDATE, TableName, szField, szCondition);
-            int nCount = 0;
-            try
-            {
-                nCount = base.BAJKDataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
-                return SystemData.ReturnValue.EXCEPTION;
-            }
-            if (nCount <= 0)
-            {
-                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
-                return SystemData.ReturnValue.EXCEPTION;
-            }
-            return SystemData.ReturnValue.OK;
-        }
-        public short Delete(string key0801)
+        /// <summary>
+        /// 清除患者所有已上传的手术情况
+        /// </summary>
+        /// <param name="brxh"></param>
+        /// <returns></returns>
+        public short Delete(decimal brxh)
         {
             if (base.BAJKDataAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            if (GlobalMethods.Misc.IsEmptyString(key0801))
+            if (GlobalMethods.Misc.IsEmptyString(brxh))
             {
                 LogManager.Instance.WriteLog("", new string[] { "" }
-                    , new object[] { key0801 }, "参数不能为空");
+                    , new object[] { brxh }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            string szCondition = string.Format("{0}={1}", SystemData.BAJK08Table.KEY0801, key0801);
+            string szCondition = string.Format("{0}={1}", SystemData.BAJK12Table.KEY1201, brxh);
             string szSQL = string.Format(SystemData.SQL.DELETE, TableName, szCondition);
             int nCount = 0;
             try

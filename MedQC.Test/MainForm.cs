@@ -88,5 +88,11 @@ namespace MedQC.Test
             
             short shRet = TimeCheckHelper.Instance.GenerateTimeRecord(patVisitInfo, DateTime.Now);
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            GenerateCode frm = new GenerateCode();
+            frm.ShowDialog();
+        }
     }
 }
