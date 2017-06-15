@@ -527,7 +527,7 @@ namespace EMRDBLib
             option.IsNewScore = false;
             option.IsShowPatientIndex = true;
             option.IsShowVitalSignsGraph = true;
-            option.DefaultEditor = "1";
+            option.DefaultEditor = "2";
             option.RecPrintLog = true;
 #endif
             return option;

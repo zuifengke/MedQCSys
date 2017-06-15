@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using Heren.Common.Libraries;
 using EMRDBLib.BAJK;
+using Heren.MedQC.Model.BAJK;
+
 namespace Heren.MedQC.Core.Services
 {
     /// <summary>
@@ -108,6 +110,10 @@ namespace Heren.MedQC.Core.Services
         /// 过敏药物
         /// </summary>
         private List<RecCodeCompasion> ALLERGEN_DRUG_DICT = null;
+        /// <summary>
+        /// 付款方式/费别
+        /// </summary>
+        private List<RecCodeCompasion> CHARGE_TYPE_DICT = null;
         public bool InitializeDict()
         {
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("SEX_DICT", ref this.SexDict);
@@ -129,13 +135,13 @@ namespace Heren.MedQC.Core.Services
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("HEAL_DICT", ref this.HEAL_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("OPERATION_SCALE_DICT", ref this.OPERATION_SCALE_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("ALLERGEN_DRUG_DICT", ref this.ALLERGEN_DRUG_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("CHARGE_TYPE_DICT", ref this.CHARGE_TYPE_DICT);
             return true;
         }
         public bool Upload(string szPatientID, string szVisitID)
         {
             try
             {
-
                 StringBuilder sbField = new StringBuilder();
                 InpVisit inpVisit = null;
                 PatMasterIndex patMasterIndex = null;
@@ -579,6 +585,45 @@ namespace Heren.MedQC.Core.Services
                 //上传费用
                 List<InpBillDetail> lstInpBillDetail = null;
                 shRet = InpBillDetailAccess.Instance.GetList(patientID, visitNo, ref lstInpBillDetail);
+                if(lstInpBillDetail!=null)
+                {
+                    BAJK15 bajk15 = null;
+                    shRet = BAJK15Access.Instance.GetModel(bajk08.KEY0801, ref bajk15);
+                    bool bajk15Exise = true;
+                    if (bajk15 == null)
+                    {
+                        bajk15 = new BAJK15();
+                        bajk15Exise = false;
+                    }
+                    bajk15.KEY1501 = bajk08.KEY0801;
+                    if (this.CHARGE_TYPE_DICT != null && !string.IsNullOrEmpty(inpVisit.CHARGE_TYPE))
+                    {
+                        var result = this.CHARGE_TYPE_DICT.Where(m => m.CODE_NAME == inpVisit.CHARGE_TYPE).FirstOrDefault();
+                        if (result != null && !string.IsNullOrEmpty(result.DM))
+                        {
+                            bajk15.COL1501 = decimal.Parse(result.DM);
+                        }
+
+                    }
+                    bajk15.COL1503 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "西药").Sum(m => m.COSTS);
+                    bajk15.COL1504 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "中药").Sum(m => m.COSTS);
+                    //bajk15.COL1505 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "中药").Sum(m => m.COSTS);
+                    bajk15.COL1508 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "输血").Sum(m => m.COSTS);
+                    bajk15.COL1510 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "手术").Sum(m => m.COSTS);
+                    //bajk15.COL1514 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "手术").Sum(m => m.COSTS);
+                    bajk15.COL1517 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "护理").Sum(m => m.COSTS);
+                    bajk15.COL1518 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == "其他").Sum(m => m.COSTS);
+                    //bajk15
+                    if (!bajk15Exise)
+                    {
+                        shRet = BAJK15Access.Instance.Insert(bajk15);
+                    }
+                    else
+                    {
+                        shRet = BAJK15Access.Instance.Update(bajk15);
+                    }
+                }
+                //bajk15.COL1501
 
             }
             catch (Exception ex)

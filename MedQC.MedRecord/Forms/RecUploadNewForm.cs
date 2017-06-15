@@ -110,7 +110,9 @@ namespace Heren.MedQC.MedRecord
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             Search();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
         private void Search()
@@ -202,12 +204,14 @@ namespace Heren.MedQC.MedRecord
         {
             if (this.XDataGrid1.Rows.Count <= 0)
                 return;
-
+            RecUploadService.Instance.InitializeDict();
             WorkProcess.Instance.Initialize(this, this.XDataGrid1.Rows.Count, "正在上传....");
             foreach (DataTableViewRow row in this.XDataGrid1.Rows)
             {
                 WorkProcess.Instance.Show(row.Index, true);
-                RecUploadLog(row.Index);
+                if (row.Cells[this.col_Chk.Index].Value != null
+                    && row.Cells[this.col_Chk.Index].Value.ToString().ToLower() == "true")
+                    RecUploadLog(row.Index);
             }
             WorkProcess.Instance.Close();
         }

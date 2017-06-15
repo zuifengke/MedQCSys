@@ -32,7 +32,6 @@ namespace MedQC.Test
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-
                     string table_name = ds.Tables[0].Rows[i]["table_name"].ToString();
                     string column_name = ds.Tables[0].Rows[i]["column_name"].ToString();
                     string comments = ds.Tables[0].Rows[i]["comments"].ToString();
