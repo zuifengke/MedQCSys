@@ -29,16 +29,6 @@ namespace EMRDBLib
             get { return this.m_szVisitID; }
             set { this.m_szVisitID = value; }
         }
-        private string m_szVisitNo = string.Empty;
-        /// <summary>
-        /// 获取或设置患者的本次就诊ID
-        /// </summary>
-        public string VisitNo
-        {
-            get { return this.m_szVisitNo; }
-            set { this.m_szVisitNo = value; }
-        }
-
         private string m_szEventID = string.Empty;
         /// <summary>
         /// 获取或设置事件ID

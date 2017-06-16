@@ -47,6 +47,7 @@ namespace EMRDBLib
             /// 检查日期
             /// </summary>
             public const string CHECK_DATE = "CHECK_DATE";
+           
         }
     }
 }

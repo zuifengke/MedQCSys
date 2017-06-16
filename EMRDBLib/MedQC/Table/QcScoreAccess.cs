@@ -289,7 +289,7 @@ namespace EMRDBLib.DbAccess
                , SystemData.QCScoreTable.DOC_LEVEL, qcScore.DOC_LEVEL);
             sbField.AppendFormat("{0}={1},"
                , SystemData.QCScoreTable.HOS_ASSESS, qcScore.HOS_ASSESS);
-            sbField.AppendFormat("{0}='{1}',"
+            sbField.AppendFormat("{0}={1},"
                , SystemData.QCScoreTable.HOS_DATE,base.QCAccess.GetSqlTimeFormat(qcScore.HOS_DATE));
             sbField.AppendFormat("{0}='{1}',"
                , SystemData.QCScoreTable.HOS_QCMAN, qcScore.HOS_QCMAN);
@@ -299,7 +299,7 @@ namespace EMRDBLib.DbAccess
                , SystemData.QCScoreTable.PATIENT_NAME, qcScore.PATIENT_NAME);
             sbField.AppendFormat("{0}='{1}',"
                , SystemData.QCScoreTable.SUBMIT_DOCTOR, qcScore.SUBMIT_DOCTOR);
-            sbField.AppendFormat("{0}='{1}',"
+            sbField.AppendFormat("{0}='{1}'"
                , SystemData.QCScoreTable.SUBMIT_DOCTOR_ID, qcScore.SUBMIT_DOCTOR_ID);
 
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}'"

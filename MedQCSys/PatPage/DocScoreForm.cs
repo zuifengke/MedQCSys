@@ -735,6 +735,7 @@ namespace MedQCSys.DockForms
                         qcTimeCheckInfo.Point = row.Cells[this.colDocPoint.Index].Value.ToString();
                     qcTimeCheckInfo.BeginTime = resultInfo.StartTime;
                     qcTimeCheckInfo.EndTime = resultInfo.EndTime;
+                   
                     shRet = QcTimeCheckAccess.Instance.SaveQCTimeCheck(qcTimeCheckInfo);
                     if (shRet != SystemData.ReturnValue.OK)
                     {
@@ -844,11 +845,7 @@ namespace MedQCSys.DockForms
             this.SaveDocContentPoints();
             this.SaveDocTimePoints();
             MessageBoxEx.ShowMessage("病历评分保存成功！");
-            if (!this.AddQCActionLog())
-            {
-                MessageBoxEx.Show("病历评分保存失败！");
-                return;
-            }
+            this.AddQCActionLog();
             this.OnRefreshView();
             this.OnDocScoreSaved(System.EventArgs.Empty);
             this.NeedSave = false;
@@ -870,6 +867,7 @@ namespace MedQCSys.DockForms
                 qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DischargeDeptCode;
             qcActionLog.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+       
             qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
             qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
             qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;

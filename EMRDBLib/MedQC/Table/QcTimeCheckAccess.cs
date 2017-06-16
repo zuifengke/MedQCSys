@@ -139,7 +139,8 @@ namespace EMRDBLib.DbAccess
             string szValue = string.Format("'{0}','{1}','{2}','{3}',{4},{5},{6},'{7}',{8}", qcTimeCheckInfo.PatientID, qcTimeCheckInfo.VisitID
                 , qcTimeCheckInfo.EventID, qcTimeCheckInfo.DocTypeID, base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.BeginTime)
                 , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.EndTime), qcTimeCheckInfo.Point, qcTimeCheckInfo.CheckerName
-                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime));
+                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime)
+                );
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_TIME_CHECK, szField, szValue);
             int nCount = 0;
             try
