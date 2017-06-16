@@ -52,7 +52,7 @@ namespace Heren.MedQC.Core
         /// 按类别存放报表类型的哈希表
         /// </summary>
         private Dictionary<string, List<ReportType>> m_htReportClassTable = null;
-        
+
 
         /// <summary>
         /// 加载病历类型列表
@@ -61,19 +61,20 @@ namespace Heren.MedQC.Core
         /// <returns>报表类型信息列表</returns>
         public List<ReportType> GetReportTypeList(string szApplyEnv)
         {
-
             if (GlobalMethods.Misc.IsEmptyString(szApplyEnv))
                 return null;
+
+            List<ReportType> lstReportTypes = null;
+            short shRet = ReportTypeAccess.Instance.GetReportTypes(szApplyEnv, ref lstReportTypes);
+            if (shRet != SystemData.ReturnValue.OK)
+                return null;
+            return lstReportTypes;
             if (this.m_htReportClassTable != null
                 && this.m_htReportClassTable.ContainsKey(szApplyEnv))
             {
                 return this.m_htReportClassTable[szApplyEnv];
             }
 
-            List<ReportType> lstReportTypes = null;
-            short shRet =ReportTypeAccess.Instance.GetReportTypes(szApplyEnv, ref lstReportTypes);
-            if (shRet != SystemData.ReturnValue.OK)
-                return null;
 
             if (lstReportTypes == null || lstReportTypes.Count <= 0)
                 return new List<ReportType>();
@@ -105,19 +106,25 @@ namespace Heren.MedQC.Core
         {
             if (GlobalMethods.Misc.IsEmptyString(szReportTypeID))
                 return null;
-
+            //重新查询获取报表类型信息
+            ReportType ReportType = null;
+            short shRet = ReportTypeAccess.Instance.GetReportType(szReportTypeID, ref ReportType);
+            if (shRet != SystemData.ReturnValue.OK || ReportType == null)
+                return null;
             //如果是子病历类型
             if (this.m_htReportTypeTable == null)
                 this.m_htReportTypeTable = new Dictionary<string, ReportType>();
             if (this.m_htReportTypeTable.ContainsKey(szReportTypeID))
-                return this.m_htReportTypeTable[szReportTypeID];
-
-            //重新查询获取报表类型信息
-            ReportType ReportType = null;
-            short shRet =ReportTypeAccess.Instance.GetReportType(szReportTypeID, ref ReportType);
-            if (shRet != SystemData.ReturnValue.OK || ReportType == null)
-                return null;
-            this.m_htReportTypeTable.Add(szReportTypeID, ReportType);
+            {
+                if (m_htReportTypeTable[szReportTypeID].ModifyTime == ReportType.ModifyTime)
+                    return this.m_htReportTypeTable[szReportTypeID];
+                else
+                {
+                    this.m_htReportTypeTable[szReportTypeID] = ReportType;
+                }
+            }
+            else
+                this.m_htReportTypeTable.Add(szReportTypeID, ReportType);
             return ReportType;
         }
 
@@ -206,10 +213,10 @@ namespace Heren.MedQC.Core
                 return ReportType2;
             else if (ReportType3 != null)
                 return ReportType3;
-            else 
+            else
                 return ReportType4;
         }
-        
+
 
         /// <summary>
         /// 获取指定的报表类型是否是全院的
@@ -324,7 +331,7 @@ namespace Heren.MedQC.Core
             }
 
             // 下载报表模板内容
-            short shRet =ReportTypeAccess.Instance.GetReportData(ReportType.ReportTypeID, ref byteTempletData);
+            short shRet = ReportTypeAccess.Instance.GetReportData(ReportType.ReportTypeID, ref byteTempletData);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 LogManager.Instance.WriteLog("ReportCache.GetReportTemplet"

@@ -470,6 +470,9 @@
       <DependentUpon>OperationForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\PatientIndexForm.resx">
+      <DependentUpon>PatientIndexForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PatPage\PatientInfoStrip.resx">
       <DependentUpon>PatientInfoStrip.cs</DependentUpon>
     </EmbeddedResource>
@@ -684,6 +687,8 @@
     <None Include="Resources\Expand.png" />
     <None Include="Resources\patientList2.png" />
     <None Include="Resources\jietu.png" />
+    <None Include="Resources\PrintDoc.png" />
+    <None Include="Resources\PrintPreview.png" />
     <Content Include="Resources\Warn.png" />
     <None Include="Resources\WordDocIcon.ico" />
   </ItemGroup>

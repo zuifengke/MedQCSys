@@ -46,6 +46,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.reportDesigner1 = new Heren.Common.Report.ReportDesigner();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
@@ -94,8 +95,8 @@
             this.tooldtpDateFrom.ShowMinute = false;
             this.tooldtpDateFrom.ShowSecond = false;
             this.tooldtpDateFrom.Size = new System.Drawing.Size(100, 22);
-            this.tooldtpDateFrom.Text = "2012/2/20 13:32:28";
-            this.tooldtpDateFrom.Value = new System.DateTime(2012, 2, 20, 13, 32, 28, 0);
+            this.tooldtpDateFrom.Text = "2012/2/20 14:16:32";
+            this.tooldtpDateFrom.Value = new System.DateTime(2012, 2, 20, 14, 16, 32, 0);
             this.tooldtpDateFrom.ValueChanged += new System.EventHandler(this.tooldtpDateFrom_ValueChanged);
             // 
             // toollblSpace1
@@ -209,7 +210,6 @@
             this.toolbtnPrint.Name = "toolbtnPrint";
             this.toolbtnPrint.Size = new System.Drawing.Size(64, 22);
             this.toolbtnPrint.Text = "打印";
-            this.toolbtnPrint.Visible = false;
             // 
             // toolmnuPrintAll
             // 
@@ -271,12 +271,14 @@
             this.ClientSize = new System.Drawing.Size(706, 454);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "VitalSignsGraphForm";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.Text = "体温单";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 

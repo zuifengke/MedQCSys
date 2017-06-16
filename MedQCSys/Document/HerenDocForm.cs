@@ -23,6 +23,7 @@ namespace MedQCSys.Document
 {
     public partial class HerenDocForm : DockContentBase, IDocumentForm
     {
+        private TextEditor textEditorPrint = null;
         /// <summary>
         /// ȱ�ݼ�鰴ť
         /// </summary>
@@ -32,6 +33,7 @@ namespace MedQCSys.Document
             : base(mainForm)
         {
             InitializeComponent();
+            this.textEditorPrint = new TextEditor();
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
             this.Icon = MedQCSys.Properties.Resources.MedDocIcon;
@@ -767,5 +769,23 @@ namespace MedQCSys.Document
         }
 
         #endregion
+
+        private void toolbtnPrintPreview_Click(object sender, EventArgs e)
+        {
+            
+            SectionInfo curSection= this.textEditor1.GetCurrentSection();
+            byte[] byteDocument = null;
+            this.textEditor1.SaveSection(curSection, out byteDocument);
+            if (byteDocument == null)
+            {
+                this.textEditor1.SaveDocument2(out byteDocument);
+            }
+            this.textEditorPrint.ReviseEnabled = false;
+            this.textEditorPrint.CommentEditMode = false;
+            this.textEditorPrint.CommentVisible = false;
+            this.textEditorPrint.RevisionVisible = false;
+            this.textEditorPrint.LoadDocument2(byteDocument);
+            this.textEditorPrint.ShowPreviewDialog();
+        }
     }
 }

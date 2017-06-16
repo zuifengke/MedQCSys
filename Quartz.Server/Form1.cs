@@ -49,6 +49,7 @@ namespace Quartz.Server
             server = QuartzServerFactory.CreateServer();
             server.Initialize();
             server.Start();
+            LoadLogText();
             ChangeBtnStatus();
         }
         

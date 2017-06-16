@@ -450,6 +450,17 @@ namespace MedQCSys.DockForms
                    SystemParam.Instance.PatVisitInfo.VISIT_TIME);
                 return true;
             }
+            if (name == "出院时间")
+            {
+                if (SystemParam.Instance.PatVisitInfo == null)
+                    return false;
+                if (SystemParam.Instance.PatVisitInfo.DISCHARGE_TIME ==
+                    SystemParam.Instance.PatVisitInfo.DefaultTime)
+                    value = DateTime.Now;
+                else
+                    value = SystemParam.Instance.PatVisitInfo.DISCHARGE_TIME;
+                return true;
+            }
             if (name == "患者病情")
             {
                 if (SystemParam.Instance.PatVisitInfo == null)
