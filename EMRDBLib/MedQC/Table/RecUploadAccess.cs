@@ -39,7 +39,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetRecUpload(string szUploadID, ref RecUpload RecUpload)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -64,7 +64,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -106,12 +106,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecUploads(string szPatientID, string szVisitNo, ref List<RecUpload> lstRecUploads)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
@@ -132,7 +132,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -177,7 +177,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -242,7 +242,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { RecUpload }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -262,7 +262,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -284,7 +284,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szID))
@@ -299,7 +299,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

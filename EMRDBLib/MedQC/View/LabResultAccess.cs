@@ -39,7 +39,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (lstTestResultInfo == null)
@@ -60,7 +60,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 do
@@ -82,7 +82,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetTestResultList", new string[] { "szSQL" }, new object[] { szSQL }, "查询检验结果列表时出现异常!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
     }
 }

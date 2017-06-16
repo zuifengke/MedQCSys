@@ -39,7 +39,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
@@ -54,7 +54,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 do
@@ -77,7 +77,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetExamResultInfo", new string[] { "szSQL" }, new object[] { szSQL }, "查询检查报告信息时出现异常!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace EMRDBLib.DbAccess
 
         public short GetMrArchives(DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd, DateTime dtDischargeTimeBegin, DateTime dtDischargeTimeEnd, string szMrStatus, string szDeptCode, ref List<MrArchive> lstMrArchives)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.MrArchiveView.ARCHIVE_DOCTOR);
@@ -66,8 +66,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                     , szCondition
                     , SystemData.MrArchiveView.ADMISSION_DATE_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
             }
             if (dtDischargeTimeBegin != SystemParam.Instance.DefaultTime
                 && dtDischargeTimeEnd != SystemParam.Instance.DefaultTime)
@@ -75,8 +75,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                       , szCondition
                       , SystemData.MrArchiveView.DISCHARGE_DATE_TIME
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
             }
             if (!string.IsNullOrEmpty(szDeptCode))
             {
@@ -100,7 +100,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -191,11 +191,11 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short GetMrArchives(DateTime dtVisitTimeBegin,DateTime dtVisitTimeEnd, DateTime dtDischargeTimeBegin,DateTime dtDischargeTimeEnd,string szMrStatus,string szDeptCode,string szPatientID,string szPatientName, ref List<MrArchive> lstMrArchives)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.MrArchiveView.ARCHIVE_DOCTOR);
@@ -228,8 +228,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                     , szCondition
                     , SystemData.MrArchiveView.ADMISSION_DATE_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
             }
             if (dtDischargeTimeBegin != SystemParam.Instance.DefaultTime
                 && dtDischargeTimeEnd != SystemParam.Instance.DefaultTime)
@@ -237,8 +237,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                       , szCondition
                       , SystemData.MrArchiveView.DISCHARGE_DATE_TIME
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
             }
             if(!string.IsNullOrEmpty(szDeptCode))
             {
@@ -276,7 +276,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -367,7 +367,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
     }
 }

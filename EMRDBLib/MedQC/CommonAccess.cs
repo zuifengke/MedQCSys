@@ -35,15 +35,15 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetServerTime(ref DateTime dtSysDate)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szSQL = null;
-            if (base.QCAccess.DatabaseType == DatabaseType.SQLSERVER)
+            if (base.MedQCAccess.DatabaseType == DatabaseType.SQLSERVER)
             {
                 szSQL = string.Format(SystemData.SQL.SELECT, "CONVERT(VARCHAR(20), GETDATE(), 20)");
             }
-            else if (base.QCAccess.DatabaseType == DatabaseType.ORACLE)
+            else if (base.MedQCAccess.DatabaseType == DatabaseType.ORACLE)
             {
                 szSQL = string.Format(SystemData.SQL.SELECT_FROM, "SYSDATE", "DUAL");
             }
@@ -55,7 +55,7 @@ namespace EMRDBLib.DbAccess
             object oRet = null;
             try
             {
-                oRet = base.QCAccess.ExecuteScalar(szSQL, CommandType.Text);
+                oRet = base.MedQCAccess.ExecuteScalar(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -84,12 +84,12 @@ namespace EMRDBLib.DbAccess
         public short ExecuteQuery(string sql, out DataSet result)
         {
             result = null;
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             try
             {
-                result = base.QCAccess.ExecuteDataSet(sql, CommandType.Text);
+                result = base.MedQCAccess.ExecuteDataSet(sql, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -107,10 +107,10 @@ namespace EMRDBLib.DbAccess
         /// <returns>ServerData.ExecuteResult</returns>
         public short ExecuteUpdate(bool isProc, params string[] sqlarray)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            if (!base.QCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+            if (!base.MedQCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                 return SystemData.ReturnValue.EXCEPTION;
 
             if (sqlarray == null)
@@ -120,18 +120,18 @@ namespace EMRDBLib.DbAccess
                 try
                 {
                     if (!isProc)
-                        base.QCAccess.ExecuteNonQuery(sql, CommandType.Text);
+                        base.MedQCAccess.ExecuteNonQuery(sql, CommandType.Text);
                     else
-                        base.QCAccess.ExecuteNonQuery(sql, CommandType.StoredProcedure);
+                        base.MedQCAccess.ExecuteNonQuery(sql, CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {
-                    base.QCAccess.AbortTransaction();
+                    base.MedQCAccess.AbortTransaction();
                     LogManager.Instance.WriteLog("CommonAccess.ExecuteUpdate", new string[] { "sql" }, new object[] { sql }, ex);
                     return SystemData.ReturnValue.EXCEPTION;
                 }
             }
-            base.QCAccess.CommitTransaction(true);
+            base.MedQCAccess.CommitTransaction(true);
             return SystemData.ReturnValue.OK;
         }
     }

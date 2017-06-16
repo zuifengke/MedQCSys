@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetReportTypes(string szApplyEnv, ref List<ReportType> lstReportTypes)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -64,7 +64,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -117,7 +117,7 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 获取所有自动核查结果信息列表
@@ -126,7 +126,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetReportType(string szReportTypeID, ref ReportType reportType)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szReportTypeID))
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -152,7 +152,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -200,7 +200,7 @@ namespace EMRDBLib.DbAccess
 }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 根据报表模板ID从DB中获取报表模板内容
@@ -210,7 +210,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>ServerData.ExecuteResult</returns>
         public short GetReportData(string szTempletID, ref byte[] byteReportData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.ReportTypeTable.REPORT_TYPE_ID, szTempletID);
@@ -219,7 +219,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("TempletAccess.GetReportTempletFromDB", new string[] { "szSQL" }, new object[] { szSQL }, "没有查询到记录!");
@@ -233,7 +233,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
 
@@ -245,15 +245,15 @@ namespace EMRDBLib.DbAccess
         /// <returns>ServerData.ExecuteResult</returns>
         public short SaveReportDataToDB(string szDocTypeID, byte[] byteTempletData)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}={1}", SystemData.ReportTypeTable.MODIFY_TIME, base.QCAccess.GetSystemTimeSql());
+            string szField = string.Format("{0}={1}", SystemData.ReportTypeTable.MODIFY_TIME, base.MedQCAccess.GetSystemTimeSql());
 
             DbParameter[] pmi = null;
             if (byteTempletData != null)
             {
-                szField = string.Format("{0},{1}={2}", szField, SystemData.ReportTypeTable.REPORT_DATA, base.QCAccess.GetSqlParamName("REPORT_DATA"));
+                szField = string.Format("{0},{1}={2}", szField, SystemData.ReportTypeTable.REPORT_DATA, base.MedQCAccess.GetSqlParamName("REPORT_DATA"));
 
                 pmi = new DbParameter[1];
                 pmi[0] = new DbParameter("REPORT_DATA", byteTempletData);
@@ -265,7 +265,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -300,7 +300,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.ReportTypeTable.IS_VALID);
             sbValue.AppendFormat("{0},", reportType.IsValid ? 1 : 0);
             sbField.AppendFormat("{0},", SystemData.ReportTypeTable.MODIFY_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(reportType.ModifyTime));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(reportType.ModifyTime));
             sbField.AppendFormat("{0},", SystemData.ReportTypeTable.PARENT_ID);
             sbValue.AppendFormat("'{0}',", reportType.ParentID);
             sbField.AppendFormat("{0},", SystemData.ReportTypeTable.REPORT_TYPE_ID);
@@ -313,7 +313,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -340,7 +340,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { reportType }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -350,7 +350,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}={1},"
                 , SystemData.ReportTypeTable.IS_VALID, reportType.IsValid ? 1 : 0);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.ReportTypeTable.MODIFY_TIME, base.QCAccess.GetSqlTimeFormat(reportType.ModifyTime));
+                , SystemData.ReportTypeTable.MODIFY_TIME, base.MedQCAccess.GetSqlTimeFormat(reportType.ModifyTime));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.ReportTypeTable.PARENT_ID, reportType.ParentID);
             sbField.AppendFormat("{0}='{1}',"
@@ -362,7 +362,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -384,7 +384,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szReportTypeID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szReportTypeID))
@@ -399,7 +399,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -418,11 +418,11 @@ namespace EMRDBLib.DbAccess
         {
             try
             {
-                if (base.QCAccess == null)
+                if (base.MedQCAccess == null)
                     return SystemData.ReturnValue.PARAM_ERROR;
 
                 //开始数据库事务
-                if (!base.QCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+                if (!base.MedQCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                     return SystemData.ReturnValue.EXCEPTION;
                 foreach (var item in lstReportTypeID)
                 {
@@ -430,12 +430,12 @@ namespace EMRDBLib.DbAccess
                     short shRet = this.Delete(item);
                     if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
                     {
-                        base.QCAccess.AbortTransaction();
+                        base.MedQCAccess.AbortTransaction();
                         return shRet;
                     }
                 }
                 //提交数据库更新
-                if (!base.QCAccess.CommitTransaction(true))
+                if (!base.MedQCAccess.CommitTransaction(true))
                     return SystemData.ReturnValue.EXCEPTION;
             }
             catch (Exception ex)
@@ -444,7 +444,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
             return SystemData.ReturnValue.OK;
         }

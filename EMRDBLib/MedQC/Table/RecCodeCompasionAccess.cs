@@ -35,7 +35,7 @@ namespace EMRDBLib.DbAccess
 
         public short GetRecCodeCompasion(string id, ref RecCodeCompasion recCodeCompasion)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -59,7 +59,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -102,12 +102,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecCodeCompasions(string codeTypeName, ref List<RecCodeCompasion> lstRecCodeCompasions)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.CODETYPE_NAME);
@@ -132,7 +132,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -182,13 +182,13 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
 
         public short GetLists(bool bIsConfig, ref List<RecCodeCompasion> lstRecCodeCompasions)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("*");
@@ -202,7 +202,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -230,7 +230,7 @@ namespace EMRDBLib.DbAccess
 }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 新增一条人工核查结果信息
@@ -256,7 +256,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.CODE_ID);
             sbValue.AppendFormat("'{0}',", recCodeCompasion.CODE_ID);
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.CODE_NAME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlParamName("CODE_NAME") );
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlParamName("CODE_NAME") );
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.DM);
             sbValue.AppendFormat("'{0}',", recCodeCompasion.DM);
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.DMLB);
@@ -264,15 +264,15 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.ID);
             sbValue.AppendFormat("'{0}',", recCodeCompasion.ID);
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.FORM_SQL);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlParamName("FORM_SQL"));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlParamName("FORM_SQL"));
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.IS_CONFIG);
             sbValue.AppendFormat("{0},", recCodeCompasion.IS_CONFIG);
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.TO_SQL);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlParamName("TO_SQL"));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlParamName("TO_SQL"));
             sbField.AppendFormat("{0},", SystemData.RecCodeCompasionTable.CONFIG_NAME);
             sbValue.AppendFormat("'{0}',", recCodeCompasion.CONFIG_NAME);
             sbField.AppendFormat("{0}", SystemData.RecCodeCompasionTable.MC);
-            sbValue.AppendFormat("{0}", base.QCAccess.GetSqlParamName("MC"));
+            sbValue.AppendFormat("{0}", base.MedQCAccess.GetSqlParamName("MC"));
 
 
             if (recCodeCompasion.FORM_SQL == null)
@@ -295,7 +295,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text,ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text,ref pmi);
             }
             catch (Exception ex)
             {
@@ -322,7 +322,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { recCodeCompasion }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if(recCodeCompasion.IS_CONFIG==0)
             {
@@ -344,13 +344,13 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecCodeCompasionTable.DMLB, recCodeCompasion.DMLB);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecCodeCompasionTable.FORM_SQL, base.QCAccess.GetSqlParamName("FORM_SQL"));
+                , SystemData.RecCodeCompasionTable.FORM_SQL, base.MedQCAccess.GetSqlParamName("FORM_SQL"));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecCodeCompasionTable.CONFIG_NAME, recCodeCompasion.CONFIG_NAME);
             sbField.AppendFormat("{0}={1},"
                 , SystemData.RecCodeCompasionTable.IS_CONFIG, recCodeCompasion.IS_CONFIG);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecCodeCompasionTable.TO_SQL, base.QCAccess.GetSqlParamName("TO_SQL"));
+                , SystemData.RecCodeCompasionTable.TO_SQL, base.MedQCAccess.GetSqlParamName("TO_SQL"));
             sbField.AppendFormat("{0}='{1}'"
                 , SystemData.RecCodeCompasionTable.MC, recCodeCompasion.MC);
             string szCondition = string.Format("{0}='{1}'", SystemData.RecCodeCompasionTable.ID, recCodeCompasion.ID);
@@ -363,7 +363,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text,ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text,ref pmi);
             }
             catch (Exception ex)
             {
@@ -380,7 +380,7 @@ namespace EMRDBLib.DbAccess
 
         public short Delete(string szID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szID))
@@ -395,7 +395,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

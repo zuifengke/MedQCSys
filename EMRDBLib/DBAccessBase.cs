@@ -13,8 +13,8 @@ namespace EMRDBLib.DbAccess
 {
     public abstract class DBAccessBase
     {
-        private DataAccess m_DbAccess = null;
-        private DataAccess m_QCAccess = null;
+        private DataAccess m_MeddocAccess = null;
+        private DataAccess m_MedQCAccess = null;
         private DataAccess m_HerenHisAccess = null;
         private DataAccess m_NursringDbAccess = null;
         private DataAccess m_HisLoginAccess = null;
@@ -28,13 +28,13 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 获取病历文书数据库访问对象实例
         /// </summary>
-        protected DataAccess DataAccess
+        protected DataAccess MeddocAccess
         {
             get
             {
-                if (this.m_DbAccess == null)
-                    this.m_DbAccess = this.GetDbAccess();
-                return this.m_DbAccess;
+                if (this.m_MeddocAccess == null)
+                    this.m_MeddocAccess = this.GetMeddocAccess();
+                return this.m_MeddocAccess;
             }
         }
 
@@ -42,10 +42,10 @@ namespace EMRDBLib.DbAccess
         /// 获取数据库访问对象
         /// </summary>
         /// <returns></returns>
-        public DataAccess GetDbAccess()
+        public DataAccess GetMeddocAccess()
         {
-            if (this.m_DbAccess != null)
-                return this.m_DbAccess;
+            if (this.m_MeddocAccess != null)
+                return this.m_MeddocAccess;
             //读取配置文件中数据库配置
             string szDBType = SystemConfig.Instance.Get(SystemData.ConfigKey.MDS_DB_TYPE, string.Empty);
             string szDBDriverType = SystemConfig.Instance.Get(SystemData.ConfigKey.MDS_PROVIDER_TYPE, string.Empty);
@@ -61,12 +61,12 @@ namespace EMRDBLib.DbAccess
                     , new object[] { SystemConfig.Instance.ConfigFile }, "数据库配置参数中包含非法的值!");
                 return null;
             }
-            this.m_DbAccess = new DataAccess();
-            this.m_DbAccess.ConnectionString = szConnectionString;
-            this.m_DbAccess.ClearPoolEnabled = this.m_bAutoClearPool;
-            this.m_DbAccess.DatabaseType = this.GetDatabaseType(szDBType);
-            this.m_DbAccess.DataProvider = this.GetDataProvider(szDBDriverType);
-            return this.m_DbAccess;
+            this.m_MeddocAccess = new DataAccess();
+            this.m_MeddocAccess.ConnectionString = szConnectionString;
+            this.m_MeddocAccess.ClearPoolEnabled = this.m_bAutoClearPool;
+            this.m_MeddocAccess.DatabaseType = this.GetDatabaseType(szDBType);
+            this.m_MeddocAccess.DataProvider = this.GetDataProvider(szDBDriverType);
+            return this.m_MeddocAccess;
         }
         private StorageMode m_eStorageMode = StorageMode.Unknown;
         /// <summary>
@@ -87,10 +87,10 @@ namespace EMRDBLib.DbAccess
         /// 获取数据库访问对象
         /// </summary>
         /// <returns></returns>
-        public DataAccess GetQCAccess()
+        public DataAccess GetMedQCAccess()
         {
-            if (this.m_QCAccess != null)
-                return this.m_QCAccess;
+            if (this.m_MedQCAccess != null)
+                return this.m_MedQCAccess;
 
             //读取配置文件中数据库配置
             string szDBType = SystemConfig.Instance.Get(SystemData.ConfigKey.QC_DB_TYPE, string.Empty);
@@ -107,12 +107,12 @@ namespace EMRDBLib.DbAccess
                     , new object[] { SystemConfig.Instance.ConfigFile }, "数据库配置参数中包含非法的值!");
                 return null;
             }
-            this.m_QCAccess = new DataAccess();
-            this.m_QCAccess.ConnectionString = szConnectionString;
-            this.m_QCAccess.ClearPoolEnabled = this.m_bAutoClearPool;
-            this.m_QCAccess.DatabaseType = this.GetDatabaseType(szDBType);
-            this.m_QCAccess.DataProvider = this.GetDataProvider(szDBDriverType);
-            return this.m_QCAccess;
+            this.m_MedQCAccess = new DataAccess();
+            this.m_MedQCAccess.ConnectionString = szConnectionString;
+            this.m_MedQCAccess.ClearPoolEnabled = this.m_bAutoClearPool;
+            this.m_MedQCAccess.DatabaseType = this.GetDatabaseType(szDBType);
+            this.m_MedQCAccess.DataProvider = this.GetDataProvider(szDBDriverType);
+            return this.m_MedQCAccess;
         }
 
         /// <summary>
@@ -248,13 +248,13 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 获取质控数据库访问对象实例
         /// </summary>
-        protected DataAccess QCAccess
+        protected DataAccess MedQCAccess
         {
             get
             {
-                if (this.m_QCAccess == null)
-                    this.m_QCAccess = this.GetQCAccess();
-                return this.m_QCAccess;
+                if (this.m_MedQCAccess == null)
+                    this.m_MedQCAccess = this.GetMedQCAccess();
+                return this.m_MedQCAccess;
             }
         }
         private DataAccess m_BAJKAccess = null;
@@ -273,7 +273,7 @@ namespace EMRDBLib.DbAccess
 
         public string ParaHolder(string szParaName)
         {
-            switch (this.DataAccess.DataProvider)
+            switch (this.MeddocAccess.DataProvider)
             {
                 case DataProvider.ODPNET:
                 case DataProvider.Odbc:

@@ -43,7 +43,7 @@ namespace EMRDBLib.DbAccess
         public short GetPatVisitList(string szDeptCode, PatientType patientType, DateTime dtBeginTime, DateTime dtEndTime
             , ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
@@ -65,12 +65,12 @@ namespace EMRDBLib.DbAccess
             if (patientType == PatientType.AllPatient)
             {
                 szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3}", szCondition, SystemData.PatVisitView.VISIT_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             }
             else if (patientType == PatientType.PatOutHosptal)
             {
                 szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3}", szCondition, SystemData.PatVisitView.DISCHARGE_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
                 szCondition = string.Format("{0} AND {1} IS NOT NULL", szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
             }
             if (!string.IsNullOrEmpty(szDeptCode))
@@ -81,7 +81,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -128,7 +128,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         
@@ -142,7 +142,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatsListByDeadTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -169,7 +169,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format("{0}>={1} AND {0}<={2} AND {3}='死亡' AND {4}='IP'", SystemData.PatVisitView.DISCHARGE_TIME
-                , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime)
+                , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime)
                 , SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.VISIT_TYPE);
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition = string.Format("{0} AND {1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
@@ -178,7 +178,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -224,7 +224,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -240,7 +240,7 @@ namespace EMRDBLib.DbAccess
         public short GetPatsListByAdmTime(DateTime dtBeginTime, DateTime dtEndTime, PatientType patientType, string szDeptCode
             , ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -262,7 +262,7 @@ namespace EMRDBLib.DbAccess
             if (patientType == PatientType.AllPatient)
             {
                 szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3}", szCondition, SystemData.PatVisitView.VISIT_TIME
-                     , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                     , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             }
 
             //入院日期检索方式下检索已出院病人
@@ -271,7 +271,7 @@ namespace EMRDBLib.DbAccess
             {
                 szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3} AND {4} IS NOT NULL",
                     szCondition, SystemData.PatVisitView.VISIT_TIME,
-                    base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime),
+                    base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime),
                     SystemData.PatVisitView.DISCHARGE_TIME);
             }
 
@@ -283,7 +283,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -330,7 +330,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -344,7 +344,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatientListByDisChargeTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -360,7 +360,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format("{0}>={1} AND {0}<={2} AND {3}='IP'", SystemData.PatVisitView.DISCHARGE_TIME
-                , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.VISIT_TYPE);
+                , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.VISIT_TYPE);
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition = string.Format("{0} AND {1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
             string szOrderBy = string.Format("{0},{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.PATIENT_NAME);
@@ -369,7 +369,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -416,7 +416,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -433,7 +433,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetDeathPatList(string szDeptCode, DateTime dtBeginTime, DateTime dtEndTime, ref List<EMRDBLib.PatVisitInfo> lstPatVisitLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -451,8 +451,8 @@ namespace EMRDBLib.DbAccess
             string szCondition = string.Format("A.{0}=B.{0} AND A.{1}=B.{1} AND A.{2}=C.{2}", SystemData.PatVisitView.PATIENT_ID
               , SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.DEPT_CODE);
             szCondition = string.Format("{0} AND A.{1}>={2} AND A.{1}<={3} AND (A.{4}='H') AND {5}='IP'", szCondition
-                , SystemData.AdtLogView.LOG_DATE_TIME, base.QCAccess.GetSqlTimeFormat(dtBeginTime)
-                , base.QCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.PATIENT_CONDITION
+                , SystemData.AdtLogView.LOG_DATE_TIME, base.MedQCAccess.GetSqlTimeFormat(dtBeginTime)
+                , base.MedQCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.PATIENT_CONDITION
                 , SystemData.PatVisitView.VISIT_TYPE);
 
             if (!string.IsNullOrEmpty(szDeptCode))
@@ -466,7 +466,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -509,7 +509,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -527,7 +527,7 @@ namespace EMRDBLib.DbAccess
         public short GetDeptDocScoreInfo(string szDeptCode, string szCheckerName, DateTime dateBegin, DateTime dateEnd
             , bool bDischareTime, string szScoreH, string szScoreL, ref List<EMRDBLib.DeptDocScoreInfo> lstDeptDocScoreInfo)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder strBuilder = new StringBuilder();
@@ -537,10 +537,10 @@ namespace EMRDBLib.DbAccess
             strBuilder.Append(" WHERE B.PATIENT_ID=C.PATIENT_ID AND B.VISIT_ID=C.VISIT_ID");
             if (bDischareTime)
                 strBuilder.AppendFormat(" AND B.DISCHARGE_TIME >={0} AND B.DISCHARGE_TIME<{1} AND B.DEPT_DISCHARGE_FROM=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             else
                 strBuilder.AppendFormat(" AND B.VISIT_TIME >={0} AND B.VISIT_TIME<{1} AND B.DEPT_CODE=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             strBuilder.AppendFormat(" AND C.HOS_ASSESS>={0}", szScoreH);
             if (!string.IsNullOrEmpty(szCheckerName))
                 strBuilder.AppendFormat(" AND C.HOS_QCMAN='{0}'", szCheckerName);
@@ -551,10 +551,10 @@ namespace EMRDBLib.DbAccess
             strBuilder.Append(" WHERE B.PATIENT_ID=C.PATIENT_ID AND B.VISIT_ID=C.VISIT_ID");
             if (bDischareTime)
                 strBuilder.AppendFormat(" AND B.DISCHARGE_TIME >={0} AND B.DISCHARGE_TIME<{1} AND B.DEPT_DISCHARGE_FROM=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             else
                 strBuilder.AppendFormat(" AND B.VISIT_TIME >={0} AND B.VISIT_TIME<{1} AND B.DEPT_CODE=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             strBuilder.AppendFormat(" AND C.HOS_ASSESS>={0} AND C.HOS_ASSESS<{1}", szScoreL, szScoreH);
             if (!string.IsNullOrEmpty(szCheckerName))
                 strBuilder.AppendFormat(" AND C.HOS_QCMAN='{0}'", szCheckerName);
@@ -565,10 +565,10 @@ namespace EMRDBLib.DbAccess
             strBuilder.Append(" WHERE B.PATIENT_ID=C.PATIENT_ID AND B.VISIT_ID=C.VISIT_ID");
             if (bDischareTime)
                 strBuilder.AppendFormat(" AND B.DISCHARGE_TIME >={0} AND B.DISCHARGE_TIME<{1} AND B.DEPT_DISCHARGE_FROM=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             else
                 strBuilder.AppendFormat(" AND B.VISIT_TIME >={0} AND B.VISIT_TIME<{1} AND B.DEPT_CODE=A.DEPT_CODE"
-                    , base.QCAccess.GetSqlTimeFormat(dateBegin), base.QCAccess.GetSqlTimeFormat(dateEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dateBegin), base.MedQCAccess.GetSqlTimeFormat(dateEnd));
             strBuilder.AppendFormat(" AND C.HOS_ASSESS<{0}", szScoreL);
             if (!string.IsNullOrEmpty(szCheckerName))
                 strBuilder.AppendFormat(" AND C.HOS_QCMAN='{0}'", szCheckerName);
@@ -579,7 +579,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(strBuilder.ToString(), CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(strBuilder.ToString(), CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -612,7 +612,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -628,7 +628,7 @@ namespace EMRDBLib.DbAccess
         public short GetPatsListByPatient(string szPatientIDOrInpNo, bool bIsPatientID, string szPatientName, string szDeptCode
             , ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}"
@@ -657,7 +657,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -701,7 +701,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -718,7 +718,7 @@ namespace EMRDBLib.DbAccess
         public short GetPatListByOperation(string szDeptCode, PatientType patientType, DateTime dtBeginTime, DateTime dtEndTime
             , string szOperationCode, ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
@@ -743,12 +743,12 @@ namespace EMRDBLib.DbAccess
             if (patientType == PatientType.AllPatient)
             {
                 szCondition = string.Format("{0} AND A.{1}>={2} AND A.{1}<={3}", szCondition, SystemData.PatVisitView.VISIT_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             }
             else if (patientType == PatientType.PatOutHosptal)
             {
                 szCondition = string.Format("{0} AND A.{1}>={2} AND A.{1}<={3}", szCondition, SystemData.PatVisitView.DISCHARGE_TIME
-                   , base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                   , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
                 szCondition = string.Format("{0} AND A.{1} IS NOT NULL", szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
             }
             if (!string.IsNullOrEmpty(szOperationCode))
@@ -760,7 +760,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -805,7 +805,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -822,7 +822,7 @@ namespace EMRDBLib.DbAccess
         public short GetPatListByInHospDays(string szDeptCode, int nInHospDays, OperatorType operatorType, PatientType patientType
             , ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (patientType == PatientType.PatInHosptial)
@@ -872,7 +872,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -916,7 +916,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
 
         }
@@ -931,7 +931,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDiagnosisInfo(string szPatientID, string szVisitID, ref List<DiagnosisInfo> lstDiagnosisInfo)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5}", SystemData.DiagnosisView.DIAGNOSIS_TYPE, SystemData.DiagnosisView.DIAGNOSIS_TYPE_NAME
@@ -945,7 +945,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -978,7 +978,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -991,7 +991,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatVisitInfo(string szPatientID, string szVisitID, ref PatVisitInfo patVisitLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}", SystemData.PatVisitView.INP_NO
@@ -1012,7 +1012,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1058,7 +1058,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1071,7 +1071,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatVisit(string szPatientID, string szVisitNo, ref PatVisitInfo patVisitLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}", SystemData.PatVisitView.INP_NO
@@ -1092,7 +1092,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1138,13 +1138,13 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
         public short GetPatVisitInfos(string szPatientID, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}"
@@ -1166,7 +1166,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1212,7 +1212,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -1228,7 +1228,7 @@ namespace EMRDBLib.DbAccess
             , DateTime dtRequestTime, int nOperFlag)
         {
             string szDoctorID = string.Empty;
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             DbParameter[] pmi = new DbParameter[6];
@@ -1241,7 +1241,7 @@ namespace EMRDBLib.DbAccess
             int nInsertResult = 0;
             try
             {
-                nInsertResult = base.QCAccess.ExecuteNonQuery("UPDATE_MR_ON_LINE", CommandType.StoredProcedure, ref pmi);
+                nInsertResult = base.MedQCAccess.ExecuteNonQuery("UPDATE_MR_ON_LINE", CommandType.StoredProcedure, ref pmi);
             }
             catch (Exception ex)
             {
@@ -1257,7 +1257,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetPatDoctors(ref List<PatDoctorInfo> lstPatDoctorInfos)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (lstPatDoctorInfos == null | lstPatDoctorInfos.Count <= 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1280,7 +1280,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1313,7 +1313,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1322,7 +1322,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         public short GetPatListByCheckedDoc(string szCheckerName, DateTime dtBeginTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15}"
@@ -1334,8 +1334,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME);
             string szTableB = string.Format("SELECT DISTINCT PATIENT_ID, VISIT_ID  FROM MEDICAL_QC_MSG" +
                                          " WHERE ISSUED_DATE_TIME >= {0}  AND ISSUED_DATE_TIME < {1} ",
-                                         base.QCAccess.GetSqlTimeFormat(dtBeginTime),
-                                         base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                                         base.MedQCAccess.GetSqlTimeFormat(dtBeginTime),
+                                         base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             if (!string.IsNullOrEmpty(szCheckerName))
             {
                 szTableB += string.Format(" AND ISSUED_BY = '{0}'", szCheckerName);
@@ -1349,7 +1349,7 @@ namespace EMRDBLib.DbAccess
             try
             {
                 LogManager.Instance.WriteLog("szSQL:" + szSQL);
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1392,7 +1392,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1417,7 +1417,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1447,13 +1447,13 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
         public short GetPatListByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             short shRet = GetPidByMutiVisit(dtStartTime, dtEndTime, ref lstPatVisitLogs);
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count <= 0)
@@ -1472,7 +1472,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME);
 
             string szCondition = string.Format(" ({0}) AND A.Discharge_time > {1} AND A.VISIT_TIME <={2}",
-                                                 szPids, base.QCAccess.GetSqlTimeFormat(dtStartTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                                                 szPids, base.MedQCAccess.GetSqlTimeFormat(dtStartTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
             string szTable = string.Format("{0} A ", SystemData.DataView.PAT_VISIT_V);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
@@ -1480,7 +1480,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1524,7 +1524,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1532,7 +1532,7 @@ namespace EMRDBLib.DbAccess
 
         private short GetPidByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szSQL = string.Format("SELECT PATIENT_ID  FROM PAT_VISIT_V" +
@@ -1540,12 +1540,12 @@ namespace EMRDBLib.DbAccess
                                             " AND VISIT_TIME <={1}" +
                                             " AND VISIT_TYPE = 'IP'" +
                                             " GROUP BY PATIENT_ID HAVING COUNT(PATIENT_ID) >= 2",
-                                         base.QCAccess.GetSqlTimeFormat(dtStartTime),
-                                         base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                                         base.MedQCAccess.GetSqlTimeFormat(dtStartTime),
+                                         base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1574,13 +1574,13 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
         public short GetPatListByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             short shRet = GetPidVidByTransferTime(dtStartTime, dtEndTime, ref lstPatVisitLogs);
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count <= 0)
@@ -1606,7 +1606,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1650,7 +1650,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -1662,7 +1662,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetPatListByDocReview(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15}"
@@ -1678,8 +1678,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.VISIT_ID, SystemData.MedicalQcMsgTable.VISIT_ID);
             szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3} "
                 , szCondition
-                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, base.QCAccess.GetSqlTimeFormat(dtStartTime)
-                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, base.MedQCAccess.GetSqlTimeFormat(dtStartTime)
+                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             szCondition = string.Format("{0} AND {1} = 2"
                 , szCondition, SystemData.MedicalQcMsgTable.MSG_STATUS);
             string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
@@ -1689,7 +1689,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1733,7 +1733,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1781,19 +1781,19 @@ namespace EMRDBLib.DbAccess
 
         private short GetPidVidByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szSQL = string.Format("SELECT DISTINCT PATIENT_ID,VISIT_ID FROM EMR_TRANSFER_V" +
                                             " WHERE DISCHARGE_DATE_TIME > {0}" +
                                             " AND DISCHARGE_DATE_TIME <={1}" +
                                             " AND DEPT_TRANSFERED_TO IS NOT NULL",
-                                         base.QCAccess.GetSqlTimeFormat(dtStartTime),
-                                         base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                                         base.MedQCAccess.GetSqlTimeFormat(dtStartTime),
+                                         base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1823,7 +1823,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1834,7 +1834,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetOutPatientFirstDiagnosis(List<PatVisitInfo> lstPatVisitLogs, List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1853,7 +1853,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1885,7 +1885,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -1896,7 +1896,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetPatientMainDiagnosis(List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1915,7 +1915,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1946,7 +1946,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -1955,7 +1955,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="lstPatConstInfo"></param>
         public short GetPatConstInfo(ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1973,7 +1973,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -2005,7 +2005,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         public short GetOutPatientCondition(List<PatVisitInfo> lstPatVistLogs)
@@ -2082,7 +2082,7 @@ namespace EMRDBLib.DbAccess
         }
         public short GetPatVisits(string szDeptCode, string szUserID, string szPatientID, string szPatientName, DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd, DateTime dtDischargeTimeBegin, DateTime dtDischargeTimeEnd, string szDischargeMode, ref List<PatVisitInfo> lstPatVisitInfos)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.PatVisitView.ADDRESS);
@@ -2156,8 +2156,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                     , szCondition
                     , SystemData.PatVisitView.VISIT_TIME
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
-                    , base.QCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
             }
             if (dtDischargeTimeBegin != SystemParam.Instance.DefaultTime
                 && dtDischargeTimeEnd != SystemParam.Instance.DefaultTime)
@@ -2165,8 +2165,8 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
                       , szCondition
                       , SystemData.PatVisitView.DISCHARGE_TIME
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
-                      , base.QCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeBegin)
+                      , base.MedQCAccess.GetSqlTimeFormat(dtDischargeTimeEnd));
             }
             string szOrderBy = string.Format("{0},{1}", SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.DISCHARGE_TIME);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC
@@ -2175,7 +2175,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -2293,7 +2293,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
     }
 }

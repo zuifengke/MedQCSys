@@ -29,7 +29,7 @@ namespace EMRDBLib.DbAccess
         }
         public short GetOperations(string szDeptCode, DateTime dtBeginTime, DateTime dtEndTime, ref List<Operation> lstOperations)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -56,8 +56,8 @@ namespace EMRDBLib.DbAccess
             szCondition = string.Format("{0} AND {1}>{2} and {1} <{3} "
                 , szCondition
                 , SystemData.OperationView.OPERATING_DATE
-                , base.QCAccess.GetSqlTimeFormat(dtBeginTime)
-                , base.QCAccess.GetSqlTimeFormat(dtEndTime)
+                , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime)
+                , base.MedQCAccess.GetSqlTimeFormat(dtEndTime)
                 );
 
             if (!string.IsNullOrEmpty(szDeptCode))
@@ -70,7 +70,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -154,13 +154,13 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
         public short GetOperations(string szPatientID, string szPatientName, ref List<Operation> lstOperations)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (string.IsNullOrEmpty(szPatientID) && string.IsNullOrEmpty(szPatientName))
@@ -203,7 +203,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -287,7 +287,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
     }

@@ -31,7 +31,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetTimeQCRules(ref List<TimeQCRule> lstTimeQCRules)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}"
@@ -49,7 +49,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -91,7 +91,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("ConfigAccess.GetTimeQCRules", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.TimeRuleTable.RULE_DESC);
 
             string szValue = string.Format("'{0}','{1}',{2},{3},'{4}','{5}',{6},{7},{8},{9},'{10}'"
-                , timeQCRule.RuleID, timeQCRule.EventID, base.DataAccess.GetSqlParamName("DocTypeID")
-                , base.DataAccess.GetSqlParamName("DocTypeName")
+                , timeQCRule.RuleID, timeQCRule.EventID, base.MeddocAccess.GetSqlParamName("DocTypeID")
+                , base.MeddocAccess.GetSqlParamName("DocTypeName")
                 , timeQCRule.DocTypeAlias, timeQCRule.WrittenPeriod, timeQCRule.IsRepeat ? 1 : 0
                 , timeQCRule.IsValid ? 1 : 0, timeQCRule.QCScore.ToString()
                 , timeQCRule.OrderValue.ToString(), timeQCRule.RuleDesc);
@@ -132,7 +132,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -161,14 +161,14 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}={7},{8}='{9}',{10}='{11}',{12}={13},{14}={15},{16}={17},{18}={19},{20}='{21}'"
                 , SystemData.TimeRuleTable.RULE_ID, timeQCRule.RuleID
                 , SystemData.TimeRuleTable.EVENT_ID, timeQCRule.EventID
-                , SystemData.TimeRuleTable.DOCTYPE_ID, base.DataAccess.GetSqlParamName("DocTypeID")
-                , SystemData.TimeRuleTable.DOCTYPE_NAME, base.DataAccess.GetSqlParamName("DocTypeName")
+                , SystemData.TimeRuleTable.DOCTYPE_ID, base.MeddocAccess.GetSqlParamName("DocTypeID")
+                , SystemData.TimeRuleTable.DOCTYPE_NAME, base.MeddocAccess.GetSqlParamName("DocTypeName")
                 , SystemData.TimeRuleTable.DOCTYPE_ALIAS, timeQCRule.DocTypeAlias
                 , SystemData.TimeRuleTable.WRITTEN_PERIOD, timeQCRule.WrittenPeriod
                 , SystemData.TimeRuleTable.IS_REPEAT, timeQCRule.IsRepeat ? 1 : 0
@@ -187,7 +187,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -209,7 +209,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short DeleteTimeQCRule(string szRuleID)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szRuleID))
@@ -225,7 +225,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

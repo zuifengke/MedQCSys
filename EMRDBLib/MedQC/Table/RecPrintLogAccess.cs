@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetRecPrintLog(string szPrintID, ref RecPrintLog RecPrintLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -71,7 +71,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -140,12 +140,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecPrintLogs(string szPatientID, string szVisitNo, ref List<RecPrintLog> lstRecPrintLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.DISCHARGE_TIME);
@@ -174,7 +174,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -246,12 +246,12 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecPrintLogs(DateTime dtPrintTimeBegin, DateTime dtPrintTimeEnd, string szPatientName, ref List<RecPrintLog> lstRecPrintLogs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.DISCHARGE_TIME);
@@ -273,8 +273,8 @@ namespace EMRDBLib.DbAccess
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} <= {3}"
                 , szCondition
                 , SystemData.RecPrintLogTable.PRINT_TIME
-                , base.QCAccess.GetSqlTimeFormat(dtPrintTimeBegin)
-                , base.QCAccess.GetSqlTimeFormat(dtPrintTimeEnd)
+                , base.MedQCAccess.GetSqlTimeFormat(dtPrintTimeBegin)
+                , base.MedQCAccess.GetSqlTimeFormat(dtPrintTimeEnd)
                 );
             if (!string.IsNullOrEmpty(szPatientName))
                 szCondition = string.Format("{0} AND {1} like '%{2}%'"
@@ -286,7 +286,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -358,7 +358,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 新增一条人工核查结果信息
@@ -380,7 +380,7 @@ namespace EMRDBLib.DbAccess
             StringBuilder sbField = new StringBuilder();
             StringBuilder sbValue = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.DISCHARGE_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(recPrintLog.DISCHARGE_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(recPrintLog.DISCHARGE_TIME));
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.INVOICE);
             sbValue.AppendFormat("{0},", recPrintLog.INVOICE ? 1 : 0);
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.MONEY);
@@ -400,7 +400,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.PRINT_NAME);
             sbValue.AppendFormat("'{0}',", recPrintLog.PRINT_NAME);
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.PRINT_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(recPrintLog.PRINT_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(recPrintLog.PRINT_TIME));
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.REMARKS);
             sbValue.AppendFormat("'{0}',", recPrintLog.REMARKS);
             sbField.AppendFormat("{0},", SystemData.RecPrintLogTable.RELATIONSHIP_PATIENT);
@@ -413,7 +413,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -440,11 +440,11 @@ namespace EMRDBLib.DbAccess
                     , new object[] { recPrintLog }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecPrintLogTable.DISCHARGE_TIME, base.QCAccess.GetSqlTimeFormat(recPrintLog.DISCHARGE_TIME));
+                , SystemData.RecPrintLogTable.DISCHARGE_TIME, base.MedQCAccess.GetSqlTimeFormat(recPrintLog.DISCHARGE_TIME));
             sbField.AppendFormat("{0}={1},"
                 , SystemData.RecPrintLogTable.INVOICE, recPrintLog.INVOICE ? 1 : 0);
             sbField.AppendFormat("{0}={1},"
@@ -464,7 +464,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecPrintLogTable.PRINT_NAME, recPrintLog.PRINT_NAME);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecPrintLogTable.PRINT_TIME, base.QCAccess.GetSqlTimeFormat(recPrintLog.PRINT_TIME));
+                , SystemData.RecPrintLogTable.PRINT_TIME, base.MedQCAccess.GetSqlTimeFormat(recPrintLog.PRINT_TIME));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecPrintLogTable.RELATIONSHIP_PATIENT, recPrintLog.RELATIONSHIP_PATIENT);
             sbField.AppendFormat("{0}='{1}',"
@@ -478,7 +478,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -495,7 +495,7 @@ namespace EMRDBLib.DbAccess
 
         public short Delete(string szPrintID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szPrintID))
@@ -510,7 +510,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

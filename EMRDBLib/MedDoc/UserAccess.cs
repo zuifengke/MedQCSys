@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDeptUserList(string szDeptCode, ref List<UserInfo> lstUserInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
@@ -52,7 +52,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -76,7 +76,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetDeptUserList", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
@@ -107,7 +107,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -131,7 +131,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetUserInfo", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 获取全院所有用户列表
@@ -140,7 +140,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetAllUserInfos(ref List<UserInfo> lstUserInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
@@ -153,7 +153,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -177,7 +177,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("UserAccess.GetAllUserInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 根据用户ID获取指定的用户信息
@@ -193,7 +193,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
@@ -207,7 +207,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -227,7 +227,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetUserInfo", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
     }
 }

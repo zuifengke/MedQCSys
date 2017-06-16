@@ -34,7 +34,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>ServerData.ExecuteResult</returns>
         public short GetQCMsgChatInfoImage(string szChatID, ref byte[] byteImage)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.QCMsgChatTable.CHAT_ID, szChatID);
@@ -44,7 +44,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("DBAccess.GetQCMsgChatInfoImage"
@@ -59,7 +59,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("DBAccess.GetQCMsgChatInfoImage", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgChatLogList(string szListenser, bool bIsRead, ref List<QcMsgChatLog> lstQcMsgChatLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
@@ -98,7 +98,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -135,7 +135,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -147,7 +147,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgChatLogList(string szListenser, DateTime dtBeginTime, DateTime dtEndTime, ref List<QcMsgChatLog> lstQcMsgChatLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
@@ -164,8 +164,8 @@ namespace EMRDBLib.DbAccess
                 );
             string szCondition = string.Format(" 1=1  and {0}='{1}' and {2} >= {3} and {4} <={5}"
                 , SystemData.QCMsgChatTable.LISTENER, szListenser
-                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.QCAccess.GetSqlTimeFormat(dtBeginTime)
-                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.QCAccess.GetSqlTimeFormat(dtEndTime)
+                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.MedQCAccess.GetSqlTimeFormat(dtBeginTime)
+                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.MedQCAccess.GetSqlTimeFormat(dtEndTime)
                 );
 
             string szSQL = string.Format(SystemData.SQL.SELECT_DISTINCT_WHERE_ORDER_DESC, szField
@@ -175,7 +175,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -212,7 +212,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -224,7 +224,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgChatLogList(string szPatientID, string szVisitID, ref List<QcMsgChatLog> lstQcMsgChatLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
@@ -251,7 +251,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -288,7 +288,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -301,7 +301,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgChatLogList(string szPatientID, string szVisitID, string szListener, ref List<QcMsgChatLog> lstQcMsgChatLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
@@ -330,7 +330,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -367,7 +367,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -391,7 +391,7 @@ namespace EMRDBLib.DbAccess
             string szValue = string.Format("'{0}','{1}',{2},{3},'{4}','{5}','{6}','{7}',{8},'{9}'"
                 , qcMsgChatLog.ChatContent
                 , qcMsgChatLog.ChatID
-                , base.QCAccess.GetSqlTimeFormat(qcMsgChatLog.ChatSendDate)
+                , base.MedQCAccess.GetSqlTimeFormat(qcMsgChatLog.ChatSendDate)
                 , qcMsgChatLog.IsRead ? "1" : "0"
                 , qcMsgChatLog.Listener
                 , qcMsgChatLog.PatientID
@@ -407,7 +407,7 @@ namespace EMRDBLib.DbAccess
             if (byteImage != null)
             {
                 szField = string.Format("{0},{1}", szField, SystemData.QCMsgChatTable.CHAT_IMAGE);
-                szValue = string.Format("{0},{1}", szValue, base.QCAccess.GetSqlParamName("CHAT_IMAGE"));
+                szValue = string.Format("{0},{1}", szValue, base.MedQCAccess.GetSqlParamName("CHAT_IMAGE"));
 
                 pmi = new DbParameter[1];
                 pmi[0] = new DbParameter("CHAT_IMAGE", byteImage);
@@ -415,7 +415,7 @@ namespace EMRDBLib.DbAccess
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_MSG_CHAT_LOG, szField, szValue);
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -438,7 +438,7 @@ namespace EMRDBLib.DbAccess
             try
             {
 
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -455,7 +455,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgLogUserID(string szUserID, ref List<string> lstUserID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1}",
@@ -472,7 +472,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -499,7 +499,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
@@ -512,7 +512,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQCMsgChatLogView(string szUserID_A, string szUserID_B, DateTime dtBeginTime, DateTime dtEndTime, ref List<QcMsgChatLog> lstQcMsgChatLog)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
@@ -533,8 +533,8 @@ namespace EMRDBLib.DbAccess
                 );
             szCondition = string.Format(" {0} and {1} >= {2} and {3} <={4}"
                 , szCondition
-                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.QCAccess.GetSqlTimeFormat(dtBeginTime)
-                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.QCAccess.GetSqlTimeFormat(dtEndTime)
+                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.MedQCAccess.GetSqlTimeFormat(dtBeginTime)
+                , SystemData.QCMsgChatTable.CHAT_SEND_DATE, base.MedQCAccess.GetSqlTimeFormat(dtEndTime)
                 );
             string szSQL = string.Format(SystemData.SQL.SELECT_DISTINCT_WHERE_ORDER_ASC, szField
                   , SystemData.DataTable.QC_MSG_CHAT_LOG
@@ -543,7 +543,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -580,7 +580,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
     }

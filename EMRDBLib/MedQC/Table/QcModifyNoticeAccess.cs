@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcModifyNotice(string szPatientID, string szVisitID, ref QcModifyNotice qcModifyNotice)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -78,7 +78,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -157,7 +157,7 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcModifyNotices(DateTime dtNoticeTimeBegin, DateTime dtNoticeTimeEnd, string szDeptCode, string szUserID, string szPatientID, string szPatientName, ref List<QcModifyNotice> lstQcModifyNotices)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.MODIFY_NOTICE_ID);
@@ -196,8 +196,8 @@ namespace EMRDBLib.DbAccess
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} <= {3}"
                 , szCondition
                 , SystemData.QcModifyNoticeTable.NOTICE_TIME
-                , base.QCAccess.GetSqlTimeFormat(dtNoticeTimeBegin)
-                , base.QCAccess.GetSqlTimeFormat(dtNoticeTimeEnd));
+                , base.MedQCAccess.GetSqlTimeFormat(dtNoticeTimeBegin)
+                , base.MedQCAccess.GetSqlTimeFormat(dtNoticeTimeEnd));
             if (!string.IsNullOrEmpty(szDeptCode))
             {
                 szCondition = string.Format("{0} AND {1}='{2}'"
@@ -233,7 +233,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -315,7 +315,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -346,11 +346,11 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.MODIFY_SCORE);
             sbValue.AppendFormat("{0},", qcModifyNotice.MODIFY_SCORE);
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.MODIFY_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(qcModifyNotice.MODIFY_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(qcModifyNotice.MODIFY_TIME));
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.NOTICE_STATUS);
             sbValue.AppendFormat("{0},", qcModifyNotice.NOTICE_STATUS);
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.NOTICE_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(qcModifyNotice.NOTICE_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(qcModifyNotice.NOTICE_TIME));
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.PATIENT_ID);
             sbValue.AppendFormat("'{0}',", qcModifyNotice.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.QcModifyNoticeTable.QC_DEPT_CODE);
@@ -381,7 +381,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -408,7 +408,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { qcModifyNotice }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -420,7 +420,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}={1},"
                 , SystemData.QcModifyNoticeTable.NOTICE_STATUS, qcModifyNotice.NOTICE_STATUS);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.QcModifyNoticeTable.NOTICE_TIME, base.QCAccess.GetSqlTimeFormat(qcModifyNotice.NOTICE_TIME));
+                , SystemData.QcModifyNoticeTable.NOTICE_TIME, base.MedQCAccess.GetSqlTimeFormat(qcModifyNotice.NOTICE_TIME));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.QcModifyNoticeTable.PATIENT_ID, qcModifyNotice.PATIENT_ID);
             sbField.AppendFormat("{0}='{1}',"
@@ -450,7 +450,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -472,7 +472,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szModifyNoticeID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szModifyNoticeID))
@@ -487,7 +487,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

@@ -45,13 +45,13 @@ namespace EMRDBLib.DbAccess
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}' AND {4}='{5}' AND {6}='{7}' AND {8}={9} AND {10}={11}"
                 , SystemData.QcTimeCheckTable.PATIENT_ID, szPatientID, SystemData.QcTimeCheckTable.VISIT_ID, szVisitID
                 , SystemData.QcTimeCheckTable.EVENT_ID, szEventID, SystemData.QcTimeCheckTable.DOCTYPE_ID, szDocTypeID
-                , SystemData.QcTimeCheckTable.BEGIN_DATE, base.QCAccess.GetSqlTimeFormat(startTime), SystemData.QcTimeCheckTable.END_DATE
-                , base.QCAccess.GetSqlTimeFormat(endTime));
+                , SystemData.QcTimeCheckTable.BEGIN_DATE, base.MedQCAccess.GetSqlTimeFormat(startTime), SystemData.QcTimeCheckTable.END_DATE
+                , base.MedQCAccess.GetSqlTimeFormat(endTime));
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataTable.QC_TIME_CHECK, szCondition);
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -82,7 +82,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -92,23 +92,23 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short UpdateQCTimeCheck(QCTimeCheck qcTimeCheckInfo)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}={1},{2}='{3}',{4}={5}", SystemData.QcTimeCheckTable.POINT, qcTimeCheckInfo.Point
                 , SystemData.QcTimeCheckTable.CHECKER_NAME, qcTimeCheckInfo.CheckerName, SystemData.QcTimeCheckTable.CHECK_DATE
-                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime));
+                , base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime));
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}' AND {4}='{5}' AND {6}='{7}' AND {8}={9} AND {10}={11}"
                 , SystemData.QcTimeCheckTable.PATIENT_ID, qcTimeCheckInfo.PatientID, SystemData.QcTimeCheckTable.VISIT_ID, qcTimeCheckInfo.VisitID
                 , SystemData.QcTimeCheckTable.EVENT_ID, qcTimeCheckInfo.EventID, SystemData.QcTimeCheckTable.DOCTYPE_ID, qcTimeCheckInfo.DocTypeID
-                , SystemData.QcTimeCheckTable.BEGIN_DATE, base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.BeginTime), SystemData.QcTimeCheckTable.END_DATE
-                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.EndTime));
+                , SystemData.QcTimeCheckTable.BEGIN_DATE, base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.BeginTime), SystemData.QcTimeCheckTable.END_DATE
+                , base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.EndTime));
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QC_TIME_CHECK, szField, szCondition);
 
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short SaveQCTimeCheck(QCTimeCheck qcTimeCheckInfo)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", SystemData.QcTimeCheckTable.PATIENT_ID
@@ -137,15 +137,15 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcTimeCheckTable.BEGIN_DATE, SystemData.QcTimeCheckTable.END_DATE, SystemData.QcTimeCheckTable.POINT
                 , SystemData.QcTimeCheckTable.CHECKER_NAME, SystemData.QcTimeCheckTable.CHECK_DATE);
             string szValue = string.Format("'{0}','{1}','{2}','{3}',{4},{5},{6},'{7}',{8}", qcTimeCheckInfo.PatientID, qcTimeCheckInfo.VisitID
-                , qcTimeCheckInfo.EventID, qcTimeCheckInfo.DocTypeID, base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.BeginTime)
-                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.EndTime), qcTimeCheckInfo.Point, qcTimeCheckInfo.CheckerName
-                , base.QCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime)
+                , qcTimeCheckInfo.EventID, qcTimeCheckInfo.DocTypeID, base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.BeginTime)
+                , base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.EndTime), qcTimeCheckInfo.Point, qcTimeCheckInfo.CheckerName
+                , base.MedQCAccess.GetSqlTimeFormat(qcTimeCheckInfo.CheckTime)
                 );
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_TIME_CHECK, szField, szValue);
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

@@ -53,7 +53,7 @@ namespace EMRDBLib.DbAccess
             if (szOldPwd.Trim() == szNewPwd.Trim())
                 return SystemData.ReturnValue.OK;
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.EXCEPTION;
 
             if (szNewPwd != string.Empty)
@@ -72,7 +72,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref param);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref param);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.RES_NO_FOUND;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.EXCEPTION;
 
             //先获取用户信息
@@ -110,7 +110,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -123,7 +123,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.VerifyUser", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
 
             //验证密码
             if (GlobalMethods.Misc.IsEmptyString(szPwdText))
@@ -149,7 +149,7 @@ namespace EMRDBLib.DbAccess
             if (GlobalMethods.Misc.IsEmptyString(szUserID))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'AND {2}='{3}'"
@@ -160,7 +160,7 @@ namespace EMRDBLib.DbAccess
             nCount = 0;
             try
             {
-                object objValue = base.DataAccess.ExecuteScalar(szSQL, CommandType.Text);
+                object objValue = base.MeddocAccess.ExecuteScalar(szSQL, CommandType.Text);
                 if (objValue == null || objValue == System.DBNull.Value)
                     nCount = 0;
                 if (!int.TryParse(objValue.ToString(), out nCount))
@@ -183,7 +183,7 @@ namespace EMRDBLib.DbAccess
             if (userRight == null || GlobalMethods.Misc.IsEmptyString(userRight.UserID))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}'", SystemData.UserRightTable.RIGHT_CODE, userRight.GetRightCode());
@@ -196,7 +196,7 @@ namespace EMRDBLib.DbAccess
             int count = 0;
             try
             {
-                count = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                count = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -222,7 +222,7 @@ namespace EMRDBLib.DbAccess
             if (count > 0)
                 return this.UpdateUserRight(userRight);
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3}"
@@ -237,7 +237,7 @@ namespace EMRDBLib.DbAccess
             count = 0;
             try
             {
-                count = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                count = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -255,7 +255,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetUserRight(string szUserID, UserRightType rightType, ref UserRightBase userRight)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2}"
@@ -270,7 +270,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -287,7 +287,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("RightAccess.GetUserRight", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
 
@@ -299,7 +299,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetUserRight(UserRightType rightType, ref List<UserRightBase> lstUserRight)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2}"
@@ -315,7 +315,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -340,7 +340,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("RightAccess.GetUserRight", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
     }
 }

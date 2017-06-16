@@ -223,7 +223,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetConfigData(string szGroupName, string szConfigName, ref List<ConfigInfo> lstConfigInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3}"
@@ -259,7 +259,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -284,7 +284,7 @@ namespace EMRDBLib.DbAccess
                         , new object[] { szGroupName, szConfigName, szSQL }, "没有查询到记录!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short UpdateConfigData(ConfigInfo configInfo)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (configInfo == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -315,7 +315,7 @@ namespace EMRDBLib.DbAccess
             szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.CONFIG_DICT, szField, szCondition);
             try
             {
-                int i = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                int i = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
                 if (i <= 0)
                 {
                     return SystemData.ReturnValue.FAILED;
@@ -329,7 +329,7 @@ namespace EMRDBLib.DbAccess
                         , new object[] { configInfo, szSQL }, "没有查询到记录!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short AddConfigData(ConfigInfo configInfo)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (configInfo == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -359,7 +359,7 @@ namespace EMRDBLib.DbAccess
             szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.CONFIG_DICT, szField, szValue);
             try
             {
-                int i = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                int i = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
                 if (i <= 0)
                 {
                     return SystemData.ReturnValue.FAILED;
@@ -373,7 +373,7 @@ namespace EMRDBLib.DbAccess
                         , new object[] { configInfo, szSQL }, "没有查询到记录!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
     }
 }

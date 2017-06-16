@@ -31,7 +31,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ExecuteResult</returns>
         public short GetTimeQCEvents(ref List<TimeQCEvent> lstTimeQCEvents)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4}"
@@ -45,7 +45,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -73,7 +73,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("ConfigAccess.GetTimeQCEvents", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 新增一条时效事件配置信息
@@ -94,8 +94,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.TimeEventTable.SQL_TEXT, SystemData.TimeEventTable.SQL_CONDITON
                 , SystemData.TimeEventTable.DEPEND_EVENT);
             string szValue = string.Format("'{0}','{1}',{2},{3},'{4}'"
-                , timeQCEvent.EventID, timeQCEvent.EventName, base.DataAccess.GetSqlParamName("SqlText")
-                , base.DataAccess.GetSqlParamName("SqlCondition"), timeQCEvent.DependEvent);
+                , timeQCEvent.EventID, timeQCEvent.EventName, base.MeddocAccess.GetSqlParamName("SqlText")
+                , base.MeddocAccess.GetSqlParamName("SqlCondition"), timeQCEvent.DependEvent);
 
             DbParameter[] pmi = new DbParameter[2];
             pmi[0] = new DbParameter("SqlText", timeQCEvent.SqlText);
@@ -105,7 +105,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -134,14 +134,14 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}={7},{8}='{9}'"
                 , SystemData.TimeEventTable.EVENT_ID, timeQCEvent.EventID
                 , SystemData.TimeEventTable.EVENT_NAME, timeQCEvent.EventName
-                , SystemData.TimeEventTable.SQL_TEXT, base.DataAccess.GetSqlParamName("SqlText")
-                , SystemData.TimeEventTable.SQL_CONDITON, base.DataAccess.GetSqlParamName("SqlCondition")
+                , SystemData.TimeEventTable.SQL_TEXT, base.MeddocAccess.GetSqlParamName("SqlText")
+                , SystemData.TimeEventTable.SQL_CONDITON, base.MeddocAccess.GetSqlParamName("SqlCondition")
                 , SystemData.TimeEventTable.DEPEND_EVENT, timeQCEvent.DependEvent);
 
             DbParameter[] pmi = new DbParameter[2];
@@ -154,7 +154,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -176,7 +176,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short DeleteTimeQCEvent(string szEventID)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.TimeEventTable.EVENT_ID, szEventID);
@@ -185,7 +185,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -217,7 +217,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -240,7 +240,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("ConfigAccess.ExecuteTimeEventSQL", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
     }
 }

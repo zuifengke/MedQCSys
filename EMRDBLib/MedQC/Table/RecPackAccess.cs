@@ -30,7 +30,7 @@ namespace EMRDBLib.DbAccess
 
         public short GetRecPacks(string szPackerID, ref List<RecPack> lstRecPacks)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.ACCESS_ERROR;
             if (string.IsNullOrEmpty(szPackerID))
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -64,7 +64,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -132,12 +132,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecPacks(string szCaseNo,string szPackNo,string szPatientID, ref List<RecPack> lstRecPacks)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.ACCESS_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -183,7 +183,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -251,12 +251,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecPacksByPackNo(string szPackNo, ref List<RecPack> lstRecPacks)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -287,7 +287,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -355,18 +355,18 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public int GetNextCaseNo()
         {
             int caseNo = 1;
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szSql = "select max(case_no) as case_no from rec_pack t";
             try
             {
-                DataSet ds = base.QCAccess.ExecuteDataSet(szSql);
+                DataSet ds = base.MedQCAccess.ExecuteDataSet(szSql);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     if (ds.Tables[0].Rows[0][SystemData.RecPackTable.CASE_NO] == null
@@ -383,14 +383,14 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
             return caseNo;
         }
 
         public short GetRecPacksByCaseNo(string szCaseNo, ref List<RecPack> lstRecPacks)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -419,7 +419,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -487,12 +487,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecPack(string szPatientID, string szVisitNo, ref RecPack RecPack)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szPatientID) || string.IsNullOrEmpty(szVisitNo))
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -522,7 +522,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -582,11 +582,11 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short GetRecPacks(string szPatientID, string szVisitNo, ref List<RecPack> lstRecPacks)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecPackTable.CASE_NO);
@@ -613,7 +613,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -679,7 +679,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short Insert(RecPack RecPack)
@@ -699,7 +699,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecPackTable.CASE_NO);
             sbValue.AppendFormat("'{0}',", RecPack.CASE_NO);
             sbField.AppendFormat("{0},", SystemData.RecPackTable.DISCHARGE_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(RecPack.DISCHARGE_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(RecPack.DISCHARGE_TIME));
             sbField.AppendFormat("{0},", SystemData.RecPackTable.HOSPITAL_DISTRICT);
             sbValue.AppendFormat("'{0}',", RecPack.HOSPITAL_DISTRICT);
             sbField.AppendFormat("{0},", SystemData.RecPackTable.PACKER);
@@ -711,7 +711,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecPackTable.PACK_NO);
             sbValue.AppendFormat("'{0}',", RecPack.PACK_NO);
             sbField.AppendFormat("{0},", SystemData.RecPackTable.PACK_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(RecPack.PACK_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(RecPack.PACK_TIME));
             sbField.AppendFormat("{0},", SystemData.RecPackTable.PAPER_NUMBER);
             sbValue.AppendFormat("{0},", RecPack.PAPER_NUMBER);
             sbField.AppendFormat("{0},", SystemData.RecPackTable.PATIENT_ID);
@@ -726,7 +726,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -749,13 +749,13 @@ namespace EMRDBLib.DbAccess
                     , new object[] { recPack }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecPackTable.CASE_NO, recPack.CASE_NO);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecPackTable.DISCHARGE_TIME, base.QCAccess.GetSqlTimeFormat(recPack.DISCHARGE_TIME));
+                , SystemData.RecPackTable.DISCHARGE_TIME, base.MedQCAccess.GetSqlTimeFormat(recPack.DISCHARGE_TIME));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecPackTable.HOSPITAL_DISTRICT, recPack.HOSPITAL_DISTRICT);
             sbField.AppendFormat("{0}='{1}',"
@@ -765,7 +765,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecPackTable.PACK_NO, recPack.PACK_NO);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecPackTable.PACK_TIME, base.QCAccess.GetSqlTimeFormat(recPack.PACK_TIME));
+                , SystemData.RecPackTable.PACK_TIME, base.MedQCAccess.GetSqlTimeFormat(recPack.PACK_TIME));
             sbField.AppendFormat("{0}={1},"
                 , SystemData.RecPackTable.PAPER_NUMBER, recPack.PAPER_NUMBER);
             sbField.AppendFormat("{0}='{1}',"
@@ -779,7 +779,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -802,7 +802,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { szPackNo }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}'"
@@ -812,7 +812,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -829,7 +829,7 @@ namespace EMRDBLib.DbAccess
 
         public short Delete(string szPackID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szPackID))
@@ -844,7 +844,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

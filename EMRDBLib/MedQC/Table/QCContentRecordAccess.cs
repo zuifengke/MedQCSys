@@ -31,14 +31,14 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short DeleteContentRecord(string szDocSetID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szDocSetID))
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szSQL = string.Format(" DELETE FROM QC_CONTENT_RECORD_T WHERE DOC_SETID='{0}' ", szDocSetID);
             try
             {
-                int i = base.QCAccess.ExecuteNonQuery(szSQL);
+                int i = base.MedQCAccess.ExecuteNonQuery(szSQL);
                 return SystemData.ReturnValue.OK;
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
 
         }
@@ -77,15 +77,15 @@ namespace EMRDBLib.DbAccess
                 sb.AppendFormat("('{0}','{1}','{2}','{3}',{4},'{5}','{6}',{7},'{8}','{9}','{10}','{11}','{12}',{13},'{14}','{15}',{16},'{17}','{18}')",
                    item.MakeID(), item.PatientID, item.VisitID,
                     item.DocTypeID, item.Point, item.DocSetID, item.DocTitle,
-                    base.QCAccess.GetSqlTimeFormat(item.ModifyTime),
+                    base.MedQCAccess.GetSqlTimeFormat(item.ModifyTime),
                     item.BugClass, item.QCExplain, item.DocIncharge,
-                   item.DeptIncharge, item.PatientName, base.QCAccess.GetSqlTimeFormat(item.DocTime), item.BugType, item.DeptCode,
-                   base.QCAccess.GetSqlTimeFormat(item.BugCreateTime),item.CreateID,item.CreateName);
+                   item.DeptIncharge, item.PatientName, base.MedQCAccess.GetSqlTimeFormat(item.DocTime), item.BugType, item.DeptCode,
+                   base.MedQCAccess.GetSqlTimeFormat(item.BugCreateTime),item.CreateID,item.CreateName);
             }
             szSQL = string.Format("INSERT ALL  {0}  SELECT * FROM dual", sb.ToString());
             try
             {
-                int i = base.QCAccess.ExecuteNonQuery(szSQL);
+                int i = base.MedQCAccess.ExecuteNonQuery(szSQL);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
             return SystemData.ReturnValue.OK;
         }
@@ -103,7 +103,7 @@ namespace EMRDBLib.DbAccess
         
         public short GetQcContentRecordByPidVid(string szPatientId, string szVisitId, ref List<QcContentRecord> lstQcContentRecord)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szPatientId) || string.IsNullOrEmpty(szVisitId))
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -115,7 +115,7 @@ namespace EMRDBLib.DbAccess
             IDataReader reader = null;
             try
             {
-                reader = base.QCAccess.ExecuteReader(szSQL);
+                reader = base.MedQCAccess.ExecuteReader(szSQL);
                 if (reader == null || reader.IsClosed || !reader.Read())
                     return SystemData.ReturnValue.EXCEPTION;
                 if (lstQcContentRecord == null)
@@ -155,7 +155,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
 
         }
@@ -171,11 +171,11 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQcContentRecord(DateTime dtpModifyBeginTime, DateTime dtpModifyEndTime, string szDeptName, string szPatientId, string szVisitId, ref List<QcContentRecord> lstQcContentRecord)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("MODIFY_TIME >={0} and MODIFY_TIME <{1}",
-                base.QCAccess.GetSqlTimeFormat(dtpModifyBeginTime), base.QCAccess.GetSqlTimeFormat(dtpModifyEndTime));
+                base.MedQCAccess.GetSqlTimeFormat(dtpModifyBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtpModifyEndTime));
             if (!string.IsNullOrEmpty(szDeptName))
                 szCondition += string.Format(" AND DEPT_IN_CHARGE='{0}'", szDeptName);
             if (!string.IsNullOrEmpty(szPatientId))
@@ -193,7 +193,7 @@ namespace EMRDBLib.DbAccess
             IDataReader reader = null;
             try
             {
-                reader = base.QCAccess.ExecuteReader(szSQL);
+                reader = base.MedQCAccess.ExecuteReader(szSQL);
                 if (reader == null || reader.IsClosed || !reader.Read())
                     return SystemData.ReturnValue.EXCEPTION;
                 if (lstQcContentRecord == null)
@@ -234,7 +234,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -249,11 +249,11 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetQcContentRecord(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<QcContentRecord> lstQcContentRecord)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("BUG_CREATE_ITME >={0} and BUG_CREATE_ITME <{1}",
-                base.QCAccess.GetSqlTimeFormat(dtBeginTime), base.QCAccess.GetSqlTimeFormat(dtEndTime));
+                base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition += string.Format(" AND DEPT_CODE='{0}'", szDeptCode);
 
@@ -268,7 +268,7 @@ namespace EMRDBLib.DbAccess
             IDataReader reader = null;
             try
             {
-                reader = base.QCAccess.ExecuteReader(szSQL);
+                reader = base.MedQCAccess.ExecuteReader(szSQL);
                 if (reader == null || reader.IsClosed || !reader.Read())
                     return SystemData.ReturnValue.EXCEPTION;
                 if (lstQcContentRecord == null)
@@ -309,17 +309,17 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
 
         public short GetQcContentRecord(DateTime dtModifyBeginTime, DateTime dtModifyEndTime, List<DeptInfo> lstDeptInfos, bool bIsChecked, ref List<QcContentRecord> lstQcContentRecord)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("MODIFY_TIME >={0} and MODIFY_TIME <{1}",
-                base.QCAccess.GetSqlTimeFormat(dtModifyBeginTime), base.QCAccess.GetSqlTimeFormat(dtModifyEndTime));
+                base.MedQCAccess.GetSqlTimeFormat(dtModifyBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtModifyEndTime));
             if (lstDeptInfos != null && lstDeptInfos.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();   
@@ -359,7 +359,7 @@ namespace EMRDBLib.DbAccess
             IDataReader reader = null;
             try
             {
-                reader = base.QCAccess.ExecuteReader(szSQL);
+                reader = base.MedQCAccess.ExecuteReader(szSQL);
                 if (reader == null || reader.IsClosed || !reader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 if (lstQcContentRecord == null)
@@ -401,7 +401,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -414,17 +414,17 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short UpdateQCContentRecord(string szDocSetId, string szUserId, string szUserName, DateTime now)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szDocSetId) || string.IsNullOrEmpty(szUserId) || string.IsNullOrEmpty(szUserName))
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format(" CHECKER_ID='{0}',CHECKER_NAME='{1}',CHECK_DATE={2}"
-               , szUserId, szUserName, base.QCAccess.GetSqlTimeFormat(now));
+               , szUserId, szUserName, base.MedQCAccess.GetSqlTimeFormat(now));
             string szWhere = string.Format(" DOC_SETID='{0}' AND CHECKER_ID IS NULL", szDocSetId);
             string szSQL = string.Format(SystemData.SQL.UPDATE, "QC_CONTENT_RECORD_T", szField, szWhere);
             try
             {
-                int i = base.QCAccess.ExecuteNonQuery(szSQL);
+                int i = base.MedQCAccess.ExecuteNonQuery(szSQL);
                 if (i >= 0)
                     return SystemData.ReturnValue.OK;
                 else
@@ -437,7 +437,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
 
             return SystemData.ReturnValue.OK;

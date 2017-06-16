@@ -41,7 +41,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (lstOrderInfo == null)
@@ -73,7 +73,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 do
@@ -106,7 +106,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetInpOrderList", new string[] { "szSQL" }, new object[] { szSQL }, "查询住院医嘱时出现异常!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
     }

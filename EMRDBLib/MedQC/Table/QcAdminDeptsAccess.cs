@@ -31,7 +31,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcAdminDeptsList(ref List<QcAdminDepts> lstQcAdminDepts)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3}"
@@ -45,7 +45,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -76,13 +76,13 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
       
         public short GetQcAdminDeptsList(string szUserID, ref List<EMRDBLib.QcAdminDepts> lstQcAdminDepts)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format("{0},{1},{2},{3}"
                , SystemData.QcAdminDeptsTable.DEPT_CODE, SystemData.QcAdminDeptsTable.DEPT_NAME, SystemData.QcAdminDeptsTable.USER_ID,SystemData.QcAdminDeptsTable.USER_NAME);
@@ -92,7 +92,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -123,7 +123,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -156,7 +156,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -173,17 +173,17 @@ namespace EMRDBLib.DbAccess
         
         public short SaveQcAdminDeptsList(string szUserID, List<QcAdminDepts> lstQcAdminDepts)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             //开始数据库事务
-            if (!base.QCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+            if (!base.MedQCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                 return SystemData.ReturnValue.EXCEPTION;
 
             //删除原有关联信息
             short shRet = this.Delete(szUserID);
             if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
-                base.QCAccess.AbortTransaction();
+                base.MedQCAccess.AbortTransaction();
                 return shRet;
             }
 
@@ -193,19 +193,19 @@ namespace EMRDBLib.DbAccess
                 shRet = this.Insert(item);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.QCAccess.AbortTransaction();
+                    base.MedQCAccess.AbortTransaction();
                     return shRet;
                 }
             }
             //提交数据库更新
-            if (!base.QCAccess.CommitTransaction(true))
+            if (!base.MedQCAccess.CommitTransaction(true))
                 return SystemData.ReturnValue.EXCEPTION;
             return SystemData.ReturnValue.OK;
         }
 
         public short Delete(string szUserID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szUserID))
@@ -221,7 +221,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

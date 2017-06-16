@@ -30,7 +30,7 @@ namespace EMRDBLib.DbAccess
         public short UpdateMrStatus(MrIndex mrIndex)
         {
             string szDoctorID = string.Empty;
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             DbParameter[] pmi = new DbParameter[5];
@@ -43,7 +43,7 @@ namespace EMRDBLib.DbAccess
             int rcount = 0;
             try
             {
-                nResult = base.QCAccess.ExecuteNonQuery("UPDATE_MR_INDEX", CommandType.StoredProcedure, ref pmi);
+                nResult = base.MedQCAccess.ExecuteNonQuery("UPDATE_MR_INDEX", CommandType.StoredProcedure, ref pmi);
                 rcount = int.Parse(pmi[4].Value.ToString());
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
             return rcount <= 0 ? SystemData.ReturnValue.OTHER_ERROR : SystemData.ReturnValue.OK;
         }
         public short GetMrIndex(string szPatientID, string szVisitID, ref MrIndex mrIndex)
@@ -72,7 +72,7 @@ namespace EMRDBLib.DbAccess
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -94,7 +94,7 @@ namespace EMRDBLib.DbAccess
                         , new object[] { szSQL }, "查询失败!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short GetMrIndexList(string szDeptCode, ref DeptDict deptDict)
         {

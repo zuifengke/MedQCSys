@@ -57,11 +57,11 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short SaveDocToDB( MedDocInfo docInfo, byte[] byteDocData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //开始数据库事务
-            if (!base.DataAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+            if (!base.MeddocAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                 return SystemData.ReturnValue.EXCEPTION;
 
             //添加文档状态信息记录
@@ -74,7 +74,7 @@ namespace EMRDBLib.DbAccess
             short shRet = this.AddDocStatusInfo(docStatusInfo);
             if (shRet != SystemData.ReturnValue.OK)
             {
-                base.DataAccess.AbortTransaction();
+                base.MeddocAccess.AbortTransaction();
                 return shRet;
             }
 
@@ -82,12 +82,12 @@ namespace EMRDBLib.DbAccess
             shRet = this.AddDocIndexInfo(docInfo, byteDocData);
             if (shRet != SystemData.ReturnValue.OK)
             {
-                base.DataAccess.AbortTransaction();
+                base.MeddocAccess.AbortTransaction();
                 return shRet;
             }
 
             //提交数据库更新
-            if (!base.DataAccess.CommitTransaction(true))
+            if (!base.MeddocAccess.CommitTransaction(true))
                 return SystemData.ReturnValue.EXCEPTION;
             return SystemData.ReturnValue.OK;
         }
@@ -161,7 +161,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5}"
@@ -169,13 +169,13 @@ namespace EMRDBLib.DbAccess
                 , SystemData.DocStatusTable.OPERATOR_NAME, SystemData.DocStatusTable.OPERATE_TIME, SystemData.DocStatusTable.STATUS_DESC);
             string szValue = string.Format("'{0}','{1}','{2}','{3}',{4},'{5}'"
                 , docStatusInfo.DocID, docStatusInfo.DocStatus, docStatusInfo.OperatorID
-                , docStatusInfo.OperatorName, base.DataAccess.GetSystemTimeSql(), docStatusInfo.StatusDesc);
+                , docStatusInfo.OperatorName, base.MeddocAccess.GetSystemTimeSql(), docStatusInfo.StatusDesc);
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.DOC_STATUS, szField, szValue);
 
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -198,7 +198,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short AddDocIndexInfo( MedDocInfo docInfo, byte[] byteDocData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22}"
@@ -211,19 +211,19 @@ namespace EMRDBLib.DbAccess
                 , SystemData.EmrDocTable.SIGN_CODE, SystemData.EmrDocTable.CONFID_CODE, SystemData.EmrDocTable.ORDER_VALUE
                 , SystemData.EmrDocTable.RECORD_TIME, SystemData.EmrDocTable.EMR_TYPE);
             string szValue = string.Format("'{0}','{1}','{2}',{3},'{4}',{5},'{6}','{7}','{8}','{9}',{10},'{11}','{12}','{13}',{14},'{15}','{16}','{17}','{18}','{19}',{20},{21},'{22}'"
-                , docInfo.DOC_ID, docInfo.DOC_TYPE, docInfo.DOC_TITLE, base.DataAccess.GetSqlTimeFormat(docInfo.DOC_TIME)
+                , docInfo.DOC_ID, docInfo.DOC_TYPE, docInfo.DOC_TITLE, base.MeddocAccess.GetSqlTimeFormat(docInfo.DOC_TIME)
                 , docInfo.DOC_SETID, docInfo.DOC_VERSION, docInfo.CREATOR_ID, docInfo.CREATOR_NAME, docInfo.MODIFIER_ID
-                , docInfo.MODIFIER_NAME, base.DataAccess.GetSqlTimeFormat(docInfo.MODIFY_TIME), docInfo.PATIENT_ID
-                , docInfo.PATIENT_NAME, docInfo.VISIT_ID, base.DataAccess.GetSqlTimeFormat(docInfo.VISIT_TIME), docInfo.VISIT_TYPE
+                , docInfo.MODIFIER_NAME, base.MeddocAccess.GetSqlTimeFormat(docInfo.MODIFY_TIME), docInfo.PATIENT_ID
+                , docInfo.PATIENT_NAME, docInfo.VISIT_ID, base.MeddocAccess.GetSqlTimeFormat(docInfo.VISIT_TIME), docInfo.VISIT_TYPE
                 , docInfo.DEPT_CODE, docInfo.DEPT_NAME, docInfo.SIGN_CODE, docInfo.CONFID_CODE, docInfo.ORDER_VALUE
-                , base.DataAccess.GetSqlTimeFormat(docInfo.RECORD_TIME), docInfo.EMR_TYPE
+                , base.MeddocAccess.GetSqlTimeFormat(docInfo.RECORD_TIME), docInfo.EMR_TYPE
                );
 
             DbParameter[] pmi = null;
             if (byteDocData != null)
             {
                 szField = string.Format("{0},{1}", szField, SystemData.EmrDocTable.DOC_DATA);
-                szValue = string.Format("{0},{1}", szValue, base.DataAccess.GetSqlParamName("DocData"));
+                szValue = string.Format("{0},{1}", szValue, base.MeddocAccess.GetSqlParamName("DocData"));
 
                 pmi = new DbParameter[1];
                 pmi[0] = new DbParameter("DocData", byteDocData);
@@ -233,7 +233,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -257,7 +257,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetDoctorInChargeByEmrDoc(string szPatientID, string szVisitID, ref string szDoctorInCharge)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
             {
                 LogManager.Instance.WriteLog("GetDoctorInChargeByEmrDoc base.QCAccess == null");
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -270,7 +270,7 @@ namespace EMRDBLib.DbAccess
 
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(sbSQL.ToString(), CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(sbSQL.ToString(), CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -292,7 +292,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.MeddocAccess.CloseConnnection(false);
             }
 
         }
@@ -306,7 +306,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDoctorDocInfos(string szUserID, DateTime dtBeginTime, ref List<MedDocInfo> lstDocInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10}"
@@ -342,7 +342,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -382,7 +382,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDoctorDocInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         #region"更新已有文档接口"
@@ -417,11 +417,11 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short UpdateDocToDB(string szOldDocID,  MedDocInfo newDocInfo, string szUpdateReason, byte[] byteDocData)
         {
-            if (newDocInfo == null || base.DataAccess == null)
+            if (newDocInfo == null || base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //开始数据库事务
-            if (!base.DataAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+            if (!base.MeddocAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                 return SystemData.ReturnValue.EXCEPTION;
 
             DocStatusInfo docStatusInfo = new DocStatusInfo();
@@ -439,7 +439,7 @@ namespace EMRDBLib.DbAccess
                 short shRet = this.ModifyDocStatusInfo(ref docStatusInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.DataAccess.AbortTransaction();
+                    base.MeddocAccess.AbortTransaction();
                     return shRet;
                 }
 
@@ -447,7 +447,7 @@ namespace EMRDBLib.DbAccess
                 shRet = this.ModifyDocIndexInfo(newDocInfo, byteDocData);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.DataAccess.AbortTransaction();
+                    base.MeddocAccess.AbortTransaction();
                     return shRet;
                 }
             }
@@ -459,7 +459,7 @@ namespace EMRDBLib.DbAccess
                 short shRet = this.ModifyDocStatusInfo(ref docStatusInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.DataAccess.AbortTransaction();
+                    base.MeddocAccess.AbortTransaction();
                     return shRet;
                 }
 
@@ -470,7 +470,7 @@ namespace EMRDBLib.DbAccess
                 shRet = this.AddDocStatusInfo(docStatusInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.DataAccess.AbortTransaction();
+                    base.MeddocAccess.AbortTransaction();
                     return shRet;
                 }
 
@@ -478,12 +478,12 @@ namespace EMRDBLib.DbAccess
                 shRet = this.AddDocIndexInfo(newDocInfo, byteDocData);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
-                    base.DataAccess.AbortTransaction();
+                    base.MeddocAccess.AbortTransaction();
                     return shRet;
                 }
             }
             //提交数据库更新
-            if (!base.DataAccess.CommitTransaction(true))
+            if (!base.MeddocAccess.CommitTransaction(true))
                 return SystemData.ReturnValue.EXCEPTION;
             return SystemData.ReturnValue.OK;
         }
@@ -574,14 +574,14 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}',{2}='{3}',{4}='{5}',{6}={7},{8}='{9}'"
                 , SystemData.DocStatusTable.DOC_STATUS, docStatusInfo.DocStatus
                 , SystemData.DocStatusTable.OPERATOR_ID, docStatusInfo.OperatorID
                 , SystemData.DocStatusTable.OPERATOR_NAME, docStatusInfo.OperatorName
-                , SystemData.DocStatusTable.OPERATE_TIME, base.DataAccess.GetSqlTimeFormat(docStatusInfo.OperateTime)
+                , SystemData.DocStatusTable.OPERATE_TIME, base.MeddocAccess.GetSqlTimeFormat(docStatusInfo.OperateTime)
                 , SystemData.DocStatusTable.STATUS_DESC, docStatusInfo.StatusDesc);
             string szCondition = string.Format("{0}='{1}'", SystemData.DocStatusTable.DOC_ID, docStatusInfo.DocID);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.DOC_STATUS, szField, szCondition);
@@ -589,7 +589,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -611,7 +611,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short ModifyDocIndexInfo( MedDocInfo docInfo, byte[] byteDocData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}',{2}={3},{4}='{5}',{6}='{7}',{8}={9},{10}='{11}',{12}='{13}',{14}={15}"
@@ -619,17 +619,17 @@ namespace EMRDBLib.DbAccess
                 , SystemData.EmrDocTable.DOC_VERSION, docInfo.DOC_VERSION
                 , SystemData.EmrDocTable.MODIFIER_ID, docInfo.MODIFIER_ID
                 , SystemData.EmrDocTable.MODIFIER_NAME, docInfo.MODIFIER_NAME
-                , SystemData.EmrDocTable.MODIFY_TIME, base.DataAccess.GetSqlTimeFormat(docInfo.MODIFY_TIME)
+                , SystemData.EmrDocTable.MODIFY_TIME, base.MeddocAccess.GetSqlTimeFormat(docInfo.MODIFY_TIME)
                 , SystemData.EmrDocTable.SIGN_CODE, docInfo.SIGN_CODE
                 , SystemData.EmrDocTable.CONFID_CODE, docInfo.CONFID_CODE
-                , SystemData.EmrDocTable.RECORD_TIME, base.DataAccess.GetSqlTimeFormat(docInfo.RECORD_TIME)
+                , SystemData.EmrDocTable.RECORD_TIME, base.MeddocAccess.GetSqlTimeFormat(docInfo.RECORD_TIME)
                );
             string szCondition = string.Format("{0}='{1}'", SystemData.EmrDocTable.DOC_ID, docInfo.DOC_ID);
 
             DbParameter[] pmi = null;
             if (byteDocData != null)
             {
-                szField = string.Format("{0},{1}={2}", szField, SystemData.EmrDocTable.DOC_DATA, base.DataAccess.GetSqlParamName("DocData"));
+                szField = string.Format("{0},{1}={2}", szField, SystemData.EmrDocTable.DOC_DATA, base.MeddocAccess.GetSqlParamName("DocData"));
 
                 pmi = new DbParameter[1];
                 pmi[0] = new DbParameter("DocData", byteDocData);
@@ -639,7 +639,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -670,7 +670,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetDocList(string patientID, string visitID, ref List<MedDocInfo> lstDocInfo)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format("A.{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}"
                , SystemData.EmrDocTable.DOC_ID, SystemData.EmrDocTable.DOC_TYPE, SystemData.EmrDocTable.DOC_TITLE
@@ -695,7 +695,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -737,7 +737,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetPatListByName", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         
         /// <summary>
@@ -749,7 +749,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetPatChargeDoctorID(string szPatientID, string szVisitID, ref string szRequestDoctorID)
         {
-            if (base.DataAccess == null || string.IsNullOrEmpty(szPatientID) || string.IsNullOrEmpty(szVisitID))
+            if (base.MeddocAccess == null || string.IsNullOrEmpty(szPatientID) || string.IsNullOrEmpty(szVisitID))
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2}", SystemData.PatDoctorView.REQUEST_DOCTOR_ID
@@ -763,7 +763,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -787,7 +787,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("EMRDBAccess.GetPatChargeDoctorID", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         #endregion
 
@@ -936,7 +936,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short MedCallBack(string szPatientID, string szVisitID, string szUserID)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             DbParameter[] pmi = new DbParameter[3];
@@ -946,7 +946,7 @@ namespace EMRDBLib.DbAccess
 
             try
             {
-                base.DataAccess.ExecuteNonQuery("MED_CALL_BACK", CommandType.StoredProcedure, ref pmi);
+                base.MeddocAccess.ExecuteNonQuery("MED_CALL_BACK", CommandType.StoredProcedure, ref pmi);
             }
             catch (Exception ex)
             {
@@ -958,7 +958,7 @@ namespace EMRDBLib.DbAccess
 
         public short GetPatListByDocTypeAndDocTime(string szDocTypeID, DateTime dtBeginTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
@@ -986,7 +986,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1032,7 +1032,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.MeddocAccess.CloseConnnection(false);
             }
         }
 
@@ -1059,17 +1059,17 @@ namespace EMRDBLib.DbAccess
 
         private short GetPidVidByDocTypeAndDocTime(string szDocTypeID, DateTime dtBeginTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szSQL = string.Format("SELECT distinct A.PATIENT_ID ,A.VISIT_ID FROM EMR_DOC_T A,DOC_STATUS_T B "
                 + "WHERE A.DOC_ID=B.DOC_ID  AND B.DOC_STATUS!='2' AND A.DOC_TYPE='{0}' "
                 + "AND A.{1}>={2} AND A.{1}<={3}",
-                szDocTypeID, SystemData.EmrDocTable.DOC_TIME, base.DataAccess.GetSqlTimeFormat(dtBeginTime), base.DataAccess.GetSqlTimeFormat(dtEndTime));
+                szDocTypeID, SystemData.EmrDocTable.DOC_TIME, base.MeddocAccess.GetSqlTimeFormat(dtBeginTime), base.MeddocAccess.GetSqlTimeFormat(dtEndTime));
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1099,7 +1099,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.MeddocAccess.CloseConnnection(false);
             }
         }
 
@@ -1115,7 +1115,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetDocModifyApplyList(DateTime dtApplyBegin, DateTime dtApplyEnd, string szAuditStatus, string szDeptCode, ref List<DocRecordModifyApply> lstDocRecordModifyApply)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (dtApplyBegin == null || dtApplyEnd == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1127,8 +1127,8 @@ namespace EMRDBLib.DbAccess
                 SystemData.DocRecordModifyApplyView.QC_ID, SystemData.DocRecordModifyApplyView.QC_TIME, SystemData.DocRecordModifyApplyView.QC_REMARK
                 , SystemData.DocRecordModifyApplyView.AUDIT_STATUS);
             string szCondition = string.Format(" {0}>={1} AND {2}<={3}  AND {4} in ({5}) "
-                , SystemData.DocRecordModifyApplyView.APPLY_DATE, base.DataAccess.GetSqlTimeFormat(dtApplyBegin)
-                , SystemData.DocRecordModifyApplyView.APPLY_DATE, base.DataAccess.GetSqlTimeFormat(dtApplyEnd)
+                , SystemData.DocRecordModifyApplyView.APPLY_DATE, base.MeddocAccess.GetSqlTimeFormat(dtApplyBegin)
+                , SystemData.DocRecordModifyApplyView.APPLY_DATE, base.MeddocAccess.GetSqlTimeFormat(dtApplyEnd)
                 , SystemData.DocRecordModifyApplyView.AUDIT_STATUS, szAuditStatus);
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition += string.Format(" AND {0}='{1}'", SystemData.DocRecordModifyApplyView.APPLY_DEPT_CODE, szDeptCode);
@@ -1136,7 +1136,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -1180,7 +1180,7 @@ namespace EMRDBLib.DbAccess
                     dataReader.Dispose();
                     dataReader = null;
                 }
-                base.DataAccess.CloseConnnection(false);
+                base.MeddocAccess.CloseConnnection(false);
             }
         }
         /// <summary>
@@ -1191,7 +1191,7 @@ namespace EMRDBLib.DbAccess
         /// <returns></returns>
         public short GetDocInfoByModifyTime(DateTime dtModify, int nDays, ref List<MedDocInfo> lstDocInfo)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11}",
                 SystemData.EmrDocTable.PATIENT_ID,
@@ -1226,7 +1226,7 @@ namespace EMRDBLib.DbAccess
             string szSql = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
             try
             {
-                reader = base.DataAccess.ExecuteReader(szSql);
+                reader = base.MeddocAccess.ExecuteReader(szSql);
                 if (reader == null || reader.IsClosed || !reader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 if (lstDocInfo == null)
@@ -1293,7 +1293,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short GetDocFromDB(string szDocID, ref byte[] byteDocData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.EmrDocTable.DOC_ID, szDocID);
@@ -1303,7 +1303,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("MedDocAccess.GetDocFromDB"
@@ -1318,7 +1318,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocFromDB", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -1389,7 +1389,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             szDocID = szDocID.Trim();
@@ -1409,7 +1409,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("MedDocAccess.GetDocInfo", new string[] { "szSQL" }, new object[] { szSQL }, "未查询到记录");
@@ -1456,7 +1456,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocInfo", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         ///  根据文档集ID查询当前文档集对应的历次修订的病历记录
@@ -1473,7 +1473,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             szDocSetID = szDocSetID.Trim();
@@ -1495,7 +1495,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("MedDocAccess.GetDocInfoBySetID", new string[] { "szSQL" }, new object[] { szSQL }, "未查询到记录");
@@ -1544,7 +1544,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocInfoBySetID", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 获取指定文档集中最新的文档版本信息
@@ -1561,7 +1561,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             szDocSetID = szDocSetID.Trim();
@@ -1584,7 +1584,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1626,7 +1626,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetLatestDocID", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 获取指定修改者在指定时间内修改病历的信息
@@ -1638,7 +1638,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDocInfos(string szModifierID, DateTime dtBegin, DateTime dtEnd, ref List<MedDocInfo> lstDocInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             szModifierID = szModifierID.Trim();
@@ -1667,7 +1667,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref paras);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1695,7 +1695,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
         /// <summary>
         /// 获取指定就诊，指定病人，指定类型中已有文档详细信息列表.
@@ -1710,7 +1710,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDocInfos(string szPatientID, string szVisitID, string szVisitType, DateTime dtVisitTime, string szDocTypeID, ref MedDocList lstDocInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("A.{0},", SystemData.EmrDocTable.CONFID_CODE);
@@ -1743,7 +1743,7 @@ namespace EMRDBLib.DbAccess
             if (szVisitType == SystemData.VisitType.OP)
             {
                 szCondition = string.Format("A.{0}='{1}' AND A.{2}={3}", SystemData.EmrDocTable.VISIT_ID, szVisitID
-                    , SystemData.EmrDocTable.VISIT_TIME, base.DataAccess.GetSqlTimeFormat(dtVisitTime));
+                    , SystemData.EmrDocTable.VISIT_TIME, base.MeddocAccess.GetSqlTimeFormat(dtVisitTime));
             }
             else
             {
@@ -1774,7 +1774,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1877,7 +1877,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -1893,7 +1893,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetDocInfos(string szPatientID, string szVisitID, string szVisitType, DateTime dtVisitTime, string szDocTypeID, ref List<MedDocInfo> lstDocInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17},A.{18},A.{19},A.{20},A.{21},A.{22} "
@@ -1910,7 +1910,7 @@ namespace EMRDBLib.DbAccess
             string szCondition = null;
             if (szVisitType == SystemData.VisitType.OP)
             {
-                szCondition = string.Format("A.{0}='{1}' AND A.{2}={3}", SystemData.EmrDocTable.VISIT_ID, szVisitID , SystemData.EmrDocTable.VISIT_TIME, base.DataAccess.GetSqlTimeFormat(dtVisitTime));
+                szCondition = string.Format("A.{0}='{1}' AND A.{2}={3}", SystemData.EmrDocTable.VISIT_ID, szVisitID , SystemData.EmrDocTable.VISIT_TIME, base.MeddocAccess.GetSqlTimeFormat(dtVisitTime));
             }
             else
             {
@@ -1941,7 +1941,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                     return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1987,7 +1987,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("MedDocAccess.GetDocInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -1995,7 +1995,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         public short UpdateDocSignCode(string szDocSetID, string szSignCode)
         {
-            if (string.IsNullOrEmpty(szDocSetID)|| base.DataAccess == null)
+            if (string.IsNullOrEmpty(szDocSetID)|| base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             string szField = string.Format("{0}='{1}'"
               , SystemData.EmrDocTable.SIGN_CODE,szSignCode);
@@ -2005,7 +2005,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.DataAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MeddocAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

@@ -33,7 +33,7 @@ namespace EMRDBLib.DbAccess
         
         public short GetTempletTypes(string szApplyEnv, ref List<TempletType> lstTempletTypes)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -60,7 +60,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -113,12 +113,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         
         public short GetTempletType(string szTempletTypeID, ref TempletType TempletType)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             if (string.IsNullOrEmpty(szTempletTypeID))
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -144,7 +144,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -192,11 +192,11 @@ namespace EMRDBLib.DbAccess
 }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short GetTempletData(string szTempletID, ref byte[] byteTempletData)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.TempletTypeTable.TEMPLET_TYPE_ID, szTempletID);
@@ -205,7 +205,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     LogManager.Instance.WriteLog("TempletAccess.GetTempletTempletFromDB", new string[] { "szSQL" }, new object[] { szSQL }, "没有查询到记录!");
@@ -219,7 +219,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
 
@@ -231,15 +231,15 @@ namespace EMRDBLib.DbAccess
         /// <returns>ServerData.ExecuteResult</returns>
         public short SaveTempletDataToDB(string szDocTypeID, byte[] byteTempletData)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}={1}", SystemData.TempletTypeTable.MODIFY_TIME, base.QCAccess.GetSystemTimeSql());
+            string szField = string.Format("{0}={1}", SystemData.TempletTypeTable.MODIFY_TIME, base.MedQCAccess.GetSystemTimeSql());
 
             DbParameter[] pmi = null;
             if (byteTempletData != null)
             {
-                szField = string.Format("{0},{1}={2}", szField, SystemData.TempletTypeTable.TEMPLET_DATA, base.QCAccess.GetSqlParamName("Templet_DATA"));
+                szField = string.Format("{0},{1}={2}", szField, SystemData.TempletTypeTable.TEMPLET_DATA, base.MedQCAccess.GetSqlParamName("Templet_DATA"));
 
                 pmi = new DbParameter[1];
                 pmi[0] = new DbParameter("Templet_DATA", byteTempletData);
@@ -251,7 +251,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -286,7 +286,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.TempletTypeTable.IS_VALID);
             sbValue.AppendFormat("{0},", TempletType.IsValid ? 1 : 0);
             sbField.AppendFormat("{0},", SystemData.TempletTypeTable.MODIFY_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(TempletType.ModifyTime));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(TempletType.ModifyTime));
             sbField.AppendFormat("{0},", SystemData.TempletTypeTable.PARENT_ID);
             sbValue.AppendFormat("'{0}',", TempletType.ParentID);
             sbField.AppendFormat("{0},", SystemData.TempletTypeTable.TEMPLET_TYPE_ID);
@@ -299,7 +299,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -326,7 +326,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { TempletType }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -336,7 +336,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}={1},"
                 , SystemData.TempletTypeTable.IS_VALID, TempletType.IsValid ? 1 : 0);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.TempletTypeTable.MODIFY_TIME, base.QCAccess.GetSqlTimeFormat(TempletType.ModifyTime));
+                , SystemData.TempletTypeTable.MODIFY_TIME, base.MedQCAccess.GetSqlTimeFormat(TempletType.ModifyTime));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.TempletTypeTable.PARENT_ID, TempletType.ParentID);
             sbField.AppendFormat("{0}='{1}',"
@@ -348,7 +348,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -370,7 +370,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szTempletTypeID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szTempletTypeID))
@@ -385,7 +385,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -404,11 +404,11 @@ namespace EMRDBLib.DbAccess
         {
             try
             {
-                if (base.QCAccess == null)
+                if (base.MedQCAccess == null)
                     return SystemData.ReturnValue.PARAM_ERROR;
 
                 //开始数据库事务
-                if (!base.QCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
+                if (!base.MedQCAccess.BeginTransaction(IsolationLevel.ReadCommitted))
                     return SystemData.ReturnValue.EXCEPTION;
                 foreach (var item in lstTempletTypeID)
                 {
@@ -416,12 +416,12 @@ namespace EMRDBLib.DbAccess
                     short shRet = this.Delete(item);
                     if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
                     {
-                        base.QCAccess.AbortTransaction();
+                        base.MedQCAccess.AbortTransaction();
                         return shRet;
                     }
                 }
                 //提交数据库更新
-                if (!base.QCAccess.CommitTransaction(true))
+                if (!base.MedQCAccess.CommitTransaction(true))
                     return SystemData.ReturnValue.EXCEPTION;
             }
             catch (Exception ex)
@@ -430,7 +430,7 @@ namespace EMRDBLib.DbAccess
             }
             finally
             {
-                base.QCAccess.CloseConnnection(false);
+                base.MedQCAccess.CloseConnnection(false);
             }
             return SystemData.ReturnValue.OK;
         }

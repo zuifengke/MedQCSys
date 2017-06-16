@@ -61,7 +61,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         private short GetUserTempletInfosInternal(string szCondition, string szOrderSQL, ref List<TempletInfo> lstTempletInfos, DbParameter[] param)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}"
@@ -89,7 +89,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.DataAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text, ref param);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -141,7 +141,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("TempletAccess.GetUserTempletInfosInternal", new string[] { "szSQL" }, new object[] { szSQL }, "SQL”Ôæ‰÷¥–– ß∞‹!", ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.DataAccess.CloseConnnection(false); }
+            finally { base.MeddocAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetUserTempletInfos(string szCheckStatus, ref List<TempletInfo> lstTempletInfos)
         {
-            if (base.DataAccess == null)
+            if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             DbParameter[] param = new DbParameter[1] { new DbParameter(SystemData.DocTempletTable.CHECK_STATUS, szCheckStatus) };
             string szCondition = string.Format("{0}={1} AND {2}=1", SystemData.DocTempletTable.CHECK_STATUS, base.ParaHolder(SystemData.DocTempletTable.CHECK_STATUS)

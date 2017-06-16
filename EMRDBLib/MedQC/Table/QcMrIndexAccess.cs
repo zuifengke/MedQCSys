@@ -32,7 +32,7 @@ namespace EMRDBLib.DbAccess
         }
         public short GetQcMrIndex(string szPatientID, string szVisitID, ref QcMrIndex qcMrIndex)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.ARCHIVE_DOCTOR);
@@ -60,7 +60,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -117,7 +117,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short Insert(QcMrIndex qcMrIndex)
         {
@@ -134,7 +134,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.ARCHIVE_DOCTOR_ID);
             sbValue.AppendFormat("'{0}',", qcMrIndex.ARCHIVE_DOCTOR_ID);
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.ARCHIVE_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(qcMrIndex.ARCHIVE_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(qcMrIndex.ARCHIVE_TIME));
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.PAPER_RECEIVE);
             sbValue.AppendFormat("'{0}',", qcMrIndex.PAPER_RECEIVE);
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.PATIENT_ID);
@@ -146,7 +146,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.SUBMIT_DOCTOR_ID);
             sbValue.AppendFormat("'{0}',", qcMrIndex.SUBMIT_DOCTOR_ID);
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.SUBMIT_TIME);
-            sbValue.AppendFormat("{0},", base.QCAccess.GetSqlTimeFormat(qcMrIndex.SUBMIT_TIME));
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(qcMrIndex.SUBMIT_TIME));
             sbField.AppendFormat("{0},", SystemData.QcMrIndexTable.VISIT_ID);
             sbValue.AppendFormat("'{0}',", qcMrIndex.VISIT_ID);
             sbField.AppendFormat("{0}", SystemData.QcMrIndexTable.VISIT_NO);
@@ -155,7 +155,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -177,7 +177,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { qcMrIndex }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -185,7 +185,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.QcMrIndexTable.ARCHIVE_DOCTOR_ID, qcMrIndex.ARCHIVE_DOCTOR_ID);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.QcMrIndexTable.ARCHIVE_TIME, base.QCAccess.GetSqlTimeFormat(qcMrIndex.ARCHIVE_TIME));
+                , SystemData.QcMrIndexTable.ARCHIVE_TIME, base.MedQCAccess.GetSqlTimeFormat(qcMrIndex.ARCHIVE_TIME));
             sbField.AppendFormat("{0}={1},"
                 , SystemData.QcMrIndexTable.PAPER_RECEIVE, qcMrIndex.PAPER_RECEIVE);
             sbField.AppendFormat("{0}={1},"
@@ -195,7 +195,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.QcMrIndexTable.SUBMIT_DOCTOR_ID, qcMrIndex.SUBMIT_DOCTOR_ID);
             sbField.AppendFormat("{0}={1}"
-                , SystemData.QcMrIndexTable.SUBMIT_TIME, base.QCAccess.GetSqlTimeFormat(qcMrIndex.SUBMIT_TIME));
+                , SystemData.QcMrIndexTable.SUBMIT_TIME, base.MedQCAccess.GetSqlTimeFormat(qcMrIndex.SUBMIT_TIME));
             string szCondition = string.Format("{0}='{1}' and {2}='{3}'"
                 , SystemData.QcMrIndexTable.PATIENT_ID, qcMrIndex.PATIENT_ID
                 , SystemData.QcMrIndexTable.VISIT_ID, qcMrIndex.VISIT_ID);
@@ -203,7 +203,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

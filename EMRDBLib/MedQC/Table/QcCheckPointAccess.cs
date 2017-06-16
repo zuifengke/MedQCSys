@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcCheckPoints(ref List<QcCheckPoint> lstQcCheckPoints)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16}"
@@ -66,7 +66,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -117,7 +117,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("QcCheckPoint.GetQcCheckPoints", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcCheckPoint(string szCheckPointID, ref QcCheckPoint qcCheckPoint)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16}"
@@ -160,7 +160,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -207,7 +207,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("QcCheckPoint.GetQcCheckPoint", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -240,8 +240,8 @@ namespace EMRDBLib.DbAccess
             string szValue = string.Format("'{0}','{1}',{2},{3},'{4}',{5},'{6}','{7}',{8},{9},'{10}','{11}','{12}','{13}','{14}',{15}"
                 , qcCheckPoint.CheckPointID
                 , qcCheckPoint.CheckPointContent
-                , base.QCAccess.GetSqlParamName("DocTypeID")
-                , base.QCAccess.GetSqlParamName("DocTypeName")
+                , base.MedQCAccess.GetSqlParamName("DocTypeID")
+                , base.MedQCAccess.GetSqlParamName("DocTypeName")
                 , qcCheckPoint.HandlerCommand
                 , qcCheckPoint.IsValid ? 1 : 0
                 , qcCheckPoint.MsgDictCode
@@ -264,7 +264,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -293,14 +293,14 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}={7},{8}='{9}',{10}={11},{12}='{13}',{14}='{15}',{16}={17},{18}={19},{20}='{21}',{22}='{23}',{24}='{25}',{26}='{27}',{28}='{29}',{30}={31}"
                 , SystemData.QcCheckPointTable.CHECK_POINT_ID, qcCheckPoint.CheckPointID
                 , SystemData.QcCheckPointTable.CHECK_POINT_CONTENT, qcCheckPoint.CheckPointContent
-                , SystemData.QcCheckPointTable.DOCTYPE_ID, base.QCAccess.GetSqlParamName("DocTypeID")
-                , SystemData.QcCheckPointTable.DOCTYPE_NAME, base.QCAccess.GetSqlParamName("DocTypeName")
+                , SystemData.QcCheckPointTable.DOCTYPE_ID, base.MedQCAccess.GetSqlParamName("DocTypeID")
+                , SystemData.QcCheckPointTable.DOCTYPE_NAME, base.MedQCAccess.GetSqlParamName("DocTypeName")
                 , SystemData.QcCheckPointTable.HANDLER_COMMAND, qcCheckPoint.HandlerCommand
                 , SystemData.QcCheckPointTable.IS_VALID, qcCheckPoint.IsValid ? 1 : 0
                 , SystemData.QcCheckPointTable.MSG_DICT_CODE, qcCheckPoint.MsgDictCode
@@ -324,7 +324,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text, ref pmi);
             }
             catch (Exception ex)
             {
@@ -346,7 +346,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szCheckPointID)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szCheckPointID))
@@ -362,7 +362,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {

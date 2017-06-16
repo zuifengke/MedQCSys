@@ -38,7 +38,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short GetRecMrBatch(string szBatchNo, ref RecMrBatch RecMrBatch)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             StringBuilder sbField = new StringBuilder();
@@ -74,7 +74,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -152,12 +152,12 @@ namespace EMRDBLib.DbAccess
     }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         public short GetRecMrBatchs(DateTime dtSendTimeBegin, DateTime dtSendTimeEnd, string szDeptCode,string szBatchNo, ref List<RecMrBatch> lstRecMrBatchs)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.BATCH_NO);
@@ -182,8 +182,8 @@ namespace EMRDBLib.DbAccess
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} <= {3}"
                 , szCondition
                 , SystemData.RecMrBatchTable.SEND_TIME
-                , base.QCAccess.GetSqlTimeFormat(dtSendTimeBegin)
-                , base.QCAccess.GetSqlTimeFormat(dtSendTimeEnd));
+                , base.MedQCAccess.GetSqlTimeFormat(dtSendTimeBegin)
+                , base.MedQCAccess.GetSqlTimeFormat(dtSendTimeEnd));
             if (!string.IsNullOrEmpty(szDeptCode))
             {
                 szCondition = string.Format("{0} AND {1}='{2}'"
@@ -205,7 +205,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.QCAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -288,7 +288,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.QCAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.RECEIVE_DOCTOR_NAME);
             sbValue.AppendFormat("'{0}',", RecMrBatch.RECEIVE_DOCTOR_NAME);
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.RECEIVE_TIME);
-            sbValue.AppendFormat("{0},",base.QCAccess.GetSqlTimeFormat(RecMrBatch.RECEIVE_TIME));
+            sbValue.AppendFormat("{0},",base.MedQCAccess.GetSqlTimeFormat(RecMrBatch.RECEIVE_TIME));
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.REMARK);
             sbValue.AppendFormat("'{0}',", RecMrBatch.REMARK);
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.SEND_DEPT_CODE);
@@ -339,7 +339,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.SEND_DOCTOR_NAME);
             sbValue.AppendFormat("'{0}',", RecMrBatch.SEND_DOCTOR_NAME);
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.SEND_TIME);
-            sbValue.AppendFormat("{0},",base.QCAccess.GetSqlTimeFormat(RecMrBatch.SEND_TIME));
+            sbValue.AppendFormat("{0},",base.MedQCAccess.GetSqlTimeFormat(RecMrBatch.SEND_TIME));
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.VISIT_NOS);
             sbValue.AppendFormat("'{0}',", RecMrBatch.VISIT_NOS);
             sbField.AppendFormat("{0},", SystemData.RecMrBatchTable.WORKER_ID);
@@ -350,7 +350,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -377,7 +377,7 @@ namespace EMRDBLib.DbAccess
                     , new object[] { recMrBatch }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
@@ -395,7 +395,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecMrBatchTable.RECEIVE_DOCTOR_NAME, recMrBatch.RECEIVE_DOCTOR_NAME);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecMrBatchTable.RECEIVE_TIME,base.QCAccess.GetSqlTimeFormat(recMrBatch.RECEIVE_TIME));
+                , SystemData.RecMrBatchTable.RECEIVE_TIME,base.MedQCAccess.GetSqlTimeFormat(recMrBatch.RECEIVE_TIME));
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecMrBatchTable.REMARK, recMrBatch.REMARK);
             sbField.AppendFormat("{0}={1},"
@@ -407,7 +407,7 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecMrBatchTable.SEND_DOCTOR_NAME, recMrBatch.SEND_DOCTOR_NAME);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecMrBatchTable.SEND_TIME,base.QCAccess.GetSqlTimeFormat(recMrBatch.SEND_TIME) );
+                , SystemData.RecMrBatchTable.SEND_TIME,base.MedQCAccess.GetSqlTimeFormat(recMrBatch.SEND_TIME) );
             sbField.AppendFormat("{0}='{1}',"
                 , SystemData.RecMrBatchTable.VISIT_NOS, recMrBatch.VISIT_NOS);
             sbField.AppendFormat("{0}='{1}',"
@@ -419,7 +419,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
@@ -441,7 +441,7 @@ namespace EMRDBLib.DbAccess
         /// <returns>SystemData.ReturnValue</returns>
         public short Delete(string szBatchNO)
         {
-            if (base.QCAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (GlobalMethods.Misc.IsEmptyString(szBatchNO))
@@ -456,7 +456,7 @@ namespace EMRDBLib.DbAccess
             int nCount = 0;
             try
             {
-                nCount = base.QCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
             }
             catch (Exception ex)
             {
