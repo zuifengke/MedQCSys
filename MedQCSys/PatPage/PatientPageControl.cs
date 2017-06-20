@@ -38,6 +38,7 @@ namespace MedQCSys.PatPage
             {
                 return true;
             }
+            SystemParam.Instance.PatVisitInfo = patVisit;
             PatientInfoChangingEventArgs e =
                 new PatientInfoChangingEventArgs(this.m_patientVisit, patVisit);
             this.OnPatientInfoChanging(e);
@@ -52,7 +53,6 @@ namespace MedQCSys.PatPage
             }
             if (patVisit == null)
                 patVisit = new PatVisitInfo();
-            SystemParam.Instance.PatVisitInfo = patVisit;
             this.m_patientVisit = patVisit;
             this.OnPatientInfoChanged(EventArgs.Empty);
             return true;
@@ -171,7 +171,7 @@ namespace MedQCSys.PatPage
             contents.Add(new PatientIndexForm(this.MainForm, this));
             if (SystemParam.Instance.LocalConfigOption.IsNewScore)
             {
-                DocScoreNewForm docScoreNewForm = new DocScoreNewForm(this.MainForm, this);
+                DocScoreNew2Form docScoreNewForm = new DocScoreNew2Form(this.MainForm, this);
                 contents.Add(docScoreNewForm);
                 this.MainForm.DocScoreNewForm = docScoreNewForm;
                 docScoreNewForm.HummanScoreSaved += new EventHandler(this.MainForm.DocScoreNewForm_HummanScoreSaved);

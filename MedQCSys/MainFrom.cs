@@ -42,7 +42,7 @@ namespace MedQCSys
         private PatientInfoForm m_PatientInfoForm = null;
         private DocScoreForm m_DocScoreForm = null;
         private PatientIndexForm m_PatientIndexForm = null;
-        public DocScoreNewForm DocScoreNewForm = null;
+        public DocScoreNew2Form DocScoreNewForm = null;
         /// <summary>
         /// 获取当前停靠控件
         /// </summary>

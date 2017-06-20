@@ -183,6 +183,16 @@ namespace MedQCSys.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Collapse2 {
+            get {
+                object obj = ResourceManager.GetObject("Collapse2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap CombinDoc {
             get {
                 object obj = ResourceManager.GetObject("CombinDoc", resourceCulture);
@@ -306,6 +316,16 @@ namespace MedQCSys.Properties {
         internal static System.Drawing.Bitmap Expand {
             get {
                 object obj = ResourceManager.GetObject("Expand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Expand2 {
+            get {
+                object obj = ResourceManager.GetObject("Expand2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

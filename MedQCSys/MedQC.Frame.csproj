@@ -138,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="Controls\CollapseDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CollapseDataGridView.designer.cs">
+      <DependentUpon>CollapseDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LogoPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -206,6 +212,12 @@
     </Compile>
     <Compile Include="Dialogs\TempletSelectForm.Designer.cs">
       <DependentUpon>TempletSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatPage\DocScoreNew2Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatPage\DocScoreNew2Form.Designer.cs">
+      <DependentUpon>DocScoreNew2Form.cs</DependentUpon>
     </Compile>
     <Compile Include="PatPage\DocScoreNewForm.cs">
       <SubType>Form</SubType>
@@ -462,6 +474,10 @@
     <EmbeddedResource Include="Dialogs\TempletSelectForm.resx">
       <DependentUpon>TempletSelectForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PatPage\DocScoreNew2Form.resx">
+      <DependentUpon>DocScoreNew2Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PatPage\DocScoreNewForm.resx">
       <DependentUpon>DocScoreNewForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -653,6 +669,7 @@
     <None Include="Resources\Collapse.png" />
     <None Include="Resources\copy.png" />
     <None Include="Resources\copy1.png" />
+    <None Include="Resources\Collapse2.png" />
     <Content Include="Resources\Error.png" />
     <None Include="Resources\SysIcon.ico" />
     <None Include="Resources\ICDItem.png" />
@@ -689,6 +706,7 @@
     <None Include="Resources\jietu.png" />
     <None Include="Resources\PrintDoc.png" />
     <None Include="Resources\PrintPreview.png" />
+    <None Include="Resources\Expand2.png" />
     <Content Include="Resources\Warn.png" />
     <None Include="Resources\WordDocIcon.ico" />
   </ItemGroup>

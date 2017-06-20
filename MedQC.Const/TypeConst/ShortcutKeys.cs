@@ -35,6 +35,7 @@ namespace EMRDBLib
             public const string Ctrl_Q = "Ctrl+Q";
             public const string Ctrl_W = "Ctrl+W";
 
+            public const string ALt_W = "ALt+W";
             public const string ALt_T = "ALt+T";
             public const string ALt_O = "ALt+O";
             public const string ALt_H = "ALt+H";
@@ -44,7 +45,7 @@ namespace EMRDBLib
             public const string ALt_F = "ALt+F";
             public static string[] GetArrShortcutKeys()
             {
-                return new string[] { Ctrl_D, Ctrl_F, Ctrl_E, Ctrl_L, Ctrl_O, Ctrl_P, Ctrl_Q, Ctrl_T, Ctrl_W, ALt_T, ALt_O, ALt_H,ALt_M,ALt_S,ALt_C, F1, F2, F3,ALt_F };
+                return new string[] { Ctrl_D, Ctrl_F, Ctrl_E, Ctrl_L, Ctrl_O, Ctrl_P, Ctrl_Q, Ctrl_T, Ctrl_W, ALt_T,ALt_W, ALt_O, ALt_H,ALt_M,ALt_S,ALt_C, F1, F2, F3,ALt_F };
             }
             /// <summary>
             /// 获取菜单的快捷方式
@@ -100,6 +101,9 @@ namespace EMRDBLib
                         break;
                     case ALt_F:
                         key = (Keys)((Keys.Alt | Keys.F));
+                        break;
+                    case ALt_W:
+                        key = (Keys)((Keys.Alt | Keys.W));
                         break;
                     case F1:
                         key = (Keys)(Keys.F1);

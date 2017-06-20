@@ -10,6 +10,10 @@ namespace EMRDBLib
     /// </summary>
     public class QcMsgDict : DbTypeBase
     {
+        /// <summary>
+        /// 序号
+        /// </summary>
+        public int OrderNo { get; set; }
         private string m_szSerialNo = string.Empty;      //序号
         private string m_szQCMsgCode = string.Empty;     //反馈信息代码
         private string m_szQaEventType = string.Empty;   //问题分类
