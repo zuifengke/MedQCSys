@@ -9,6 +9,7 @@ using System.Text;
 using System.Data;
 using Heren.Common.Libraries;
 using Heren.Common.Libraries.DbAccess;
+using System.Reflection;
 
 namespace EMRDBLib.DbAccess
 {
@@ -28,14 +29,68 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 病历质控系统,获取质控反馈信息字典列表
         /// </summary>
-        /// <param name="lstQCMessageTemplets">质控反馈信息字典列表</param>
+        /// <param name="lstQcMsgDicts">质控反馈信息字典列表</param>
+        /// <returns>SystemData.ReturnValue</returns>
+        public short GetAllQcMsgDictList(ref List<QcMsgDict> lstQcMsgDicts)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+
+            string szField = string.Format("*");
+            string szCondtion = string.Format("1=1 ");
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
+               , SystemData.QcMsgDictTable.SERIAL_NO);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstQcMsgDicts == null)
+                    lstQcMsgDicts = new List<QcMsgDict>();
+                do
+                {
+                    QcMsgDict model = new QcMsgDict();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(QcMsgDict), dataReader.GetName(i));
+                        bool result = Reflect.SetPropertyValue(model, property, dataReader.GetValue(i));
+                    }
+                    lstQcMsgDicts.Add(model);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+        /// <summary>
+        /// 病历质控系统,获取质控反馈信息有效字典列表
+        /// </summary>
+        /// <param name="lstQcMsgDicts">质控反馈信息字典列表</param>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcMsgDictList(ref List<QcMsgDict> lstQcMsgDicts)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
                , SystemData.QcMsgDictTable.APPLY_ENV
                , SystemData.QcMsgDictTable.INPUT_CODE
                , SystemData.QcMsgDictTable.ISVETO
@@ -45,8 +100,9 @@ namespace EMRDBLib.DbAccess
                , SystemData.QcMsgDictTable.QC_MSG_CODE
                , SystemData.QcMsgDictTable.SCORE
                , SystemData.QcMsgDictTable.SERIAL_NO
+               , SystemData.QcMsgDictTable.IS_VALID
                );
-            string szCondtion = string.Format("1=1");
+            string szCondtion = string.Format("1=1 and {0} = 1", SystemData.QcMsgDictTable.IS_VALID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
                , SystemData.QcMsgDictTable.SERIAL_NO);
             IDataReader dataReader = null;
@@ -71,7 +127,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(6)) qcMsgDict.QC_MSG_CODE = dataReader.GetString(6);
                     if (!dataReader.IsDBNull(7)) qcMsgDict.SCORE = float.Parse(dataReader.GetValue(7).ToString());
                     if (!dataReader.IsDBNull(8)) qcMsgDict.SERIAL_NO = int.Parse(dataReader.GetValue(8).ToString());
-
+                    if (!dataReader.IsDBNull(9)) qcMsgDict.IS_VALID = decimal.Parse(dataReader.GetValue(9).ToString());
                     lstQcMsgDicts.Add(qcMsgDict);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -79,73 +135,6 @@ namespace EMRDBLib.DbAccess
             catch (Exception ex)
             {
                 LogManager.Instance.WriteLog("MedQCAccess.GetQCMessageTempletList", new string[] { "szSQL" }, new object[] { szSQL }, ex);
-                return SystemData.ReturnValue.EXCEPTION;
-            }
-            finally
-            {
-                if (dataReader != null)
-                {
-                    dataReader.Close();
-                    dataReader.Dispose();
-                    dataReader = null;
-                }
-                base.MedQCAccess.CloseConnnection(false);
-            }
-        }
-        public short GetQcMsgDictList(string szQaEventType, string szMessageTitle, ref List<QcMsgDict> lstQCMessageTemplets)
-        {
-            if (base.MedQCAccess == null)
-                return SystemData.ReturnValue.PARAM_ERROR;
-
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
-               , SystemData.QcMsgDictTable.SERIAL_NO, SystemData.QcMsgDictTable.QC_MSG_CODE, SystemData.QcMsgDictTable.QA_EVENT_TYPE
-               , SystemData.QcMsgDictTable.MESSAGE, SystemData.QcMsgDictTable.SCORE, SystemData.QcMsgDictTable.INPUT_CODE
-               , SystemData.QcMsgDictTable.MESSAGE_TITLE, SystemData.QcMsgDictTable.ISVETO);
-            string szCondtion = string.Format("1=1");
-            if (!string.IsNullOrEmpty(szQaEventType))
-            {
-                szCondtion = string.Format("{0} AND {1}='{2}'"
-                    , szCondtion
-                    , SystemData.QcMsgDictTable.QA_EVENT_TYPE
-                    , szQaEventType);
-            }
-            if (!string.IsNullOrEmpty(szMessageTitle))
-            {
-                szCondtion = string.Format("{0} AND {1}='{2}'"
-                    , szCondtion
-                    , SystemData.QcMsgDictTable.MESSAGE_TITLE
-                    , szMessageTitle);
-            }
-            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
-               , SystemData.QcMsgDictTable.SERIAL_NO);
-            IDataReader dataReader = null;
-            try
-            {
-                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
-                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
-                {
-                    return SystemData.ReturnValue.RES_NO_FOUND;
-                }
-                if (lstQCMessageTemplets == null)
-                    lstQCMessageTemplets = new List<QcMsgDict>();
-                do
-                {
-                    QcMsgDict qcMessageTemplet = new QcMsgDict();
-                    if (!dataReader.IsDBNull(0)) qcMessageTemplet.SERIAL_NO = int.Parse(dataReader.GetValue(0).ToString());
-                    if (!dataReader.IsDBNull(1)) qcMessageTemplet.QC_MSG_CODE = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) qcMessageTemplet.QA_EVENT_TYPE = dataReader.GetString(2);
-                    if (!dataReader.IsDBNull(3)) qcMessageTemplet.MESSAGE = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) qcMessageTemplet.SCORE = float.Parse(dataReader.GetValue(4).ToString());
-                    if (!dataReader.IsDBNull(5)) qcMessageTemplet.INPUT_CODE = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) qcMessageTemplet.MESSAGE_TITLE = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) qcMessageTemplet.ISVETO = dataReader.GetString(7) == "1";
-                    lstQCMessageTemplets.Add(qcMessageTemplet);
-                } while (dataReader.Read());
-                return SystemData.ReturnValue.OK;
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.WriteLog("QcMsgDictAccess.GetQcMsgDictList", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
             finally
@@ -173,7 +162,7 @@ namespace EMRDBLib.DbAccess
                , SystemData.QcMsgDictTable.MESSAGE_TITLE
                , SystemData.QcMsgDictTable.ISVETO);
             string szCondtion = string.Format("{0}='{1}'"
-              
+
                 , SystemData.QcMsgDictTable.QC_MSG_CODE, szQcMsgCode);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
                , SystemData.QcMsgDictTable.SERIAL_NO);
@@ -228,9 +217,11 @@ namespace EMRDBLib.DbAccess
                , SystemData.QcMsgDictTable.SERIAL_NO, SystemData.QcMsgDictTable.QC_MSG_CODE, SystemData.QcMsgDictTable.QA_EVENT_TYPE
                , SystemData.QcMsgDictTable.MESSAGE, SystemData.QcMsgDictTable.SCORE, SystemData.QcMsgDictTable.INPUT_CODE
                , SystemData.QcMsgDictTable.MESSAGE_TITLE, SystemData.QcMsgDictTable.ISVETO);
-            string szCondition = " 1=1 ";
+            string szCondition = string.Format(" 1=1 and {0}=1", SystemData.QcMsgDictTable.IS_VALID);
             if (!string.IsNullOrEmpty(szQuestionType))
-                szCondition = string.Format("{0}='{1}'", SystemData.QcMsgDictTable.QA_EVENT_TYPE, szQuestionType);
+                szCondition = string.Format("{0} AND {1}='{2}'"
+                    , szCondition
+                    , SystemData.QcMsgDictTable.QA_EVENT_TYPE, szQuestionType);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField
                 , SystemData.DataTable.QC_MSG_DICT, szCondition, SystemData.QcMsgDictTable.SERIAL_NO);
             IDataReader dataReader = null;
@@ -288,7 +279,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}"
                 , SystemData.QcMsgDictTable.APPLY_ENV
                 , SystemData.QcMsgDictTable.INPUT_CODE
                 , SystemData.QcMsgDictTable.ISVETO
@@ -297,9 +288,10 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcMsgDictTable.QA_EVENT_TYPE
                 , SystemData.QcMsgDictTable.QC_MSG_CODE
                 , SystemData.QcMsgDictTable.SCORE
-                , SystemData.QcMsgDictTable.SERIAL_NO);
+                , SystemData.QcMsgDictTable.SERIAL_NO
+                , SystemData.QcMsgDictTable.IS_VALID);
 
-            string szValue = string.Format("'{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},{8}"
+            string szValue = string.Format("'{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},{8},{9}"
                 , qcMsgDict.APPLY_ENV
                 , qcMsgDict.INPUT_CODE
                 , qcMsgDict.ISVETO ? 1 : 0
@@ -308,7 +300,8 @@ namespace EMRDBLib.DbAccess
                 , qcMsgDict.QA_EVENT_TYPE
                 , qcMsgDict.QC_MSG_CODE
                 , qcMsgDict.SCORE
-                , qcMsgDict.SERIAL_NO);
+                , qcMsgDict.SERIAL_NO
+                , qcMsgDict.IS_VALID);
 
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_MSG_DICT, szField, szValue);
             int nCount = 0;
@@ -318,12 +311,12 @@ namespace EMRDBLib.DbAccess
             }
             catch (Exception ex)
             {
-                LogManager.Instance.WriteLog("QcCheckPointAccess.SaveQcCheckPoint", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
             if (nCount <= 0)
             {
-                LogManager.Instance.WriteLog("QcCheckPointAccess.SaveQcCheckPoint", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
                 return SystemData.ReturnValue.EXCEPTION;
             }
             return SystemData.ReturnValue.OK;
@@ -347,16 +340,17 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}='{1}',{2}='{3}',{4}='{5}',{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}={15},{16}={17}"
+            string szField = string.Format("{0}='{1}',{2}='{3}',{4}='{5}',{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}={15},{16}={17},{18}={19}"
                 , SystemData.QcMsgDictTable.APPLY_ENV, qcMsgDict.APPLY_ENV
                 , SystemData.QcMsgDictTable.INPUT_CODE, qcMsgDict.INPUT_CODE
-                , SystemData.QcMsgDictTable.ISVETO, qcMsgDict.ISVETO?1:0
+                , SystemData.QcMsgDictTable.ISVETO, qcMsgDict.ISVETO ? 1 : 0
                 , SystemData.QcMsgDictTable.MESSAGE, qcMsgDict.MESSAGE
                 , SystemData.QcMsgDictTable.MESSAGE_TITLE, qcMsgDict.MESSAGE_TITLE
                 , SystemData.QcMsgDictTable.QA_EVENT_TYPE, qcMsgDict.QA_EVENT_TYPE
                 , SystemData.QcMsgDictTable.QC_MSG_CODE, qcMsgDict.QC_MSG_CODE
                 , SystemData.QcMsgDictTable.SCORE, qcMsgDict.SCORE
-                , SystemData.QcMsgDictTable.SERIAL_NO, qcMsgDict.SERIAL_NO);
+                , SystemData.QcMsgDictTable.SERIAL_NO, qcMsgDict.SERIAL_NO
+                , SystemData.QcMsgDictTable.IS_VALID, qcMsgDict.IS_VALID);
 
             string szCondition = string.Format("{0}='{1}'", SystemData.QcMsgDictTable.QC_MSG_CODE, szOldQCMsgCode);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QC_MSG_DICT, szField, szCondition);
@@ -367,12 +361,12 @@ namespace EMRDBLib.DbAccess
             }
             catch (Exception ex)
             {
-                LogManager.Instance.WriteLog("QcMsgDictAccess.Update", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
             if (nCount <= 0)
             {
-                LogManager.Instance.WriteLog("QcCheckPointAccess.UpdateQcCheckPoint", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
                 return SystemData.ReturnValue.EXCEPTION;
             }
             return SystemData.ReturnValue.OK;

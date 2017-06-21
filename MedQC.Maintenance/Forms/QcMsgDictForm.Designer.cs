@@ -1,6 +1,6 @@
 namespace Heren.MedQC.Maintenance
 {
-    partial class QCMsgTempletForm
+    partial class QcMsgDictForm
     {
         /// <summary>
         /// Required designer variable.
@@ -47,6 +47,7 @@ namespace Heren.MedQC.Maintenance
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsVeto = new Heren.Common.Controls.TableView.ComboBoxColumn();
             this.colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_IS_VALID = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -66,14 +67,14 @@ namespace Heren.MedQC.Maintenance
             this.toolStrip1.Location = new System.Drawing.Point(0, 291);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(716, 30);
+            this.toolStrip1.Size = new System.Drawing.Size(750, 30);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolbtnNew
             // 
             this.toolbtnNew.AutoSize = false;
-            this.toolbtnNew.Image = global:: Heren.MedQC.Maintenance.Properties.Resources.Add;
+            this.toolbtnNew.Image = global::Heren.MedQC.Maintenance.Properties.Resources.Add;
             this.toolbtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolbtnNew.Name = "toolbtnNew";
             this.toolbtnNew.Size = new System.Drawing.Size(84, 26);
@@ -132,12 +133,13 @@ namespace Heren.MedQC.Maintenance
             this.colMessageTitle,
             this.colMessage,
             this.colIsVeto,
-            this.colScore});
+            this.colScore,
+            this.col_IS_VALID});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             this.dataGridView1.Location = new System.Drawing.Point(4, 4);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(708, 286);
+            this.dataGridView1.Size = new System.Drawing.Size(742, 286);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -243,14 +245,22 @@ namespace Heren.MedQC.Maintenance
             this.colScore.MaxInputLength = 5;
             this.colScore.Name = "colScore";
             // 
-            // QCMsgTempletForm
+            // col_IS_VALID
+            // 
+            this.col_IS_VALID.HeaderText = "启用";
+            this.col_IS_VALID.Name = "col_IS_VALID";
+            this.col_IS_VALID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_IS_VALID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_IS_VALID.Width = 50;
+            // 
+            // QcMsgDictForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(716, 321);
+            this.ClientSize = new System.Drawing.Size(750, 321);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.Name = "QCMsgTempletForm";
+            this.Name = "QcMsgDictForm";
             this.Text = "质控质检问题字典维护";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -274,11 +284,12 @@ namespace Heren.MedQC.Maintenance
         private System.Windows.Forms.ToolStripMenuItem mnuDeleteItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveItems;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSerialNO;
-        private Heren.Common.Controls.TableView.ComboBoxColumn colQCEventType;
+        private Common.Controls.TableView.ComboBoxColumn colQCEventType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQCMsgCode;
-        private Heren.Common.Controls.TableView.ComboBoxColumn colMessageTitle;
+        private Common.Controls.TableView.ComboBoxColumn colMessageTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
-        private Heren.Common.Controls.TableView.ComboBoxColumn colIsVeto;
+        private Common.Controls.TableView.ComboBoxColumn colIsVeto;
         private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_IS_VALID;
     }
 }

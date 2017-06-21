@@ -55,14 +55,14 @@ namespace Heren.MedQC.Maintenance
                 return false;
             foreach (DockContentBase item in form.DockPanel.Contents)
             {
-                if (item is QCMsgTempletForm)
+                if (item is QcMsgDictForm)
                 {
                     item.Activate();
                     item.OnRefreshView();
                     return true;
                 }
             }
-            QCMsgTempletForm role = new QCMsgTempletForm(form);
+            QcMsgDictForm role = new QcMsgDictForm(form);
             role.Show(form.DockPanel, DockState.Document);
             role.Activate();
             return true;

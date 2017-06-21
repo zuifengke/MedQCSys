@@ -47,6 +47,10 @@ namespace EMRDBLib
             /// 单项否决
             /// </summary>
             public const string ISVETO = "ISVETO";
+            /// <summary>
+            /// 是否有效
+            /// </summary>
+            public const string IS_VALID = "IS_VALID";
         }
     }
 }

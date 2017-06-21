@@ -69,11 +69,13 @@ namespace EMRDBLib
         /// 是否单项否决
         /// </summary>
         public bool ISVETO { get; set; }
+        public decimal IS_VALID { get; set; }
         public string APPLY_ENV { get; set; }
         public QcMsgDict()
         {
             this.MESSAGE_TITLE = string.Empty;
             this.MESSAGE = string.Empty;
+            this.IS_VALID = 1;//默认开启
         }
         public override string ToString()
         {

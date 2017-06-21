@@ -23,9 +23,9 @@ using MedQCSys;
 
 namespace Heren.MedQC.Maintenance
 {
-    public partial class QCMsgTempletForm : DockContentBase
+    public partial class QcMsgDictForm : DockContentBase
     {
-        public QCMsgTempletForm(MainForm parent)
+        public QcMsgDictForm(MainForm parent)
             : base(parent)
         {
             this.InitializeComponent();
@@ -53,7 +53,7 @@ namespace Heren.MedQC.Maintenance
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在刷新质控质检问题字典，请稍候...");
 
-            this.LoadQCMessageTempletList();
+            this.LoadQcMsgDictList();
             this.UpdateUIState();
 
             this.ShowStatusMessage(null);
@@ -63,13 +63,13 @@ namespace Heren.MedQC.Maintenance
         /// <summary>
         /// 装载反馈质控信息字典
         /// </summary>
-        private void LoadQCMessageTempletList()
+        private void LoadQcMsgDictList()
         {
             this.dataGridView1.Rows.Clear();
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
-            List<EMRDBLib.QcMsgDict> lstQCMessageTemplets = null;
-            short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQCMessageTemplets);
+            List<EMRDBLib.QcMsgDict> lstQcMsgDicts = null;
+            short shRet = QcMsgDictAccess.Instance.GetAllQcMsgDictList(ref lstQcMsgDicts);
             if (shRet == SystemData.ReturnValue.RES_NO_FOUND)
             {
                 this.MainForm.ShowStatusMessage("未找到记录");
@@ -80,16 +80,16 @@ namespace Heren.MedQC.Maintenance
                 MessageBoxEx.Show("获取反馈质控信息字典失败！");
                 return;
             }
-            if (lstQCMessageTemplets == null || lstQCMessageTemplets.Count <= 0)
+            if (lstQcMsgDicts == null || lstQcMsgDicts.Count <= 0)
                 return;
             this.RefreshQCEventTypeColumn();
-            for (int index = 0; index < lstQCMessageTemplets.Count; index++)
+            for (int index = 0; index < lstQcMsgDicts.Count; index++)
             {
-                EMRDBLib.QcMsgDict qcMessageTemplet = lstQCMessageTemplets[index];
+                EMRDBLib.QcMsgDict qcMsgDict = lstQcMsgDicts[index];
                 int nRowIndex = this.dataGridView1.Rows.Add();
                 DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
-                row.Tag = qcMessageTemplet;
-                this.SetRowData(row, qcMessageTemplet);
+                row.Tag = qcMsgDict;
+                this.SetRowData(row, qcMsgDict);
                 this.dataGridView1.SetRowState(row, RowState.Normal);
             }
         }
@@ -225,21 +225,22 @@ namespace Heren.MedQC.Maintenance
         /// 设置指定行显示的数据,以及绑定的数据
         /// </summary>
         /// <param name="row">指定行</param>
-        /// <param name="qcMessageTemplet">绑定的数据</param>
+        /// <param name="qcMsgDict">绑定的数据</param>
         /// <returns>bool</returns>
-        private bool SetRowData(DataGridViewRow row, EMRDBLib.QcMsgDict qcMessageTemplet)
+        private bool SetRowData(DataGridViewRow row, EMRDBLib.QcMsgDict qcMsgDict)
         {
-            if (row == null || row.Index < 0 || qcMessageTemplet == null)
+            if (row == null || row.Index < 0 || qcMsgDict == null)
                 return false;
-            row.Tag = qcMessageTemplet;
-            row.Cells[this.colSerialNO.Index].Value = qcMessageTemplet.SERIAL_NO;
-            row.Cells[this.colQCEventType.Index].Value = qcMessageTemplet.QA_EVENT_TYPE;
-            row.Cells[this.colQCMsgCode.Index].Value = qcMessageTemplet.QC_MSG_CODE;
-            row.Cells[this.colMessage.Index].Value = qcMessageTemplet.MESSAGE;
-            row.Cells[this.colMessageTitle.Index].Value = qcMessageTemplet.MESSAGE_TITLE;
+            row.Tag = qcMsgDict;
+            row.Cells[this.colSerialNO.Index].Value = qcMsgDict.SERIAL_NO;
+            row.Cells[this.colQCEventType.Index].Value = qcMsgDict.QA_EVENT_TYPE;
+            row.Cells[this.colQCMsgCode.Index].Value = qcMsgDict.QC_MSG_CODE;
+            row.Cells[this.colMessage.Index].Value = qcMsgDict.MESSAGE;
+            row.Cells[this.colMessageTitle.Index].Value = qcMsgDict.MESSAGE_TITLE;
             row.Cells[this.colScore.Index].Value =
-                Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcMessageTemplet.SCORE, 0f)), 1).ToString("F1");
-            row.Cells[this.colIsVeto.Index].Value = qcMessageTemplet.ISVETO ? "是" : "否";
+                Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcMsgDict.SCORE, 0f)), 1).ToString("F1");
+            row.Cells[this.col_IS_VALID.Index].Value = qcMsgDict.IS_VALID == 1 ? true : false;
+            row.Cells[this.colIsVeto.Index].Value = qcMsgDict.ISVETO ? "是" : "否";
             return true;
         }
 
@@ -247,13 +248,13 @@ namespace Heren.MedQC.Maintenance
         /// 获取指定行最新修改后的数据
         /// </summary>
         /// <param name="row">指定行</param>
-        /// <param name="qcMessageTemplet">最新修改后的数据</param>
+        /// <param name="qcMsgDict">最新修改后的数据</param>
         /// <returns>bool</returns>
-        private bool MakeRowData(DataTableViewRow row, ref EMRDBLib.QcMsgDict qcMessageTemplet)
+        private bool MakeRowData(DataTableViewRow row, ref EMRDBLib.QcMsgDict qcMsgDict)
         {
             if (row == null || row.Index < 0)
                 return false;
-            qcMessageTemplet = new EMRDBLib.QcMsgDict();
+            qcMsgDict = new EMRDBLib.QcMsgDict();
             EMRDBLib.QcMsgDict oldQCMessageTemplet = row.Tag as EMRDBLib.QcMsgDict;
             if (!this.dataGridView1.IsNewRow(row))
             {
@@ -266,7 +267,7 @@ namespace Heren.MedQC.Maintenance
 
             if (this.dataGridView1.IsDeletedRow(row))
             {
-                qcMessageTemplet = oldQCMessageTemplet;
+                qcMsgDict = oldQCMessageTemplet;
                 return true;
             }
             object cellValue = row.Cells[this.colSerialNO.Index].Value;
@@ -314,17 +315,22 @@ namespace Heren.MedQC.Maintenance
                 return false;
             }
 
-            if (qcMessageTemplet == null)
-                qcMessageTemplet = new EMRDBLib.QcMsgDict();
-            qcMessageTemplet.SERIAL_NO = int.Parse(row.Cells[this.colSerialNO.Index].Value.ToString());
-            qcMessageTemplet.QA_EVENT_TYPE = (string)row.Cells[this.colQCEventType.Index].Value;
-            qcMessageTemplet.QC_MSG_CODE = (string)row.Cells[this.colQCMsgCode.Index].Value;
-            qcMessageTemplet.MESSAGE = (string)row.Cells[this.colMessage.Index].Value;
-            qcMessageTemplet.MESSAGE_TITLE = row.Cells[this.colMessageTitle.Index].Value == null ?
+            if (qcMsgDict == null)
+                qcMsgDict = new EMRDBLib.QcMsgDict();
+            qcMsgDict.SERIAL_NO = int.Parse(row.Cells[this.colSerialNO.Index].Value.ToString());
+            qcMsgDict.QA_EVENT_TYPE = (string)row.Cells[this.colQCEventType.Index].Value;
+            qcMsgDict.QC_MSG_CODE = (string)row.Cells[this.colQCMsgCode.Index].Value;
+            qcMsgDict.MESSAGE = (string)row.Cells[this.colMessage.Index].Value;
+            qcMsgDict.MESSAGE_TITLE = row.Cells[this.colMessageTitle.Index].Value == null ?
                 string.Empty : (string)row.Cells[this.colMessageTitle.Index].Value;
-            qcMessageTemplet.SCORE = float.Parse(row.Cells[this.colScore.Index].Value.ToString());
-            qcMessageTemplet.ISVETO = (string)row.Cells[this.colIsVeto.Index].Value == "是";
-            qcMessageTemplet.APPLY_ENV = "MEDDOC";
+            qcMsgDict.SCORE = float.Parse(row.Cells[this.colScore.Index].Value.ToString());
+            qcMsgDict.ISVETO = (string)row.Cells[this.colIsVeto.Index].Value == "是";
+            qcMsgDict.APPLY_ENV = "MEDDOC";
+            if (row.Cells[this.col_IS_VALID.Index].Value == null
+                || row.Cells[this.col_IS_VALID.Index].Value.ToString().ToLower() == "false")
+                qcMsgDict.IS_VALID = 0;
+            else
+                qcMsgDict.IS_VALID = 1;
             return true;
         }
 
@@ -343,13 +349,13 @@ namespace Heren.MedQC.Maintenance
                     return SystemData.ReturnValue.CANCEL;
             }
 
-            EMRDBLib.QcMsgDict qcMessageTemplet = row.Tag as EMRDBLib.QcMsgDict;
-            if (qcMessageTemplet == null)
+            EMRDBLib.QcMsgDict qcMsgDict = row.Tag as EMRDBLib.QcMsgDict;
+            if (qcMsgDict == null)
                 return SystemData.ReturnValue.FAILED;
-            string szQCMsgCode = qcMessageTemplet.QC_MSG_CODE;
+            string szQCMsgCode = qcMsgDict.QC_MSG_CODE;
 
-            qcMessageTemplet = null;
-            if (!this.MakeRowData(row, ref qcMessageTemplet))
+            qcMsgDict = null;
+            if (!this.MakeRowData(row, ref qcMsgDict))
                 return SystemData.ReturnValue.FAILED;
 
             short shRet = SystemData.ReturnValue.OK;
@@ -367,26 +373,26 @@ namespace Heren.MedQC.Maintenance
             }
             else if (this.dataGridView1.IsModifiedRow(row))
             {
-                shRet = QcMsgDictAccess.Instance.Update(qcMessageTemplet, szQCMsgCode);
+                shRet = QcMsgDictAccess.Instance.Update(qcMsgDict, szQCMsgCode);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
                     MessageBoxEx.Show("无法更新当前记录！");
                     return SystemData.ReturnValue.FAILED;
                 }
-                row.Tag = qcMessageTemplet;
+                row.Tag = qcMsgDict;
                 this.dataGridView1.SetRowState(row, RowState.Normal);
             }
             else if (this.dataGridView1.IsNewRow(row))
             {
-                shRet = QcMsgDictAccess.Instance.Insert(qcMessageTemplet);
+                shRet = QcMsgDictAccess.Instance.Insert(qcMsgDict);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
                     MessageBoxEx.Show("无法保存当前记录！");
                     return SystemData.ReturnValue.FAILED;
                 }
-                row.Tag = qcMessageTemplet;
+                row.Tag = qcMsgDict;
                 this.dataGridView1.SetRowState(row, RowState.Normal);
             }
             return SystemData.ReturnValue.OK;
@@ -395,24 +401,10 @@ namespace Heren.MedQC.Maintenance
         /// <summary>
         /// 增加一行记录
         /// </summary>
-        private void AddNewItem()
+        private void AddRow()
         {
             if (SystemParam.Instance.UserRight == null)
                 return;
-
-            ////创建数据
-            //EMRDBLib.QCMessageTemplet qcMessageInfo = new EMRDBLib.QCMessageTemplet();
-            ////创建行
-            //int index = this.dataGridView1.Rows.Add();
-            //DataTableViewRow row = this.dataGridView1.Rows[index];
-            //row.Tag = qcMessageInfo;
-            //this.dataGridView1.SetRowState(row, RowState.New);
-            //this.UpdateUIState();
-
-            //this.dataGridView1.CurrentCell = row.Cells[this.colSerialNO.Index];
-            //this.dataGridView1.BeginEdit(true);
-
-
             EMRDBLib.QcMsgDict qcMessageTemplet = null;
             DataTableViewRow currRow = this.dataGridView1.CurrentRow;
             if (currRow != null && currRow.Index >= 0)
@@ -492,7 +484,7 @@ namespace Heren.MedQC.Maintenance
 
         private void toolbtnNew_Click(object sender, EventArgs e)
         {
-            this.AddNewItem();
+            this.AddRow();
         }
 
         private void toolbtnModify_Click(object sender, EventArgs e)
@@ -518,7 +510,7 @@ namespace Heren.MedQC.Maintenance
 
         private void mnuAddItem_Click(object sender, EventArgs e)
         {
-            this.AddNewItem();
+            this.AddRow();
         }
 
         private void mnuModifyItem_Click(object sender, EventArgs e)

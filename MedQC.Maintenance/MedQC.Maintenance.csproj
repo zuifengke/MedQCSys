@@ -102,11 +102,11 @@
     <Compile Include="Forms\QCEventTypesForm.Designer.cs">
       <DependentUpon>QCEventTypesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\QCMsgTempletForm.cs">
+    <Compile Include="Forms\QcMsgDictForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\QCMsgTempletForm.Designer.cs">
-      <DependentUpon>QCMsgTempletForm.cs</DependentUpon>
+    <Compile Include="Forms\QcMsgDictForm.Designer.cs">
+      <DependentUpon>QcMsgDictForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SqlConditionForm.cs">
       <SubType>Form</SubType>
@@ -157,8 +157,8 @@
       <DependentUpon>QCEventTypesForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\QCMsgTempletForm.resx">
-      <DependentUpon>QCMsgTempletForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\QcMsgDictForm.resx">
+      <DependentUpon>QcMsgDictForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SqlConditionForm.resx">
