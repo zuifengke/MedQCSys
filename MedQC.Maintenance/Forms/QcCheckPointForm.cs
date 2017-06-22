@@ -20,6 +20,7 @@ using Heren.MedQC.Utilities;
 using Heren.MedQC.Core;
 using MedQCSys.DockForms;
 using MedQCSys;
+using Heren.MedQC.Maintenance.Dialogs;
 
 namespace Heren.MedQC.Maintenance
 {
@@ -220,7 +221,8 @@ namespace Heren.MedQC.Maintenance
             row.Cells[this.colEvent.Index].Tag = qcCheckPoint.EventID;
             row.Cells[this.colIsRepeat.Index].Value = qcCheckPoint.IsRepeat;
             row.Cells[this.colQaEventType.Index].Value = qcCheckPoint.QaEventType;
-            
+            row.Cells[this.col_ELEMENT_NAME.Index].Value = qcCheckPoint.ELEMENT_NAME;
+
         }
 
         /// <summary>
@@ -291,6 +293,11 @@ namespace Heren.MedQC.Maintenance
                     return false;
                 }
                 qcCheckPoint.Score = value;
+            }
+            cellValue = row.Cells[this.col_ELEMENT_NAME.Index].Value;
+            if (cellValue != null && cellValue.ToString().Trim() != "")
+            {
+                qcCheckPoint.ELEMENT_NAME = cellValue.ToString();
             }
 
             qcCheckPoint.OrderValue = row.Index;
@@ -621,6 +628,7 @@ namespace Heren.MedQC.Maintenance
             DataTableViewRow row = this.dataGridView1.Rows[e.RowIndex];
             if (this.dataGridView1.IsDeletedRow(row))
                 return;
+            QcCheckPoint qcCheckPoint = row.Tag as QcCheckPoint;
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (e.ColumnIndex == this.colEvent.Index)
                 this.ShowTimeEventSelectForm();
@@ -636,8 +644,26 @@ namespace Heren.MedQC.Maintenance
                 this.ShowScriptEditForm(row);
             else if (e.ColumnIndex == this.col_ELEMENT_NAME.Index)
             {
-                //this.ShowStatusMessage
-
+                SelectElementForm frm = new SelectElementForm();
+                string doctypeids =row.Cells[this.colDocType.Index].Tag as string;
+                if (string.IsNullOrEmpty(doctypeids))
+                {
+                    MessageBoxEx.ShowMessage("请先选择相关文书");
+                }
+                string[] arrDocTypeIDs = doctypeids.Split(';');
+                frm.DocTypeInfo = new DocTypeInfo() { DocTypeID = arrDocTypeIDs[0] };
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    row.Cells[this.col_ELEMENT_NAME.Index].Value = frm.SelectedElement.ElementName;
+                    qcCheckPoint.ELEMENT_NAME= frm.SelectedElement.ElementName;
+                }
+                else if(frm.SelectedElement==null)
+                {
+                    row.Cells[this.col_ELEMENT_NAME.Index].Value = string.Empty;
+                    qcCheckPoint.ELEMENT_NAME = string.Empty;
+                }
+                if (this.dataGridView1.IsNormalRowUndeleted(row))
+                    this.dataGridView1.SetRowState(row, RowState.Update);
             }
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -680,6 +706,8 @@ namespace Heren.MedQC.Maintenance
             else if (e.ColumnIndex == this.colDocType.Index || e.ColumnIndex == this.colCheckPointContent.Index)
                 e.Cancel = true;
             else if (e.ColumnIndex == this.colQaEventType.Index || e.ColumnIndex == this.colMsgDictMessage.Index)
+                e.Cancel = true;
+            else if (e.ColumnIndex == this.col_ELEMENT_NAME.Index)
                 e.Cancel = true;
         }
 

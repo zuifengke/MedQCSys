@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Heren.MedQC.Utilities.Document
+namespace Heren.MedQC.Frame.Document
 {
     public class DocumentEditor:Control
     {

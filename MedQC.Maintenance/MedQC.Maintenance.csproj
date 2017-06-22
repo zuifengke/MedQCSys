@@ -71,6 +71,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Libraries.dll</HintPath>
     </Reference>
+    <Reference Include="Common.RichEditor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -84,6 +85,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\SelectElementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectElementForm.Designer.cs">
+      <DependentUpon>SelectElementForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ModifyPwdForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +153,9 @@
     </Compile>
     <Compile Include="MaintenanceCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\SelectElementForm.resx">
+      <DependentUpon>SelectElementForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModifyPwdForm.resx">
       <DependentUpon>ModifyPwdForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -255,9 +265,7 @@
   <ItemGroup>
     <None Include="Resources\save.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialogs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\MoveDown.png" />
   </ItemGroup>

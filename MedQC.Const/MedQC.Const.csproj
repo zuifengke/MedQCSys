@@ -82,6 +82,7 @@
     <Compile Include="DataTable\RecMrBatchTable.cs" />
     <Compile Include="DataTable\QcModifyNoticeTable.cs" />
     <Compile Include="DataView\MrArchiveView.cs" />
+    <Compile Include="TypeConst\DefaultEditor.cs" />
     <Compile Include="TypeConst\DocTypeApplyEnv.cs" />
     <Compile Include="HerenHis\DiagnosisDictTable.cs" />
     <Compile Include="HerenHis\TransferTable.cs" />

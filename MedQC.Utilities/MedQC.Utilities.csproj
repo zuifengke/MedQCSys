@@ -101,12 +101,6 @@
     <Compile Include="Dialogs\ImageViewerDialog.Designer.cs">
       <DependentUpon>ImageViewerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Document\DocumentEditor.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Document\HerenEditor.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="IDCardRead\CardInfo.cs" />
     <Compile Include="IDCardRead\IDCardRead.cs" />
     <Compile Include="IDCardRead\Public_class.cs" />
@@ -139,6 +133,9 @@
     <EmbeddedResource Include="Dialogs\ImageViewerDialog.resx">
       <DependentUpon>ImageViewerDialog.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Document\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

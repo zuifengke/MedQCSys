@@ -50,6 +50,7 @@ namespace EMRDBLib.DbAccess
                 }
                 if (lstQcMsgDicts == null)
                     lstQcMsgDicts = new List<QcMsgDict>();
+                lstQcMsgDicts.Clear();
                 do
                 {
                     QcMsgDict model = new QcMsgDict();
@@ -57,8 +58,43 @@ namespace EMRDBLib.DbAccess
                     {
                         if (dataReader.IsDBNull(i))
                             continue;
-                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(QcMsgDict), dataReader.GetName(i));
-                        bool result = Reflect.SetPropertyValue(model, property, dataReader.GetValue(i));
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.QcMsgDictTable.APPLY_ENV:
+                                model.APPLY_ENV = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.INPUT_CODE:
+                                model.INPUT_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.ISVETO:
+                                model.ISVETO = dataReader.GetValue(i).ToString()=="1";
+                                break;
+                            case SystemData.QcMsgDictTable.IS_VALID:
+                                model.IS_VALID = decimal.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcMsgDictTable.MESSAGE:
+                                model.MESSAGE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.MESSAGE_TITLE:
+                                model.MESSAGE_TITLE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.QA_EVENT_TYPE:
+                                model.QA_EVENT_TYPE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.QC_MSG_CODE:
+                                model.QC_MSG_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcMsgDictTable.SCORE:
+                                model.SCORE =float.Parse( dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcMsgDictTable.SERIAL_NO:
+                                model.SERIAL_NO = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+
+                            default: break;
+                        }
                     }
                     lstQcMsgDicts.Add(model);
                 } while (dataReader.Read());

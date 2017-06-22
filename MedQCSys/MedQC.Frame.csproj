@@ -213,6 +213,24 @@
     <Compile Include="Dialogs\TempletSelectForm.Designer.cs">
       <DependentUpon>TempletSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Document\BaseDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\BaseDocumentForm.Designer.cs">
+      <DependentUpon>BaseDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\DocumentEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Document\HerenDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document\HerenDocumentForm.Designer.cs">
+      <DependentUpon>HerenDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Document\HerenEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PatPage\DocScoreNew2Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -473,6 +491,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TempletSelectForm.resx">
       <DependentUpon>TempletSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\BaseDocumentForm.resx">
+      <DependentUpon>BaseDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document\HerenDocumentForm.resx">
+      <DependentUpon>HerenDocumentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatPage\DocScoreNew2Form.resx">
       <DependentUpon>DocScoreNew2Form.cs</DependentUpon>

@@ -56,7 +56,7 @@ namespace Heren.MedQC.Maintenance
             this.LoadQcMsgDictList();
             this.UpdateUIState();
 
-            this.ShowStatusMessage(null);
+            //this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -92,6 +92,7 @@ namespace Heren.MedQC.Maintenance
                 this.SetRowData(row, qcMsgDict);
                 this.dataGridView1.SetRowState(row, RowState.Normal);
             }
+            this.MainForm.ShowStatusMessage(string.Format("¹²{0}Ìõ¼ÇÂ¼", lstQcMsgDicts.Count));
         }
 
         /// <summary>

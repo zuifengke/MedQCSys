@@ -41,7 +41,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16},{17}"
                 , SystemData.QcCheckPointTable.CHECK_POINT_ID, SystemData.QcCheckPointTable.CHECK_POINT_CONTENT
                 , SystemData.QcCheckPointTable.DOCTYPE_ID, SystemData.QcCheckPointTable.DOCTYPE_NAME
                 , SystemData.QcCheckPointTable.HANDLER_COMMAND, SystemData.QcCheckPointTable.IS_VALID
@@ -53,6 +53,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckPointTable.EVENT_ID
                 , SystemData.QcCheckPointTable.IS_REPEAT
                 , SystemData.TimeEventTable.EVENT_NAME
+                , SystemData.QcCheckPointTable.ELEMENT_NAME
                 );
             string szTable = string.Format("{0} A,{1} B"
                 , SystemData.DataTable.QC_CHECK_POINT
@@ -108,6 +109,8 @@ namespace EMRDBLib.DbAccess
                         qcCheckPoint.IsRepeat = dataReader.GetValue(15).ToString() == "1" ? true : false;
                     if (!dataReader.IsDBNull(16))
                         qcCheckPoint.EventName = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17))
+                        qcCheckPoint.ELEMENT_NAME = dataReader.GetString(17);
                     lstQcCheckPoints.Add(qcCheckPoint);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
