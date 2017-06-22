@@ -36,13 +36,13 @@
             this.lblDiagnosis = new System.Windows.Forms.Label();
             this.lblAllergyDrugs = new System.Windows.Forms.Label();
             this.lblChargeType = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblScore = new System.Windows.Forms.Label();
             this.picSexFlag = new System.Windows.Forms.PictureBox();
             this.fbtnHigh = new Heren.Common.Controls.FlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.fbtnPrintLog = new Heren.Common.Controls.FlatButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.flatButton1 = new Heren.Common.Controls.FlatButton();
-            this.fbtnPrintLog = new Heren.Common.Controls.FlatButton();
             ((System.ComponentModel.ISupportInitialize)(this.picSexFlag)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -136,16 +136,16 @@
             this.lblChargeType.Text = "费别：";
             this.lblChargeType.UseCompatibleTextRendering = true;
             // 
-            // label1
+            // lblScore
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(945, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "成绩：";
-            this.label1.UseCompatibleTextRendering = true;
+            this.lblScore.AutoSize = true;
+            this.lblScore.BackColor = System.Drawing.Color.Transparent;
+            this.lblScore.Location = new System.Drawing.Point(945, 8);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(42, 19);
+            this.lblScore.TabIndex = 0;
+            this.lblScore.Text = "成绩：";
+            this.lblScore.UseCompatibleTextRendering = true;
             // 
             // picSexFlag
             // 
@@ -177,7 +177,7 @@
             this.panel1.Controls.Add(this.lblPatientName);
             this.panel1.Controls.Add(this.lblAge);
             this.panel1.Controls.Add(this.lblPatientID);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.lblScore);
             this.panel1.Controls.Add(this.lblInDays);
             this.panel1.Controls.Add(this.lblChargeType);
             this.panel1.Controls.Add(this.lblDoctorInCharge);
@@ -188,6 +188,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1211, 32);
             this.panel1.TabIndex = 4;
+            // 
+            // fbtnPrintLog
+            // 
+            this.fbtnPrintLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.fbtnPrintLog.BorderColor = System.Drawing.Color.Red;
+            this.fbtnPrintLog.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.fbtnPrintLog.Location = new System.Drawing.Point(1110, 6);
+            this.fbtnPrintLog.Name = "fbtnPrintLog";
+            this.fbtnPrintLog.Size = new System.Drawing.Size(80, 22);
+            this.fbtnPrintLog.TabIndex = 4;
+            this.fbtnPrintLog.Text = "复印登记";
+            this.fbtnPrintLog.ToolTipText = null;
+            this.fbtnPrintLog.Click += new System.EventHandler(this.fbtnPrintLog_Click);
             // 
             // panel2
             // 
@@ -210,19 +223,6 @@
             this.flatButton1.TabIndex = 3;
             this.flatButton1.ToolTipText = null;
             this.flatButton1.Click += new System.EventHandler(this.flatButton1_Click);
-            // 
-            // fbtnPrintLog
-            // 
-            this.fbtnPrintLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fbtnPrintLog.BorderColor = System.Drawing.Color.Red;
-            this.fbtnPrintLog.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.fbtnPrintLog.Location = new System.Drawing.Point(1110, 6);
-            this.fbtnPrintLog.Name = "fbtnPrintLog";
-            this.fbtnPrintLog.Size = new System.Drawing.Size(80, 22);
-            this.fbtnPrintLog.TabIndex = 4;
-            this.fbtnPrintLog.Text = "复印登记";
-            this.fbtnPrintLog.ToolTipText = null;
-            this.fbtnPrintLog.Click += new System.EventHandler(this.fbtnPrintLog_Click);
             // 
             // PatientInfoStrip
             // 
@@ -251,7 +251,7 @@
         private System.Windows.Forms.Label lblDiagnosis;
         private System.Windows.Forms.Label lblAllergyDrugs;
         private System.Windows.Forms.Label lblChargeType;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblScore;
         private Heren.Common.Controls.FlatButton fbtnHigh;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;

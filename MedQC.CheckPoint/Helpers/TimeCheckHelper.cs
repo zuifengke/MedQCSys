@@ -171,8 +171,7 @@ namespace Heren.MedQC.CheckPoint
                 if (!timeQCEventResult.EndTime.HasValue)
                     continue;
                 DateTime dtPeriodTime = timeQCEventResult.EventTime.Value;
-                ////根据书写规则定义标准，修改循环退出判断逻辑
-                //bool IsRuleAsDocCommited = DataLayer.SystemParam.Instance.SystemOption.DocWriteRule == "2";
+            
                 do
                 {
                     TimeCheckResult timeCheckResult = new TimeCheckResult();

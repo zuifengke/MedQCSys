@@ -231,12 +231,6 @@
     <Compile Include="Document\HerenEditor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PatPage\DocScoreNew2Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PatPage\DocScoreNew2Form.Designer.cs">
-      <DependentUpon>DocScoreNew2Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="PatPage\DocScoreNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -497,10 +491,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Document\HerenDocumentForm.resx">
       <DependentUpon>HerenDocumentForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocScoreNew2Form.resx">
-      <DependentUpon>DocScoreNew2Form.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PatPage\DocScoreNewForm.resx">
       <DependentUpon>DocScoreNewForm.cs</DependentUpon>

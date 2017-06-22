@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 using EMRDBLib;
+using System.Collections.Generic;
 
 namespace MedQCSys.Controls.PatInfoList
 {
@@ -30,7 +31,7 @@ namespace MedQCSys.Controls.PatInfoList
         /// </summary>
         [Description("当用户单击列表项时触发")]
         public event MouseEventHandler CardMouseClick = null;
-
+        public List<PatInfoCard> PatInfoCards { get; set; }
         private PatInfoCard m_selectedCard = null;
         /// <summary>
         /// 获取或设置当前选中的患者信息卡
@@ -74,6 +75,8 @@ namespace MedQCSys.Controls.PatInfoList
             this.BorderStyle = BorderStyle.Fixed3D;
             this.AutoScroll = true;
             this.Padding = new Padding(1);
+            if (this.PatInfoCards == null)
+                this.PatInfoCards = new List<PatInfoCard>();
         }
         /// <summary>
         /// 当焦点控件不可见时自动滚动到可见区域.
@@ -94,6 +97,9 @@ namespace MedQCSys.Controls.PatInfoList
             patInfoCard.MouseUp += new MouseEventHandler(this.patInfoCard_MouseUp);
             patInfoCard.Tag = patVisitLog;
             this.Controls.Add(patInfoCard);
+            if (this.PatInfoCards == null)
+                this.PatInfoCards = new List<PatInfoCard>();
+            this.PatInfoCards.Add(patInfoCard);
             return patInfoCard;
         }
 
@@ -101,6 +107,7 @@ namespace MedQCSys.Controls.PatInfoList
         {
             this.SuspendLayout();
             this.Controls.Clear();
+            this.PatInfoCards.Clear();
             this.ResumeLayout(true);
         }
 

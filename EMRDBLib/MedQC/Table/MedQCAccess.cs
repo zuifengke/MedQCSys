@@ -453,7 +453,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="fScore">病历总扣分</param>
         /// <param name="szQCResultStatus">质控结果状态</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetQCResultStatus(string szPatientID, string szVisitID, ref float fScore, ref string szQCResultStatus)
+        public short GetQCResultStatus(string szPatientID, string szVisitID,int nGradingLow, ref float fScore, ref string szQCResultStatus)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -519,7 +519,7 @@ namespace EMRDBLib.DbAccess
             {
                 szQCResultStatus = SystemData.MedQCStatus.EXIST_BUG;
             }
-            if (fScore > (100 - SystemParam.Instance.LocalConfigOption.GradingLow))
+            if (fScore > (100 - nGradingLow))
             {
                 szQCResultStatus = SystemData.MedQCStatus.SERIOUS_BUG;
             }
@@ -532,7 +532,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="lstPatVisitLogs"></param>
         /// <param name="lstPatVisistQCStatus"></param>
-        public short GetQCResultStatus(ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetQCResultStatus(int nGradingLow,ref List<PatVisitInfo> lstPatVisitLogs)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -640,7 +640,7 @@ namespace EMRDBLib.DbAccess
                         {
                             pat.QCResultStatus = SystemData.MedQCStatus.EXIST_BUG;
                         }
-                        if (fScore > (100 - SystemParam.Instance.LocalConfigOption.GradingLow))
+                        if (fScore > (100 -  nGradingLow))
                         {
                             pat.QCResultStatus = SystemData.MedQCStatus.SERIOUS_BUG;
                         }

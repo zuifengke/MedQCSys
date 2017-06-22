@@ -211,7 +211,7 @@ namespace Heren.MedQC.TimeCheckGener.Forms
             LogManager.Instance.WriteLog(string.Format("{0} 执行内容检查记录生成", DateTime.Now), null, LogType.Information);
             List<EMRDBLib.MedDocInfo> lstDocInfos = null;
             int nDays = m_parent.DocContentDay;
-            short shRet = EmrDocAccess.Instance.GetDocInfoByModifyTime(DateTime.Now, nDays, ref lstDocInfos);
+            short shRet = EmrDocAccess.Instance.GetDocInfoByModifyTime(DateTime.Now, nDays, SystemParam.Instance.LocalConfigOption.IgnoreDocTypeIDs, ref lstDocInfos);
             if (shRet != SystemData.ReturnValue.OK || lstDocInfos == null)
             {
                 LogManager.Instance.WriteLog("未查询到昨天修改病历信息");

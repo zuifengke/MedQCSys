@@ -171,16 +171,24 @@ namespace MedQCSys.PatPage
             contents.Add(new PatientIndexForm(this.MainForm, this));
             if (SystemParam.Instance.LocalConfigOption.IsNewScore)
             {
-                DocScoreNew2Form docScoreNewForm = new DocScoreNew2Form(this.MainForm, this);
+                DocScoreNewForm docScoreNewForm = new DocScoreNewForm(this.MainForm, this);
                 contents.Add(docScoreNewForm);
                 this.MainForm.DocScoreNewForm = docScoreNewForm;
                 docScoreNewForm.HummanScoreSaved += new EventHandler(this.MainForm.DocScoreNewForm_HummanScoreSaved);
+                docScoreNewForm.HummanScoreSaved += new EventHandler(this.patientInfoStrip1.DocScoreNewForm_HummanScoreSaved);
             }
             else
-                contents.Add(new DocScoreForm(this.MainForm, this));
+            {
+                DocScoreForm docScoreForm = new DocScoreForm(this.MainForm, this);
+                contents.Add(docScoreForm);
+                docScoreForm.DocScoreSaved += new EventHandler(this.MainForm.DocScoreNewForm_HummanScoreSaved);
+                docScoreForm.DocScoreSaved += new EventHandler(this.patientInfoStrip1.DocScoreNewForm_HummanScoreSaved);
+
+            }
             if (SystemParam.Instance.LocalConfigOption.IsOpenOperation)
             {
                 contents.Add(new OperationForm(this.MainForm, this));
+
             }
             return contents;
         }

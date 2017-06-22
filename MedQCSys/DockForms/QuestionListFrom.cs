@@ -655,7 +655,7 @@ namespace MedQCSys.DockForms
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             string szQCResultStatus = string.Empty;
             float fScore = 0;
-            short shRet = MedQCAccess.Instance.GetQCResultStatus(szPatientID, szVisitID, ref fScore, ref szQCResultStatus);
+            short shRet = MedQCAccess.Instance.GetQCResultStatus(szPatientID, szVisitID, SystemParam.Instance.LocalConfigOption.GradingLow, ref fScore, ref szQCResultStatus);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.Show("更新病案的质控结果状态失败！");

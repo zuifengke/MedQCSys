@@ -68,14 +68,21 @@ namespace MedQCSys
         }
         public override bool Execute(object param, object data)
         {
-            MainForm main = param as MainForm;
-            if (main == null)
-                return false;
-            
-            PatVisitInfo patVisitInfo = new PatVisitInfo();
-            patVisitInfo.PATIENT_ID = "P101210";
-            patVisitInfo.VISIT_ID = "2";
-            main.SwitchPatient(patVisitInfo);
+            try
+            {
+                MainForm main = param as MainForm;
+                if (main == null)
+                    return false;
+
+                PatVisitInfo patVisitInfo = new PatVisitInfo();
+                patVisitInfo.PATIENT_ID = "P101210";
+                patVisitInfo.VISIT_ID = "2";
+                main.SwitchPatient(patVisitInfo);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
             
             return true;
         }

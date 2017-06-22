@@ -62,6 +62,14 @@ namespace MedQCSys.PatPage
             else
                 fbtnPrintLog.Visible = true;
         }
+
+        public void DocScoreNewForm_HummanScoreSaved(object sender, EventArgs e)
+        {
+            if (SystemParam.Instance.PatVisitInfo == null)
+                return;
+            this.lblScore.Text= "成绩：" + SystemParam.Instance.PatVisitInfo.TotalScore;
+
+        }
         private void RefreshView(PatVisitInfo patientVisit)
         {
             this.PatVisitInfo = patientVisit;
@@ -91,6 +99,8 @@ namespace MedQCSys.PatPage
             this.lblDiagnosis.Text = "诊断：" + patientVisit.DIAGNOSIS;
             this.lblAllergyDrugs.Text = "过敏：" + patientVisit.ALLERGY_DRUGS;
             this.lblChargeType.Text = "费别：" + patientVisit.CHARGE_TYPE;
+            this.lblScore.Text = "成绩：" + patientVisit.TotalScore;
+           
         }
         private void flatButton1_Click(object sender, EventArgs e)
         {

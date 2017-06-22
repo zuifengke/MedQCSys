@@ -42,7 +42,7 @@ namespace MedQCSys
         private PatientInfoForm m_PatientInfoForm = null;
         private DocScoreForm m_DocScoreForm = null;
         private PatientIndexForm m_PatientIndexForm = null;
-        public DocScoreNew2Form DocScoreNewForm = null;
+        public DocScoreNewForm DocScoreNewForm = null;
         /// <summary>
         /// 获取当前停靠控件
         /// </summary>
@@ -553,15 +553,6 @@ namespace MedQCSys
             }
             else if (szPersistString == typeof(VitalSignsGraphForm).ToString())
             {
-                //判断是否显示病案评分
-                string szTempletPath = string.Format(@"{0}\Templet\\{1}\\{2}"
-               , GlobalMethods.Misc.GetWorkingPath()
-               , MedDocSys.DataLayer.SystemParam.Instance.SystemOption.HospitalName
-               , "体温单.hrdt"
-               );
-                if (!File.Exists(szTempletPath))
-                    return null;
-
                 if (this.m_VitalSignsGraphForm == null || this.m_VitalSignsGraphForm.IsDisposed)
                     this.m_VitalSignsGraphForm = new VitalSignsGraphForm(this);
                 return this.m_VitalSignsGraphForm;
@@ -1510,6 +1501,7 @@ namespace MedQCSys
                 return;
             if (this.m_PatientListForm != null && !this.m_PatientListForm.IsDisposed)
                 this.m_PatientListForm.RefreshDocScore();
+            
         }
 
     }

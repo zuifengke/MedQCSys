@@ -219,7 +219,7 @@ namespace MedQCSys.DockForms
             {
                 var result = lstPatVisitLogs.Skip(i * 100).Take(100).ToList();
                 //查询质控结果状态
-                MedQCAccess.Instance.GetQCResultStatus(ref result);
+                MedQCAccess.Instance.GetQCResultStatus(SystemParam.Instance.LocalConfigOption.GradingLow,ref result);
                 //查询病历得分
                 MedQCAccess.Instance.GetPatQCScore(ref result);
                 //查询是否手术
@@ -408,6 +408,10 @@ namespace MedQCSys.DockForms
             QCScore qcScore = null;
             short shRet = QcScoreAccess.Instance.GetQCScore(SystemParam.Instance.PatVisitInfo.PATIENT_ID, SystemParam.Instance.PatVisitInfo.VISIT_ID, ref qcScore);
             SystemParam.Instance.PatVisitInfo.TotalScore = qcScore.HOS_ASSESS.ToString();
+            if (this.patInfoList.SelectedCard == null)
+            {
+                this.patInfoList.SelectedCard = this.patInfoList.PatInfoCards[0];
+            }
             this.patInfoList.SelectedCard.PatVisitLog = SystemParam.Instance.PatVisitInfo;
             this.patInfoList.SelectedCard.Refresh();
         }
@@ -421,7 +425,7 @@ namespace MedQCSys.DockForms
         {
             string szQCResultStatus = string.Empty;
             float Score = 0.0f;
-            short shRet = MedQCAccess.Instance.GetQCResultStatus(SystemParam.Instance.PatVisitInfo.PATIENT_ID, SystemParam.Instance.PatVisitInfo.VISIT_ID, ref Score, ref szQCResultStatus);
+            short shRet = MedQCAccess.Instance.GetQCResultStatus(SystemParam.Instance.PatVisitInfo.PATIENT_ID, SystemParam.Instance.PatVisitInfo.VISIT_ID, SystemParam.Instance.LocalConfigOption.GradingLow, ref Score, ref szQCResultStatus);
 
             if (shRet != SystemData.ReturnValue.OK)
             {

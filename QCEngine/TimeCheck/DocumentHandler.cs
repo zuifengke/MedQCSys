@@ -232,8 +232,6 @@ namespace MedDocSys.QCEngine.TimeCheck
                 if (!timeQCEventResult.EndTime.HasValue)
                     continue;
                 DateTime dtPeriodTime = timeQCEventResult.EventTime.Value;
-                ////根据书写规则定义标准，修改循环退出判断逻辑
-                //bool IsRuleAsDocCommited = DataLayer.SystemParam.Instance.SystemOption.DocWriteRule == "2";
                 do
                 {
                     TimeCheckResult timeCheckResult = new TimeCheckResult();
@@ -263,7 +261,8 @@ namespace MedDocSys.QCEngine.TimeCheck
                     timeCheckResult.DoctorLevel = timeQCEventResult.DoctorLevel;
                     lstTimeCheckResults.Add(timeCheckResult);
                     dtPeriodTime = timeCheckResult.EndTime;
-                } while (timeQCRule.IsRepeat && dtPeriodTime < timeQCEventResult.EndTime && dtPeriodTime < timeQCRule.ValidateTime);//当转院，死亡等事件发生后，
+                } while (timeQCRule.IsRepeat && dtPeriodTime < timeQCEventResult.EndTime && dtPeriodTime < timeQCRule.ValidateTime);
+                //当转院，死亡等事件发生后，
                 //不用再循环创建应书写病历，所以需要  dtPeriodTime < timeQCEventResult.EndTime（timeQCEventResult.EndTime：转院或死亡等事件发生时间）
 
                 //while (timeQCRule.IsRepeat && dtPeriodTime < timeQCEventResult.EndTime && (!IsRuleAsDocCommited || (IsRuleAsDocCommited && dtPeriodTime < timeQCRule.ValidateTime))); 

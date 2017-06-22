@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace EMRDBLib
 {
     /// <summary>
-    /// 本地文件配置信息
+    /// 系统选项
     /// </summary>
     public class LocalConfigOption
     {
@@ -45,7 +45,8 @@ namespace EMRDBLib
         public string HospitalLogo
         {
             get { return this.m_HospitalLogo; }
-            set {
+            set
+            {
                 this.m_HospitalLogo = value;
             }
         }
@@ -428,7 +429,9 @@ namespace EMRDBLib
         public bool IsOpenHomePage
         {
             get
-            { return this.m_IsOpenHomePage; }
+            {
+                return this.m_IsOpenHomePage;
+            }
             set
             {
                 this.m_IsOpenHomePage = value;
@@ -506,7 +509,7 @@ namespace EMRDBLib
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
-                option.HospitalLogo =string.Format("{0}/HospitalLogo/{1}",GlobalMethods.Misc.GetWorkingPath(), "ZYJHZYY_SysIcon.ico");
+                option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "ZYJHZYY_SysIcon.ico");
                 option.IsShowPatientIndex = false;
             }
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)

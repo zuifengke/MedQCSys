@@ -18,6 +18,7 @@ using EMRDBLib;
 using EMRDBLib.DbAccess;
 using System.Linq;
 using Heren.MedQC.CheckPoint;
+using MedQCSys.Controls;
 
 namespace MedQCSys.DockForms
 {
@@ -44,6 +45,8 @@ namespace MedQCSys.DockForms
             get { return this.m_szQcChecker; }
         }
         private bool m_NeedSave = false;
+        private List<QcCheckResult> m_lstQcCheckResult;
+
         /// <summary>
         /// 是否需要保存病案评分
         /// </summary>
@@ -120,11 +123,12 @@ namespace MedQCSys.DockForms
 
 
             this.ShowStatusMessage("正在分析人工检测扣分情况...");
-            this.LoadHummanScoreInfos();
+            //this.LoadHummanScoreInfos();
+            LoadHummanScoreInfos();
             this.LoadSystemScoreInfos();
             this.ShowStatusMessage(null);
-            this.dgvSystemScore.Columns[this.col_2_Item.Index].Width = 350;
-            this.dgvHummanScore.Columns[this.colItem.Index].Width = 350;
+            //this.dgvSystemScore.Columns[this.col_2_Item.Index].Width = 350;
+            //this.dgvHummanScore.Columns[this.colItem.Index].Width = 350;
             this.Update();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -177,118 +181,7 @@ namespace MedQCSys.DockForms
                 LogManager.Instance.WriteLog("DocScoreNewForm.OnHummanScoreSaved", ex);
             }
         }
-
-        /// <summary>
-        /// 加载人工检查扣分信息
-        /// </summary>
-        private void LoadHummanScoreInfos()
-        {
-            this.dgvHummanScore.Rows.Clear();
-            List<QaEventTypeDict> lstQaEventTypeDict = null;
-            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
-            List<QcMsgDict> lstQcMsgDict = null;
-            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
-
-            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            List<QcCheckResult> lstQcCheckResult = null;
-            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.Artificial, ref lstQcCheckResult);
-
-            if (shRet != SystemData.ReturnValue.OK
-                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
-            {
-                MessageBoxEx.Show("质控质检问题下载失败！");
-                return;
-            }
-
-            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
-            int nRowIndex = 0;
-            foreach (var item in firstQaEventTypeDict)
-            {
-                //添加一级分类
-                nRowIndex = this.dgvHummanScore.Rows.Add();
-                DataGridViewRow row = this.dgvHummanScore.Rows[nRowIndex];
-                row.Tag = item;
-                row.Cells[this.colItem.Index].Value = item.QA_EVENT_TYPE;
-                row.ReadOnly = true;
-                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
-                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
-                if (secondQaEventTypeDict.Count > 0)
-                {
-                    foreach (var childItem in secondQaEventTypeDict)
-                    {
-                        //增加二级分类
-                        nRowIndex = this.dgvHummanScore.Rows.Add();
-                        DataGridViewRow childrow = this.dgvHummanScore.Rows[nRowIndex];
-                        childrow.Tag = childItem;
-                        childrow.Cells[this.colItem.Index].Value = "  " + childItem.QA_EVENT_TYPE;
-                        childrow.ReadOnly = true;
-                        childrow.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
-                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
-                        if (secondMsgdict.Count > 0)
-                        {
-                            foreach (var itemMsgDict in secondMsgdict)
-                            {
-                                //添加二级分类下的质检问题项
-                                nRowIndex = this.dgvHummanScore.Rows.Add();
-                                DataGridViewRow row2 = this.dgvHummanScore.Rows[nRowIndex];
-                                row2.Tag = itemMsgDict;
-                                row2.ReadOnly = true;
-                                row2.Cells[this.colItem.Index].Value = string.Format("    {0}、{1}", secondMsgdict.IndexOf(itemMsgDict, 0) + 1, itemMsgDict.MESSAGE);
-                                row2.Cells[this.colPoint.Index].Value = itemMsgDict.SCORE;
-                                if (lstQcCheckResult != null)
-                                {
-                                    QcCheckResult qcCheckResult = lstQcCheckResult.Where(m => m.MSG_DICT_CODE == itemMsgDict.QC_MSG_CODE).FirstOrDefault();
-                                    if (qcCheckResult != null)
-                                    {
-                                        row2.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
-                                        row2.Cells[this.colCheckBox.Index].Value = true;
-                                        row2.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                                        row2.Cells[this.colRemark.Index].Tag = qcCheckResult;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
-                if (firstMsgDict.Count > 0)
-                {
-                    foreach (var item3 in firstMsgDict)
-                    {
-                        //添加一级分类下的质检问题项
-                        nRowIndex = this.dgvHummanScore.Rows.Add();
-                        DataGridViewRow row2 = this.dgvHummanScore.Rows[nRowIndex];
-                        row2.Tag = item3;
-                        row2.Cells[this.colItem.Index].Value = string.Format("  {0}、{1}", firstMsgDict.IndexOf(item3, 0) + 1, item3.MESSAGE);
-                        row2.Cells[this.colPoint.Index].Value = item3.SCORE;
-                        row2.ReadOnly = true;
-                        //row2.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
-                        if (lstQcCheckResult != null)
-                        {
-                            QcCheckResult qcCheckResult = lstQcCheckResult.Where(m => m.MSG_DICT_CODE == item3.QC_MSG_CODE).FirstOrDefault();
-                            if (qcCheckResult != null)
-                            {
-                                row2.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
-                                row2.Cells[this.colCheckBox.Index].Value = true;
-                                row2.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                                row2.Cells[this.colRemark.Index].Tag = qcCheckResult;
-                            }
-                        }
-                    }
-                }
-            }
-            this.dgvHummanScore.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
-            this.dgvHummanScore.Refresh();
-            //加载评分结果
-            QCScore qcScore = new QCScore();
-            shRet = QcScoreAccess.Instance.GetQCScore(szPatientID, szVisitID, ref qcScore);
-            this.tpHummanScore.Tag = qcScore;
-            //this.CalHummanScore();
-            this.tpHummanScore.Text = string.Format("人工检测（{0}）", qcScore.HOS_ASSESS);
-        }
-
+      
         /// <summary>
         /// 加载系统检查扣分信息
         /// </summary>
@@ -415,7 +308,8 @@ namespace MedQCSys.DockForms
             {
                 DataGridViewRow row = this.dgvHummanScore.Rows[index];
                 QcMsgDict qcMsgDict = row.Tag as QcMsgDict;
-                if (qcMsgDict == null)
+                if (qcMsgDict == null
+                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
                     continue;
 
                 QcCheckResult qcCheckResult = row.Cells[this.colRemark.Index].Tag as QcCheckResult;
@@ -553,33 +447,6 @@ namespace MedQCSys.DockForms
             this.SaveHummanScore();
         }
         /// <summary>
-        /// 保存一条质检LOG信息
-        /// </summary>
-        private bool AddQCActionLog()
-        {
-            if (SystemParam.Instance.PatVisitInfo == null)
-                return false;
-            EMRDBLib.MedicalQcLog qcActionLog = new EMRDBLib.MedicalQcLog();
-            qcActionLog.CHECK_DATE = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-            if (!GlobalMethods.Misc.IsEmptyString(SystemParam.Instance.PatVisitInfo.DEPT_CODE))
-                qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
-            else
-                qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DischargeDeptCode;
-            qcActionLog.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
-            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
-            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
-            qcActionLog.DOC_SETID = string.Empty;
-            qcActionLog.CHECK_TYPE = 2;
-            qcActionLog.LOG_TYPE = 1;
-            qcActionLog.LOG_DESC = "质控者保存病案评分";
-            qcActionLog.AddQCQuestion = false;
-            return MedicalQcLogAccess.Instance.Insert(qcActionLog) == SystemData.ReturnValue.OK;
-        }
-
-        /// <summary>
         /// 获取打印数据
         /// </summary>
         /// <returns>System.Data.DataTable</returns>
@@ -618,45 +485,6 @@ namespace MedQCSys.DockForms
             return false;
         }
 
-        private void dgvDocContent_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            //DataGridViewCell currCell = this.dgvHummanScore.CurrentCell;
-            //if (currCell == null)
-            //    return;
-
-            //TextBox textBoxExitingControl = e.Control as TextBox;
-            //if (textBoxExitingControl == null || textBoxExitingControl.IsDisposed)
-            //    return;
-            //textBoxExitingControl.ImeMode = ImeMode.Alpha;
-            //textBoxExitingControl.KeyPress -= new KeyPressEventHandler(this.TextBoxExitingControl_KeyPress);
-        }
-
-        private void TextBoxExitingControl_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //DataGridViewCell currCell = this.dgvHummanScore.CurrentCell;
-            //if (currCell == null)
-            //    return;
-
-            //if (currCell.ColumnIndex == this.colErrorCount.Index)
-            //{
-            //    if (e.KeyChar == (char)((int)Keys.Back))
-            //        return;
-            //    if (e.KeyChar.CompareTo('0') >= 0 && e.KeyChar.CompareTo('9') <= 0)
-            //        return;
-            //    if (e.KeyChar.CompareTo('.') == 0)
-            //        return;
-            //    e.Handled = true;
-            //}
-        }
-
-
-        private void dgvDocContent_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-
-            if (e.ColumnIndex == this.colErrorCount.Index)
-                CalHummanScore();
-        }
-
         private void ReportExplorerForm_QueryContext(object sender, Heren.Common.Report.QueryContextEventArgs e)
         {
             object value = e.Value;
@@ -684,49 +512,68 @@ namespace MedQCSys.DockForms
 
         private void dgvHummanScore_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-            DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
-            bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
-            var qcMsgDict = row.Tag as QcMsgDict;
-            if (qcMsgDict == null)
-                return;
-            if (e.ColumnIndex == this.colCheckBox.Index)
+            try
             {
-                row.Cells[this.colCheckBox.Index].ReadOnly = false;
-                row.Cells[this.colCheckBox.Index].Value = !flag;
-                flag = !flag;
-                if (flag)
+                if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                    return;
+                DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
+
+                bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
+                var qcMsgDict = row.Tag as QcMsgDict;
+                if (qcMsgDict == null
+                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                    return;
+                if (e.ColumnIndex == this.colCheckBox.Index)
                 {
-                    row.Cells[this.colErrorCount.Index].ReadOnly = false;
-                    row.Cells[this.colErrorCount.Index].Value = 1;
+                    row.Cells[this.colCheckBox.Index].ReadOnly = false;
+                    row.Cells[this.colCheckBox.Index].Value = !flag;
+                    flag = !flag;
+                    if (flag)
+                    {
+                        row.Cells[this.colErrorCount.Index].ReadOnly = false;
+                        row.Cells[this.colErrorCount.Index].Value = 1;
+                    }
+                    else
+                    {
+                        row.Cells[this.colErrorCount.Index].Value = string.Empty;
+                    }
                 }
                 else
                 {
-                    row.Cells[this.colErrorCount.Index].Value = string.Empty;
+                    row.Cells[this.colRemark.Index].ReadOnly = !flag;
+                    row.Cells[this.colErrorCount.Index].ReadOnly = !flag;
                 }
+                this.CalHummanScore();
+                this.NeedSave = true;
             }
-            else
+            catch (Exception ex)
             {
-                row.Cells[this.colRemark.Index].ReadOnly = !flag;
-                row.Cells[this.colErrorCount.Index].ReadOnly = !flag;
+                MessageBoxEx.ShowError("发生错误", ex.ToString());
             }
-            this.NeedSave = true;
         }
         private void CalHummanScore()
         {
             float totalScore = 100;
-            foreach (DataGridViewRow item in this.dgvHummanScore.Rows)
+            foreach (DataGridViewRow row in this.dgvHummanScore.Rows)
             {
-                var qcMsgDict = item.Tag as QcMsgDict;
-                if (qcMsgDict == null)
-                    continue;
-                if (item.Cells[this.colCheckBox.Index].Value != null &&
-                    item.Cells[this.colCheckBox.Index].Value.ToString() == "True")
+                if (row is CollapseDataGridViewRow)
                 {
-                    float point = float.Parse(item.Cells[this.colPoint.Index].Value.ToString());
-                    int errorCount = int.Parse(item.Cells[this.colErrorCount.Index].Value.ToString());
-                    totalScore -= point * errorCount;
+                    //第一级分类行
+                    CollapseDataGridViewRow FirstRow = (row as CollapseDataGridViewRow);
+                    foreach (var item in FirstRow.Rows)
+                    {
+                       
+                        var qcMsgDict = item.Tag as QcMsgDict;
+                        if (qcMsgDict == null || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                            continue;
+                        if (item.Cells[this.colCheckBox.Index].Value != null &&
+                            item.Cells[this.colCheckBox.Index].Value.ToString() == "True")
+                        {
+                            float point = float.Parse(item.Cells[this.colPoint.Index].Value.ToString());
+                            int errorCount = int.Parse(item.Cells[this.colErrorCount.Index].Value.ToString());
+                            totalScore -= point * errorCount;
+                        }
+                    }
                 }
             }
             this.tpHummanScore.Text = string.Format("人工检测（{0}）", totalScore);
@@ -736,6 +583,8 @@ namespace MedQCSys.DockForms
             {
                 qcScore = new QCScore();
             }
+            if (SystemParam.Instance.PatVisitInfo == null)
+                return;
             qcScore.DeptCode = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
             qcScore.DEPT_NAME = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
             qcScore.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
@@ -767,31 +616,39 @@ namespace MedQCSys.DockForms
         }
         private void dgvHummanScore_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
+            try
+            {
 
-            DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
-            bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
-            var qcMsgDict = row.Tag as QcMsgDict;
-            if (qcMsgDict == null)
-            {
-                QaEventTypeDict qaEventTypeDict = row.Tag as QaEventTypeDict;
-                this.PatientPageControl.LoadModule(qaEventTypeDict.QA_EVENT_TYPE);
-                return;
+                if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                    return;
+
+                DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
+                bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
+                var qcMsgDict = row.Tag as QcMsgDict;
+                if (qcMsgDict == null
+                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                {
+                    this.PatientPageControl.LoadModule(qcMsgDict.QA_EVENT_TYPE);
+                    return;
+                }
+                row.Cells[this.colCheckBox.Index].ReadOnly = false;
+                row.Cells[this.colCheckBox.Index].Value = !flag;
+                flag = !flag;
+                if (flag)
+                {
+                    row.Cells[this.colErrorCount.Index].ReadOnly = false;
+                    row.Cells[this.colErrorCount.Index].Value = 1;
+                }
+                else
+                {
+                    row.Cells[this.colErrorCount.Index].Value = string.Empty;
+                }
+                this.NeedSave = true;
             }
-            row.Cells[this.colCheckBox.Index].ReadOnly = false;
-            row.Cells[this.colCheckBox.Index].Value = !flag;
-            flag = !flag;
-            if (flag)
+            catch (Exception ex)
             {
-                row.Cells[this.colErrorCount.Index].ReadOnly = false;
-                row.Cells[this.colErrorCount.Index].Value = 1;
+                MessageBoxEx.ShowError("打开关联病历出错", ex.ToString());
             }
-            else
-            {
-                row.Cells[this.colErrorCount.Index].Value = string.Empty;
-            }
-            this.NeedSave = true;
 
         }
 
@@ -827,6 +684,131 @@ namespace MedQCSys.DockForms
 
             }
         }
+        //行绑定处理方法
+        void dgvHummanScore_OnBindDataDetail(object item, int rowIndex, bool isMainItem)
+        {
+            DataGridViewRow row = this.dgvHummanScore.Rows[rowIndex];
+            QcMsgDict singleModel = item as QcMsgDict;
+            row.ReadOnly = true;
+            //Country
+            if (isMainItem)
+            {
+                row.Cells[this.colItem.Index].Value = singleModel.QA_EVENT_TYPE;
+                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
+          
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(singleModel.MESSAGE))
+                {
+                    //二级分类
+                    row.Cells[this.colItem.Index].Value = "  " + singleModel.MESSAGE_TITLE;
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
+                }
+                else
+                {
+                    //评分项
+                    row.Cells[this.colItem.Index].Value = "    " + singleModel.OrderNo.ToString() + "、" + singleModel.MESSAGE;
+                    row.Cells[this.colPoint.Index].Value = singleModel.SCORE;
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255);
+
+                    if (m_lstQcCheckResult != null)
+                    {
+                        QcCheckResult qcCheckResult = m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == singleModel.QC_MSG_CODE).FirstOrDefault();
+                        if (qcCheckResult != null)
+                        {
+                            row.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
+                            row.Cells[this.colCheckBox.Index].Value = true;
+                            row.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
+                            row.Cells[this.colRemark.Index].Tag = qcCheckResult;
+                            row.Cells[this.colErrorCount.Index].ReadOnly = false;
+                            row.Cells[this.colRemark.Index].ReadOnly = false;
+                        }
+                    }
+                }
+            }
+            //Name
+            //Gender
+        }
+        public void LoadHummanScoreInfos()
+        {
+            this.dgvHummanScore.IsFreezeGroupHeader = true;
+            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
+            this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
+            this.dgvHummanScore.Rows.Clear();
+            List<QaEventTypeDict> lstQaEventTypeDict = null;
+            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
+            List<QcMsgDict> lstQcMsgDict = null;
+            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
+            lstQcMsgDict = lstQcMsgDict.Where(m => m.IS_VALID == 1).ToList();
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+           
+            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.Artificial, ref m_lstQcCheckResult);
+
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("质控质检问题下载失败！");
+                return;
+            }
+
+            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
+            GroupQcMsgDict groupQcMsgDict = new GroupQcMsgDict();
+            foreach (var item in firstQaEventTypeDict)
+            {
+                //添加一级分类
+                ListQcMsgDict listQcMsgDict = new ListQcMsgDict();
+                QcMsgDict firstQaEventType = new QcMsgDict();
+                firstQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
+                listQcMsgDict.Add(firstQaEventType);
+                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
+                if (secondQaEventTypeDict.Count > 0)
+                {
+                    foreach (var childItem in secondQaEventTypeDict)
+                    {
+                        //增加二级分类
+                        QcMsgDict secondQaEventType = new QcMsgDict();
+                        secondQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
+                        secondQaEventType.MESSAGE_TITLE = childItem.QA_EVENT_TYPE;
+                        listQcMsgDict.Add(secondQaEventType);
+                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE ).ToList();
+                        if (secondMsgdict.Count > 0)
+                        {
+                            foreach (var itemMsgDict in secondMsgdict)
+                            {
+                                itemMsgDict.OrderNo = secondMsgdict.IndexOf(itemMsgDict)+1;
+                                //添加二级分类下的质检问题项
+                                listQcMsgDict.Add(itemMsgDict);
+                            }
+                        }
+                    }
+                }
+                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE ).ToList();
+                if (firstMsgDict.Count > 0)
+                {
+                    foreach (var item3 in firstMsgDict)
+                    {
+                        item3.OrderNo = firstMsgDict.IndexOf(item3) + 1;
+                        //添加一级分类下的质检问题项
+                        listQcMsgDict.Add(item3);
+                       
+                    }
+                }
+                if (listQcMsgDict.Count > 0)
+                    groupQcMsgDict.Add(listQcMsgDict);
+            }
+            this.dgvHummanScore.BindDataSource<GroupQcMsgDict, QcMsgDict>(groupQcMsgDict);
+            //默认展开第一组
+            this.dgvHummanScore.Expand(0);
+        }
+
     }
+
+    public class ListQcMsgDict : List<QcMsgDict>
+    {
+    }
+    public class GroupQcMsgDict : List<List<QcMsgDict>>
+    { }
 
 }

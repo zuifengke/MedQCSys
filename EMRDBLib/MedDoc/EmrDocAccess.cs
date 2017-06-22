@@ -1189,7 +1189,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtModify"></param>
         /// <param name="lstDocInfo"></param>
         /// <returns></returns>
-        public short GetDocInfoByModifyTime(DateTime dtModify, int nDays, ref List<MedDocInfo> lstDocInfo)
+        public short GetDocInfoByModifyTime(DateTime dtModify, int nDays,string szIgnoreDocTypeIDs, ref List<MedDocInfo> lstDocInfo)
         {
             if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1213,13 +1213,13 @@ namespace EMRDBLib.DbAccess
                                  + "  AND A.MODIFY_TIME < TO_DATE('{1}', 'YYYY/MM/DD HH24:mi:ss')"
                                  , dtModify.AddDays(-nDays).ToString("yyyy/MM/dd 00:00:00")
                                  , dtModify.ToString("yyyy/MM/dd 00:00:00"));
-            if (!string.IsNullOrEmpty(SystemParam.Instance.LocalConfigOption.IgnoreDocTypeIDs))
+            if (!string.IsNullOrEmpty(szIgnoreDocTypeIDs))
             {
                 //不分析某些文档类型，例如胸科提出跳过分析知情同意书。
                 szCondition = string.Format("{0} and A.{1} not in ({2})"
                     , szCondition
                     , SystemData.EmrDocTable.DOC_TYPE
-                    , SystemParam.Instance.LocalConfigOption.IgnoreDocTypeIDs);
+                    , szIgnoreDocTypeIDs);
             }
             string szTable = string.Format("{0} A,{1} B", SystemData.DataTable.EMR_DOC, SystemData.DataTable.DOC_STATUS_T);
             IDataReader reader = null;

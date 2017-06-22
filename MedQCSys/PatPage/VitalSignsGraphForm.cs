@@ -544,8 +544,6 @@ namespace MedQCSys.DockForms
                 value = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                 return true;
             }
-
-
             return false;
             #endregion
         }

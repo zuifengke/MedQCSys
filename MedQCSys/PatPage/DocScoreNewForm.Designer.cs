@@ -31,12 +31,13 @@ namespace MedQCSys.DockForms
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSave = new System.Windows.Forms.Button();
             this.txtLevel = new System.Windows.Forms.TextBox();
@@ -45,7 +46,8 @@ namespace MedQCSys.DockForms
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpHummanScore = new System.Windows.Forms.TabPage();
-            this.dgvHummanScore = new Heren.Common.Controls.TableView.DataTableView();
+            this.dgvHummanScore = new MedQCSys.Controls.CollapseDataGridView();
+            this.colNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,7 +70,7 @@ namespace MedQCSys.DockForms
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSave.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnSave.Location = new System.Drawing.Point(129, 379);
+            this.btnSave.Location = new System.Drawing.Point(129, 390);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 28);
             this.btnSave.TabIndex = 16;
@@ -82,7 +84,7 @@ namespace MedQCSys.DockForms
             this.txtLevel.BackColor = System.Drawing.Color.White;
             this.txtLevel.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtLevel.ForeColor = System.Drawing.Color.Black;
-            this.txtLevel.Location = new System.Drawing.Point(53, 382);
+            this.txtLevel.Location = new System.Drawing.Point(53, 393);
             this.txtLevel.Name = "txtLevel";
             this.txtLevel.ReadOnly = true;
             this.txtLevel.Size = new System.Drawing.Size(67, 23);
@@ -93,7 +95,7 @@ namespace MedQCSys.DockForms
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(12, 386);
+            this.label2.Location = new System.Drawing.Point(12, 397);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 14);
             this.label2.TabIndex = 19;
@@ -103,7 +105,7 @@ namespace MedQCSys.DockForms
             // 
             this.btnSystemCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSystemCheck.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnSystemCheck.Location = new System.Drawing.Point(312, 379);
+            this.btnSystemCheck.Location = new System.Drawing.Point(312, 390);
             this.btnSystemCheck.Name = "btnSystemCheck";
             this.btnSystemCheck.Size = new System.Drawing.Size(90, 28);
             this.btnSystemCheck.TabIndex = 16;
@@ -115,7 +117,7 @@ namespace MedQCSys.DockForms
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.button2.Location = new System.Drawing.Point(215, 379);
+            this.button2.Location = new System.Drawing.Point(215, 390);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 28);
             this.button2.TabIndex = 16;
@@ -134,7 +136,7 @@ namespace MedQCSys.DockForms
             this.tabControl1.Location = new System.Drawing.Point(-1, -1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(823, 378);
+            this.tabControl1.Size = new System.Drawing.Size(737, 389);
             this.tabControl1.TabIndex = 0;
             // 
             // tpHummanScore
@@ -143,14 +145,18 @@ namespace MedQCSys.DockForms
             this.tpHummanScore.Location = new System.Drawing.Point(4, 24);
             this.tpHummanScore.Name = "tpHummanScore";
             this.tpHummanScore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHummanScore.Size = new System.Drawing.Size(815, 350);
+            this.tpHummanScore.Size = new System.Drawing.Size(729, 361);
             this.tpHummanScore.TabIndex = 0;
             this.tpHummanScore.Text = "人工检测（..）";
             this.tpHummanScore.UseVisualStyleBackColor = true;
             // 
             // dgvHummanScore
             // 
+            this.dgvHummanScore.AllowUserToAddRows = false;
+            this.dgvHummanScore.AllowUserToDeleteRows = false;
             this.dgvHummanScore.AllowUserToOrderColumns = true;
+            this.dgvHummanScore.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            this.dgvHummanScore.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -161,6 +167,7 @@ namespace MedQCSys.DockForms
             this.dgvHummanScore.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHummanScore.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHummanScore.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumber,
             this.colCheckBox,
             this.colItem,
             this.colPoint,
@@ -176,16 +183,38 @@ namespace MedQCSys.DockForms
             this.dgvHummanScore.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHummanScore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHummanScore.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvHummanScore.GroupEvenColor = System.Drawing.Color.White;
+            this.dgvHummanScore.GroupOddColor = System.Drawing.Color.White;
+            this.dgvHummanScore.ImageHeight = 15;
+            this.dgvHummanScore.ImageWidth = 15;
+            this.dgvHummanScore.ImgCollapse = global::MedQCSys.Properties.Resources.Collapse;
+            this.dgvHummanScore.ImgExpand = global::MedQCSys.Properties.Resources.Expand;
+            this.dgvHummanScore.IsInitCollapsed = true;
             this.dgvHummanScore.Location = new System.Drawing.Point(3, 3);
             this.dgvHummanScore.MultiSelect = false;
             this.dgvHummanScore.Name = "dgvHummanScore";
-            this.dgvHummanScore.RowHeadersVisible = false;
-            this.dgvHummanScore.Size = new System.Drawing.Size(809, 344);
-            this.dgvHummanScore.TabIndex = 7;
-            this.dgvHummanScore.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDocContent_CellValueChanged);
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(41);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHummanScore.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvHummanScore.RowHeadersWidth = 25;
+            this.dgvHummanScore.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvHummanScore.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvHummanScore.Size = new System.Drawing.Size(723, 355);
+            this.dgvHummanScore.TabIndex = 10;
             this.dgvHummanScore.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHummanScore_CellClick);
             this.dgvHummanScore.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHummanScore_CellDoubleClick);
-            this.dgvHummanScore.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvDocContent_EditingControlShowing);
+            // 
+            // colNumber
+            // 
+            this.colNumber.HeaderText = "序号";
+            this.colNumber.Name = "colNumber";
+            this.colNumber.Visible = false;
             // 
             // colCheckBox
             // 
@@ -202,14 +231,12 @@ namespace MedQCSys.DockForms
             this.colItem.FillWeight = 500F;
             this.colItem.HeaderText = "评定项目";
             this.colItem.Name = "colItem";
-            this.colItem.ReadOnly = true;
-            this.colItem.Width = 230;
+            this.colItem.Width = 200;
             // 
             // colPoint
             // 
             this.colPoint.HeaderText = "分值";
             this.colPoint.Name = "colPoint";
-            this.colPoint.ReadOnly = true;
             this.colPoint.Width = 60;
             // 
             // colErrorCount
@@ -232,7 +259,7 @@ namespace MedQCSys.DockForms
             this.tpSystemScore.Location = new System.Drawing.Point(4, 24);
             this.tpSystemScore.Name = "tpSystemScore";
             this.tpSystemScore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSystemScore.Size = new System.Drawing.Size(815, 350);
+            this.tpSystemScore.Size = new System.Drawing.Size(729, 361);
             this.tpSystemScore.TabIndex = 1;
             this.tpSystemScore.Text = "系统检测（..）";
             this.tpSystemScore.UseVisualStyleBackColor = true;
@@ -242,41 +269,41 @@ namespace MedQCSys.DockForms
             this.dgvSystemScore.AllowUserToOrderColumns = true;
             this.dgvSystemScore.AllowUserToResizeRows = true;
             this.dgvSystemScore.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSystemScore.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSystemScore.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvSystemScore.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSystemScore.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_2_Item,
             this.col_2_Score,
             this.col_2_ErrorCount,
             this.col_2_QC_EXPLAIN});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSystemScore.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSystemScore.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgvSystemScore.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSystemScore.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvSystemScore.Location = new System.Drawing.Point(3, 3);
             this.dgvSystemScore.MultiSelect = false;
             this.dgvSystemScore.Name = "dgvSystemScore";
             this.dgvSystemScore.RowHeadersVisible = false;
-            this.dgvSystemScore.Size = new System.Drawing.Size(809, 344);
+            this.dgvSystemScore.Size = new System.Drawing.Size(723, 355);
             this.dgvSystemScore.TabIndex = 8;
             // 
             // col_2_Item
             // 
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_2_Item.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_2_Item.DefaultCellStyle = dataGridViewCellStyle7;
             this.col_2_Item.FillWeight = 500F;
             this.col_2_Item.HeaderText = "评定项目";
             this.col_2_Item.Name = "col_2_Item";
@@ -296,18 +323,18 @@ namespace MedQCSys.DockForms
             // 
             // col_2_QC_EXPLAIN
             // 
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_2_QC_EXPLAIN.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_2_QC_EXPLAIN.DefaultCellStyle = dataGridViewCellStyle8;
             this.col_2_QC_EXPLAIN.HeaderText = "系统错误描述";
             this.col_2_QC_EXPLAIN.Name = "col_2_QC_EXPLAIN";
             this.col_2_QC_EXPLAIN.Width = 300;
             // 
-            // DocScoreNewForm
+            // DocScoreNew2Form
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 418);
+            this.ClientSize = new System.Drawing.Size(733, 429);
             this.Controls.Add(this.txtLevel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnSystemCheck);
@@ -315,7 +342,7 @@ namespace MedQCSys.DockForms
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "DocScoreNewForm";
+            this.Name = "DocScoreNew2Form";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -336,15 +363,9 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.TabPage tpHummanScore;
         private System.Windows.Forms.TabPage tpSystemScore;
         private System.Windows.Forms.Button btnSave;
-        private Heren.Common.Controls.TableView.DataTableView dgvHummanScore;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtLevel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheckBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPoint;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colErrorCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRemark;
         private System.Windows.Forms.Button button2;
         private Heren.Common.Controls.TableView.DataTableView dgvSystemScore;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_2_Item;
@@ -352,5 +373,12 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.DataGridViewTextBoxColumn col_2_ErrorCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_2_QC_EXPLAIN;
         private System.Windows.Forms.Button btnSystemCheck;
+        private Controls.CollapseDataGridView dgvHummanScore;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumber;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheckBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPoint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colErrorCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRemark;
     }
 }
