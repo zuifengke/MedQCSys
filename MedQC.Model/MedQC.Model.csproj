@@ -80,6 +80,7 @@
     <Compile Include="HerenHis\PatMasterIndex.cs" />
     <Compile Include="HerenHis\BaseCodeDict.cs" />
     <Compile Include="HerenHis\InpVisit.cs" />
+    <Compile Include="MedDoc\StructElement.cs" />
     <Compile Include="MedQC\HdpParameter.cs" />
     <Compile Include="MedQC\RecCodeCompasion.cs" />
     <Compile Include="MedQC\KeyValueData.cs" />

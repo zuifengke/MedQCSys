@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using EMRDBLib.DbAccess;
 using EMRDBLib;
+using Heren.MedQC.Utilities.Document;
+
 namespace MedQCSys.Document
 {
     public partial class HerenDocForm : DockContentBase, IDocumentForm

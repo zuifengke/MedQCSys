@@ -61,7 +61,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckPointTable.EVENT_ID
                 , SystemData.TimeEventTable.EVENT_ID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC
-                    , szField, szTable,szCondition, SystemData.TimeRuleTable.ORDER_VALUE);
+                    , szField, szTable, szCondition, SystemData.TimeRuleTable.ORDER_VALUE);
 
             IDataReader dataReader = null;
             try
@@ -105,7 +105,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(14))
                         qcCheckPoint.EventID = dataReader.GetString(14);
                     if (!dataReader.IsDBNull(15))
-                        qcCheckPoint.IsRepeat = dataReader.GetValue(15).ToString()=="1"?true:false;
+                        qcCheckPoint.IsRepeat = dataReader.GetValue(15).ToString() == "1" ? true : false;
                     if (!dataReader.IsDBNull(16))
                         qcCheckPoint.EventName = dataReader.GetString(16);
                     lstQcCheckPoints.Add(qcCheckPoint);
@@ -130,7 +130,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},A.{14},{15},B.{16},{17}"
                 , SystemData.QcCheckPointTable.CHECK_POINT_ID, SystemData.QcCheckPointTable.CHECK_POINT_CONTENT
                 , SystemData.QcCheckPointTable.DOCTYPE_ID, SystemData.QcCheckPointTable.DOCTYPE_NAME
                 , SystemData.QcCheckPointTable.HANDLER_COMMAND, SystemData.QcCheckPointTable.IS_VALID
@@ -141,9 +141,10 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckPointTable.CHECK_TYPE
                 , SystemData.QcCheckPointTable.EVENT_ID
                 , SystemData.QcCheckPointTable.IS_REPEAT
-                , SystemData.TimeEventTable.EVENT_NAME);
-            
-          
+                , SystemData.TimeEventTable.EVENT_NAME
+                , SystemData.QcCheckPointTable.ELEMENT_NAME);
+
+
             string szTable = string.Format("{0} A,{1} B"
                , SystemData.DataTable.QC_CHECK_POINT
                , SystemData.DataTable.TIME_EVENT
@@ -196,9 +197,11 @@ namespace EMRDBLib.DbAccess
                 if (!dataReader.IsDBNull(14))
                     qcCheckPoint.EventID = dataReader.GetString(14);
                 if (!dataReader.IsDBNull(15))
-                    qcCheckPoint.IsRepeat = dataReader.GetValue(15).ToString()=="1"?true:false;
+                    qcCheckPoint.IsRepeat = dataReader.GetValue(15).ToString() == "1" ? true : false;
                 if (!dataReader.IsDBNull(16))
                     qcCheckPoint.EventName = dataReader.GetString(16);
+                if (!dataReader.IsDBNull(17))
+                    qcCheckPoint.ELEMENT_NAME = dataReader.GetString(17);
 
                 return SystemData.ReturnValue.OK;
             }
@@ -224,7 +227,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}"
                 , SystemData.QcCheckPointTable.CHECK_POINT_ID, SystemData.QcCheckPointTable.CHECK_POINT_CONTENT
                 , SystemData.QcCheckPointTable.DOCTYPE_ID, SystemData.QcCheckPointTable.DOCTYPE_NAME
                 , SystemData.QcCheckPointTable.HANDLER_COMMAND, SystemData.QcCheckPointTable.IS_VALID
@@ -235,9 +238,10 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckPointTable.EXPRESSION
                 , SystemData.QcCheckPointTable.CHECK_TYPE
                 , SystemData.QcCheckPointTable.EVENT_ID
-                , SystemData.QcCheckPointTable.IS_REPEAT);
+                , SystemData.QcCheckPointTable.IS_REPEAT
+                , SystemData.QcCheckPointTable.ELEMENT_NAME);
 
-            string szValue = string.Format("'{0}','{1}',{2},{3},'{4}',{5},'{6}','{7}',{8},{9},'{10}','{11}','{12}','{13}','{14}',{15}"
+            string szValue = string.Format("'{0}','{1}',{2},{3},'{4}',{5},'{6}','{7}',{8},{9},'{10}','{11}','{12}','{13}','{14}',{15},'{16}'"
                 , qcCheckPoint.CheckPointID
                 , qcCheckPoint.CheckPointContent
                 , base.MedQCAccess.GetSqlParamName("DocTypeID")
@@ -253,7 +257,8 @@ namespace EMRDBLib.DbAccess
                 , qcCheckPoint.Expression
                 , qcCheckPoint.CheckType
                 , qcCheckPoint.EventID
-                , qcCheckPoint.IsRepeat?1:0);
+                , qcCheckPoint.IsRepeat ? 1 : 0
+                , qcCheckPoint.ELEMENT_NAME);
 
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_CHECK_POINT, szField, szValue);
 
@@ -296,7 +301,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}={7},{8}='{9}',{10}={11},{12}='{13}',{14}='{15}',{16}={17},{18}={19},{20}='{21}',{22}='{23}',{24}='{25}',{26}='{27}',{28}='{29}',{30}={31}"
+            string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}={7},{8}='{9}',{10}={11},{12}='{13}',{14}='{15}',{16}={17},{18}={19},{20}='{21}',{22}='{23}',{24}='{25}',{26}='{27}',{28}='{29}',{30}={31},{32}='{33}'"
                 , SystemData.QcCheckPointTable.CHECK_POINT_ID, qcCheckPoint.CheckPointID
                 , SystemData.QcCheckPointTable.CHECK_POINT_CONTENT, qcCheckPoint.CheckPointContent
                 , SystemData.QcCheckPointTable.DOCTYPE_ID, base.MedQCAccess.GetSqlParamName("DocTypeID")
@@ -311,8 +316,9 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckPointTable.QA_EVENT_TYPE, qcCheckPoint.QaEventType
                 , SystemData.QcCheckPointTable.EXPRESSION, qcCheckPoint.Expression
                 , SystemData.QcCheckPointTable.CHECK_TYPE, qcCheckPoint.CheckType
-                , SystemData.QcCheckPointTable.EVENT_ID,qcCheckPoint.EventID
-                , SystemData.QcCheckPointTable.IS_REPEAT,qcCheckPoint.IsRepeat?1:0);
+                , SystemData.QcCheckPointTable.EVENT_ID, qcCheckPoint.EventID
+                , SystemData.QcCheckPointTable.IS_REPEAT, qcCheckPoint.IsRepeat ? 1 : 0
+                , SystemData.QcCheckPointTable.ELEMENT_NAME,qcCheckPoint.ELEMENT_NAME);
 
             string szCondition = string.Format("{0}='{1}'", SystemData.QcCheckPointTable.CHECK_POINT_ID, qcCheckPoint.CheckPointID);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QC_CHECK_POINT, szField, szCondition);

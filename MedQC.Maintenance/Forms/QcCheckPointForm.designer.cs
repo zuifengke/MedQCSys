@@ -51,8 +51,9 @@ namespace Heren.MedQC.Maintenance
             this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMsgDictMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCheckPointContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEvent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDocType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_ELEMENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEvent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colWrittenPeriod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsRepeat = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colIsValid = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -130,7 +131,7 @@ namespace Heren.MedQC.Maintenance
             // btnMoveDown
             // 
             this.btnMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveDown.Location = new System.Drawing.Point(826, 59);
+            this.btnMoveDown.Location = new System.Drawing.Point(883, 59);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(24, 24);
             this.btnMoveDown.TabIndex = 2;
@@ -140,7 +141,7 @@ namespace Heren.MedQC.Maintenance
             // btnMoveUp
             // 
             this.btnMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveUp.Location = new System.Drawing.Point(826, 29);
+            this.btnMoveUp.Location = new System.Drawing.Point(883, 29);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(24, 24);
             this.btnMoveUp.TabIndex = 1;
@@ -160,8 +161,9 @@ namespace Heren.MedQC.Maintenance
             this.colQaEventType,
             this.colMsgDictMessage,
             this.colCheckPointContent,
-            this.colEvent,
             this.colDocType,
+            this.col_ELEMENT_NAME,
+            this.colEvent,
             this.colWrittenPeriod,
             this.colIsRepeat,
             this.colIsValid,
@@ -181,7 +183,7 @@ namespace Heren.MedQC.Maintenance
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 36;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.Size = new System.Drawing.Size(818, 411);
+            this.dataGridView1.Size = new System.Drawing.Size(875, 411);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
@@ -191,7 +193,7 @@ namespace Heren.MedQC.Maintenance
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Location = new System.Drawing.Point(763, 424);
+            this.btnExport.Location = new System.Drawing.Point(820, 424);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(87, 27);
             this.btnExport.TabIndex = 4;
@@ -202,7 +204,7 @@ namespace Heren.MedQC.Maintenance
             // btnCommit
             // 
             this.btnCommit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCommit.Location = new System.Drawing.Point(670, 424);
+            this.btnCommit.Location = new System.Drawing.Point(727, 424);
             this.btnCommit.Name = "btnCommit";
             this.btnCommit.Size = new System.Drawing.Size(87, 27);
             this.btnCommit.TabIndex = 4;
@@ -215,6 +217,7 @@ namespace Heren.MedQC.Maintenance
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.NullValue = "调试";
             this.colDebug.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colDebug.Frozen = true;
             this.colDebug.HeaderText = "";
             this.colDebug.Name = "colDebug";
             this.colDebug.Text = "调试";
@@ -223,12 +226,15 @@ namespace Heren.MedQC.Maintenance
             // colCheckPointID
             // 
             this.colCheckPointID.FillWeight = 130F;
+            this.colCheckPointID.Frozen = true;
             this.colCheckPointID.HeaderText = "规则编号";
             this.colCheckPointID.Name = "colCheckPointID";
             this.colCheckPointID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colCheckPointID.Visible = false;
             // 
             // colCheckType
             // 
+            this.colCheckType.Frozen = true;
             this.colCheckType.HeaderText = "检查类型";
             this.colCheckType.Items.Add("合理性");
             this.colCheckType.Items.Add("一致性");
@@ -241,15 +247,17 @@ namespace Heren.MedQC.Maintenance
             // 
             // colQaEventType
             // 
+            this.colQaEventType.Frozen = true;
             this.colQaEventType.HeaderText = "内容分类";
             this.colQaEventType.Name = "colQaEventType";
-            this.colQaEventType.Width = 150;
+            this.colQaEventType.Width = 80;
             // 
             // colMsgDictMessage
             // 
+            this.colMsgDictMessage.Frozen = true;
             this.colMsgDictMessage.HeaderText = "缺陷内容";
             this.colMsgDictMessage.Name = "colMsgDictMessage";
-            this.colMsgDictMessage.Width = 400;
+            this.colMsgDictMessage.Width = 300;
             // 
             // colCheckPointContent
             // 
@@ -259,19 +267,25 @@ namespace Heren.MedQC.Maintenance
             this.colCheckPointContent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colCheckPointContent.Width = 600;
             // 
-            // colEvent
-            // 
-            this.colEvent.HeaderText = "相关事件";
-            this.colEvent.Name = "colEvent";
-            this.colEvent.ReadOnly = true;
-            this.colEvent.Width = 80;
-            // 
             // colDocType
             // 
             this.colDocType.FillWeight = 240F;
             this.colDocType.HeaderText = "相关病历";
             this.colDocType.Name = "colDocType";
             this.colDocType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // col_ELEMENT_NAME
+            // 
+            this.col_ELEMENT_NAME.HeaderText = "相关内容项";
+            this.col_ELEMENT_NAME.Name = "col_ELEMENT_NAME";
+            this.col_ELEMENT_NAME.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colEvent
+            // 
+            this.colEvent.HeaderText = "相关事件";
+            this.colEvent.Name = "colEvent";
+            this.colEvent.ReadOnly = true;
+            this.colEvent.Width = 80;
             // 
             // colWrittenPeriod
             // 
@@ -324,7 +338,7 @@ namespace Heren.MedQC.Maintenance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 461);
+            this.ClientSize = new System.Drawing.Size(913, 461);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnMoveDown);
             this.Controls.Add(this.btnMoveUp);
@@ -361,8 +375,9 @@ namespace Heren.MedQC.Maintenance
         private System.Windows.Forms.DataGridViewTextBoxColumn colQaEventType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMsgDictMessage;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCheckPointContent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEvent;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDocType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_ELEMENT_NAME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEvent;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWrittenPeriod;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsRepeat;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsValid;

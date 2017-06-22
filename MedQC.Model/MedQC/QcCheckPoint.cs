@@ -10,6 +10,10 @@ namespace EMRDBLib
     public class QcCheckPoint : DbTypeBase
     {
         /// <summary>
+        /// 相关内容项（元素名称）
+        /// </summary>
+        public string ELEMENT_NAME { get; set; }
+        /// <summary>
         /// 事件名
         /// </summary>
         public string EventName { get; set; }
@@ -79,6 +83,10 @@ namespace EMRDBLib
         public string CheckType { get; set; }
         public string ScriptID { get; set; }
         public string ScriptName { get; set; }
+        public QcCheckPoint()
+        {
+            this.ELEMENT_NAME = string.Empty;
+        }
         public string MakeCheckPointID()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);

@@ -67,5 +67,8 @@ namespace MedQCSys.Document
         /// <returns>DataLayer.SystemData.ReturnValue</returns>
         short OpenHistoryDocument(MedicalQcMsg questionInfo);
         #endregion
+
+
+
     }
 }

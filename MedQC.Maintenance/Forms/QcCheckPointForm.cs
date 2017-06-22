@@ -220,6 +220,7 @@ namespace Heren.MedQC.Maintenance
             row.Cells[this.colEvent.Index].Tag = qcCheckPoint.EventID;
             row.Cells[this.colIsRepeat.Index].Value = qcCheckPoint.IsRepeat;
             row.Cells[this.colQaEventType.Index].Value = qcCheckPoint.QaEventType;
+            
         }
 
         /// <summary>
@@ -633,6 +634,11 @@ namespace Heren.MedQC.Maintenance
                 this.ShowQuestionTypeForm(row);
             else if (e.ColumnIndex == this.colScriptSource.Index)
                 this.ShowScriptEditForm(row);
+            else if (e.ColumnIndex == this.col_ELEMENT_NAME.Index)
+            {
+                //this.ShowStatusMessage
+
+            }
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
