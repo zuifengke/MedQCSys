@@ -312,6 +312,7 @@ namespace EMRDBLib.DbAccess
                 }
                 if (lstQcCheckResults == null)
                     lstQcCheckResults = new List<QcCheckResult>();
+                lstQcCheckResults.Clear();
                 do
                 {
                     QcCheckResult qcCheckResult = new QcCheckResult();

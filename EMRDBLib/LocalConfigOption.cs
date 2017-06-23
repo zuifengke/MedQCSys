@@ -416,7 +416,7 @@ namespace EMRDBLib
             get { return this.m_IsScoreRightShow; }
             set { this.m_IsScoreRightShow = value; }
         }
-        private bool m_IsDrawingPatientIdentification = true;
+        private bool m_IsDrawingPatientIdentification = false;
         public bool IsDrawingPatientIdentification
         {
             get { return this.m_IsDrawingPatientIdentification; }
@@ -464,7 +464,7 @@ namespace EMRDBLib
 
         public LocalConfigOption()
         {
-            this.IsDrawingPatientIdentification = false;
+            
             this.IsOpenHomePage = false;
         }
     }
@@ -522,6 +522,10 @@ namespace EMRDBLib
             {
                 option.IgnoreDocTypeIDs = "'34763-3','34130'";
             }
+            if (option.HOSPITAL_NAME.IndexOf("解放军") >= 0)
+            {
+                option.IsDrawingPatientIdentification = true;
+            }
 
 #if DEBUG //调试时系统开发设置
             option.IsOpenHomePage = true;
@@ -533,6 +537,7 @@ namespace EMRDBLib
             option.IsShowVitalSignsGraph = true;
             option.DefaultEditor = "2";
             option.RecPrintLog = true;
+            option.IsDrawingPatientIdentification = true;
 #endif
             return option;
         }

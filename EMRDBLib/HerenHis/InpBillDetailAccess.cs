@@ -13,6 +13,7 @@ using EMRDBLib.DbAccess;
 using EMRDBLib.BAJK;
 using System.Reflection;
 using EMRDBLib.HerenHis;
+using System.Collections;
 
 namespace EMRDBLib.HerenHis
 {
@@ -21,7 +22,7 @@ namespace EMRDBLib.HerenHis
     {
         public const string TableName = SystemData.DataTable_HerenHis.INP_BILL_DETAIL;
         private static InpBillDetailAccess m_Instance = null;
-
+        
         /// <summary>
         /// 获取系统运行上下文实例
         /// </summary>
@@ -30,7 +31,9 @@ namespace EMRDBLib.HerenHis
             get
             {
                 if (m_Instance == null)
+                {
                     m_Instance = new InpBillDetailAccess();
+                }
                 return m_Instance;
             }
         }

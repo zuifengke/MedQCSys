@@ -52,7 +52,7 @@ namespace Heren.MedQC.HomePage
 
             // Set fast line chart type
             chart2.Series["Series1"].ChartType = SeriesChartType.FastLine;
-
+            this.demoCard1.RefreshCard();
         }
 
     }

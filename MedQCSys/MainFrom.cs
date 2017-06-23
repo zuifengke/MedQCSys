@@ -303,6 +303,7 @@ namespace MedQCSys
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            CommandHandler.Instance.RegisterStartUpCommands();
             bool r = CommandHandler.Instance.SendCommand("切换账号", this, null);
             if (!r)
             {
@@ -320,7 +321,6 @@ namespace MedQCSys
             this.Icon = MedQCSys.Properties.Resources.medical;
             this.toolStrip1.Visible = SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_TOOL_STRIP, false);
             this.statusStrip1.Visible = SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_STATUS_STRIP, true);
-
             //启动消息窗口
             if (SystemParam.Instance.LocalConfigOption.IsShowChat)
                 this.StartQChat();

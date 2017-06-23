@@ -32,6 +32,14 @@ namespace Heren.MedQC.Maintenance.Dialogs
                 ((HerenEditor)this.TempletEditor).TextEditor.Zoom = 0.8f;
                 ((HerenEditor)this.TempletEditor).TextEditor.Encryption = true;
             }
+            else if (SystemParam.Instance.LocalConfigOption.DefaultEditor == SystemData.DefaultEditor.Chenpad)
+            {
+                this.TempletEditor = new Heren.MedQC.Frame.Document.ChenPadEditor();
+                this.TempletEditor.Parent = this.panel1;
+                this.TempletEditor.Dock = DockStyle.Fill;
+                ((ChenPadEditor)this.TempletEditor).AutoZoom=true;
+                ((ChenPadEditor)this.TempletEditor).OpenTemplet(new byte[0]) ;
+            }
             if (this.TempletEditor == null)
             {
                 MessageBoxEx.ShowMessage("当前编辑器暂不支持元素选择");
@@ -89,6 +97,11 @@ namespace Heren.MedQC.Maintenance.Dialogs
             {
                 this.DialogResult = DialogResult.OK;
             }
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            this.Dispose();
         }
     }
 }

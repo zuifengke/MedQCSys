@@ -63,8 +63,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Libraries.dll</HintPath>
     </Reference>
+    <Reference Include="MetroFramework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Debug\MetroFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +86,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentTest.Designer.cs">
+      <DependentUpon>ComponentTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerateCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +128,9 @@
     <Compile Include="SplitterForm.Designer.cs">
       <DependentUpon>SplitterForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ComponentTest.resx">
+      <DependentUpon>ComponentTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GenerateCode.resx">
       <DependentUpon>GenerateCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +178,10 @@
     <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
       <Project>{1bfc8232-0b92-4928-96ed-c0cb701b9c0b}</Project>
       <Name>MedQC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.HomePage\MedQC.HomePage.csproj">
+      <Project>{5a17d577-89e6-43ba-947f-60535750d205}</Project>
+      <Name>MedQC.HomePage</Name>
     </ProjectReference>
     <ProjectReference Include="..\MedQC.MedRecord\MedQC.MedRecord.csproj">
       <Project>{862829E8-3B97-4EA5-B7DB-3113D14765FF}</Project>

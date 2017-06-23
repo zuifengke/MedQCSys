@@ -10,18 +10,29 @@ using System.Data;
 using Heren.Common.Libraries;
 using Heren.Common.Libraries.DbAccess;
 using System.Reflection;
+using System.Collections;
 
 namespace EMRDBLib.DbAccess
 {
     public class QcMsgDictAccess : DBAccessBase
     {
         private static QcMsgDictAccess m_Instance = null;
+        private static Dictionary<string, PropertyInfo> m_htProperty = null;
         public static QcMsgDictAccess Instance
         {
             get
             {
                 if (m_Instance == null)
+                {
                     m_Instance = new QcMsgDictAccess();
+                    m_htProperty = new Dictionary<string, PropertyInfo>();
+                    QcMsgDict model = new QcMsgDict();
+                    PropertyInfo[] propertyInfos= Reflect.GetProperties<QcMsgDict>(model);
+                    foreach (var item in propertyInfos)
+                    {
+                        m_htProperty.Add(item.Name, item);
+                    }
+                }
                 return m_Instance;
             }
         }
@@ -58,8 +69,8 @@ namespace EMRDBLib.DbAccess
                     {
                         if (dataReader.IsDBNull(i))
                             continue;
-                        if (dataReader.IsDBNull(i))
-                            continue;
+                        //PropertyInfo propertyInfo = m_htProperty[dataReader.GetName(i)];
+                        //bool result = Reflect.SetPropertyValue(model, propertyInfo, dataReader.GetValue(i));
                         switch (dataReader.GetName(i))
                         {
                             case SystemData.QcMsgDictTable.APPLY_ENV:
@@ -69,7 +80,7 @@ namespace EMRDBLib.DbAccess
                                 model.INPUT_CODE = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.QcMsgDictTable.ISVETO:
-                                model.ISVETO = dataReader.GetValue(i).ToString()=="1";
+                                model.ISVETO = dataReader.GetValue(i).ToString() == "1";
                                 break;
                             case SystemData.QcMsgDictTable.IS_VALID:
                                 model.IS_VALID = decimal.Parse(dataReader.GetValue(i).ToString());
@@ -87,7 +98,7 @@ namespace EMRDBLib.DbAccess
                                 model.QC_MSG_CODE = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.QcMsgDictTable.SCORE:
-                                model.SCORE =float.Parse( dataReader.GetValue(i).ToString());
+                                model.SCORE = float.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.QcMsgDictTable.SERIAL_NO:
                                 model.SERIAL_NO = int.Parse(dataReader.GetValue(i).ToString());

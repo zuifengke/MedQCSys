@@ -77,6 +77,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\AxInterop.MedXML2Lib.dll</HintPath>
     </Reference>
+    <Reference Include="AxInterop.ZJHREMRLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\AxInterop.ZJHREMRLib.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Controls.dll</HintPath>
@@ -228,9 +232,13 @@
     <Compile Include="Document\HerenDocumentForm.Designer.cs">
       <DependentUpon>HerenDocumentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Document\ChenPadEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Document\HerenEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Document\PageProperty.cs" />
     <Compile Include="PatPage\DocScoreNewForm.cs">
       <SubType>Form</SubType>
     </Compile>

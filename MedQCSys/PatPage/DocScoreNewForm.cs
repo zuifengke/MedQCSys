@@ -67,6 +67,9 @@ namespace MedQCSys.DockForms
                 | DockAreas.DockRight | DockAreas.DockTop;
             //this.dgvHummanScore.Font = new Font("宋体", 10.5f);
             //this.dgvSystemScore.Font = new Font("宋体", 10.5f);
+            this.dgvHummanScore.IsFreezeGroupHeader = true;
+            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
+            this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
         }
 
         public DocScoreNewForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
@@ -103,6 +106,9 @@ namespace MedQCSys.DockForms
             //this.dgvSystemScore.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             //设置自动调整高度  
             //this.dgvSystemScore.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvHummanScore.IsFreezeGroupHeader = true;
+            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
+            this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
         }
 
         protected override void OnPatientScoreChanged()
@@ -111,10 +117,17 @@ namespace MedQCSys.DockForms
             if (this.Pane == null || this.Pane.IsDisposed)
                 return;
             if (this.NeedRefreshView)
+            {
+
                 this.OnRefreshView();
+                base.OnRefreshView();
+            }
             this.NeedSave = true;
         }
-
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+        }
         public override void OnRefreshView()
         {
             if (SystemParam.Instance.PatVisitInfo == null)
@@ -123,13 +136,11 @@ namespace MedQCSys.DockForms
 
 
             this.ShowStatusMessage("正在分析人工检测扣分情况...");
-            //this.LoadHummanScoreInfos();
-            LoadHummanScoreInfos();
+            this.LoadHummanScoreInfos();
             this.LoadSystemScoreInfos();
             this.ShowStatusMessage(null);
-            //this.dgvSystemScore.Columns[this.col_2_Item.Index].Width = 350;
-            //this.dgvHummanScore.Columns[this.colItem.Index].Width = 350;
             this.Update();
+            
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -145,7 +156,10 @@ namespace MedQCSys.DockForms
             if (this.Pane == null || this.Pane.IsDisposed)
                 return;
             if (this.Pane.ActiveContent == this)
+            {
                 this.OnRefreshView();
+                base.OnRefreshView();
+            }
         }
 
         /// <summary>
@@ -732,10 +746,9 @@ namespace MedQCSys.DockForms
         }
         public void LoadHummanScoreInfos()
         {
-            this.dgvHummanScore.IsFreezeGroupHeader = true;
-            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
-            this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
+            
             this.dgvHummanScore.Rows.Clear();
+            
             List<QaEventTypeDict> lstQaEventTypeDict = null;
             short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
             List<QcMsgDict> lstQcMsgDict = null;
@@ -743,7 +756,9 @@ namespace MedQCSys.DockForms
             lstQcMsgDict = lstQcMsgDict.Where(m => m.IS_VALID == 1).ToList();
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-           
+            if (m_lstQcCheckResult == null)
+                m_lstQcCheckResult = new List<QcCheckResult>();
+            m_lstQcCheckResult.Clear();
             shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.Artificial, ref m_lstQcCheckResult);
 
             if (shRet != SystemData.ReturnValue.OK

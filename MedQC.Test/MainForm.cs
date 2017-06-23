@@ -94,5 +94,11 @@ namespace MedQC.Test
             GenerateCode frm = new GenerateCode();
             frm.ShowDialog();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            ComponentTest frm = new ComponentTest();
+            frm.Show();
+        }
     }
 }

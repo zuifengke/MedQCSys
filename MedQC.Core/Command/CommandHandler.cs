@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace Heren.MedQC.Core
 {
@@ -23,7 +24,7 @@ namespace Heren.MedQC.Core
                 return m_instance;
             }
         }
-
+        private bool m_bIsRead;
         private Dictionary<string, Dictionary<ICommand, int>> m_commands = null;
 
         public Dictionary<string, Dictionary<ICommand, int>> Commands
@@ -32,7 +33,31 @@ namespace Heren.MedQC.Core
         }
         public void Initialize()
         {
-            this.ReadAutoCommands();
+            Thread t1 = new Thread(new ThreadStart(this.ReadAutoCommands));
+            t1.IsBackground = true;
+            t1.Start();
+        }
+        /// <summary>
+        /// 读取起始exe插件命令，加快程序开启
+        /// </summary>
+        public void RegisterStartUpCommands()
+        {
+            Assembly assembly = Assembly.LoadFrom(@"mrqc.exe");
+            if (assembly == null)
+                return;
+            Type[] types = assembly.GetExportedTypes();
+            foreach (var item in types)
+            {
+                this.RegisterCommand(item);
+            }
+            assembly = Assembly.LoadFrom(@"MedQC.HomePage.dll");
+            if (assembly == null)
+                return;
+            types = assembly.GetExportedTypes();
+            foreach (var item in types)
+            {
+                this.RegisterCommand(item);
+            }
         }
         /// <summary>
         /// 读取插件命令，每新建一个插件需要在此处注册下
@@ -41,6 +66,8 @@ namespace Heren.MedQC.Core
         {
             try
             {
+                if (this.m_bIsRead)
+                    return;
                 Assembly assembly = Assembly.LoadFrom(@"MedQC.CheckPoint.exe");
                 if (assembly == null)
                     return;
@@ -50,14 +77,6 @@ namespace Heren.MedQC.Core
                     this.RegisterCommand(item);
                 }
                 assembly = Assembly.LoadFrom(@"MedQC.Hdp.dll");
-                if (assembly == null)
-                    return;
-                types = assembly.GetExportedTypes();
-                foreach (var item in types)
-                {
-                    this.RegisterCommand(item);
-                }
-                assembly = Assembly.LoadFrom(@"MedQC.HomePage.dll");
                 if (assembly == null)
                     return;
                 types = assembly.GetExportedTypes();
@@ -89,14 +108,7 @@ namespace Heren.MedQC.Core
                 {
                     this.RegisterCommand(item);
                 }
-                assembly = Assembly.LoadFrom(@"mrqc.exe");
-                if (assembly == null)
-                    return;
-                types = assembly.GetExportedTypes();
-                foreach (var item in types)
-                {
-                    this.RegisterCommand(item);
-                }
+                
                 assembly = Assembly.LoadFrom(@"MedQC.Maintenance.dll");
                 if (assembly == null)
                     return;
@@ -137,6 +149,7 @@ namespace Heren.MedQC.Core
                 {
                     this.RegisterCommand(item);
                 }
+                this.m_bIsRead = true;
             }
             catch (Exception ex)
             {
@@ -209,6 +222,7 @@ namespace Heren.MedQC.Core
 
         public bool SendCommand(string commandName, object param, object data)
         {
+
             if (string.IsNullOrEmpty(commandName) || this.m_commands == null)
                 return false;
             if (!this.m_commands.ContainsKey(commandName))

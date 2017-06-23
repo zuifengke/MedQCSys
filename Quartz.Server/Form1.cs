@@ -42,7 +42,6 @@ namespace Quartz.Server
             SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
             CommandHandler.Instance.Initialize();
             this.button1_Click(null, null);//自动触发启动
-
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -137,6 +136,15 @@ namespace Quartz.Server
         private void timer1_Tick(object sender, EventArgs e)
         {
             LoadLogText();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.server.Stop();
+            base.OnClosing(e);
         }
     }
 }
