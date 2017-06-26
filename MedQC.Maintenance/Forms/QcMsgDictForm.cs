@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
@@ -463,24 +464,27 @@ namespace Heren.MedQC.Maintenance
 
             if (SystemParam.Instance.UserRight == null)
                 return;
-           
-            DataTableViewRow row = this.dataGridView1.SelectedRows[0];
-            if (this.dataGridView1.IsDeletedRow(row))
+            foreach (DataTableViewRow row in this.dataGridView1.SelectedRows)
             {
-                if (this.dataGridView1.IsNewRow(row))
-                    this.dataGridView1.SetRowState(row, RowState.New);
-                else if (this.dataGridView1.IsModifiedRow(row))
-                    this.dataGridView1.SetRowState(row, RowState.Update);
-                else if (this.dataGridView1.IsNormalRow(row))
-                    this.dataGridView1.SetRowState(row, RowState.Normal);
+                if (this.dataGridView1.IsDeletedRow(row))
+                {
+                    if (this.dataGridView1.IsNewRow(row))
+                        this.dataGridView1.SetRowState(row, RowState.New);
+                    else if (this.dataGridView1.IsModifiedRow(row))
+                        this.dataGridView1.SetRowState(row, RowState.Update);
+                    else if (this.dataGridView1.IsNormalRow(row))
+                        this.dataGridView1.SetRowState(row, RowState.Normal);
+                    else
+                        this.dataGridView1.SetRowState(row, RowState.Unknown);
+                }
                 else
-                    this.dataGridView1.SetRowState(row, RowState.Unknown);
+                {
+                    this.dataGridView1.SetRowState(row, RowState.Delete);
+                }
+                this.UpdateUIState();
             }
-            else
-            {
-                this.dataGridView1.SetRowState(row, RowState.Delete);
-            }
-            this.UpdateUIState();
+            //DataTableViewRow row = this.dataGridView1.SelectedRows[0];
+            
         }
 
         private void toolbtnNew_Click(object sender, EventArgs e)
@@ -593,6 +597,10 @@ namespace Heren.MedQC.Maintenance
                 EMRDBLib.QaEventTypeDict qcEventType = lstQCEventTypes[index];
                 this.colMessageTitle.Items.Add(qcEventType.QA_EVENT_TYPE);
             }
+            if (this.colMessageTitle.Items.Count == 0)
+            {
+                this.colMessageTitle.Items.Add(string.Empty);
+            }
             this.colMessageTitle.DisplayStyle = ComboBoxStyle.DropDownList;
         }
 
@@ -644,6 +652,47 @@ namespace Heren.MedQC.Maintenance
                     return;
                 e.Handled = true;
             }
+        }
+
+        private void tsBtnAutoSerialNo_Click(object sender, EventArgs e)
+        {
+            //序号根据问题分类生成
+            //字典排序规则，先按分类序号，在按代码
+            List<QaEventTypeDict> lstQaEventTypeDict = null;
+            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
+            List<QcMsgDict> lstQcMsgDict = null;
+            shRet = QcMsgDictAccess.Instance.GetAllQcMsgDictList(ref lstQcMsgDict);
+            WorkProcess.Instance.Initialize(this, lstQcMsgDict.Count, "正在按分类排序生成问题字典序号");
+            foreach (QcMsgDict item in lstQcMsgDict)
+            {
+                if (WorkProcess.Instance.Canceled)
+                {
+                    WorkProcess.Instance.Close();
+                    break;
+                }
+                WorkProcess.Instance.Show(string.Format("已完成{0}条...", lstQcMsgDict.IndexOf(item)), lstQcMsgDict.IndexOf(item), true);
+                QaEventTypeDict qaEventTypeDict = null;
+                if (string.IsNullOrEmpty(item.MESSAGE_TITLE))
+                {
+                    qaEventTypeDict = lstQaEventTypeDict.Where(m => m.QA_EVENT_TYPE == item.QA_EVENT_TYPE && string.IsNullOrEmpty(m.PARENT_CODE) ).FirstOrDefault();
+                }
+                else
+                {
+                    qaEventTypeDict = lstQaEventTypeDict.Where(m => m.QA_EVENT_TYPE == item.MESSAGE_TITLE && !string.IsNullOrEmpty(m.PARENT_CODE)).FirstOrDefault();
+                }
+                if (qaEventTypeDict == null)
+                    continue;
+                item.SERIAL_NO = qaEventTypeDict.SERIAL_NO;
+                shRet = QcMsgDictAccess.Instance.Update(item, item.QC_MSG_CODE);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    MessageBoxEx.ShowError("生成失败");
+                    WorkProcess.Instance.Close();
+                    return;
+                }
+            }
+            WorkProcess.Instance.Close();
+            this.OnRefreshView();
         }
     }
 }

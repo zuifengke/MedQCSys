@@ -35,19 +35,22 @@ namespace Heren.MedQC.Maintenance
             this.toolbtnDelete = new System.Windows.Forms.ToolStripButton();
             this.toolbtnSave = new System.Windows.Forms.ToolStripButton();
             this.dataGridView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnuAddItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuModifyItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSaveItems = new System.Windows.Forms.ToolStripMenuItem();
             this.colSerialNO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQCEventType = new Heren.Common.Controls.TableView.ComboBoxColumn();
             this.colQCMsgCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQCEventType = new Heren.Common.Controls.TableView.ComboBoxColumn();
             this.colMessageTitle = new Heren.Common.Controls.TableView.ComboBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsVeto = new Heren.Common.Controls.TableView.ComboBoxColumn();
             this.colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_IS_VALID = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuAddItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuModifyItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSaveItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnAutoSerialNo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -63,11 +66,13 @@ namespace Heren.MedQC.Maintenance
             this.toolbtnNew,
             this.toolbtnModify,
             this.toolbtnDelete,
-            this.toolbtnSave});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 291);
+            this.toolbtnSave,
+            this.toolStripLabel1,
+            this.tsBtnAutoSerialNo});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 331);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(750, 30);
+            this.toolStrip1.Size = new System.Drawing.Size(875, 30);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -128,8 +133,8 @@ namespace Heren.MedQC.Maintenance
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colSerialNO,
-            this.colQCEventType,
             this.colQCMsgCode,
+            this.colQCEventType,
             this.colMessageTitle,
             this.colMessage,
             this.colIsVeto,
@@ -137,14 +142,78 @@ namespace Heren.MedQC.Maintenance
             this.col_IS_VALID});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             this.dataGridView1.Location = new System.Drawing.Point(4, 4);
-            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(742, 286);
+            this.dataGridView1.Size = new System.Drawing.Size(867, 326);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // colSerialNO
+            // 
+            this.colSerialNO.FillWeight = 60F;
+            this.colSerialNO.HeaderText = "序号";
+            this.colSerialNO.MaxInputLength = 4;
+            this.colSerialNO.Name = "colSerialNO";
+            this.colSerialNO.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSerialNO.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colSerialNO.Width = 60;
+            // 
+            // colQCMsgCode
+            // 
+            this.colQCMsgCode.FillWeight = 60F;
+            this.colQCMsgCode.HeaderText = "代码";
+            this.colQCMsgCode.MaxInputLength = 4;
+            this.colQCMsgCode.Name = "colQCMsgCode";
+            this.colQCMsgCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colQCMsgCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colQCMsgCode.Width = 60;
+            // 
+            // colQCEventType
+            // 
+            this.colQCEventType.FillWeight = 200F;
+            this.colQCEventType.HeaderText = "问题大类";
+            this.colQCEventType.Name = "colQCEventType";
+            this.colQCEventType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colQCEventType.Width = 150;
+            // 
+            // colMessageTitle
+            // 
+            this.colMessageTitle.HeaderText = "问题子类";
+            this.colMessageTitle.Name = "colMessageTitle";
+            this.colMessageTitle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colMessage
+            // 
+            this.colMessage.FillWeight = 400F;
+            this.colMessage.HeaderText = "信息说明";
+            this.colMessage.MaxInputLength = 100;
+            this.colMessage.Name = "colMessage";
+            this.colMessage.Width = 400;
+            // 
+            // colIsVeto
+            // 
+            this.colIsVeto.HeaderText = "单项否决";
+            this.colIsVeto.Items.Add("是");
+            this.colIsVeto.Items.Add("否");
+            this.colIsVeto.Name = "colIsVeto";
+            this.colIsVeto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colIsVeto.Width = 70;
+            // 
+            // colScore
+            // 
+            this.colScore.HeaderText = "扣分";
+            this.colScore.MaxInputLength = 5;
+            this.colScore.Name = "colScore";
+            // 
+            // col_IS_VALID
+            // 
+            this.col_IS_VALID.HeaderText = "启用";
+            this.col_IS_VALID.Name = "col_IS_VALID";
+            this.col_IS_VALID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_IS_VALID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_IS_VALID.Width = 50;
             // 
             // contextMenuStrip1
             // 
@@ -188,75 +257,30 @@ namespace Heren.MedQC.Maintenance
             this.mnuSaveItems.Text = "保存";
             this.mnuSaveItems.Click += new System.EventHandler(this.mnuSaveItems_Click);
             // 
-            // colSerialNO
+            // toolStripButton1
             // 
-            this.colSerialNO.FillWeight = 60F;
-            this.colSerialNO.HeaderText = "序号";
-            this.colSerialNO.MaxInputLength = 4;
-            this.colSerialNO.Name = "colSerialNO";
-            this.colSerialNO.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSerialNO.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colSerialNO.Width = 60;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 23);
             // 
-            // colQCEventType
+            // tsBtnAutoSerialNo
             // 
-            this.colQCEventType.FillWeight = 200F;
-            this.colQCEventType.HeaderText = "问题大类";
-            this.colQCEventType.Name = "colQCEventType";
-            this.colQCEventType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colQCEventType.Width = 150;
+            this.tsBtnAutoSerialNo.Image = global::Heren.MedQC.Maintenance.Properties.Resources.order;
+            this.tsBtnAutoSerialNo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnAutoSerialNo.Name = "tsBtnAutoSerialNo";
+            this.tsBtnAutoSerialNo.Size = new System.Drawing.Size(83, 27);
+            this.tsBtnAutoSerialNo.Text = "自动排序";
+            this.tsBtnAutoSerialNo.Click += new System.EventHandler(this.tsBtnAutoSerialNo_Click);
             // 
-            // colQCMsgCode
+            // toolStripLabel1
             // 
-            this.colQCMsgCode.FillWeight = 60F;
-            this.colQCMsgCode.HeaderText = "代码";
-            this.colQCMsgCode.MaxInputLength = 4;
-            this.colQCMsgCode.Name = "colQCMsgCode";
-            this.colQCMsgCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colQCMsgCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colQCMsgCode.Width = 60;
-            // 
-            // colMessageTitle
-            // 
-            this.colMessageTitle.HeaderText = "问题子类";
-            this.colMessageTitle.Name = "colMessageTitle";
-            this.colMessageTitle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // colMessage
-            // 
-            this.colMessage.FillWeight = 400F;
-            this.colMessage.HeaderText = "信息说明";
-            this.colMessage.MaxInputLength = 100;
-            this.colMessage.Name = "colMessage";
-            this.colMessage.Width = 400;
-            // 
-            // colIsVeto
-            // 
-            this.colIsVeto.HeaderText = "单项否决";
-            this.colIsVeto.Items.Add("是");
-            this.colIsVeto.Items.Add("否");
-            this.colIsVeto.Name = "colIsVeto";
-            this.colIsVeto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colIsVeto.Width = 70;
-            // 
-            // colScore
-            // 
-            this.colScore.HeaderText = "扣分";
-            this.colScore.MaxInputLength = 5;
-            this.colScore.Name = "colScore";
-            // 
-            // col_IS_VALID
-            // 
-            this.col_IS_VALID.HeaderText = "启用";
-            this.col_IS_VALID.Name = "col_IS_VALID";
-            this.col_IS_VALID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_IS_VALID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.col_IS_VALID.Width = 50;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(427, 14);
+            this.toolStripLabel1.Text = "                                                            ";
             // 
             // QcMsgDictForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(750, 321);
+            this.ClientSize = new System.Drawing.Size(875, 361);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -284,12 +308,15 @@ namespace Heren.MedQC.Maintenance
         private System.Windows.Forms.ToolStripMenuItem mnuDeleteItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveItems;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSerialNO;
-        private Common.Controls.TableView.ComboBoxColumn colQCEventType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQCMsgCode;
+        private Common.Controls.TableView.ComboBoxColumn colQCEventType;
         private Common.Controls.TableView.ComboBoxColumn colMessageTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
         private Common.Controls.TableView.ComboBoxColumn colIsVeto;
         private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
         private System.Windows.Forms.DataGridViewCheckBoxColumn col_IS_VALID;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsBtnAutoSerialNo;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -295,7 +296,7 @@ namespace Heren.MedQC.Maintenance
             EMRDBLib.QaEventTypeDict qcEventType = row.Tag as EMRDBLib.QaEventTypeDict;
             if (qcEventType == null)
                 return SystemData.ReturnValue.FAILED;
-            string szEventType = qcEventType.QA_EVENT_TYPE;
+            string szInputCode = qcEventType.INPUT_CODE;
 
             qcEventType = null;
             if (!this.MakeRowData(row, ref qcEventType))
@@ -305,7 +306,7 @@ namespace Heren.MedQC.Maintenance
             if (this.dataGridView1.IsDeletedRow(row))
             {
                 if (!this.dataGridView1.IsNewRow(row))
-                    shRet = QaEventTypeDictAccess.Instance.Delete(szEventType);
+                    shRet = QaEventTypeDictAccess.Instance.Delete(szInputCode);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
@@ -316,7 +317,7 @@ namespace Heren.MedQC.Maintenance
             }
             else if (this.dataGridView1.IsModifiedRow(row))
             {
-                shRet = QaEventTypeDictAccess.Instance.Update(qcEventType, szEventType);
+                shRet = QaEventTypeDictAccess.Instance.Update(qcEventType, szInputCode);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
@@ -590,6 +591,47 @@ namespace Heren.MedQC.Maintenance
 
             this.dataGridView1.CurrentCell = row.Cells[this.colSerialNO.Index];
             this.dataGridView1.BeginEdit(true);
+        }
+
+        private void tsBtnAutoSerialNo_Click(object sender, EventArgs e)
+        {
+            //序号根据问题分类生成
+            //字典排序规则，先按分类序号，在按代码
+            List<QaEventTypeDict> lstQaEventTypeDict = null;
+            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
+            List<QcMsgDict> lstQcMsgDict = null;
+            shRet = QcMsgDictAccess.Instance.GetAllQcMsgDictList(ref lstQcMsgDict);
+            WorkProcess.Instance.Initialize(this, lstQcMsgDict.Count, "正在按分类排序生成问题字典序号");
+            foreach (QcMsgDict item in lstQcMsgDict)
+            {
+                if(WorkProcess.Instance.Canceled)
+                {
+                    WorkProcess.Instance.Close();
+                    break;
+                }
+                WorkProcess.Instance.Show(string.Format("已完成{0}条...",lstQcMsgDict.IndexOf(item)),lstQcMsgDict.IndexOf(item), true);
+                QaEventTypeDict qaEventTypeDict = null;
+                if (string.IsNullOrEmpty(item.MESSAGE_TITLE))
+                {
+                    qaEventTypeDict = lstQaEventTypeDict.Where(m => m.QA_EVENT_TYPE == item.QA_EVENT_TYPE && m.PARENT_CODE == null).FirstOrDefault();
+                }
+                else
+                {
+                    qaEventTypeDict = lstQaEventTypeDict.Where(m => m.QA_EVENT_TYPE == item.MESSAGE_TITLE && m.PARENT_CODE != null).FirstOrDefault();
+                }
+                if (qaEventTypeDict == null)
+                    continue;
+                item.SERIAL_NO = qaEventTypeDict.SERIAL_NO;
+                shRet = QcMsgDictAccess.Instance.Update(item, item.QC_MSG_CODE);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    MessageBoxEx.ShowError("生成失败");
+                    WorkProcess.Instance.Close();
+                    return;
+                }
+            }
+            WorkProcess.Instance.Close();
+            this.OnRefreshView();
         }
     }
 }

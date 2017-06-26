@@ -217,7 +217,13 @@ namespace MedQCSys.Dialogs
             this.Cursor = Cursors.Default;
             SystemParam.Instance.UserInfo = userInfo;
             SystemConfig.Instance.Write(SystemData.ConfigKey.DEFAULT_LOGIN_USERID, szUserID);
-            string szProduct = (this.cboProduct.SelectedItem as HdpProduct).NAME_SHORT;
+            HdpProduct hdpProduct = (this.cboProduct.SelectedItem as HdpProduct);
+            if (hdpProduct == null)
+            {
+                MessageBoxEx.Show("Õ¯¬Á≥ˆœ÷“Ï≥£!");
+                return;
+            }
+            string szProduct = hdpProduct.NAME_SHORT;
             SystemConfig.Instance.Write(SystemData.ConfigKey.DEFAULT_LOGIN_PRODUCT, szProduct);
             DataCache.Instance.HdpProduct = this.cboProduct.SelectedItem as HdpProduct;
 

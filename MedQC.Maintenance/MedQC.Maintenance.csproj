@@ -265,7 +265,9 @@
   <ItemGroup>
     <None Include="Resources\save.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\order1.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MoveDown.png" />
   </ItemGroup>

@@ -49,8 +49,11 @@ namespace EMRDBLib.DbAccess
 
             string szField = string.Format("*");
             string szCondtion = string.Format("1=1 ");
+            string szOrderBy = string.Format("{0},{1}"
+                , SystemData.QcMsgDictTable.SERIAL_NO
+                , SystemData.QcMsgDictTable.QC_MSG_CODE);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
-               , SystemData.QcMsgDictTable.SERIAL_NO);
+               , szOrderBy);
             IDataReader dataReader = null;
             try
             {
@@ -149,9 +152,12 @@ namespace EMRDBLib.DbAccess
                , SystemData.QcMsgDictTable.SERIAL_NO
                , SystemData.QcMsgDictTable.IS_VALID
                );
+            string szOrderBy = string.Format("{0},{1}"
+               , SystemData.QcMsgDictTable.SERIAL_NO
+               , SystemData.QcMsgDictTable.QC_MSG_CODE);
             string szCondtion = string.Format("1=1 and {0} = 1", SystemData.QcMsgDictTable.IS_VALID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataTable.QC_MSG_DICT, szCondtion
-               , SystemData.QcMsgDictTable.SERIAL_NO);
+               , szOrderBy);
             IDataReader dataReader = null;
             try
             {

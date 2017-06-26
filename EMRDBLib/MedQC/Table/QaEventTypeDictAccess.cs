@@ -88,7 +88,7 @@ namespace EMRDBLib.DbAccess
             string szField = string.Format("{0},{1},{2},{3},{4}", SystemData.QaEventTypeDictTable.SERIAL_NO
                , SystemData.QaEventTypeDictTable.QA_EVENT_TYPE, SystemData.QaEventTypeDictTable.INPUT_CODE
                , SystemData.QaEventTypeDictTable.PARENT_CODE, SystemData.QaEventTypeDictTable.MAX_SCORE);
-            string szCondtion = string.Format("{0}='{1}'", SystemData.QaEventTypeDictTable.APPLY_ENV, "MEDDOC");
+            string szCondtion = string.Format("{0}='{1}' or {0} is null", SystemData.QaEventTypeDictTable.APPLY_ENV, "MEDDOC");
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField
                 , SystemData.DataTable.QA_EVENT_TYPE_DICT, szCondtion, SystemData.QaEventTypeDictTable.SERIAL_NO);
             IDataReader dataReader = null;
@@ -183,9 +183,9 @@ namespace EMRDBLib.DbAccess
         /// 病历质控系统,修改一条病案质控问题类别
         /// </summary>
         /// <param name="qcEventType">病案质控问题类别</param>
-        /// <param name="szOldEventType">旧的病案质控问题类别名称</param>
+        /// <param name="szOldInputCode">旧的病案质控问题类别名称</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short Update(QaEventTypeDict qcEventType, string szOldEventType)
+        public short Update(QaEventTypeDict qcEventType, string szOldInputCode)
         {
             if (qcEventType == null)
             {
@@ -196,7 +196,7 @@ namespace EMRDBLib.DbAccess
 
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-
+            qcEventType.APPLY_ENV = "MEDDOC";
             string szField = string.Format("{0}='{1}',{2}='{3}',{4}={5},{6}='{7}',{8}='{9}',{10}={11}"
                 , SystemData.QaEventTypeDictTable.APPLY_ENV, qcEventType.APPLY_ENV
                 , SystemData.QaEventTypeDictTable.INPUT_CODE, qcEventType.INPUT_CODE
@@ -205,7 +205,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QaEventTypeDictTable.QA_EVENT_TYPE, qcEventType.QA_EVENT_TYPE
                 , SystemData.QaEventTypeDictTable.SERIAL_NO, qcEventType.SERIAL_NO);
 
-            string szCondition = string.Format("{0}='{1}'", SystemData.QaEventTypeDictTable.QA_EVENT_TYPE, szOldEventType);
+            string szCondition = string.Format("{0}='{1}'", SystemData.QaEventTypeDictTable.INPUT_CODE, szOldInputCode);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QA_EVENT_TYPE_DICT, szField, szCondition);
             int nCount = 0;
             try
