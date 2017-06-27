@@ -5,6 +5,8 @@ using System.Text;
 using Heren.MedQC.Core;
 using MedQCSys;
 using Heren.Common.DockSuite;
+using Heren.Common.Libraries;
+using Heren.MedQC.HomePage.Forms;
 
 namespace Heren.MedQC.HomePage
 {
@@ -19,20 +21,28 @@ namespace Heren.MedQC.HomePage
         }
         public override bool Execute(object param, object data)
         {
-            MainForm form = param as MainForm;
-            if (form == null)
-                return false;
-            foreach (DockContent item in form.DockPanel.Contents)
+            try
             {
-                if (item is HomePageForm)
+
+                MainForm form = param as MainForm;
+                if (form == null)
+                    return false;
+                foreach (DockContent item in form.DockPanel.Contents)
                 {
-                    item.Activate();
-                    return true;
+                    if (item is HomePageForm)
+                    {
+                        item.Activate();
+                        return true;
+                    }
                 }
+                HomePageForm role = new HomePageForm(form);
+                role.Show(form.DockPanel, DockState.Document);
+                role.Activate();
             }
-            HomePageForm role = new HomePageForm(form);
-            role.Show(form.DockPanel, DockState.Document);
-            role.Activate();
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
             return true;
         }
     }

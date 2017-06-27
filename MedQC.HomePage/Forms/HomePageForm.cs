@@ -1,59 +1,56 @@
-// ***********************************************************
-// 病案质控系统质控问题类型维护窗口.
-// Creator:YangMingkun  Date:2009-11-13
-// Copyright:supconhealth
-// ***********************************************************
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Heren.Common.Libraries;
-using Heren.Common.Controls;
-using Heren.Common.Controls.TableView;
-using Heren.Common.DockSuite;
 using MedQCSys.DockForms;
-using EMRDBLib;
-using EMRDBLib.DbAccess;
+using Heren.MedQC.HomePage.PageCards;
 using MedQCSys;
-using System.Windows.Forms.DataVisualization.Charting;
-
-namespace Heren.MedQC.HomePage
+using Heren.Common.DockSuite;
+namespace Heren.MedQC.HomePage.Forms
 {
     public partial class HomePageForm : DockContentBase
     {
-        public HomePageForm(MainForm form):base(form)
+
+        public HomePageForm(MainForm parent)
+            : base(parent)
         {
             this.InitializeComponent();
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
-          
+            //this.dataGridView1.AutoReadonly = true;
         }
-
-        protected override void OnShown(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-            base.OnShown(e);
-            this.Update();
-            this.OnRefreshView();
-            Random rand = new Random();
-            for (int index = 1; index < 100; index++)
-            {
-                chart1.Series["Series1"].Points.AddY(rand.Next(1, 1000));
-            }
-            double yValue = 50.0;
-            Random random = new Random();
-            for (int pointIndex = 0; pointIndex < 20000; pointIndex++)
-            {
-                yValue = yValue + (random.NextDouble() * 10.0 - 5.0);
-                chart2.Series["Series1"].Points.AddY(yValue);
-            }
+            base.OnLoad(e);
+            QcTimeCheckCard qcTimeCheckCard = new QcTimeCheckCard();
+            qcTimeCheckCard.RefreshCard();
+            this.flowLayoutPanel1.Controls.Add(qcTimeCheckCard);
 
-            // Set fast line chart type
-            chart2.Series["Series1"].ChartType = SeriesChartType.FastLine;
-            this.demoCard1.RefreshCard();
+            QcCheckResultCard qcCheckResultCard = new QcCheckResultCard();
+            qcCheckResultCard.RefreshCard();
+            this.flowLayoutPanel1.Controls.Add(qcCheckResultCard);
+
+            MedicalQcMsgCard medicalQcMsgCard = new MedicalQcMsgCard();
+            medicalQcMsgCard.RefreshCard();
+            this.flowLayoutPanel1.Controls.Add(medicalQcMsgCard);
         }
+        public override void OnRefreshView()
+        {
+            if (this.flowLayoutPanel1.IsDisposed)
+                return;
+            if (this.flowLayoutPanel1.HasChildren)
+            {
+                foreach (ICardControl item in this.flowLayoutPanel1.Controls)
+                {
+                    if (item != null)
+                        item.RefreshCard();
+                }
 
+            }
+        }
     }
 }

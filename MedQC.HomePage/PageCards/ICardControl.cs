@@ -7,6 +7,8 @@ namespace Heren.MedQC.HomePage.PageCards
 {
     public interface ICardControl
     {
-        void RefreshCard();
+        bool RefreshCard();
+        bool Export();
     }
+
 }

@@ -34,7 +34,8 @@ namespace MedQC.Test
         private String text = string.Empty;
         [
           Category("Card")
-        , Description("标题文本")
+         , Description("标题文本")
+         ,DefaultValue("标题")
         ]
         public  String TitleText
         {

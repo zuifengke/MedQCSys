@@ -84,9 +84,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
-    <Reference Include="System.Windows.Forms.DataVisualization">
-      <HintPath>..\Include\System.Windows.Forms.DataVisualization.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -105,6 +103,36 @@
     <Compile Include="Controls\CardPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\HomePageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HomePageForm.Designer.cs">
+      <DependentUpon>HomePageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageCards\BaseCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageCards\BaseCard.Designer.cs">
+      <DependentUpon>BaseCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageCards\MedicalQcMsgCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageCards\MedicalQcMsgCard.Designer.cs">
+      <DependentUpon>MedicalQcMsgCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageCards\QcCheckResultCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageCards\QcCheckResultCard.Designer.cs">
+      <DependentUpon>QcCheckResultCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageCards\QcTimeCheckCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageCards\QcTimeCheckCard.Designer.cs">
+      <DependentUpon>QcTimeCheckCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="PageCards\DemoCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,18 +141,27 @@
     </Compile>
     <Compile Include="PageCards\ICardControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\HomePageForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\HomePageForm.designer.cs">
-      <DependentUpon>HomePageForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Chart1.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\Chart1.Designer.cs">
       <DependentUpon>Chart1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\HomePageForm.resx">
+      <DependentUpon>HomePageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageCards\BaseCard.resx">
+      <DependentUpon>BaseCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageCards\MedicalQcMsgCard.resx">
+      <DependentUpon>MedicalQcMsgCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageCards\QcCheckResultCard.resx">
+      <DependentUpon>QcCheckResultCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageCards\QcTimeCheckCard.resx">
+      <DependentUpon>QcTimeCheckCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PageCards\DemoCard.resx">
       <DependentUpon>DemoCard.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,9 +175,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Forms\HomePageForm.resx">
-      <DependentUpon>HomePageForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Chart1.resx">
       <DependentUpon>Chart1.cs</DependentUpon>
     </EmbeddedResource>
@@ -200,6 +234,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Update1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
