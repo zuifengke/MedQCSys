@@ -258,10 +258,10 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 根据问题类型获取质控反馈信息字典列表
         /// </summary>
-        /// <param name="szQuestionType">问题类型</param>
+        /// <param name="szQaEventType">问题类型</param>
         /// <param name="lstQCMessageTemplets">质控反馈信息字典列表</param>
         /// <returns>MedDocSys.Common.SystemData.ReturnValue</returns>
-        public short GetQcMsgDictList(string szQuestionType, ref List<EMRDBLib.QcMsgDict> lstQCMessageTemplets)
+        public short GetQcMsgDictList(string szQaEventType, ref List<EMRDBLib.QcMsgDict> lstQCMessageTemplets)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -271,10 +271,10 @@ namespace EMRDBLib.DbAccess
                , SystemData.QcMsgDictTable.MESSAGE, SystemData.QcMsgDictTable.SCORE, SystemData.QcMsgDictTable.INPUT_CODE
                , SystemData.QcMsgDictTable.MESSAGE_TITLE, SystemData.QcMsgDictTable.ISVETO);
             string szCondition = string.Format(" 1=1 and {0}=1", SystemData.QcMsgDictTable.IS_VALID);
-            if (!string.IsNullOrEmpty(szQuestionType))
+            if (!string.IsNullOrEmpty(szQaEventType))
                 szCondition = string.Format("{0} AND {1}='{2}'"
                     , szCondition
-                    , SystemData.QcMsgDictTable.QA_EVENT_TYPE, szQuestionType);
+                    , SystemData.QcMsgDictTable.QA_EVENT_TYPE, szQaEventType);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField
                 , SystemData.DataTable.QC_MSG_DICT, szCondition, SystemData.QcMsgDictTable.SERIAL_NO);
             IDataReader dataReader = null;

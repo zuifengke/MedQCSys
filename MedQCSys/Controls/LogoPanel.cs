@@ -86,10 +86,6 @@ namespace MedQCSys.Controls
         {
             base.OnPaint(e);
             this.PaintBackground(e.Graphics);
-            //LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, this.m_GradientBeginColor
-            //    , this.m_GradientEndColor, this.m_eLinearGradientMode);
-            //e.Graphics.FillRectangle(brush, this.ClientRectangle);
-            //brush.Dispose();
 
             if (SystemParam.Instance.LocalConfigOption == null)
                 return;
@@ -118,7 +114,7 @@ namespace MedQCSys.Controls
         private void PaintBackground(Graphics graphics)
         {
             Rectangle clipRect = this.ClientRectangle;
-            Color beginColor = Color.FromArgb(123, 164, 224); 
+            Color beginColor = Color.FromArgb(123, 164, 224);
             Color endColor = Color.FromArgb(226, 238, 255);
             LinearGradientMode gradientMode = LinearGradientMode.Vertical;
             LinearGradientBrush brush = new LinearGradientBrush(clipRect, beginColor, endColor, gradientMode);
@@ -132,7 +128,14 @@ namespace MedQCSys.Controls
                 return;
             Rectangle rectLogo = Rectangle.Empty;
             rectLogo.Size = this.m_Image.Size;
-            rectLogo.Location = new Point(this.ClientSize.Width - rectLogo.Width - 8, this.ClientSize.Height - rectLogo.Height);
+            int left = this.ClientSize.Width - rectLogo.Width - 8;
+          
+            bool result = SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_TOOL_STRIP, true);
+            if (!result)
+            {
+                left = left - SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME.Length * 15;
+            }
+            rectLogo.Location = new Point(left, this.ClientSize.Height - rectLogo.Height);
             if (rectLogo.Contains(e.Location))
                 (new SystemAboutForm()).ShowDialog();
         }

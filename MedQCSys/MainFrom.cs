@@ -672,8 +672,6 @@ namespace MedQCSys
 
         internal void ShowQuestionListForm()
         {
-
-
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_QuestionListForm == null || this.m_QuestionListForm.IsDisposed)
             {
@@ -712,10 +710,10 @@ namespace MedQCSys
         /// <param name="szDocSetID">病历文档集ID</param>
         /// <<param name="szCreator">病历的创建者</param>
         /// <<param name="szDeptCode">病历的创建者所在科室</param>
-        internal void AddFeedBackInfo(string szDocTitle, string szDocSetID, string szCreatorName, string szDeptCode, byte[] byteDocData)
+        internal void AddMedicalQcMsg(MedDocInfo docInfo)
         {
             this.ShowQuestionListForm();
-            this.m_QuestionListForm.AddNewItem(szDocTitle, szDocSetID, szCreatorName, szDeptCode, byteDocData);
+            this.m_QuestionListForm.AddNewItem(docInfo.DOC_TITLE,docInfo);
         }
 
         internal void ShowDocumentTimeForm()

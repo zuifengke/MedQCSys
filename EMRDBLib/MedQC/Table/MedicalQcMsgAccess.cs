@@ -534,9 +534,10 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.VISIT_ID, szVisitID);
             string szTable = string.Format("{0}", SystemData.DataTable.MEDICAL_QC_MSG);
 
-            string szOrderBy = string.Format("{0},{1},{2},{3}",
-                SystemData.MedicalQcMsgTable.DEPT_STAYED, SystemData.MedicalQcMsgTable.QA_EVENT_TYPE
-                , SystemData.MedicalQcMsgTable.PATIENT_ID, SystemData.MedicalQcMsgTable.VISIT_ID);
+            string szOrderBy = string.Format("{0},{1}"
+                ,SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME
+                ,SystemData.MedicalQcMsgTable.QA_EVENT_TYPE
+                );
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
                 , szOrderBy);
             IDataReader dataReader = null;
@@ -1276,10 +1277,16 @@ namespace EMRDBLib.DbAccess
 
             string szField = string.Format("A.{0},B.{1},A.{2},C.{3},A.{4},A.{5},A.{6},A.{7},A.{8},C.{9},C.{10},C.{11},A.{12},A.{13},A.{14},A.{15},A.{16}",
                 SystemData.MedicalQcMsgTable.DEPT_STAYED
-                , SystemData.DeptView.DEPT_NAME, SystemData.MedicalQcMsgTable.PATIENT_ID,
-                SystemData.PatVisitView.PATIENT_NAME, SystemData.MedicalQcMsgTable.MESSAGE, SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE,
-                SystemData.MedicalQcMsgTable.ISSUED_BY, SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, SystemData.MedicalQcMsgTable.ASK_DATE_TIME,
-                SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DIAGNOSIS
+                , SystemData.DeptView.DEPT_NAME
+                , SystemData.MedicalQcMsgTable.PATIENT_ID
+                , SystemData.PatVisitView.PATIENT_NAME
+                , SystemData.MedicalQcMsgTable.MESSAGE
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE
+                , SystemData.MedicalQcMsgTable.ISSUED_BY
+                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME
+                , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
+                , SystemData.PatVisitView.INP_NO
+                , SystemData.PatVisitView.DIAGNOSIS
                 , SystemData.PatVisitView.VISIT_ID
                 , SystemData.MedicalQcMsgTable.PARENT_DOCTOR
                 , SystemData.MedicalQcMsgTable.MSG_ID

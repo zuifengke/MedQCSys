@@ -21,31 +21,31 @@ namespace MedQCSys.Dialogs
 {
     public partial class QuestionTypeForm : HerenForm
     {
-        private string m_szQuestionType;
+        private string m_szQaEventType;
         /// <summary>
         /// 获取或设置质检问题问题类型
         /// </summary>
-        public string QuestionType
+        public string QaEventType
         {
-            get { return this.m_szQuestionType; }
-            set { this.m_szQuestionType = value; }
+            get { return this.m_szQaEventType; }
+            set { this.m_szQaEventType = value; }
         }
 
-        private string m_szMessageTemplet;
+        private string m_szMessage;
         /// <summary>
         /// 获取或设置质检问题模板
         /// </summary>
-        public string MessageTemplet
+        public string Message
         {
-            get { return this.m_szMessageTemplet; }
-            set { this.m_szMessageTemplet = value; }
+            get { return this.m_szMessage; }
+            set { this.m_szMessage = value; }
         }
 
         private string m_szMessageTitle;
         /// <summary>
         /// 获取或设置质检问题标题
         /// </summary>
-        public string MessageTempletTitle
+        public string MessageTitle
         {
             get { return this.m_szMessageTitle; }
             set { this.m_szMessageTitle = value; }
@@ -62,14 +62,14 @@ namespace MedQCSys.Dialogs
             set { this.m_szScore = value; }
         }
 
-        private string m_szMessageCode;
+        private string m_szQcMsgCode;
         /// <summary>
         /// 获取或设置质检问题模板编码
         /// </summary>
-        public string MessageCode
+        public string QcMsgCode
         {
-            get { return this.m_szMessageCode; }
-            set { this.m_szMessageCode = value; }
+            get { return this.m_szQcMsgCode; }
+            set { this.m_szQcMsgCode = value; }
         }
 
         public QuestionTypeForm()
@@ -118,13 +118,13 @@ namespace MedQCSys.Dialogs
 
         /// <summary>
         /// 根据类型查找对应的质检问题模板列表
-        /// <param name="szQuestionType">问题类型</param>
+        /// <param name="szQaEventType">问题类型</param>
         /// <param name="node">当前父节点</param>
         /// </summary>
-        private void AppendChildNode(string szQuestionType, TreeNode parentNode)
+        private void AppendChildNode(string szQaEventType, TreeNode parentNode)
         {
             List<EMRDBLib.QcMsgDict> lstMessage = null;
-            short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(szQuestionType, ref lstMessage);
+            short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(szQaEventType, ref lstMessage);
             if (shRet != SystemData.ReturnValue.OK || lstMessage == null)
                 return;
             //根据MessageTitle再分组
@@ -220,20 +220,20 @@ namespace MedQCSys.Dialogs
             this.DialogResult = DialogResult.OK;
         }
 
-        private EMRDBLib.QcMsgDict selectedQCMessageTemplet = null;
+        private QcMsgDict selectedQCMessageTemplet = null;
 
-        public EMRDBLib.QcMsgDict SelectedQCMessageTemplet
+        public QcMsgDict SelectedQCMessageTemplet
         {
             get { return selectedQCMessageTemplet; }
             set { selectedQCMessageTemplet = value; }
         }
 
-        private void SetQcMessage(EMRDBLib.QcMsgDict qcMessage)
+        private void SetQcMessage(QcMsgDict qcMessage)
         {
-            this.QuestionType = qcMessage.QA_EVENT_TYPE;
-            this.MessageTemplet = qcMessage.MESSAGE;
-            this.MessageTempletTitle = string.IsNullOrEmpty(qcMessage.MESSAGE_TITLE) ? qcMessage.QA_EVENT_TYPE : qcMessage.MESSAGE_TITLE;
-            this.MessageCode = qcMessage.QC_MSG_CODE;
+            this.QaEventType = qcMessage.QA_EVENT_TYPE;
+            this.Message = qcMessage.MESSAGE;
+            this.MessageTitle = string.IsNullOrEmpty(qcMessage.MESSAGE_TITLE) ? qcMessage.QA_EVENT_TYPE : qcMessage.MESSAGE_TITLE;
+            this.QcMsgCode = qcMessage.QC_MSG_CODE;
             this.Score = qcMessage.SCORE.ToString();
         }
 

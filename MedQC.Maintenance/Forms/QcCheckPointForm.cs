@@ -684,9 +684,9 @@ namespace Heren.MedQC.Maintenance
             QcCheckPoint qcCheckPoint = row.Tag as QcCheckPoint;
             if (frmQuestionType.ShowDialog() != DialogResult.OK)
                 return;
-            qcCheckPoint.MsgDictCode = frmQuestionType.MessageCode;
-            qcCheckPoint.MsgDictMessage = frmQuestionType.MessageTemplet;
-            qcCheckPoint.QaEventType = frmQuestionType.QuestionType;
+            qcCheckPoint.MsgDictCode = frmQuestionType.QcMsgCode;
+            qcCheckPoint.MsgDictMessage = frmQuestionType.Message;
+            qcCheckPoint.QaEventType = frmQuestionType.QaEventType;
             qcCheckPoint.Score = frmQuestionType.Score != null ? float.Parse(frmQuestionType.Score) : 0;
             row.Cells[this.colMsgDictMessage.Index].Value = qcCheckPoint.MsgDictMessage;
             row.Cells[this.colQaEventType.Index].Value = qcCheckPoint.QaEventType;

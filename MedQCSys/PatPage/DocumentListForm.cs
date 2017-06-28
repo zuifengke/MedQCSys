@@ -989,25 +989,23 @@ namespace MedQCSys.DockForms
             string szDocSetID = string.Empty;
             string szDocCreator = string.Empty;
             string szDeptCode = string.Empty;
-            byte[] byteDocData = null;
             MedDocInfo docInfo = selectedNode.Data as MedDocInfo;
             if (docInfo == null && !SystemParam.Instance.LocalConfigOption.AllowAddQuestionToParDocType)
             {
                 MessageBoxEx.Show("没有选中病历文书中任何一份病历，无法添加质检问题！", MessageBoxIcon.Warning);
                 return;
             }
-            if (docInfo != null)
-            {
-                this.GetSelectedNodeInfo(selectedNode, ref szDocTitle, ref szDocSetID, ref szDocCreator, ref szDeptCode, ref byteDocData);
-            }
             else if (SystemParam.Instance.LocalConfigOption.AllowAddQuestionToParDocType)
             {
-                szDocTitle = selectedNode.ToString();
-                szDocSetID = string.Empty;
-                szDocCreator = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
-                szDeptCode = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
+                docInfo = new MedDocInfo();
+                docInfo.DOC_TITLE= selectedNode.ToString();
+                docInfo.DOC_SETID = string.Empty;
+                docInfo.CREATOR_NAME = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR; 
+                docInfo.CREATOR_ID= SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR_ID;
+                docInfo.DEPT_CODE= SystemParam.Instance.PatVisitInfo.DEPT_CODE;
+                docInfo.DEPT_NAME = SystemParam.Instance.PatVisitInfo.DEPT_NAME ;
             }
-            this.MainForm.AddFeedBackInfo(szDocTitle, szDocSetID, szDocCreator, szDeptCode, byteDocData);
+            this.MainForm.AddMedicalQcMsg(docInfo);
         }
 
         private void virtualTree1_NodeMouseClick(object sender, VirtualTreeEventArgs e)

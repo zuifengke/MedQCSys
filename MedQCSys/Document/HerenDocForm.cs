@@ -389,31 +389,13 @@ namespace MedQCSys.Document
             if (this.m_documents.Count <= 0)
                 return;
 
-            string szDocTitle = null;
-            string szDocSetID = null;
-            string szCreatorName = null;
-            string szDeptCode = null;
-            byte[] byteDocData = null;
-            if (this.m_documents.Count == 1)
-            {
-                szDocTitle = this.m_documents[0].DOC_TITLE;
-                szDocSetID = this.m_documents[0].DOC_SETID;
-                szCreatorName = this.m_documents[0].CREATOR_NAME;
-                szDeptCode = this.m_documents[0].DEPT_CODE;
-
-                EmrDocAccess.Instance.GetDocByID(this.m_documents[0].DOC_ID, ref byteDocData);
-            }
-            else
-            {
-                szDocTitle = this.Text;
-            }
             SectionInfo sectionInfo = this.textEditor1.GetCurrentSection();
 
             if (sectionInfo != null)
             {
-                szDocTitle = sectionInfo.Name;
+                this.m_documents[0].DOC_TITLE = sectionInfo.Name;
             }
-            this.MainForm.AddFeedBackInfo(szDocTitle, szDocSetID, szCreatorName, szDeptCode, byteDocData);
+            this.MainForm.AddMedicalQcMsg(this.m_documents[0]);
         }
 
         private void CheckDocBugButton_Click(object sender, EventArgs e)

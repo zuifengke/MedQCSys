@@ -18,9 +18,9 @@ using Heren.Common.Controls;
 using Heren.Common.Controls.TableView;
 using Heren.Common.Controls.VirtualTreeView;
 
-using MedQCSys.Dialogs;
 using EMRDBLib.DbAccess;
 using EMRDBLib;
+using MedQCSys.Dialogs;
 using Heren.Common.VectorEditor.Print;
 using System.Drawing.Printing;
 using MedQCSys.Document;
@@ -87,7 +87,6 @@ namespace MedQCSys.DockForms
             set { this.m_szDocTitle = value; }
         }
 
-        private Hashtable m_htMsgCodeTable = null;
 
         private string m_PrintName = string.Empty;
         private int m_iQTotalNum = 0;//问题总数
@@ -137,7 +136,7 @@ namespace MedQCSys.DockForms
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在刷新质控质检问题，请稍候...");
             this.LoadQCMsgDict();
-            this.LoadQCQuestionList();
+            this.LoadMedicalQcMsgs();
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -181,59 +180,53 @@ namespace MedQCSys.DockForms
         /// <summary>
         /// 装载质控质检问题
         /// </summary>
-        private void LoadQCQuestionList()
+        private void LoadMedicalQcMsgs()
         {
             this.dataGridView1.Rows.Clear();
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
 
-            if (this.m_htMsgCodeTable == null)
-                this.m_htMsgCodeTable = new Hashtable();
-            else
-                this.m_htMsgCodeTable.Clear();
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
 
-            List<EMRDBLib.MedicalQcMsg> lstQCQuestionInfos = null;
-            short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstQCQuestionInfos);
+            List<MedicalQcMsg> lstMedicalQcMsgs = null;
+            short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstMedicalQcMsgs);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("质控质检问题下载失败！");
                 return;
             }
-            if (lstQCQuestionInfos == null || lstQCQuestionInfos.Count <= 0)
+            if (lstMedicalQcMsgs == null || lstMedicalQcMsgs.Count <= 0)
                 return;
 
-            for (int index = 0; index < lstQCQuestionInfos.Count; index++)
+            for (int index = 0; index < lstMedicalQcMsgs.Count; index++)
             {
-                EMRDBLib.MedicalQcMsg qcQuestionInfo = lstQCQuestionInfos[index];
-                if (qcQuestionInfo == null)
+                MedicalQcMsg medicalQcMsg = lstMedicalQcMsgs[index];
+                if (medicalQcMsg == null)
                     continue;
 
-                if (!this.m_htMsgCodeTable.ContainsKey(qcQuestionInfo.QC_MSG_CODE))
-                    this.m_htMsgCodeTable.Add(qcQuestionInfo.QC_MSG_CODE, qcQuestionInfo);
                 int nRowIndex = this.dataGridView1.Rows.Add();
                 DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
-                row.Tag = qcQuestionInfo;
-                this.SetRowData(row, qcQuestionInfo);
+                row.Tag = medicalQcMsg;
+                this.SetRowData(row, medicalQcMsg);
             }
             if (this.dataGridView1.Rows.Count > 0)
             {
                 this.dataGridView1.ClearSelection();
             }
         }
-        List<EMRDBLib.QcMsgDict> lstQCMessageTemplet = null;
+        List<QcMsgDict> m_lstQcMsgDict = null;
         private void LoadQCMsgDict()
         {
-            short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQCMessageTemplet);
-            if (shRet != SystemData.ReturnValue.OK && lstQCMessageTemplet == null)
+            short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref m_lstQcMsgDict);
+            if (shRet != SystemData.ReturnValue.OK && m_lstQcMsgDict == null)
                 return;
             if (this.m_htMsgDict == null)
                 this.m_htMsgDict = new Hashtable();
-            for (int index = 0; index < lstQCMessageTemplet.Count; index++)
+            for (int index = 0; index < m_lstQcMsgDict.Count; index++)
             {
-                EMRDBLib.QcMsgDict messageTemplet = lstQCMessageTemplet[index];
+                QcMsgDict messageTemplet = m_lstQcMsgDict[index];
                 if (!m_htMsgDict.ContainsKey(messageTemplet.QC_MSG_CODE))
                     this.m_htMsgDict.Add(messageTemplet.QC_MSG_CODE, messageTemplet);
             }
@@ -263,7 +256,7 @@ namespace MedQCSys.DockForms
         /// 保存质控反馈问题类型列表的修改
         /// </summary>
         /// <returns>bool</returns>
-        public bool CommitModify(string szDocTitle, string szDocSetID, string szCreatorName, byte[] byteDocData)
+        public override bool CommitModify()
         {
             if (this.dataGridView1.Rows.Count <= 0)
                 return true;
@@ -274,12 +267,7 @@ namespace MedQCSys.DockForms
             for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
             {
                 DataTableViewRow row = this.dataGridView1.Rows[index];
-                //取得问题大类列的Tag属性,判断当前行新建、修改还是删除状态。
-                string szRowState = (string)row.Cells[this.colQCEventType.Index].Tag;
-                if (szRowState == STATUS_NORMAL)
-                    continue;
-
-                shRet = this.SaveRowData(row, szRowState, szDocTitle, szDocSetID, szCreatorName, byteDocData);
+                shRet = this.SaveRowData(row);
                 if (shRet == SystemData.ReturnValue.OK)
                     count++;
                 else if (shRet == SystemData.ReturnValue.FAILED)
@@ -289,8 +277,8 @@ namespace MedQCSys.DockForms
             {
                 //hhhh
                 //增加质控人员病案检查记录
-                EMRDBLib.MedicalQcLog actionLog = new EMRDBLib.MedicalQcLog();
-                bool bOK = QuestionListForm.MakeQCActionLog(ref actionLog);
+                MedicalQcLog medicalQcLog = new MedicalQcLog();
+                bool bOK = QuestionListForm.MakeQCActionLog(ref medicalQcLog);
 
                 //获取选中的病历的DocID记录到medical_qc_log表
                 if (this.MainForm.ActiveDocument is IDocumentForm)
@@ -302,20 +290,18 @@ namespace MedQCSys.DockForms
                         if (herendocument.TextEditor.GetCurrentSection() != null)
                         {
                             string szDocID = herendocument.TextEditor.GetCurrentSection().ID;
-                            actionLog.DOC_SETID = szDocID;
+                            medicalQcLog.DOC_SETID = szDocID;
                             LogManager.Instance.WriteLog(szDocID);
                         }
                     }
                     else
-                        actionLog.DOC_SETID = document.Document.DOC_ID;
+                        medicalQcLog.DOC_SETID = document.Document.DOC_ID;
                 }
-                else
-                    actionLog.DOC_SETID = szDocSetID;
                 if (bOK)
                 {
-                    actionLog.LOG_DESC = "质控者添加质检问题";
+                    medicalQcLog.LOG_DESC = "质控者添加质检问题";
 
-                    this.SaveQCActionLog(actionLog);
+                    this.SaveQCActionLog(medicalQcLog);
                 }
             }
 
@@ -346,35 +332,22 @@ namespace MedQCSys.DockForms
             row.Tag = medicalQcMsg;
             if (medicalQcMsg.LOCK_STATUS)
                 row.Cells[this.colLockStatus.Index].Value = Properties.Resources._lock;
-            row.Cells[this.colQCEventType.Index].Value = medicalQcMsg.QA_EVENT_TYPE;
-            row.Cells[this.colQCEventType.Index].Tag = STATUS_NORMAL;
-            if (this.m_htMsgDict.Contains(medicalQcMsg.QC_MSG_CODE))
-            {
-                EMRDBLib.QcMsgDict qcMessage = this.m_htMsgDict[medicalQcMsg.QC_MSG_CODE] as EMRDBLib.QcMsgDict;
-                if (qcMessage == null)
-                    return false;
-
-                row.Cells[this.colMessage.Index].Value = string.IsNullOrEmpty(qcMessage.MESSAGE_TITLE) ? qcMessage.QA_EVENT_TYPE : qcMessage.MESSAGE_TITLE;
-                row.Cells[this.colScore.Index].Value =
-                        medicalQcMsg.POINT;
-                row.Cells[this.colScore.Index].Tag =
-                medicalQcMsg.POINT;
-            }
-            row.Cells[this.colMessage.Index].Tag = medicalQcMsg.QC_MSG_CODE;
+            row.Cells[this.colQaEventType.Index].Value = medicalQcMsg.QA_EVENT_TYPE;
+            row.Cells[this.colMessage.Index].Value = medicalQcMsg.MESSAGE;
+            row.Cells[this.col_POINT.Index].Value = medicalQcMsg.POINT;
             if (medicalQcMsg.ISSUED_DATE_TIME != medicalQcMsg.DefaultTime)
-                row.Cells[this.colCheckTime.Index].Value = medicalQcMsg.ISSUED_DATE_TIME.ToString("yyyy-M-d HH:mm");
+                row.Cells[this.colIssuedDateTime.Index].Value = medicalQcMsg.ISSUED_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
             if (medicalQcMsg.ASK_DATE_TIME != medicalQcMsg.DefaultTime)
-                row.Cells[this.colConfirmTime.Index].Value = medicalQcMsg.ASK_DATE_TIME.ToString("yyyy-M-d HH:mm");
-            row.Cells[this.colDocTitle.Index].Value = medicalQcMsg.TOPIC;
-            row.Cells[this.colDocTitle.Index].Tag = medicalQcMsg.TOPIC_ID;
-            row.Cells[this.colFeedBackInfo.Index].Value = medicalQcMsg.DOCTOR_COMMENT;
-            row.Cells[this.colDetailInfo.Index].Value = medicalQcMsg.MESSAGE;
-            row.Cells[this.colCreator.Index].Value = medicalQcMsg.DOCTOR_IN_CHARGE;
-            row.Cells[this.colDept_Code.Index].Value = medicalQcMsg.DEPT_STAYED;
+                row.Cells[this.col_ASK_DATE_TIME.Index].Value = medicalQcMsg.ASK_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
+            row.Cells[this.colTopic.Index].Value = medicalQcMsg.TOPIC;
+            row.Cells[this.colTopic.Index].Tag = medicalQcMsg.TOPIC_ID;
+            row.Cells[this.col_DOCTOR_COMMENT.Index].Value = medicalQcMsg.DOCTOR_COMMENT;
+            row.Cells[this.colMessage.Index].Value = medicalQcMsg.MESSAGE;
+            row.Cells[this.col_DOCTOR_IN_CHARGE.Index].Value = medicalQcMsg.DOCTOR_IN_CHARGE;
+
             //质检者姓名显示权限，有权利或者是自己添加的
             //显示权限改到质控权限控制
-            row.Cells[this.colIssusdBy.Index].Value = medicalQcMsg.ISSUED_BY;
-
+            row.Cells[this.col_ISSUED_BY.Index].Value = medicalQcMsg.ISSUED_BY;
             row.Cells[this.colMsgStatus.Index].Value = SystemData.MsgStatus.GetCnMsgState(medicalQcMsg.MSG_STATUS);
             if (medicalQcMsg.MSG_STATUS == SystemData.MsgStatus.UnCheck) //0为未接收、未确认状态
             {
@@ -397,86 +370,6 @@ namespace MedQCSys.DockForms
             return true;
         }
 
-        /// <summary>
-        /// 获取指定行最新修改后的数据
-        /// </summary>
-        /// <param name="row">指定行</param>
-        /// <param name="qcQuestionInfo">最新修改后的数据</param>
-        /// <returns>bool</returns>
-        private bool MakeRowData(DataTableViewRow row, ref EMRDBLib.MedicalQcMsg qcQuestionInfo)
-        {
-            if (row == null || row.Index < 0)
-            {
-                MessageBoxEx.Show("质控质检问题数据行非法，不可用！");
-                return false;
-            }
-
-            if (SystemParam.Instance.UserInfo == null)
-            {
-                MessageBoxEx.Show("您还没有登录系统！");
-                return false;
-            }
-
-            if (SystemParam.Instance.PatVisitInfo == null)
-            {
-                MessageBoxEx.Show("您没有选择任何患者！");
-                return false;
-            }
-
-            EMRDBLib.MedicalQcMsg oldQCQuestionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-            if (oldQCQuestionInfo == null)
-            {
-                MessageBoxEx.Show("质控质检问题行数据信息为空！");
-                return false;
-            }
-            string szQCEventType = (string)row.Cells[this.colQCEventType.Index].Value;
-            if (GlobalMethods.Misc.IsEmptyString(szQCEventType))
-            {
-                this.dataGridView1.CurrentCell = row.Cells[this.colQCEventType.Index];
-                MessageBoxEx.Show("您必须选择反馈问题类型！");
-                return false;
-            }
-
-            string szMessageCode = (string)row.Cells[this.colMessage.Index].Tag;
-            string szMessageContent = (string)row.Cells[this.colDetailInfo.Index].Value;
-            if (GlobalMethods.Misc.IsEmptyString(szMessageCode)
-                || GlobalMethods.Misc.IsEmptyString(szMessageContent))
-            {
-                this.dataGridView1.CurrentCell = row.Cells[this.colMessage.Index];
-                MessageBoxEx.Show("您必须输入质检问题！");
-                return false;
-            }
-
-            if (qcQuestionInfo == null)
-                qcQuestionInfo = new EMRDBLib.MedicalQcMsg();
-            qcQuestionInfo.MSG_ID = oldQCQuestionInfo.MSG_ID;
-            qcQuestionInfo.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            qcQuestionInfo.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            qcQuestionInfo.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
-            //转科后BUG修改
-            //科室取书写病历时所在的科室
-            qcQuestionInfo.DEPT_STAYED = row.Cells[this.colDept_Code.Index].Value != null ? row.Cells[this.colDept_Code.Index].Value.ToString() : string.Empty;
-            //DoctorInCharge取创建者
-            qcQuestionInfo.DOCTOR_IN_CHARGE = row.Cells[this.colCreator.Index].Value != null ? row.Cells[this.colCreator.Index].Value.ToString() : string.Empty;
-            qcQuestionInfo.PARENT_DOCTOR = SystemParam.Instance.PatVisitInfo.AttendingDoctor;
-            qcQuestionInfo.SUPER_DOCTOR = SystemParam.Instance.PatVisitInfo.SUPER_DOCTOR;
-            qcQuestionInfo.QA_EVENT_TYPE = szQCEventType;
-            qcQuestionInfo.QC_MSG_CODE = szMessageCode;
-            qcQuestionInfo.MESSAGE = szMessageContent;
-            if (oldQCQuestionInfo.MSG_STATUS != 0)
-                qcQuestionInfo.MSG_STATUS = oldQCQuestionInfo.MSG_STATUS;
-            else
-                qcQuestionInfo.MSG_STATUS = 0;
-            qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
-            qcQuestionInfo.ISSUED_DATE_TIME = oldQCQuestionInfo.ISSUED_DATE_TIME;
-            qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
-            qcQuestionInfo.POINT_TYPE = 0;
-            qcQuestionInfo.QCDOC_TYPE = oldQCQuestionInfo.QCDOC_TYPE;
-            qcQuestionInfo.ISSUED_TYPE = SystemData.IssuedType.NORMAL;
-            if (row.Cells[this.colScore.Index].Tag != null)
-                qcQuestionInfo.POINT = float.Parse(row.Cells[this.colScore.Index].Tag.ToString());
-            return true;
-        }
 
         /// <summary>
         /// 保存指定行的数据到远程数据表,需要注意的是：行的删除状态会与其他状态共存
@@ -486,34 +379,20 @@ namespace MedQCSys.DockForms
         /// <param name="szDocTitle">病历文档标题</param>
         /// <param name="szRowState">行状态</param>
         /// <returns>SystemData.ReturnValue</returns>
-        private short SaveRowData(DataTableViewRow row, string szRowState, string szDocTitle, string szDocSetID
-            , string szCreatorName, byte[] byteDocData)
+        private short SaveRowData(DataTableViewRow row)
         {
             DateTime dtBeginTime1 = DateTime.Now;
             if (row == null || row.Index < 0)
                 return SystemData.ReturnValue.FAILED;
 
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-            if (qcQuestionInfo == null)
+            MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
+            if (medicalQcMsg == null)
                 return SystemData.ReturnValue.FAILED;
-
-            string szPatientID = qcQuestionInfo.PATIENT_ID;
-            string szVisitID = qcQuestionInfo.VISIT_ID;
-            string szQuestionCode = qcQuestionInfo.QC_MSG_CODE;
-            DateTime dtCheckTime = qcQuestionInfo.ISSUED_DATE_TIME;
-            qcQuestionInfo = null;
-            if (!this.MakeRowData(row, ref qcQuestionInfo))
-                return SystemData.ReturnValue.FAILED;
-
-            //如果病历的创建者不为空，修改经治医生的姓名为创建者，这样在医生站创建者就能收到质控发来的质检问题。
-            if (!string.IsNullOrEmpty(szCreatorName))
-                qcQuestionInfo.DOCTOR_IN_CHARGE = szCreatorName;
-
             short shRet = SystemData.ReturnValue.OK;
-            if (szRowState == STATUS_DELETE)
+            if (row.State == RowState.Delete)
             {
                 if (!this.dataGridView1.IsNewRow(row))
-                    shRet = MedicalQcMsgAccess.Instance.Delete(qcQuestionInfo.MSG_ID);
+                    shRet = MedicalQcMsgAccess.Instance.Delete(medicalQcMsg.MSG_ID);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
@@ -521,94 +400,61 @@ namespace MedQCSys.DockForms
                     return SystemData.ReturnValue.FAILED;
                 }
                 this.dataGridView1.Rows.Remove(row);
-                if (this.m_htMsgCodeTable.ContainsKey(qcQuestionInfo.QC_MSG_CODE))
-                    this.m_htMsgCodeTable.Remove(qcQuestionInfo.QC_MSG_CODE);
             }
-            else if (szRowState == STATUS_MODIFY)
+            else if (row.State == RowState.Update)
             {
-                DateTime dtNewCheckDate = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-                shRet = MedicalQcMsgAccess.Instance.Update(qcQuestionInfo);
+                DateTime dtNewCheckDate = SysTimeHelper.Instance.Now;
+                shRet = MedicalQcMsgAccess.Instance.Update(medicalQcMsg);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
                     MessageBoxEx.Show("无法更新当前记录！");
                     return SystemData.ReturnValue.FAILED;
                 }
-                if (!string.IsNullOrEmpty(szDocSetID))
-                {
-                    qcQuestionInfo.TOPIC_ID = szDocSetID;
-                    qcQuestionInfo.TOPIC = szDocTitle;
-                    string szRemotePath = SystemParam.Instance.GetQCFtpDocPath(qcQuestionInfo, "smdf");
-                    EmrDocAccess.Instance.UpdateQCDocToFtp(qcQuestionInfo, szRemotePath, dtNewCheckDate);
-                }
-                row.Cells[this.colQCEventType.Index].Tag = STATUS_NORMAL;
-                row.Cells[this.colCheckTime.Index].Value = dtNewCheckDate.ToString("yyyy-M-d HH:mm");
-                row.Cells[this.colScore.Index].Value = qcQuestionInfo.POINT;
-                qcQuestionInfo.ISSUED_DATE_TIME = dtNewCheckDate;
-                row.Tag = qcQuestionInfo;
-                if (!this.m_htMsgCodeTable.ContainsKey(qcQuestionInfo.QC_MSG_CODE))
-                    this.m_htMsgCodeTable.Add(qcQuestionInfo.QC_MSG_CODE, qcQuestionInfo);
+                string szRemotePath = SystemParam.Instance.GetQCFtpDocPath(medicalQcMsg, "smdf");
+                EmrDocAccess.Instance.UpdateQCDocToFtp(medicalQcMsg, szRemotePath, dtNewCheckDate);
+                row.Tag = medicalQcMsg;
             }
-            else if (szRowState == STATUS_NEW)
+            else if (row.State == RowState.New)
             {
-                qcQuestionInfo.QC_MODULE = "DOCTOR_MR";
-                qcQuestionInfo.TOPIC_ID = szDocSetID;
-                qcQuestionInfo.TOPIC = szDocTitle;
-                qcQuestionInfo.MSG_STATUS = 0;
-                shRet = MedicalQcMsgAccess.Instance.Insert(qcQuestionInfo);
-
-
+                shRet = MedicalQcMsgAccess.Instance.Insert(medicalQcMsg);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
                     MessageBoxEx.Show("无法保存当前记录！");
                     return SystemData.ReturnValue.FAILED;
                 }
-                row.Cells[this.colCheckTime.Index].Value = qcQuestionInfo.ISSUED_DATE_TIME.ToString("yyyy-M-d HH:mm");
-                row.Cells[this.colDocTitle.Index].Value = szDocTitle;
-                row.Cells[this.colDocTitle.Index].Tag = szDocSetID;
-                row.Cells[this.colDetailInfo.Index].Value = qcQuestionInfo.MESSAGE;
-                row.Cells[this.colScore.Index].Value = qcQuestionInfo.POINT;
-                row.Cells[this.colQCEventType.Index].Tag = STATUS_NORMAL;
-                row.Tag = qcQuestionInfo;
-                if (!this.m_htMsgCodeTable.ContainsKey(qcQuestionInfo.QC_MSG_CODE))
-                    this.m_htMsgCodeTable.Add(qcQuestionInfo.QC_MSG_CODE, qcQuestionInfo);
                 //把病历保存到FTP上
-                if (byteDocData != null)
+                if (string.IsNullOrEmpty(medicalQcMsg.TOPIC_ID))
                 {
-                    string szRemotePath = SystemParam.Instance.GetQCFtpDocPath(qcQuestionInfo, "smdf");
-                    DateTime dtBeginTime = DateTime.Now;
-                    shRet = EmrDocAccess.Instance.SaveQCDocToFTP(qcQuestionInfo.TOPIC_ID, qcQuestionInfo.ISSUED_DATE_TIME, szRemotePath, byteDocData);
-                    DateTime dtEndTime = DateTime.Now;
-                    LogManager.Instance.WriteLog(DateDiff("备份文档存到ftp", dtBeginTime, dtEndTime));
+                    byte[] byteDocData = null;
+                    shRet = EmrDocAccess.Instance.GetDocByID(medicalQcMsg.TOPIC_ID, ref byteDocData);
+                    if (shRet == SystemData.ReturnValue.OK)
+                    {
+                        string szRemotePath = SystemParam.Instance.GetQCFtpDocPath(medicalQcMsg, "smdf");
+                        DateTime dtBeginTime = DateTime.Now;
+                        shRet = EmrDocAccess.Instance.SaveQCDocToFTP(medicalQcMsg.TOPIC_ID, medicalQcMsg.ISSUED_DATE_TIME, szRemotePath, byteDocData);
+                        DateTime dtEndTime = DateTime.Now;
+                    }
                 }
 
             }
-            DateTime dtEndTime1 = DateTime.Now;
-            LogManager.Instance.WriteLog(DateDiff("保存质控信息", dtBeginTime1, dtEndTime1));
             row.State = RowState.Normal;
             return SystemData.ReturnValue.OK;
         }
 
-        private string DateDiff(string szMessage, DateTime DateTime1, DateTime DateTime2)
-        {
-            string dateDiff = null;
-            TimeSpan ts = DateTime1.Subtract(DateTime2).Duration();
-            dateDiff = szMessage + "用时" + ts.Minutes.ToString() + "分钟" + ts.Seconds.ToString() + "秒" + ts.Milliseconds + "毫秒";
-            return dateDiff;
-        }
         /// <summary>
         /// 生成一条病案质量监控日志
         /// </summary>
         /// <param name="qcActionLog">生成的监控日志信息</param>
         /// <returns>bool</returns>
-        public static bool MakeQCActionLog(ref EMRDBLib.MedicalQcLog qcActionLog)
+        public static bool MakeQCActionLog(ref MedicalQcLog qcActionLog)
         {
             if (SystemParam.Instance.PatVisitInfo == null)
                 return false;
             if (qcActionLog == null)
-                qcActionLog = new EMRDBLib.MedicalQcLog();
-            qcActionLog.CHECK_DATE = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                qcActionLog = new MedicalQcLog();
+            qcActionLog.CHECK_DATE = SysTimeHelper.Instance.Now;
             if (!GlobalMethods.Misc.IsEmptyString(SystemParam.Instance.PatVisitInfo.DEPT_CODE))
                 qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
             else
@@ -631,7 +477,7 @@ namespace MedQCSys.DockForms
         /// 保存一条病案质量监控日志
         /// </summary>
         /// <returns>bool</returns>
-        private bool SaveQCActionLog(EMRDBLib.MedicalQcLog qcActionLog)
+        private bool SaveQCActionLog(MedicalQcLog qcActionLog)
         {
             short shRet = MedicalQcLogAccess.Instance.Insert(qcActionLog);
             if (shRet != SystemData.ReturnValue.OK)
@@ -679,9 +525,9 @@ namespace MedQCSys.DockForms
             string szQCResultStatus = SystemParam.Instance.PatVisitInfo.QCResultStatus;
 
             //如果有存在未确认的质检问题，则不允许标志为合格
-            List<EMRDBLib.MedicalQcMsg> lstQCQuestionInfos = null;
+            List<MedicalQcMsg> lstmedicalQcMsgs = null;
             short shRet = SystemData.ReturnValue.OK;
-            shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstQCQuestionInfos);
+            shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstmedicalQcMsgs);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -689,12 +535,12 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.Show("查询质控质检问题列表时出错,无法标记为合格！");
                 return false;
             }
-            if (lstQCQuestionInfos == null || lstQCQuestionInfos.Count <= 0)
+            if (lstmedicalQcMsgs == null || lstmedicalQcMsgs.Count <= 0)
                 return true;
-            for (int index = 0; index < lstQCQuestionInfos.Count; index++)
+            for (int index = 0; index < lstmedicalQcMsgs.Count; index++)
             {
-                EMRDBLib.MedicalQcMsg qcQuestionInfo = lstQCQuestionInfos[index];
-                if (qcQuestionInfo.MSG_STATUS.ToString() != MDSDBLib.SystemData.QCQuestionStatus.PASSCODE)//质检问题都被标记为合格
+                MedicalQcMsg medicalQcMsg = lstmedicalQcMsgs[index];
+                if (medicalQcMsg.MSG_STATUS.ToString() != MDSDBLib.SystemData.QCQuestionStatus.PASSCODE)//质检问题都被标记为合格
                 {
                     GlobalMethods.UI.SetCursor(this, Cursors.Default);
                     MessageBoxEx.Show("该病案存在未合格的质控质检问题,无法标记为合格！");
@@ -724,7 +570,7 @@ namespace MedQCSys.DockForms
             }
 
 
-            EMRDBLib.MedicalQcLog qcActionLog = new EMRDBLib.MedicalQcLog();
+            MedicalQcLog qcActionLog = new MedicalQcLog();
             if (!QuestionListForm.MakeQCActionLog(ref qcActionLog))
             {
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
@@ -752,52 +598,69 @@ namespace MedQCSys.DockForms
 
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
-        /// <summary>
-        /// 增加一行记录
-        /// </summary>
-        /// <param name="szDocTitle">病历标题</param>
-        /// <param name="szDocSetID">病历文档集ID</param>
-        /// <param name="szCreatorName">创建者姓名</param>
-        /// <param name="szDeptCode">创建者所在科室</param>
-        /// <param name="byteDocData">文档数据</param>
-        internal void AddNewItem(string szDocTitle, string szDocSetID, string szCreatorName, string szDeptCode, byte[] byteDocData)
+
+
+        internal void AddNewItem(string szTopic, MedDocInfo docInfo)
         {
             if (!HasRightAddItem())
                 return;
 
             //创建数据
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = new EMRDBLib.MedicalQcMsg();
-            qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-            if (szDocTitle == null && szDocSetID == null && szCreatorName == null && szDeptCode == null)
+            MedicalQcMsg medicalQcMsg = new MedicalQcMsg();
+            if (docInfo == null)
             {
-                short shRet = this.GetSelectedNodeDocInfo(ref szDocTitle, ref szDocSetID, ref szCreatorName, ref szDeptCode, ref byteDocData);
+                short shRet = this.GetSelectedNodeDocInfo(ref docInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                     return;
             }
-            //创建行
-            int index = this.dataGridView1.Rows.Add();
-            DataTableViewRow row = this.dataGridView1.Rows[index];
-            row.Tag = qcQuestionInfo;
-            SelectQuestionForm questionTypeForm = new SelectQuestionForm();
-            questionTypeForm.QCMessageTemplet = null;
-            questionTypeForm.DocTitle = szDocTitle;
-            questionTypeForm.Text = "质检问题新增";
-            questionTypeForm.QCCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-            if (questionTypeForm.ShowDialog() != DialogResult.OK)
+            medicalQcMsg.APPLY_ENV = "MEDDOC";
+            medicalQcMsg.CREATOR_ID = docInfo.CREATOR_ID;
+            medicalQcMsg.DEPT_NAME = docInfo.DEPT_NAME;
+            medicalQcMsg.DEPT_STAYED = docInfo.DEPT_CODE;
+            medicalQcMsg.DOCTOR_IN_CHARGE = docInfo.CREATOR_NAME;
+            medicalQcMsg.ERROR_COUNT = 1;
+            medicalQcMsg.InpNo = SystemParam.Instance.PatVisitInfo.INP_NO;
+            medicalQcMsg.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
+            medicalQcMsg.ISSUED_DATE_TIME = SysTimeHelper.Instance.Now;
+            medicalQcMsg.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
+            medicalQcMsg.ISSUED_TYPE = 0;
+            medicalQcMsg.LOCK_STATUS = false;
+            medicalQcMsg.MSG_STATUS = 0;
+            medicalQcMsg.PARENT_DOCTOR = SystemParam.Instance.PatVisitInfo.PARENT_DOCTOR;
+            medicalQcMsg.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            medicalQcMsg.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
+            medicalQcMsg.POINT_TYPE = 1;
+            medicalQcMsg.SUPER_DOCTOR = SystemParam.Instance.PatVisitInfo.SUPER_DOCTOR;
+            medicalQcMsg.TOPIC = docInfo.DOC_TITLE;
+            medicalQcMsg.TOPIC_ID = docInfo.DOC_SETID;
+            medicalQcMsg.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            medicalQcMsg.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+            SelectQuestionForm selectQuestionForm = new SelectQuestionForm();
+            selectQuestionForm.MedicalQcMsg = medicalQcMsg;
+            selectQuestionForm.Text = "质检问题新增";
+            if (selectQuestionForm.ShowDialog() == DialogResult.OK)
             {
-                this.dataGridView1.Rows.Remove(row);
+                int index = this.dataGridView1.Rows.Add();
+                DataTableViewRow row = this.dataGridView1.Rows[index];
+                row.Tag = medicalQcMsg;
+                row.Cells[this.colQaEventType.Index].Value = medicalQcMsg.QA_EVENT_TYPE;
+                row.Cells[this.colMessage.Index].Value = string.IsNullOrEmpty(medicalQcMsg.MESSAGE);
+                row.Cells[this.colMessage.Index].Tag = medicalQcMsg.QC_MSG_CODE;
+                row.Cells[this.colTopic.Index].Value = medicalQcMsg.TOPIC;
+                row.Cells[this.colIssuedDateTime.Index].Value = medicalQcMsg.ISSUED_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
+                row.Cells[this.colMessage.Index].Value = medicalQcMsg.MESSAGE;
+                row.Cells[this.col_ISSUED_BY.Index].Value = medicalQcMsg.ISSUED_BY;
+                row.Cells[this.col_POINT.Index].Value = Math.Round(new decimal(GlobalMethods.Convert.StringToValue(medicalQcMsg.POINT, 0f)), 1).ToString("F1");
+                row.Cells[this.colMsgStatus.Index].Value = "未接收";
+                row.Cells[this.colMsgStatus.Index].Style.ForeColor = Color.Red;
+                row.Cells[this.col_DOCTOR_IN_CHARGE.Index].Value = medicalQcMsg.DOCTOR_IN_CHARGE;
+                row.Tag = medicalQcMsg;
+               
+                this.CommitModify();
+                //this.UpdatePatientScore();
                 return;
             }
-            this.SetSelectedRowValues(row, questionTypeForm.QCMessageTemplet);
-            this.dataGridView1.CurrentCell = row.Cells[this.colConfirmTime.Index];
-            row.Cells[this.colQCEventType.Index].Tag = STATUS_NEW;
-            row.Cells[this.colMsgStatus.Index].Value = "未接收";
-            row.Cells[this.colDept_Code.Index].Value = string.IsNullOrEmpty(szDeptCode) ? SystemParam.Instance.PatVisitInfo.DEPT_CODE : szDeptCode;
-            row.Cells[this.colCreator.Index].Value = string.IsNullOrEmpty(szCreatorName) ? SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR : szCreatorName; ;
-            this.CommitModify(szDocTitle, szDocSetID, szCreatorName, byteDocData);
-            this.UpdatePatientScore();
         }
-
         /// <summary>
         ///修改选中行数据
         /// </summary>
@@ -805,61 +668,32 @@ namespace MedQCSys.DockForms
         {
             if (this.dataGridView1.SelectedRows.Count <= 0)
                 return;
-
-            if (SystemParam.Instance.UserRight == null)
-                return;
-
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
-            if (row.Cells[this.colQCEventType.Index].Value == null)
+            MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
+            if (medicalQcMsg == null)
                 return;
 
-            if (row.Cells[this.colConfirmTime.Index].Value != null)
-            {
-                MessageBoxEx.Show("该质检问题已经被确认，不允许您修改！", MessageBoxIcon.Warning);
-                return;
-            }
-            EMRDBLib.MedicalQcMsg questionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-            if (questionInfo == null)
-                return;
-
-            if (questionInfo.ISSUED_BY != SystemParam.Instance.UserInfo.Name
+            if (medicalQcMsg.ISSUED_BY != SystemParam.Instance.UserInfo.Name
                 && !SystemConfig.Instance.Get(SystemData.ConfigKey.MODIFY_OR_DELETE_QUESTION, false))
             {
                 MessageBoxEx.Show("该质检问题不是您添加的，不允许您修改！", MessageBoxIcon.Warning);
                 return;
             }
-            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            row.Cells[this.colQCEventType.Index].Tag = STATUS_MODIFY;
-            EMRDBLib.QcMsgDict messageTemplet = new EMRDBLib.QcMsgDict();
-            messageTemplet.QA_EVENT_TYPE = row.Cells[this.colQCEventType.Index].Value.ToString();
-            messageTemplet.MESSAGE = row.Cells[this.colDetailInfo.Index].Value.ToString();
-            if (row.Cells[this.colMessage.Index].Value != null)
-                messageTemplet.MESSAGE_TITLE = row.Cells[this.colMessage.Index].Value.ToString();
-            messageTemplet.QC_MSG_CODE = row.Cells[this.colMessage.Index].Tag.ToString();
-            if (row.Cells[this.colScore.Index].Value != null)
-                messageTemplet.SCORE = float.Parse(row.Cells[this.colScore.Index].Value.ToString());
-            messageTemplet.QCDocType = questionInfo.QCDOC_TYPE;
             SelectQuestionForm frmQuestion = new SelectQuestionForm();
-            frmQuestion.QCMessageTemplet = messageTemplet;
-            frmQuestion.QCAskDateTime = (string)row.Cells[this.colConfirmTime.Index].Value;
-            frmQuestion.DoctorComment = (string)row.Cells[this.colFeedBackInfo.Index].Value;
+            frmQuestion.MedicalQcMsg = medicalQcMsg;
             frmQuestion.Text = "质检问题查询修改";
-            frmQuestion.DocTitle = (string)row.Cells[this.colDocTitle.Index].Value;
-            if (row.Cells[this.colCheckTime.Index].Value != null)
-                frmQuestion.QCCheckTime = DateTime.Parse(row.Cells[this.colCheckTime.Index].Value.ToString());
-            if (frmQuestion.ShowDialog() != DialogResult.OK)
+            if (frmQuestion.ShowDialog() == DialogResult.OK)
             {
+                row.State = RowState.Update;
+                GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+                row.Cells[this.colMessage.Index].Value = medicalQcMsg.MESSAGE;
+                row.Cells[this.col_POINT.Index].Value = medicalQcMsg.POINT;
+                row.Cells[this.colQaEventType.Index].Value = medicalQcMsg.QA_EVENT_TYPE;
+                this.CommitModify();
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                return;
             }
-            this.SetSelectedRowValues(row, frmQuestion.QCMessageTemplet);
-            string szDocTitle = (string)row.Cells[this.colDocTitle.Index].Value;
-            string szDocSetID = (string)row.Cells[this.colDocTitle.Index].Tag;
-            string szCreatorName = (string)row.Cells[this.colCheckTime.Index].Tag;
-            this.CommitModify(szDocTitle, szDocSetID, szCreatorName, null);
-            this.UpdatePatientScore();
-            this.OnRefreshView();
-            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            //this.UpdatePatientScore();
+            //this.OnRefreshView();
         }
 
         /// <summary>
@@ -880,29 +714,24 @@ namespace MedQCSys.DockForms
             DataTableViewRow selectedRow = this.dataGridView1.SelectedRows[0];
             if (selectedRow == null)
                 return;
-            EMRDBLib.MedicalQcMsg questionInfo = selectedRow.Tag as EMRDBLib.MedicalQcMsg;
+            MedicalQcMsg questionInfo = selectedRow.Tag as MedicalQcMsg;
             if (questionInfo == null)
                 return;
-            
-                if ( selectedRow.Cells[this.colConfirmTime.Index].Value != null)
-                {
-                    MessageBoxEx.Show("该质检问题已被确认，不能删除！", MessageBoxIcon.Warning);
-                    return;
-                }
-                if (questionInfo.ISSUED_BY != SystemParam.Instance.UserInfo.Name
-                    && !SystemConfig.Instance.Get(SystemData.ConfigKey.MODIFY_OR_DELETE_QUESTION, false))
-                {
-                    MessageBoxEx.Show("该质检问题不是您添加的，不允许您删除！", MessageBoxIcon.Warning);
-                    return;
-                }
-           
 
-            selectedRow.Cells[this.colQCEventType.Index].Tag = STATUS_DELETE;
-            string szDocTitle = (string)selectedRow.Cells[this.colDocTitle.Index].Value;
-            string szDocSetID = (string)selectedRow.Cells[this.colDocTitle.Index].Tag;
-            string szCreatorName = (string)selectedRow.Cells[this.colCheckTime.Index].Tag;
-            this.CommitModify(szDocTitle, szDocSetID, szCreatorName, null);
-            this.UpdatePatientScore();
+            if (selectedRow.Cells[this.col_ASK_DATE_TIME.Index].Value != null)
+            {
+                MessageBoxEx.Show("该质检问题已被确认，不能删除！", MessageBoxIcon.Warning);
+                return;
+            }
+            if (questionInfo.ISSUED_BY != SystemParam.Instance.UserInfo.Name
+                && !SystemConfig.Instance.Get(SystemData.ConfigKey.MODIFY_OR_DELETE_QUESTION, false))
+            {
+                MessageBoxEx.Show("该质检问题不是您添加的，不允许您删除！", MessageBoxIcon.Warning);
+                return;
+            }
+            selectedRow.State = RowState.Delete;
+            this.CommitModify();
+            //this.UpdatePatientScore();
         }
 
         //查看历史病历
@@ -913,38 +742,13 @@ namespace MedQCSys.DockForms
             DataTableViewRow selectedRow = this.dataGridView1.SelectedRows[0];
             if (selectedRow == null)
                 return;
-            EMRDBLib.MedicalQcMsg questionInfo = selectedRow.Tag as EMRDBLib.MedicalQcMsg;
+            MedicalQcMsg questionInfo = selectedRow.Tag as MedicalQcMsg;
             if (questionInfo == null)
                 return;
             this.MainForm.OpenHistoryDocument(questionInfo);
 
         }
-
-        /// <summary>
-        /// 给选中行的各个列赋值
-        /// </summary>
-        /// <param name="messageTemplet">质检问题模板对象</param>
-        private void SetSelectedRowValues(DataTableViewRow selectedRow, EMRDBLib.QcMsgDict messageTemplet)
-        {
-            if (messageTemplet == null)
-                return;
-            if (m_htMsgDict == null)
-                return;
-
-            selectedRow.Cells[this.colQCEventType.Index].Value = messageTemplet.QA_EVENT_TYPE;
-            if (this.m_htMsgDict.ContainsKey(messageTemplet.QC_MSG_CODE))
-                selectedRow.Cells[this.colMessage.Index].Value = string.IsNullOrEmpty(messageTemplet.MESSAGE_TITLE) ?
-                    this.m_htMsgDict[messageTemplet.QC_MSG_CODE] : messageTemplet.MESSAGE_TITLE;
-            selectedRow.Cells[this.colMessage.Index].Tag = messageTemplet.QC_MSG_CODE;
-            selectedRow.Cells[this.colDetailInfo.Index].Value = messageTemplet.MESSAGE;
-            selectedRow.Cells[this.colScore.Index].Value = Math.Round(new decimal(GlobalMethods.Convert.StringToValue(messageTemplet.SCORE, 0f)), 1).ToString("F1");
-            selectedRow.Cells[this.colScore.Index].Tag = Math.Round(new decimal(GlobalMethods.Convert.StringToValue(messageTemplet.SCORE, 0f)), 1).ToString("F1");
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = selectedRow.Tag as EMRDBLib.MedicalQcMsg;
-            if (qcQuestionInfo != null)
-            {
-                qcQuestionInfo.QCDOC_TYPE = messageTemplet.QCDocType;
-            }
-        }
+        
 
         /// <summary>
         /// 获取病程记录窗口选中节点的病历文档信息
@@ -952,8 +756,10 @@ namespace MedQCSys.DockForms
         /// <param name="szDocTitle">病历文档标题</param>
         /// <param name="szDocSetID">病历文档ID</param>
         /// <param name="szCreatorName">病历创建者姓名</param>
-        private short GetSelectedNodeDocInfo(ref string szDocTitle, ref string szDocSetID, ref string szCreatorName, ref string szDeptCode, ref byte[] byteDocData)
+        private short GetSelectedNodeDocInfo(ref MedDocInfo meddocInfo)
         {
+            if (meddocInfo == null)
+                meddocInfo = new MedDocInfo();
             short shRet = SystemData.ReturnValue.OK;
             if (this.MainForm.DocumentListForm == null)
                 return SystemData.ReturnValue.FAILED;
@@ -966,25 +772,24 @@ namespace MedQCSys.DockForms
             MDSDBLib.MedDocInfo docInfo = selectedNode.Data as MDSDBLib.MedDocInfo;
             if (docInfo != null)
             {
-                szDocTitle = docInfo.DocTitle;
+                meddocInfo.DOC_TITLE = docInfo.DocTitle;
                 if (docInfo.FileType != "BAODIAN" && docInfo.FileType != "CHENPAD" && docInfo.FileType != "HEREN")
-                    szDocSetID = string.Empty;
+                    meddocInfo.DOC_SETID = string.Empty;
                 else
-                    szDocSetID = docInfo.DocSetID;
-                szCreatorName = docInfo.CreatorName;
-                szDeptCode = docInfo.DeptCode;
-                EmrDocAccess.Instance.GetDocByID(docInfo.DocID, ref byteDocData);
+                    meddocInfo.DOC_SETID = docInfo.DocSetID;
+                meddocInfo.CREATOR_NAME = docInfo.CreatorName;
+                meddocInfo.CREATOR_ID = docInfo.CreatorID;
+                meddocInfo.DEPT_CODE = docInfo.DeptCode;
+                meddocInfo.DEPT_NAME = docInfo.DeptName;
             }
             else if (selectedNode.Data.Equals(COMBIN_NODE_TAG))
-                szDocTitle = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的病历");
+                meddocInfo.DOC_TITLE = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的病历");
             else if (selectedNode.Data.Equals(DOCTOR_NODE_TAG))
-                szDocTitle = "医生写的病历";
-            else if (selectedNode.Data.Equals(NURSE_NODE_TAG))
-                szDocTitle = "护士写的病历";
+                meddocInfo.DOC_TITLE = "医生写的病历";
             else if (selectedNode.Data.Equals(UNKNOWN_NODE_TAG))
-                szDocTitle = "未被归类的病历";
+                meddocInfo.DOC_TITLE = "未被归类的病历";
             else
-                szDocTitle = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的以往旧病历");
+                meddocInfo.DOC_TITLE = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的以往旧病历");
             return shRet;
         }
 
@@ -1000,7 +805,7 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.UserRight == null)
                 return false;
 
-           
+
             return true;
         }
 
@@ -1017,30 +822,18 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.Show("请选择一个患者！", MessageBoxIcon.Warning);
                 return;
             }
-            //先刷新下病历列表
-            //if (this.MainForm.DocumentListForm.NeedRefreshView)
-            //{
-            //    this.MainForm.DocumentListForm.OnRefreshView();
-            //}
 
-            Document.IDocumentForm documentForm = this.MainForm.ActiveDocument as Document.IDocumentForm;
-            DockForms.DockContentBase ActiveDocument = this.MainForm.ActiveDocument as DockForms.DockContentBase;
+            IDocumentForm documentForm = this.MainForm.ActiveDocument as IDocumentForm;
+            DockContentBase ActiveDocument = this.MainForm.ActiveDocument as DockContentBase;
 
             //文档类型的质控
             if (documentForm != null)
             {
-                if (documentForm.Documents.Count == 1) //单文档打开
-                    this.AddNewItem(null, null, null, null, null);
-                else if (documentForm.Documents.Count > 1) //合并打开
-                    this.AddNewItem(ActiveDocument != null ? ActiveDocument.Text : "合并打开病历质控", null,
-                        SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR, SystemParam.Instance.PatVisitInfo.DEPT_CODE, null);
+                this.AddNewItem("病历文书", documentForm.Documents[0]);
             }
             else if (ActiveDocument != null)
             {
-                if (ActiveDocument.Text == "病历文书")//病历列表增加质控
-                    this.AddNewItem(null, null, null, null, null);
-                else
-                    this.AddNewItem(ActiveDocument.Text + "质控", null, SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR, SystemParam.Instance.PatVisitInfo.DEPT_CODE, null);
+                this.AddNewItem(ActiveDocument.Text + "质控", null);
             }
         }
 
@@ -1054,7 +847,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnModify_Click(object sender, EventArgs e)
         {
-            
+
             this.ModifySelectedItem();
         }
 
@@ -1070,7 +863,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnPass_Click(object sender, EventArgs e)
         {
-            
+
             this.SetMedRecordPassed();
         }
 
@@ -1094,20 +887,15 @@ namespace MedQCSys.DockForms
             this.OpenSelectedDocument();
         }
 
-        private void mnuSaveItems_Click(object sender, EventArgs e)
-        {
-            this.CommitModify();
-        }
-
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
             this.ModifySelectedItem();
         }
 
         private void toolbtnRollback_Click(object sender, EventArgs e)
         {
-           
+
         }
         /// <summary>
         /// 显示当前病历的质检问题，为空显示全部
@@ -1130,10 +918,10 @@ namespace MedQCSys.DockForms
                 szCurrentDocSetID = docInfo.DOC_SETID;
                 foreach (DataGridViewRow row in this.dataGridView1.Rows)
                 {
-                    EMRDBLib.MedicalQcMsg qcQuestionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-                    if (qcQuestionInfo == null)
+                    MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
+                    if (medicalQcMsg == null)
                         continue;
-                    if (qcQuestionInfo.TOPIC_ID == docInfo.DOC_SETID)
+                    if (medicalQcMsg.TOPIC_ID == docInfo.DOC_SETID)
                         row.Visible = true;
                     else
                         row.Visible = false;
@@ -1156,10 +944,10 @@ namespace MedQCSys.DockForms
             {
                 foreach (DataGridViewRow row in this.dataGridView1.Rows)
                 {
-                    EMRDBLib.MedicalQcMsg qcQuestionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-                    if (qcQuestionInfo == null)
+                    MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
+                    if (medicalQcMsg == null)
                         continue;
-                    if (qcQuestionInfo.TOPIC_ID == szCurrentDocSetID)
+                    if (medicalQcMsg.TOPIC_ID == szCurrentDocSetID)
                         row.Visible = true;
                     else
                         row.Visible = false;
@@ -1169,7 +957,7 @@ namespace MedQCSys.DockForms
 
         private void toolbtnQCPass_Click(object sender, EventArgs e)
         {
-            
+
             this.PassSelectedItem();
         }
 
@@ -1185,18 +973,18 @@ namespace MedQCSys.DockForms
                 return;
 
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
-            if (row.Cells[this.colQCEventType.Index].Value == null)
+            if (row.Cells[this.colQaEventType.Index].Value == null)
                 return;
 
-            EMRDBLib.MedicalQcMsg questionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
-            if (questionInfo == null)
+            MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
+            if (medicalQcMsg == null)
                 return;
-            if (questionInfo.MSG_STATUS == 3)
+            if (medicalQcMsg.MSG_STATUS == 3)
             {
                 MessageBoxEx.Show("当前质检问题已经是合格状态！", MessageBoxIcon.Warning);
                 return;
             }
-            else if (questionInfo.MSG_STATUS != 2)
+            else if (medicalQcMsg.MSG_STATUS != 2)
             {
                 MessageBoxEx.Show("当前质检问题医生未修改,不允许修改成合格状态！", MessageBoxIcon.Warning);
                 return;
@@ -1205,12 +993,12 @@ namespace MedQCSys.DockForms
             DialogResult result = MessageBoxEx.Show("您真的要修改当前行质检问题为合格吗?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Cancel)
                 return;
-            questionInfo.MSG_STATUS = 3;
-            short shRet = MedicalQcMsgAccess.Instance.Update(questionInfo);
+            medicalQcMsg.MSG_STATUS = 3;
+            short shRet = MedicalQcMsgAccess.Instance.Update(medicalQcMsg);
             if (shRet == SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.Show("质检问题已修改为合格！", MessageBoxIcon.Information);
-                this.SetRowData(row, questionInfo);
+                this.SetRowData(row, medicalQcMsg);
                 return;
             }
             else
@@ -1228,10 +1016,10 @@ namespace MedQCSys.DockForms
                 return;
             }
             DataTableViewRow row = this.dataGridView1.SelectedRows[0];
-            if (row.Cells[this.colQCEventType.Index].Value == null)
+            if (row.Cells[this.colQaEventType.Index].Value == null)
                 return;
 
-            EMRDBLib.MedicalQcMsg questionInfo = row.Tag as EMRDBLib.MedicalQcMsg;
+            MedicalQcMsg questionInfo = row.Tag as MedicalQcMsg;
             if (questionInfo == null)
                 return;
 
@@ -1246,7 +1034,7 @@ namespace MedQCSys.DockForms
             NativeMethods.User32.SetForegroundWindow(fromHandle);
             NativeMethods.User32.SendMessage(fromHandle, NativeConstants.WM_COPYDATA, IntPtr.Zero, intParam);
         }
-        private UserInfo GetLinstenID(EMRDBLib.MedicalQcMsg questionInfo)
+        private UserInfo GetLinstenID(MedicalQcMsg questionInfo)
         {
             UserInfo u = null;
             if (questionInfo == null || string.IsNullOrEmpty(questionInfo.DOCTOR_IN_CHARGE))
@@ -1263,31 +1051,31 @@ namespace MedQCSys.DockForms
         /// <summary>
         /// 获取发送消息的内容
         /// </summary>
-        /// <param name="questionInfo"></param>
+        /// <param name="medicalQcMsg"></param>
         /// <returns></returns>
-        private string GetMsgContent(EMRDBLib.MedicalQcMsg questionInfo)
+        private string GetMsgContent(MedicalQcMsg medicalQcMsg)
         {
-            if (questionInfo == null)
+            if (medicalQcMsg == null)
                 return "";
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("病人:{0} 住院号:{1}{2}", SystemParam.Instance.PatVisitInfo.PATIENT_NAME,
                                                    SystemParam.Instance.PatVisitInfo.INP_NO, Environment.NewLine);
-            sb.AppendFormat("病历主题:{0}{1}", questionInfo.TOPIC, Environment.NewLine);
-            EMRDBLib.QcMsgDict qcMessageTemplet = lstQCMessageTemplet.Find(
-              delegate (EMRDBLib.QcMsgDict q)
+            sb.AppendFormat("病历主题:{0}{1}", medicalQcMsg.TOPIC, Environment.NewLine);
+            QcMsgDict qcMessageTemplet = m_lstQcMsgDict.Find(
+              delegate (QcMsgDict q)
               {
-                  return q.QC_MSG_CODE == questionInfo.QC_MSG_CODE;
+                  return q.QC_MSG_CODE == medicalQcMsg.QC_MSG_CODE;
               }
               );
             sb.AppendFormat("项目:{0}{1}", qcMessageTemplet != null ? qcMessageTemplet.MESSAGE : "", Environment.NewLine);
-            sb.AppendFormat("内容:{0}{1}", questionInfo.MESSAGE, Environment.NewLine);
-            sb.AppendFormat("扣分:{0}{1}", questionInfo.POINT, Environment.NewLine);
+            sb.AppendFormat("内容:{0}{1}", medicalQcMsg.MESSAGE, Environment.NewLine);
+            sb.AppendFormat("扣分:{0}{1}", medicalQcMsg.POINT, Environment.NewLine);
 
             return sb.ToString();
         }
         private void mnuPassItem_Click(object sender, EventArgs e)
         {
-            
+
             this.PassSelectedItem();
         }
 
@@ -1298,19 +1086,19 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.ShowMessage("请选择问题项，才能锁定");
                 return;
             }
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = this.dataGridView1.SelectedRows[0].Tag as EMRDBLib.MedicalQcMsg;
-            if (qcQuestionInfo == null)
+            MedicalQcMsg medicalQcMsg = this.dataGridView1.SelectedRows[0].Tag as MedicalQcMsg;
+            if (medicalQcMsg == null)
             {
                 return;
             }
             short shRet = SystemData.ReturnValue.OK;
-            if (qcQuestionInfo.LOCK_STATUS)
+            if (medicalQcMsg.LOCK_STATUS)
             {
-                shRet = MedicalQcMsgAccess.Instance.UpdateMesageLockStatus(false, qcQuestionInfo.MSG_ID);
+                shRet = MedicalQcMsgAccess.Instance.UpdateMesageLockStatus(false, medicalQcMsg.MSG_ID);
                 if (shRet == SystemData.ReturnValue.OK)
                 {
                     MessageBoxEx.ShowMessage("解除锁定成功");
-                    qcQuestionInfo.LOCK_STATUS = false;
+                    medicalQcMsg.LOCK_STATUS = false;
                     this.dataGridView1.SelectedRows[0].Cells[this.colLockStatus.Index].Value = Properties.Resources.empty;
                     this.toolbtnLock.Image = Properties.Resources._lock;
                     this.toolbtnLock.Text = "强制锁定";
@@ -1324,45 +1112,28 @@ namespace MedQCSys.DockForms
 
             if (MessageBoxEx.ShowConfirm("医生必须修改该问题才能继续书写病历，您确定强制锁定吗？") != DialogResult.OK)
                 return;
-            shRet = MedicalQcMsgAccess.Instance.UpdateMesageLockStatus(true, qcQuestionInfo.MSG_ID);
+            shRet = MedicalQcMsgAccess.Instance.UpdateMesageLockStatus(true, medicalQcMsg.MSG_ID);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.ShowError("强制锁定失败");
             }
             MessageBoxEx.ShowMessage("锁定成功");
-            qcQuestionInfo.LOCK_STATUS = true;
+            medicalQcMsg.LOCK_STATUS = true;
             this.dataGridView1.SelectedRows[0].Cells[this.colLockStatus.Index].Value = Properties.Resources._lock;
             this.toolbtnLock.Image = Properties.Resources.unlock;
             this.toolbtnLock.Text = "解除锁定";
             return;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = this.dataGridView1.Rows[e.RowIndex].Tag as EMRDBLib.MedicalQcMsg;
-            if (qcQuestionInfo == null)
-                return;
-            if (qcQuestionInfo.LOCK_STATUS)
-            {
-                this.toolbtnLock.Image = Properties.Resources.unlock;
-                this.toolbtnLock.Text = "解除锁定";
-            }
-            else
-            {
-                this.toolbtnLock.Image = Properties.Resources._lock;
-                this.toolbtnLock.Text = "强制锁定";
-            }
-
-        }
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
-            EMRDBLib.MedicalQcMsg qcQuestionInfo = this.dataGridView1.Rows[e.RowIndex].Tag as EMRDBLib.MedicalQcMsg;
-            if (qcQuestionInfo == null)
+            MedicalQcMsg medicalQcMsg = this.dataGridView1.Rows[e.RowIndex].Tag as MedicalQcMsg;
+            if (medicalQcMsg == null)
                 return;
-            if (qcQuestionInfo.LOCK_STATUS)
+            if (medicalQcMsg.LOCK_STATUS)
             {
                 this.toolbtnLock.Image = Properties.Resources.unlock;
                 this.toolbtnLock.Text = "解除锁定";
@@ -1401,11 +1172,11 @@ namespace MedQCSys.DockForms
             {
                 i++;
                 DataGridViewRow dvr = this.dataGridView1.Rows[m_iPrintedNum];
-                EMRDBLib.MedicalQcMsg que = dvr.Tag as EMRDBLib.MedicalQcMsg;
+                MedicalQcMsg que = dvr.Tag as MedicalQcMsg;
                 if (que != null && !string.IsNullOrEmpty(que.PATIENT_ID))
                 {
                     string szLineText = (this.m_iPrintedNum + 1).ToString() + ". ";
-                    szLineText += string.Format("审核时间：{0}    审核人：{1}    问题状态：{2}", que.ISSUED_DATE_TIME.ToString(), dvr.Cells[this.colIssusdBy.Index].Value.ToString(), dvr.Cells[this.colMsgStatus.Index].Value.ToString());
+                    szLineText += string.Format("审核时间：{0}    审核人：{1}    问题状态：{2}", que.ISSUED_DATE_TIME.ToString(), dvr.Cells[this.col_ISSUED_BY.Index].Value.ToString(), dvr.Cells[this.colMsgStatus.Index].Value.ToString());
                     e.Graphics.DrawString(szLineText, new Font(new FontFamily("宋体"), 8, FontStyle.Regular), System.Drawing.Brushes.Black, x, y);
                     y += 15;
                     e.Graphics.DrawString("问题：" + que.MESSAGE, new Font(new FontFamily("宋体"), fontSize, FontStyle.Bold), System.Drawing.Brushes.Black, x, y);
@@ -1424,24 +1195,6 @@ namespace MedQCSys.DockForms
             {
                 e.HasMorePages = false;
                 LogManager.Instance.WriteLog("多页打印执行过程(else)记录：" + e.HasMorePages.ToString());
-            }
-        }
-
-
-        private string GetMsgStatusDesc(string statusCode)
-        {
-            switch (statusCode)
-            {
-                case "0":
-                    return "未接收";
-                case "1":
-                    return "已接收";
-                case "2":
-                    return "已修改";
-                case "3":
-                    return "已合格";
-                default:
-                    return "未接收";
             }
         }
 
@@ -1494,7 +1247,7 @@ namespace MedQCSys.DockForms
             {
                 //将病历状态置为为质控退回
 
-                shRet = EmrDocAccess.Instance.UpdateDocSignCode(questionInfo.TOPIC_ID, MedDocSys.DataLayer.SystemData.SignState.QC_ROLLBACK);
+                shRet = EmrDocAccess.Instance.UpdateDocSignCode(questionInfo.TOPIC_ID, SystemData.SignState.QC_ROLLBACK);
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     MessageBoxEx.Show("病历退回失败");

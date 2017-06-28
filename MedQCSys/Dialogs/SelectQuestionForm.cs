@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using Heren.Common.Libraries;
 using Heren.Common.Controls;
- 
+using System.Linq;
 using EMRDBLib.DbAccess;
 using EMRDBLib;
 
@@ -21,19 +21,19 @@ namespace MedQCSys.Dialogs
 {
     public partial class SelectQuestionForm : HerenForm
     {
-        private EMRDBLib.QcMsgDict m_qcMessageTemplet = null;
+        private MedicalQcMsg m_MedicalQcMsg = null;
         /// <summary>
         /// 获取或设置质检问题模板类
         /// </summary>
-        public EMRDBLib.QcMsgDict QCMessageTemplet
+        public MedicalQcMsg MedicalQcMsg
         {
-            get { return this.m_qcMessageTemplet; }
-            set { this.m_qcMessageTemplet = value; }
+            get { return this.m_MedicalQcMsg; }
+            set { this.m_MedicalQcMsg = value; }
         }
 
-        private static List<EMRDBLib.QaEventTypeDict> lstQCEventTypes = null;
+        private static List<QaEventTypeDict> lstQCEventTypes = null;
 
-        public static List<EMRDBLib.QaEventTypeDict> LstQCEventTypes
+        public static List<QaEventTypeDict> LstQCEventTypes
         {
             get
             {
@@ -49,63 +49,22 @@ namespace MedQCSys.Dialogs
             }
         }
 
-        private static List<EMRDBLib.QcMsgDict> lstQCMessageTemplet = null;
+        private static List<QcMsgDict> m_lstQcMsgDicts = null;
 
-        public static List<EMRDBLib.QcMsgDict> LstQCMessageTemplet
+        public static List<QcMsgDict> ListQcMsgDict
         {
             get
             {
-                if (lstQCMessageTemplet == null)
+                if (m_lstQcMsgDicts == null)
                 {
-                    short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQCMessageTemplet);
+                    short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref m_lstQcMsgDicts);
                     if (shRet != SystemData.ReturnValue.OK)
                     {
                         MessageBoxEx.Show("获取病案质量问题分类字典失败！");
                     }
                 }
-                return SelectQuestionForm.lstQCMessageTemplet;
+                return SelectQuestionForm.m_lstQcMsgDicts;
             }
-        }
-
-
-        private string m_szDocTitle;
-        /// <summary>
-        ///获取或设置病历标题
-        /// </summary>
-        public string DocTitle
-        {
-            get { return this.m_szDocTitle; }
-            set { this.m_szDocTitle = value; }
-        }
-
-        private DateTime m_dtQCCheckTime = DateTime.Now;
-        /// <summary>
-        /// 获取或设置质检时间
-        /// </summary>
-        public DateTime QCCheckTime
-        {
-            get { return this.m_dtQCCheckTime; }
-            set { this.m_dtQCCheckTime = value; }
-        }
-
-        private string m_szQCAskDateTime = string.Empty;
-        /// <summary>
-        /// 获取或设置医生确认时间
-        /// </summary>
-        public string QCAskDateTime
-        {
-            get { return this.m_szQCAskDateTime; }
-            set { this.m_szQCAskDateTime = value; }
-        }
-
-        private string m_szDoctorComment = string.Empty;
-        /// <summary>
-        /// 获取或设置医生反馈
-        /// </summary>
-        public string DoctorComment
-        {
-            get { return this.m_szDoctorComment; }
-            set { this.m_szDoctorComment = value; }
         }
 
         public SelectQuestionForm()
@@ -114,7 +73,7 @@ namespace MedQCSys.Dialogs
             string caption = "提示:";
             if (SystemParam.Instance.LocalConfigOption.VetoHigh > 0)
             {
-                caption+= string.Format("\n{0}项单项否决将被设置成乙病历"
+                caption += string.Format("\n{0}项单项否决将被设置成乙病历"
                 , SystemParam.Instance.LocalConfigOption.VetoHigh);
             }
             if (SystemParam.Instance.LocalConfigOption.VetoLow > 0)
@@ -129,41 +88,38 @@ namespace MedQCSys.Dialogs
         {
             base.OnShown(e);
             this.txtChecker.Text = SystemParam.Instance.UserInfo.ID;
-            this.txtCheckDate.Text = this.QCCheckTime.ToString("yyyy-M-d HH:mm");
-            this.txtQuestionType.Text = "<双击选择>";
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
-            //新建时根据出院模式设置病历类型
             if (String.IsNullOrEmpty(SystemParam.Instance.PatVisitInfo.DISCHARGE_MODE))
                 this.rdbIn.Checked = true;
             else if (SystemParam.Instance.PatVisitInfo.DISCHARGE_MODE == "死亡")
                 this.rdbDeath.Checked = true;
             else
                 this.rdbOut.Checked = true;
-
             this.txtPatientID.Text = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             this.txtPatName.Text = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
             this.txtPatSex.Text = SystemParam.Instance.PatVisitInfo.PATIENT_SEX;
-            this.txtDocTitle.Text = this.DocTitle;
-            this.txtAskDateTime.Text = this.QCAskDateTime;
-            this.txtDoctorComment.Text = this.DoctorComment;
-            if (this.QCMessageTemplet != null)
+            this.txtDocTitle.Text = this.m_MedicalQcMsg.TOPIC;
+            this.txtQuestionType.Text = "<双击选择>";
+            this.txt_ISSUED_DATE_TIME.Text = this.m_MedicalQcMsg.ISSUED_DATE_TIME.ToString("yyyy-M-d HH:mm");
+            if (this.MedicalQcMsg != null && !string.IsNullOrEmpty(this.m_MedicalQcMsg.QC_MSG_CODE))
             {
-                this.txtQuestionType.Text = this.QCMessageTemplet.QA_EVENT_TYPE;
-                this.txtMesssageTitle.Text = this.QCMessageTemplet.MESSAGE_TITLE;
-                this.txtMessage.Text = this.QCMessageTemplet.MESSAGE;
+                if (this.m_MedicalQcMsg.ASK_DATE_TIME != this.m_MedicalQcMsg.DefaultTime)
+                    this.txtAskDateTime.Text = this.m_MedicalQcMsg.ASK_DATE_TIME.ToString();
+                this.txtDoctorComment.Text = this.m_MedicalQcMsg.DOCTOR_COMMENT;
+                this.txtQuestionType.Text = this.MedicalQcMsg.QA_EVENT_TYPE;
+                this.txtMessage.Text = this.MedicalQcMsg.MESSAGE;
                 this.txtMessage.Focus();
                 this.txtMessage.SelectAll();
-                this.txtMessage.Tag = this.QCMessageTemplet.QC_MSG_CODE;
-                //    this.txtChecker.Tag = this.QCMessageTemplet.Score;
-                this.txtBoxScore.Text = this.QCMessageTemplet.SCORE.ToString();
+                this.txtMessage.Tag = this.MedicalQcMsg.QC_MSG_CODE;
+                this.txtBoxScore.Text = this.MedicalQcMsg.POINT.ToString();
                 //修改或者浏览
                 //设置病历类型
-                if (this.QCMessageTemplet.QCDocType == SystemData.QCDocType.INHOSPITAL)
+                if (this.MedicalQcMsg.QCDOC_TYPE == SystemData.QCDocType.INHOSPITAL)
                 {
                     this.rdbIn.Checked = true;
                 }
-                else if (this.QCMessageTemplet.QCDocType == SystemData.QCDocType.OUTHOSPITAL)
+                else if (this.MedicalQcMsg.QCDOC_TYPE == SystemData.QCDocType.OUTHOSPITAL)
                 {
                     this.rdbOut.Checked = true;
                 }
@@ -171,20 +127,20 @@ namespace MedQCSys.Dialogs
                 {
                     this.rdbDeath.Checked = true;
                 }
-
-                EMRDBLib.QcMsgDict qcMessageTemplet = LstQCMessageTemplet.Find(delegate(EMRDBLib.QcMsgDict t) { return t.QC_MSG_CODE == QCMessageTemplet.QC_MSG_CODE; });
-                if (qcMessageTemplet != null)
-                    this.lbCurrentScoreInfo.Text = "问题标准分数：" + Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcMessageTemplet.SCORE, 0f)), 1).ToString("F1"); 
-                this.lbCurrentScoreInfo.Tag = qcMessageTemplet;
-                List<EMRDBLib.QcMsgDict> lstQCMessageTemplet = LstQCMessageTemplet;
-                //short shRet = DataAccess.GetQCMessageTempletList(ref lstQCMessageTemplet);
-                if (lstQCMessageTemplet == null)
+                if (!string.IsNullOrEmpty(this.m_MedicalQcMsg.QC_MSG_CODE))
                 {
-                    MessageBoxEx.Show("质控质检问题字典表获取失败！");
-                }
-                foreach (EMRDBLib.QcMsgDict item in lstQCMessageTemplet)
-                {
-                    if (item.QC_MSG_CODE == this.QCMessageTemplet.QC_MSG_CODE)
+                    QcMsgDict qcMsgDict = ListQcMsgDict.Where(m => m.QC_MSG_CODE == this.m_MedicalQcMsg.QC_MSG_CODE).FirstOrDefault();
+                    this.txtMesssageTitle.Text = qcMsgDict.MESSAGE_TITLE;
+                    if (qcMsgDict != null)
+                        this.lbCurrentScoreInfo.Text = "问题标准分数：" + Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcMsgDict.SCORE, 0f)), 1).ToString("F1");
+                    this.lbCurrentScoreInfo.Tag = qcMsgDict;
+                    List<QcMsgDict> lstQCMessageTemplet = ListQcMsgDict;
+                    if (lstQCMessageTemplet == null)
+                    {
+                        MessageBoxEx.Show("质控质检问题字典表获取失败！");
+                    }
+                    var item = lstQCMessageTemplet.Where(m => m.QC_MSG_CODE == this.m_MedicalQcMsg.QC_MSG_CODE).FirstOrDefault();
+                    if(item!=null)
                     {
                         this.SetScoreInfos(item);
                         //在修改分数的时候，减去当前选中的
@@ -197,7 +153,7 @@ namespace MedQCSys.Dialogs
                         scoreLevel2Count -= currentScore;
                         this.txtLevel1Score.Text = scoreLevel1Count.ToString();
                         this.txtLevel2Socre.Text = scoreLevel2Count.ToString();
-                        break;
+                     
                     }
                 }
             }
@@ -206,6 +162,12 @@ namespace MedQCSys.Dialogs
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(MedicalQcMsg.QC_MSG_CODE))
+            {
+                MessageBoxEx.Show("请双击选择问题类型!");
+                return;
+            }
             if (string.IsNullOrEmpty(this.txtQuestionType.Text) || this.txtQuestionType.Text == "<双击选择>")
             {
                 MessageBoxEx.Show("请双击选择问题类型!");
@@ -220,26 +182,20 @@ namespace MedQCSys.Dialogs
             bool bPassed = CheckBoxScore();
             if (!bPassed)
                 return;
-
-            if (this.QCMessageTemplet == null)
-                this.QCMessageTemplet = new EMRDBLib.QcMsgDict();
-            this.QCMessageTemplet.QA_EVENT_TYPE = this.txtQuestionType.Text;
-            this.QCMessageTemplet.QC_MSG_CODE = (string)this.txtMessage.Tag;
-            this.QCMessageTemplet.MESSAGE = (string)this.txtMessage.Text;
-            this.QCMessageTemplet.MESSAGE_TITLE = (string)this.txtMesssageTitle.Text;
-            this.QCMessageTemplet.SCORE =  string.IsNullOrEmpty(this.txtBoxScore.Text)?0:float.Parse(this.txtBoxScore.Text);
+            this.MedicalQcMsg.MESSAGE = (string)this.txtMessage.Text;
+            this.MedicalQcMsg.POINT = string.IsNullOrEmpty(this.txtBoxScore.Text) ? 0 : float.Parse(this.txtBoxScore.Text);
             //设置病历类型
             if (this.rdbIn.Checked)
             {
-                this.QCMessageTemplet.QCDocType = SystemData.QCDocType.INHOSPITAL;
+                this.MedicalQcMsg.QCDOC_TYPE = SystemData.QCDocType.INHOSPITAL;
             }
             else if (this.rdbOut.Checked)
             {
-                this.QCMessageTemplet.QCDocType = SystemData.QCDocType.OUTHOSPITAL;
+                this.MedicalQcMsg.QCDOC_TYPE = SystemData.QCDocType.OUTHOSPITAL;
             }
             else
             {
-                this.QCMessageTemplet.QCDocType = SystemData.QCDocType.DEATH;
+                this.MedicalQcMsg.QCDOC_TYPE = SystemData.QCDocType.DEATH;
             }
             this.DialogResult = DialogResult.OK;
         }
@@ -256,16 +212,19 @@ namespace MedQCSys.Dialogs
             QuestionTypeForm frmQuestionType = new QuestionTypeForm();
             if (frmQuestionType.ShowDialog() != DialogResult.OK)
                 return;
-            this.txtQuestionType.Text = frmQuestionType.QuestionType;
-            this.txtMessage.Text = string.Concat(this.txtMessage.Text, frmQuestionType.MessageTemplet);
-            this.txtMesssageTitle.Text = frmQuestionType.MessageTempletTitle;
-            this.txtMessage.Tag = frmQuestionType.MessageCode;
+            this.m_MedicalQcMsg.QC_MSG_CODE = frmQuestionType.QcMsgCode;
+            this.m_MedicalQcMsg.QA_EVENT_TYPE = frmQuestionType.QaEventType;
+            this.m_MedicalQcMsg.MESSAGE = frmQuestionType.Message;
+            this.txtQuestionType.Text = frmQuestionType.QaEventType;
+            this.txtMessage.Text = string.Concat(this.txtMessage.Text, frmQuestionType.Message);
+            this.txtMesssageTitle.Text = frmQuestionType.MessageTitle;
+            this.txtMessage.Tag = frmQuestionType.QcMsgCode;
             this.lbCurrentScoreInfo.Text = "问题标准分数：" + Math.Round(new decimal(GlobalMethods.Convert.StringToValue(frmQuestionType.Score, 0f)), 1).ToString("F1"); ;
             this.lbCurrentScoreInfo.Tag = frmQuestionType.SelectedQCMessageTemplet;
             this.SetScoreInfos(frmQuestionType.SelectedQCMessageTemplet);
             this.txtBoxScore.Text = Math.Round(new decimal(GlobalMethods.Convert.StringToValue(frmQuestionType.Score, 0f)), 1).ToString("F1");
             this.txtBoxIsVeto.Text = frmQuestionType.SelectedQCMessageTemplet.ISVETO ? "是" : "否";
-            this.txtBoxIsVeto.ForeColor= frmQuestionType.SelectedQCMessageTemplet.ISVETO ? Color.Red: Color.Black;
+            this.txtBoxIsVeto.ForeColor = frmQuestionType.SelectedQCMessageTemplet.ISVETO ? Color.Red : Color.Black;
             this.txtMessage.Focus();
             this.txtMessage.SelectAll();
         }
@@ -274,17 +233,17 @@ namespace MedQCSys.Dialogs
         /// 设置扣分上限信息
         /// </summary>
         /// <param name="frmQuestionType"></param>
-        private void SetScoreInfos(EMRDBLib.QcMsgDict qcMessageTemplet)
+        private void SetScoreInfos(QcMsgDict qcMessageTemplet)
         {
             string szLevel1Socre = string.Empty;
             string szLevel2Socre = string.Empty;
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
 
-            List<EMRDBLib.MedicalQcMsg> lstQCQuestionInfos = null;
-            short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID,  ref lstQCQuestionInfos);
+            List<MedicalQcMsg> lstQCQuestionInfos = null;
+            short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstQCQuestionInfos);
             if (shRet != SystemData.ReturnValue.OK
-                && shRet!= SystemData.ReturnValue.RES_NO_FOUND)
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("质控质检问题下载失败！");
                 return;
@@ -298,13 +257,13 @@ namespace MedQCSys.Dialogs
             {
                 double scoreLevel1Count = 0.0;
                 double scoreLevel2Count = 0.0;
-                foreach (EMRDBLib.MedicalQcMsg qcQuestionInfo in lstQCQuestionInfos)
+                foreach (MedicalQcMsg qcQuestionInfo in lstQCQuestionInfos)
                 {
                     if (qcQuestionInfo.QA_EVENT_TYPE == qcMessageTemplet.QA_EVENT_TYPE)//问题大类扣分累计
                     {
                         scoreLevel1Count += (double)Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcQuestionInfo.POINT, 0f)), 1);
                     }
-                    EMRDBLib.QcMsgDict itemQCMessageTemplet = LstQCMessageTemplet.Find(delegate(EMRDBLib.QcMsgDict p) { return p.QC_MSG_CODE == qcQuestionInfo.QC_MSG_CODE; });
+                    QcMsgDict itemQCMessageTemplet = ListQcMsgDict.Find(delegate (QcMsgDict p) { return p.QC_MSG_CODE == qcQuestionInfo.QC_MSG_CODE; });
                     if (itemQCMessageTemplet == null)
                         continue;
                     //子类问题扣分累加
@@ -330,7 +289,7 @@ namespace MedQCSys.Dialogs
             {
                 double scoreLevel1Max = 0.0;
                 double scoreLevel2Max = 0.0;
-                foreach (EMRDBLib.QaEventTypeDict qcEventType in LstQCEventTypes)
+                foreach (QaEventTypeDict qcEventType in LstQCEventTypes)
                 {
                     //问题大类分数上限
                     if (qcEventType.QA_EVENT_TYPE == qcMessageTemplet.QA_EVENT_TYPE)
@@ -393,6 +352,10 @@ namespace MedQCSys.Dialogs
 
         private bool CheckBoxScore()
         {
+            if (string.IsNullOrEmpty(MedicalQcMsg.QC_MSG_CODE))
+            {
+                return false;
+            }
             string szText = this.txtBoxScore.Text;
             try
             {
@@ -415,11 +378,11 @@ namespace MedQCSys.Dialogs
                 double level2ScoreMax = this.lblevel2MaxScore.Tag == null ?
                                     9999.9 : (double)Math.Round(new decimal(GlobalMethods.Convert.StringToValue(this.lblevel2MaxScore.Tag.ToString(), 0f)), 1);
                 double currentScore = (double)Math.Round(new decimal(GlobalMethods.Convert.StringToValue(szText, 0f)), 1);
-                EMRDBLib.QcMsgDict qcMessageTemplet = this.lbCurrentScoreInfo.Tag as EMRDBLib.QcMsgDict;
+                QcMsgDict qcMessageTemplet = this.lbCurrentScoreInfo.Tag as QcMsgDict;
                 double templetScore = 0.0;
                 if (qcMessageTemplet == null)
                 {
-                    qcMessageTemplet = LstQCMessageTemplet.Find(delegate(EMRDBLib.QcMsgDict t) { return t.QC_MSG_CODE == QCMessageTemplet.QC_MSG_CODE; });
+                    qcMessageTemplet = ListQcMsgDict.Find(delegate (QcMsgDict t) { return t.QC_MSG_CODE == MedicalQcMsg.QC_MSG_CODE; });
                 }
                 if (qcMessageTemplet == null)
                 {

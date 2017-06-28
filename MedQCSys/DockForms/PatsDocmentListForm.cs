@@ -15,7 +15,7 @@ using Heren.Common.Libraries;
 using Heren.Common.Controls;
 using Heren.Common.Controls.VirtualTreeView;
 using Heren.Common.DockSuite;
- 
+
 using EMRDBLib.DbAccess;
 using EMRDBLib;
 
@@ -220,7 +220,7 @@ namespace MedQCSys.DockForms
             MedDocList lstDocInfos = null;
             short shRet = EmrDocAccess.Instance.GetDocInfos(szPatientID, szVisitID, szVisitType, DateTime.Now, string.Empty, ref lstDocInfos);
             if (shRet != SystemData.ReturnValue.OK
-                && shRet!= SystemData.ReturnValue.RES_NO_FOUND)
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("获取新格式病程记录失败！");
                 return;
@@ -320,14 +320,14 @@ namespace MedQCSys.DockForms
                         docInfoNode.SubItems[nIndex].ForeColor = Color.Green;
                     }
                 }
-                 DocTypeInfo currDocType = null;
+                DocTypeInfo currDocType = null;
                 DocTypeAccess.Instance.GetDocTypeInfo(docInfo.DOC_TYPE, ref currDocType);
                 if (currDocType == null)
                 {
                     otherDocRootNode.Nodes.Add(docInfoNode);
                     continue;
                 }
-                 DocTypeInfo hostDocType = null;
+                DocTypeInfo hostDocType = null;
                 DocTypeAccess.Instance.GetDocTypeInfo(currDocType.HostTypeID, ref hostDocType);
                 if (hostDocType == null)
                 {
@@ -390,7 +390,7 @@ namespace MedQCSys.DockForms
             MedDocList lstPastDocInfos = null;
             short shRet = EMRDBAccess.Instance.GetPastDocList(szPatientID, szVisitID, ref lstPastDocInfos);
             if (shRet != SystemData.ReturnValue.OK
-                && shRet!=SystemData.ReturnValue.RES_NO_FOUND)
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("获取旧病程记录列表失败！");
                 return;
@@ -412,7 +412,7 @@ namespace MedQCSys.DockForms
             //加载已有文档列表到指定的容器
             for (int index = 0; index < lstPastDocInfos.Count; index++)
             {
-                 MedDocInfo pastDocInfo = lstPastDocInfos[index];
+                MedDocInfo pastDocInfo = lstPastDocInfos[index];
                 if (pastDocInfo == null)
                     continue;
 
@@ -482,35 +482,35 @@ namespace MedQCSys.DockForms
         /// <param name="selectedNode">当前节点</param>
         /// <param name="szDocSetID">文档集ID</param>
         /// <param name="szDocTitle">文档标题</param>
-        private void GetSelectedNodeInfo(VirtualNode selectedNode, ref string szDocTitle, ref string szDocSetID
-            , ref string szCreatorName,ref string szDeptCode,ref byte[] byteDocData)
+        private void GetSelectedNodeInfo(VirtualNode selectedNode, ref MedDocInfo meddocInfo)
         {
-             MedDocInfo docInfo = selectedNode.Data as  MedDocInfo;
+            MedDocInfo docInfo = selectedNode.Data as MedDocInfo;
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
 
             if (docInfo != null)
             {
-                szDocTitle = docInfo.DOC_TITLE;
-                if (docInfo.EMR_TYPE != "BAODIAN" && docInfo.EMR_TYPE != "CHENPAD" 
+                meddocInfo.DOC_TITLE = docInfo.DOC_TITLE;
+                if (docInfo.EMR_TYPE != "BAODIAN" && docInfo.EMR_TYPE != "CHENPAD"
                     && docInfo.EMR_TYPE != "HEREN")
-                    szDocSetID = string.Empty;
+                    meddocInfo.DOC_SETID = string.Empty;
                 else
-                    szDocSetID = docInfo.DOC_SETID;
-                szCreatorName = docInfo.CREATOR_NAME;
-                szDeptCode = docInfo.DEPT_CODE;
+                    meddocInfo.DOC_SETID = docInfo.DOC_SETID;
+                meddocInfo.CREATOR_NAME = docInfo.CREATOR_NAME;
+                meddocInfo.CREATOR_ID = docInfo.CREATOR_ID;
+                meddocInfo.DEPT_CODE = docInfo.DEPT_CODE;
+                meddocInfo.DEPT_NAME = docInfo.DEPT_NAME;
             }
             else if (selectedNode.Data.Equals(COMBIN_NODE_TAG))
-                szDocTitle = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的病历");
+                meddocInfo.DOC_TITLE = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的病历");
             else if (selectedNode.Data.Equals(DOCTOR_NODE_TAG))
-                szDocTitle = "医生写的病历";
+                meddocInfo.DOC_TITLE = "医生写的病历";
             else if (selectedNode.Data.Equals(NURSE_NODE_TAG))
-                szDocTitle = "护士写的病历";
+                meddocInfo.DOC_TITLE = "护士写的病历";
             else if (selectedNode.Data.Equals(UNKNOWN_NODE_TAG))
-                szDocTitle = "未被归类的病历";
+                meddocInfo.DOC_TITLE = "未被归类的病历";
             else
-                szDocTitle = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的以往旧病历");
-            EmrDocAccess.Instance.GetDocByID(docInfo.DOC_ID, ref byteDocData);
+                meddocInfo.DOC_TITLE = string.Concat(SystemParam.Instance.PatVisitInfo.PATIENT_NAME, "的以往旧病历");
         }
 
         ///<summary>
@@ -519,7 +519,7 @@ namespace MedQCSys.DockForms
         /// <param name="lstDocInfo">病历文档信息列表</param>
         /// <param name="dtCheckTime">检查时间</param>
         /// <param name="node">当前节点</param>
-        private void SaveReadLogInfo( MedDocInfo docInfo, DateTime dtCheckTime, VirtualNode node)
+        private void SaveReadLogInfo(MedDocInfo docInfo, DateTime dtCheckTime, VirtualNode node)
         {
             if (string.IsNullOrEmpty(docInfo.DOC_SETID))
                 return;
@@ -616,7 +616,7 @@ namespace MedQCSys.DockForms
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在下载并打开病历，请稍候...");
 
-             MedDocInfo docInfo = e.Node.Data as  MedDocInfo;
+            MedDocInfo docInfo = e.Node.Data as MedDocInfo;
             DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
             if (docInfo != null)
             {
@@ -636,10 +636,10 @@ namespace MedQCSys.DockForms
                 if (count <= 0)
                     return;
                 GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-                 MedDocList lstDocInfos = new  MedDocList();
+                MedDocList lstDocInfos = new MedDocList();
                 for (int index = 0; index < count; index++)
                 {
-                    docInfo = e.Node.Nodes[index].Data as  MedDocInfo;
+                    docInfo = e.Node.Nodes[index].Data as MedDocInfo;
                     if (docInfo == null)
                         continue;
 
@@ -673,7 +673,7 @@ namespace MedQCSys.DockForms
             if (parentNode == null || parentNode.Nodes.Count <= 0)
                 return;
 
-             MedDocList lstDocInfos = new  MedDocList();
+            MedDocList lstDocInfos = new MedDocList();
             DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
             for (int index = 0; index < parentNode.Nodes.Count; index++)
             {
@@ -685,7 +685,7 @@ namespace MedQCSys.DockForms
                 for (int ii = 0; ii < parentNode.Nodes[index].Nodes.Count; ii++)
                 {
                     VirtualNode childNode = parentNode.Nodes[index].Nodes[ii];
-                     MedDocInfo docInfo = childNode.Data as  MedDocInfo;
+                    MedDocInfo docInfo = childNode.Data as MedDocInfo;
                     if (docInfo == null)
                         continue;
 
@@ -703,7 +703,7 @@ namespace MedQCSys.DockForms
         {
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
-            
+
             VirtualNode selectedNode = this.virtualTree1.SelectedNode;
             if (selectedNode == null)
                 return;
@@ -711,13 +711,9 @@ namespace MedQCSys.DockForms
             if (patVisitLog == null)
                 return;
             SystemParam.Instance.PatVisitInfo = patVisitLog;
-            string szDocTitle = string.Empty;
-            string szDocSetID = string.Empty;
-            string szDocCreator = string.Empty;
-            string szDeptCode = string.Empty;
-            byte[] byteDocData = null;
-            this.GetSelectedNodeInfo(selectedNode, ref szDocTitle, ref szDocSetID, ref szDocCreator,ref szDeptCode, ref byteDocData);
-            this.MainForm.AddFeedBackInfo(szDocTitle, szDocSetID, szDocCreator,szDeptCode, byteDocData);
+            MedDocInfo docInfo = new MedDocInfo();
+            this.GetSelectedNodeInfo(selectedNode, ref docInfo);
+            this.MainForm.AddMedicalQcMsg(docInfo);
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)

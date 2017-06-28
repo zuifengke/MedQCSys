@@ -33,7 +33,7 @@ namespace MedQCSys.Dialogs
             this.txtDoctorComment = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtCheckDate = new System.Windows.Forms.TextBox();
+            this.txt_ISSUED_DATE_TIME = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtChecker = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -117,13 +117,13 @@ namespace MedQCSys.Dialogs
             // 
             // txtCheckDate
             // 
-            this.txtCheckDate.BackColor = System.Drawing.Color.Lavender;
-            this.txtCheckDate.Font = new System.Drawing.Font("ËÎÌו", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtCheckDate.Location = new System.Drawing.Point(255, 381);
-            this.txtCheckDate.Name = "txtCheckDate";
-            this.txtCheckDate.ReadOnly = true;
-            this.txtCheckDate.Size = new System.Drawing.Size(143, 23);
-            this.txtCheckDate.TabIndex = 15;
+            this.txt_ISSUED_DATE_TIME.BackColor = System.Drawing.Color.Lavender;
+            this.txt_ISSUED_DATE_TIME.Font = new System.Drawing.Font("ËÎÌו", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_ISSUED_DATE_TIME.Location = new System.Drawing.Point(255, 381);
+            this.txt_ISSUED_DATE_TIME.Name = "txtCheckDate";
+            this.txt_ISSUED_DATE_TIME.ReadOnly = true;
+            this.txt_ISSUED_DATE_TIME.Size = new System.Drawing.Size(143, 23);
+            this.txt_ISSUED_DATE_TIME.TabIndex = 15;
             // 
             // label8
             // 
@@ -532,7 +532,7 @@ namespace MedQCSys.Dialogs
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtCheckDate);
+            this.Controls.Add(this.txt_ISSUED_DATE_TIME);
             this.Controls.Add(this.txtPatientID);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
@@ -578,7 +578,7 @@ namespace MedQCSys.Dialogs
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtMessage;
-        private System.Windows.Forms.TextBox txtCheckDate;
+        private System.Windows.Forms.TextBox txt_ISSUED_DATE_TIME;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtChecker;
         private System.Windows.Forms.Label label7;

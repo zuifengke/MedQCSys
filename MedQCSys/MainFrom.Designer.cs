@@ -32,7 +32,6 @@ namespace MedQCSys
             this.menuStrip1 = new MedQCSys.MenuBars.MqsMainMenu();
             this.dockPanel1 = new Heren.Common.DockSuite.DockPanel();
             this.toolStrip1 = new MedQCSys.ToolBars.MainToolStrip();
-            
             this.statusStrip1 = new MedQCSys.StatusBars.MainStatusStrip();
             this.logoPanel1 = new MedQCSys.Controls.LogoPanel();
             this.logoPanel1.SuspendLayout();
@@ -40,17 +39,17 @@ namespace MedQCSys
             // 
             // menuStrip1
             // 
-            this.menuStrip1.AutoSize = false;
             this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.5F);
-            //this.menuStrip1.Font.Size = 9.5;
+            this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MainForm = null;
             this.menuStrip1.Name = "menuStrip1";
-           // this.menuStrip1.Padding = new System.Windows.Forms.Padding(1, 2, 0, 2);
-           // this.menuStrip1.Size = new System.Drawing.Size(823, 26);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.menuStrip1.ShowItemToolTips = true;
+            this.menuStrip1.Size = new System.Drawing.Size(866, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "MqsMainMenu";
             // 
@@ -60,11 +59,11 @@ namespace MedQCSys
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.dockPanel1.DocumentStyle = Heren.Common.DockSuite.DocumentStyle.DockingWindow;
-            this.dockPanel1.Location = new System.Drawing.Point(0, 63);
+            this.dockPanel1.Location = new System.Drawing.Point(0, 59);
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.ShowDocumentSubhead = true;
             this.dockPanel1.ShowInactiveDocumentTab = false;
-            this.dockPanel1.Size = new System.Drawing.Size(823, 432);
+            this.dockPanel1.Size = new System.Drawing.Size(866, 436);
             this.dockPanel1.TabIndex = 0;
             this.dockPanel1.ActiveDocumentChanged += new System.EventHandler(this.dockPanel1_ActiveDocumentChanged);
             this.dockPanel1.ActiveContentChanged += new System.EventHandler(this.dockPanel1_ActiveContentChanged);
@@ -74,10 +73,10 @@ namespace MedQCSys
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip1.Location = new System.Drawing.Point(6, 30);
+            this.toolStrip1.Location = new System.Drawing.Point(6, 28);
             this.toolStrip1.MainForm = null;
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(404, 29);
+            this.toolStrip1.Size = new System.Drawing.Size(246, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "MainToolStrip";
             // 
@@ -86,7 +85,7 @@ namespace MedQCSys
             this.statusStrip1.Location = new System.Drawing.Point(0, 495);
             this.statusStrip1.MainForm = null;
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(823, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(866, 25);
             this.statusStrip1.TabIndex = 1;
             // 
             // logoPanel1
@@ -94,6 +93,7 @@ namespace MedQCSys
             this.logoPanel1.Controls.Add(this.menuStrip1);
             this.logoPanel1.Controls.Add(this.toolStrip1);
             this.logoPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.logoPanel1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.5F);
             this.logoPanel1.GradientBeginColor = System.Drawing.SystemColors.ButtonFace;
             this.logoPanel1.GradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(252)))), ((int)(((byte)(252)))));
             this.logoPanel1.Location = new System.Drawing.Point(0, 0);
@@ -101,13 +101,13 @@ namespace MedQCSys
             this.logoPanel1.Name = "logoPanel1";
             this.logoPanel1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.logoPanel1.RowMargin = new System.Windows.Forms.Padding(0, 0, 0, 4);
-            this.logoPanel1.Size = new System.Drawing.Size(823, 63);
+            this.logoPanel1.Size = new System.Drawing.Size(866, 59);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 520);
+            this.ClientSize = new System.Drawing.Size(866, 520);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.logoPanel1);
