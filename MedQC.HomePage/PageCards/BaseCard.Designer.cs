@@ -43,7 +43,7 @@
             this.fbtnRefresh.Name = "fbtnRefresh";
             this.fbtnRefresh.Size = new System.Drawing.Size(24, 24);
             this.fbtnRefresh.TabIndex = 1;
-            this.fbtnRefresh.ToolTipText = null;
+            this.fbtnRefresh.ToolTipText = "刷新";
             this.fbtnRefresh.Click += new System.EventHandler(this.fbtnRefresh_Click);
             // 
             // fbtnExport
@@ -53,7 +53,7 @@
             this.fbtnExport.Name = "fbtnExport";
             this.fbtnExport.Size = new System.Drawing.Size(24, 24);
             this.fbtnExport.TabIndex = 1;
-            this.fbtnExport.ToolTipText = null;
+            this.fbtnExport.ToolTipText = "导出";
             this.fbtnExport.Click += new System.EventHandler(this.fbtnExport_Click);
             // 
             // panel1
@@ -84,6 +84,8 @@
             this.mlinkTitle.Text = "标题";
             this.mlinkTitle.Theme = MetroFramework.MetroThemeStyle.Light;
             this.mlinkTitle.UseStyleColors = false;
+            this.mlinkTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mlinkTitle_MouseDown);
+            this.mlinkTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mlinkTitle_MouseMove);
             // 
             // fbtnDelete
             // 
@@ -92,13 +94,14 @@
             this.fbtnDelete.Name = "fbtnDelete";
             this.fbtnDelete.Size = new System.Drawing.Size(24, 24);
             this.fbtnDelete.TabIndex = 3;
-            this.fbtnDelete.ToolTipText = null;
+            this.fbtnDelete.ToolTipText = "移除";
             this.fbtnDelete.Click += new System.EventHandler(this.fbtnDelete_Click);
             // 
             // BaseCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.panel1);
             this.Name = "BaseCard";
             this.Size = new System.Drawing.Size(609, 287);

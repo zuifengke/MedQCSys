@@ -72,5 +72,15 @@ namespace Heren.MedQC.HomePage.PageCards
                 this.Dispose();
             }
         }
+
+        private void mlinkTitle_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void mlinkTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

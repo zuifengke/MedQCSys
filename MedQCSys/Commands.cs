@@ -8,6 +8,7 @@ using MedQCSys.Dialogs;
 using Heren.Common.Libraries;
 using System.Windows.Forms;
 using EMRDBLib;
+using MedQCSys.MenuBars;
 
 namespace MedQCSys
 {
@@ -84,6 +85,34 @@ namespace MedQCSys
                 LogManager.Instance.WriteLog(ex.ToString());
             }
             
+            return true;
+        }
+    }
+    /// <summary>
+    /// 显示或隐藏工具栏
+    /// </summary>
+    public class ShowToolStripCommand3 : AbstractCommand
+    {
+        public ShowToolStripCommand3()
+        {
+            this.m_name = "隐藏/显示工具栏";
+        }
+        public override bool Execute(object param, object data)
+        {
+            try
+            {
+                MainForm main = param as MainForm;
+                if (main == null)
+                    return false;
+                MqsMenuItemBase toolbtn = data as MqsMenuItemBase;
+                toolbtn.Checked = !toolbtn.Checked;
+                main.ShowToolStrip(toolbtn.Checked);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
+
             return true;
         }
     }

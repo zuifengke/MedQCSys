@@ -223,6 +223,11 @@ namespace MedQCSys.MenuBars
                     mnuItem.Name = item.UIConfigID;
                     mnuItem.Text = item.ShowName;
                     mnuItem.Click += new EventHandler(this.toolbtn_Click);
+                    if (mnuItem.Text.IndexOf("¹¤¾ßÀ¸") >= 0)
+                    {
+                       bool result=  SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_TOOL_STRIP, true);
+                        mnuItem.Checked = result;
+                    }
                     if (!RightHandler.Instance.HasRight(item.UIRightKey)) mnuItem.Enabled = false;
                     parentMenuItem.DropDownItems.Add(mnuItem);
                 }
@@ -246,7 +251,7 @@ namespace MedQCSys.MenuBars
             if (hdp.UICommand == string.Empty)
                 return;
 
-            CommandHandler.Instance.SendCommand(hdp.UICommand, this.m_mainForm, null);
+            CommandHandler.Instance.SendCommand(hdp.UICommand, this.m_mainForm, toolbtn);
         }
     }
 }

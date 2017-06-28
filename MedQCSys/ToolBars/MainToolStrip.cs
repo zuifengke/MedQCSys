@@ -186,7 +186,6 @@ namespace MedQCSys.ToolBars
             : base(parent)
         {
             this.InitializeComponent();
-          
         }
 
         private void toolbtnShowQuestionList_Click(object sender, System.EventArgs e)

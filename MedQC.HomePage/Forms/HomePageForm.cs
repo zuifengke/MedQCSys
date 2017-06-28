@@ -21,7 +21,6 @@ namespace Heren.MedQC.HomePage.Forms
             this.InitializeComponent();
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
-            //this.dataGridView1.AutoReadonly = true;
         }
         protected override void OnLoad(EventArgs e)
         {

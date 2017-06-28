@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using MedQCSys.Dialogs;
 using EMRDBLib;
+using Heren.Common.Libraries;
 
 namespace MedQCSys.Controls
 {
@@ -90,11 +91,6 @@ namespace MedQCSys.Controls
             //e.Graphics.FillRectangle(brush, this.ClientRectangle);
             //brush.Dispose();
 
-            if (this.m_Image != null)
-            {
-                int nLeft = this.ClientSize.Width - this.m_Image.Width - 8;
-                e.Graphics.DrawImage(this.m_Image, nLeft, this.ClientSize.Height - this.m_Image.Height);
-            }
             if (SystemParam.Instance.LocalConfigOption == null)
                 return;
             if (string.IsNullOrEmpty(SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME))
@@ -105,6 +101,15 @@ namespace MedQCSys.Controls
             this.Font = new Font("Microsoft YaHei UI", 9.5f);
             RectangleF rect = new RectangleF(0, 6, this.Width - 8, 24);
             e.Graphics.DrawString(SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME, this.Font, brush, rect, format);
+            if (this.m_Image != null)
+            {
+                int nLeft = this.ClientSize.Width - this.m_Image.Width - 8;
+                //当不显示工具条时，logo往左绘制
+                bool result = SystemConfig.Instance.Get(SystemData.ConfigKey.SHOW_TOOL_STRIP, true);
+                if (!result)
+                    nLeft = nLeft - SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME.Length * 15;
+                e.Graphics.DrawImage(this.m_Image, nLeft, this.ClientSize.Height - this.m_Image.Height);
+            }
             brush.Dispose();
             format.Dispose();
 

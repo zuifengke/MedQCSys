@@ -28,99 +28,112 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.metroCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
-            this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
+            this.chkUnModified = new MetroFramework.Controls.MetroCheckBox();
+            this.chkModified = new MetroFramework.Controls.MetroCheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_ISSUED_DATE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_MESSAGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_DOCTOR_COMMENT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // metroCheckBox2
+            // chkUnModified
             // 
-            this.metroCheckBox2.AutoSize = true;
-            this.metroCheckBox2.CustomBackground = false;
-            this.metroCheckBox2.CustomForeColor = false;
-            this.metroCheckBox2.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroCheckBox2.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.metroCheckBox2.Location = new System.Drawing.Point(80, 30);
-            this.metroCheckBox2.Name = "metroCheckBox2";
-            this.metroCheckBox2.Size = new System.Drawing.Size(62, 15);
-            this.metroCheckBox2.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroCheckBox2.StyleManager = null;
-            this.metroCheckBox2.TabIndex = 5;
-            this.metroCheckBox2.Text = "未修改";
-            this.metroCheckBox2.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroCheckBox2.UseStyleColors = false;
-            this.metroCheckBox2.UseVisualStyleBackColor = true;
+            this.chkUnModified.AutoSize = true;
+            this.chkUnModified.CustomBackground = false;
+            this.chkUnModified.CustomForeColor = false;
+            this.chkUnModified.FontSize = MetroFramework.MetroLinkSize.Small;
+            this.chkUnModified.FontWeight = MetroFramework.MetroLinkWeight.Regular;
+            this.chkUnModified.Location = new System.Drawing.Point(80, 30);
+            this.chkUnModified.Name = "chkUnModified";
+            this.chkUnModified.Size = new System.Drawing.Size(62, 15);
+            this.chkUnModified.Style = MetroFramework.MetroColorStyle.Blue;
+            this.chkUnModified.StyleManager = null;
+            this.chkUnModified.TabIndex = 5;
+            this.chkUnModified.Text = "未修改";
+            this.chkUnModified.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.chkUnModified.UseStyleColors = false;
+            this.chkUnModified.UseVisualStyleBackColor = true;
+            this.chkUnModified.CheckedChanged += new System.EventHandler(this.chkUnModified_CheckedChanged);
             // 
-            // metroCheckBox1
+            // chkModified
             // 
-            this.metroCheckBox1.AutoSize = true;
-            this.metroCheckBox1.Checked = true;
-            this.metroCheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.metroCheckBox1.CustomBackground = false;
-            this.metroCheckBox1.CustomForeColor = false;
-            this.metroCheckBox1.FontSize = MetroFramework.MetroLinkSize.Small;
-            this.metroCheckBox1.FontWeight = MetroFramework.MetroLinkWeight.Regular;
-            this.metroCheckBox1.Location = new System.Drawing.Point(12, 30);
-            this.metroCheckBox1.Name = "metroCheckBox1";
-            this.metroCheckBox1.Size = new System.Drawing.Size(62, 15);
-            this.metroCheckBox1.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroCheckBox1.StyleManager = null;
-            this.metroCheckBox1.TabIndex = 6;
-            this.metroCheckBox1.Text = "已修改";
-            this.metroCheckBox1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroCheckBox1.UseStyleColors = false;
-            this.metroCheckBox1.UseVisualStyleBackColor = true;
+            this.chkModified.AutoSize = true;
+            this.chkModified.Checked = true;
+            this.chkModified.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkModified.CustomBackground = false;
+            this.chkModified.CustomForeColor = false;
+            this.chkModified.FontSize = MetroFramework.MetroLinkSize.Small;
+            this.chkModified.FontWeight = MetroFramework.MetroLinkWeight.Regular;
+            this.chkModified.Location = new System.Drawing.Point(12, 30);
+            this.chkModified.Name = "chkModified";
+            this.chkModified.Size = new System.Drawing.Size(62, 15);
+            this.chkModified.Style = MetroFramework.MetroColorStyle.Blue;
+            this.chkModified.StyleManager = null;
+            this.chkModified.TabIndex = 6;
+            this.chkModified.Text = "已修改";
+            this.chkModified.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.chkModified.UseStyleColors = false;
+            this.chkModified.UseVisualStyleBackColor = true;
+            this.chkModified.CheckedChanged += new System.EventHandler(this.chkModified_CheckedChanged);
             // 
             // dataGridView1
             // 
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column4,
-            this.Column2});
+            this.col_ISSUED_DATE_TIME,
+            this.col_PATIENT_NAME,
+            this.col_MESSAGE,
+            this.col_DOCTOR_COMMENT});
             this.dataGridView1.Location = new System.Drawing.Point(3, 51);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(608, 236);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(644, 236);
             this.dataGridView1.TabIndex = 4;
             // 
-            // Column1
+            // col_ISSUED_DATE_TIME
             // 
-            this.Column1.HeaderText = "提交时间";
-            this.Column1.Name = "Column1";
+            this.col_ISSUED_DATE_TIME.HeaderText = "提交时间";
+            this.col_ISSUED_DATE_TIME.Name = "col_ISSUED_DATE_TIME";
             // 
-            // Column4
+            // col_PATIENT_NAME
             // 
-            this.Column4.HeaderText = "质检问题";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 300;
+            this.col_PATIENT_NAME.HeaderText = "患者";
+            this.col_PATIENT_NAME.Name = "col_PATIENT_NAME";
+            this.col_PATIENT_NAME.Width = 60;
             // 
-            // Column2
+            // col_MESSAGE
             // 
-            this.Column2.HeaderText = "医生反馈";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 200;
+            this.col_MESSAGE.HeaderText = "质检问题";
+            this.col_MESSAGE.Name = "col_MESSAGE";
+            this.col_MESSAGE.Width = 250;
+            // 
+            // col_DOCTOR_COMMENT
+            // 
+            this.col_DOCTOR_COMMENT.HeaderText = "医生反馈";
+            this.col_DOCTOR_COMMENT.Name = "col_DOCTOR_COMMENT";
+            this.col_DOCTOR_COMMENT.Width = 200;
             // 
             // MedicalQcMsgCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.metroCheckBox2);
-            this.Controls.Add(this.metroCheckBox1);
+            this.Controls.Add(this.chkUnModified);
+            this.Controls.Add(this.chkModified);
             this.Controls.Add(this.dataGridView1);
             this.Name = "MedicalQcMsgCard";
-            this.Size = new System.Drawing.Size(614, 290);
+            this.Size = new System.Drawing.Size(650, 290);
             this.Controls.SetChildIndex(this.dataGridView1, 0);
-            this.Controls.SetChildIndex(this.metroCheckBox1, 0);
-            this.Controls.SetChildIndex(this.metroCheckBox2, 0);
+            this.Controls.SetChildIndex(this.chkModified, 0);
+            this.Controls.SetChildIndex(this.chkUnModified, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -129,11 +142,12 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroCheckBox metroCheckBox2;
-        private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
+        private MetroFramework.Controls.MetroCheckBox chkUnModified;
+        private MetroFramework.Controls.MetroCheckBox chkModified;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_ISSUED_DATE_TIME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_PATIENT_NAME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_MESSAGE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_DOCTOR_COMMENT;
     }
 }

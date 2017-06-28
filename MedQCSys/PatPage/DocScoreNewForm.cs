@@ -777,6 +777,19 @@ namespace MedQCSys.DockForms
                 QcMsgDict firstQaEventType = new QcMsgDict();
                 firstQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
                 listQcMsgDict.Add(firstQaEventType);
+
+                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
+                if (firstMsgDict.Count > 0)
+                {
+                    foreach (var item3 in firstMsgDict)
+                    {
+                        item3.OrderNo = firstMsgDict.IndexOf(item3) + 1;
+                        //添加一级分类下的质检问题项
+                        listQcMsgDict.Add(item3);
+
+                    }
+                }
+
                 var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
                 if (secondQaEventTypeDict.Count > 0)
                 {
@@ -797,17 +810,6 @@ namespace MedQCSys.DockForms
                                 listQcMsgDict.Add(itemMsgDict);
                             }
                         }
-                    }
-                }
-                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE ).ToList();
-                if (firstMsgDict.Count > 0)
-                {
-                    foreach (var item3 in firstMsgDict)
-                    {
-                        item3.OrderNo = firstMsgDict.IndexOf(item3) + 1;
-                        //添加一级分类下的质检问题项
-                        listQcMsgDict.Add(item3);
-                       
                     }
                 }
                 if (listQcMsgDict.Count > 0)

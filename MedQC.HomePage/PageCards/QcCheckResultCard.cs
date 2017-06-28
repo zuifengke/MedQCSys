@@ -22,6 +22,7 @@ namespace Heren.MedQC.HomePage.PageCards
         }
         public override bool  RefreshCard()
         {
+            chart1.Series["Series1"].Points.Clear();
             Random rand = new Random();
             for (int index = 1; index < 100; index++)
             {

@@ -602,6 +602,170 @@ namespace EMRDBLib.DbAccess
             }
         }
         /// <summary>
+        /// 获取当前用户相关的质检问题列表
+        /// </summary>
+        /// <param name="szMsgState"></param>
+        /// <param name="szIssuedBy"></param>
+        /// <param name="lstQcMsg"></param>
+        /// <returns></returns>
+        public short GetMedicalQcMsgList2(string szMsgState, string szIssuedBy, ref List<MedicalQcMsg> lstQcMsg)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            if (string.IsNullOrEmpty(szIssuedBy))
+            {
+                LogManager.Instance.WriteLog("GetMedicalQcMsgList2", new string[] { "szIssuedBy", "szMsgState" }, new object[] { szIssuedBy, szMsgState }, "szIssuedBy为空");
+            }
+            string szField = string.Format("*");
+
+            string szCondition = string.Format("1=1 AND {0}='{1}' AND {2} in ({3})"
+                , SystemData.MedicalQcMsgTable.ISSUED_BY
+                , szIssuedBy
+                , SystemData.MedicalQcMsgTable.MSG_STATUS
+                , szMsgState);
+
+            string szTable = string.Format("{0}", SystemData.DataTable.MEDICAL_QC_MSG);
+
+            string szOrderBy = string.Format("{0},{1}"
+                , SystemData.MedicalQcMsgTable.PATIENT_ID, SystemData.MedicalQcMsgTable.VISIT_ID);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
+                , szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstQcMsg == null)
+                    lstQcMsg = new List<MedicalQcMsg>();
+                do
+                {
+                    MedicalQcMsg item = new MedicalQcMsg();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.MedicalQcMsgTable.APPLY_ENV:
+                                item.APPLY_ENV = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.ASK_DATE_TIME:
+                                item.ASK_DATE_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.CREATOR_ID:
+                                item.CREATOR_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.DEPT_NAME:
+                                item.DEPT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.DEPT_STAYED:
+                                item.DEPT_STAYED = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.DOCTOR_COMMENT:
+                                item.DOCTOR_COMMENT = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE:
+                                item.DOCTOR_IN_CHARGE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.ERROR_COUNT:
+                                item.ERROR_COUNT = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.ISSUED_BY:
+                                item.ISSUED_BY = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME:
+                                item.ISSUED_DATE_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.ISSUED_ID:
+                                item.ISSUED_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.ISSUED_TYPE:
+                                item.ISSUED_TYPE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.LOCK_STATUS:
+                                item.LOCK_STATUS = dataReader.GetValue(i).ToString() == "1";
+                                break;
+                            case SystemData.MedicalQcMsgTable.MESSAGE:
+                                item.MESSAGE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.MODIFY_NOTICE_ID:
+                                item.MODIFY_NOTICE_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.MSG_ID:
+                                item.MSG_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.MSG_STATUS:
+                                item.MSG_STATUS = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.PARENT_DOCTOR:
+                                item.PARENT_DOCTOR = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.PATIENT_ID:
+                                item.PATIENT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.PATIENT_NAME:
+                                item.PATIENT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.POINT:
+                                item.POINT = float.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.POINT_TYPE:
+                                item.POINT_TYPE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.QA_EVENT_TYPE:
+                                item.QA_EVENT_TYPE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.QCDOC_TYPE:
+                                item.QCDOC_TYPE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.MedicalQcMsgTable.QC_MODULE:
+                                item.QC_MODULE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.QC_MSG_CODE:
+                                item.QC_MSG_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.SUPER_DOCTOR:
+                                item.SUPER_DOCTOR = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.TOPIC:
+                                item.TOPIC = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.TOPIC_ID:
+                                item.TOPIC_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.VISIT_ID:
+                                item.VISIT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.MedicalQcMsgTable.VISIT_NO:
+                                item.VISIT_NO = dataReader.GetValue(i).ToString();
+                                break;
+                            default: break;
+                        }
+                    }
+                    lstQcMsg.Add(item);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+        /// <summary>
         /// 获取整改通知书
         /// </summary>
         /// <param name="lstQcCheckResults"></param>

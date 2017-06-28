@@ -32,6 +32,7 @@ namespace MedQCSys
             this.menuStrip1 = new MedQCSys.MenuBars.MqsMainMenu();
             this.dockPanel1 = new Heren.Common.DockSuite.DockPanel();
             this.toolStrip1 = new MedQCSys.ToolBars.MainToolStrip();
+            
             this.statusStrip1 = new MedQCSys.StatusBars.MainStatusStrip();
             this.logoPanel1 = new MedQCSys.Controls.LogoPanel();
             this.logoPanel1.SuspendLayout();
