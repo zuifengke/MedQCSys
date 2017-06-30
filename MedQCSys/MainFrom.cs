@@ -722,8 +722,6 @@ namespace MedQCSys
 
         internal void ShowDocumentTimeForm()
         {
-
-
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_DocumentTimeForm == null || this.m_DocumentTimeForm.IsDisposed)
             {
@@ -740,7 +738,6 @@ namespace MedQCSys
 
         internal void ShowExamResultListForm()
         {
-
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_ExamResultForm == null || this.m_ExamResultForm.IsDisposed)
             {

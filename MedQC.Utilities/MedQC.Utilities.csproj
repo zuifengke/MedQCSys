@@ -109,6 +109,7 @@
     <Compile Include="StatExpExcelHelper.cs" />
     <Compile Include="DocLevel.cs" />
     <Compile Include="GridViewHelper.cs" />
+    <Compile Include="StringHelper.cs" />
     <Compile Include="SysTimeHelper.cs" />
     <Compile Include="UtilitiesHandler.cs" />
   </ItemGroup>
