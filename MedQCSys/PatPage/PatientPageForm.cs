@@ -25,6 +25,10 @@ namespace MedQCSys.PatPage
         {
             this.patientPageControl1.LoadModule(moduleName);
         }
+        public void GetActiveContent(ref DockContentBase dockContent)
+        {
+            this.patientPageControl1.GetActiveDoument(ref dockContent);
+        }
         public PatientPageForm(MainForm parent) : base(parent)
         {
             InitializeComponent();

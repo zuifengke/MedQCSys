@@ -1095,5 +1095,13 @@ namespace MedQCSys.DockForms
             if (this.dockPanel1.Contents.Count == 0)
                 this.HideDockPanel();
         }
+        public void GetActiveDocument(ref HerenDocForm dockContent)
+        {
+            if (this.dockPanel1.Contents.Count == 0)
+                return;
+
+            if (this.dockPanel1.ActiveDocument is HerenDocForm)
+                dockContent = this.dockPanel1.ActiveDocument as HerenDocForm;
+        }
     }
 }

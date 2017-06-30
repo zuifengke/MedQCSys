@@ -607,17 +607,7 @@ namespace MedQCSys.DockForms
 
             //创建数据
             MedicalQcMsg medicalQcMsg = new MedicalQcMsg();
-            if (docInfo == null)
-            {
-                short shRet = this.GetSelectedNodeDocInfo(ref docInfo);
-                if (shRet != SystemData.ReturnValue.OK)
-                    return;
-            }
             medicalQcMsg.APPLY_ENV = "MEDDOC";
-            medicalQcMsg.CREATOR_ID = docInfo.CREATOR_ID;
-            medicalQcMsg.DEPT_NAME = docInfo.DEPT_NAME;
-            medicalQcMsg.DEPT_STAYED = docInfo.DEPT_CODE;
-            medicalQcMsg.DOCTOR_IN_CHARGE = docInfo.CREATOR_NAME;
             medicalQcMsg.ERROR_COUNT = 1;
             medicalQcMsg.InpNo = SystemParam.Instance.PatVisitInfo.INP_NO;
             medicalQcMsg.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
@@ -631,10 +621,23 @@ namespace MedQCSys.DockForms
             medicalQcMsg.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
             medicalQcMsg.POINT_TYPE = 1;
             medicalQcMsg.SUPER_DOCTOR = SystemParam.Instance.PatVisitInfo.SUPER_DOCTOR;
-            medicalQcMsg.TOPIC = docInfo.DOC_TITLE;
-            medicalQcMsg.TOPIC_ID = docInfo.DOC_SETID;
             medicalQcMsg.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             medicalQcMsg.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+            if (docInfo == null)
+            {
+                short shRet = this.GetSelectedNodeDocInfo(ref docInfo);
+                if (shRet !=SystemData.ReturnValue.OK)
+                    medicalQcMsg.TOPIC = szTopic;
+            }
+            else
+            {
+                medicalQcMsg.CREATOR_ID = docInfo.CREATOR_ID;
+                medicalQcMsg.DEPT_NAME = docInfo.DEPT_NAME;
+                medicalQcMsg.DEPT_STAYED = docInfo.DEPT_CODE;
+                medicalQcMsg.DOCTOR_IN_CHARGE = docInfo.CREATOR_NAME;
+                medicalQcMsg.TOPIC = docInfo.DOC_TITLE;
+                medicalQcMsg.TOPIC_ID = docInfo.DOC_SETID;
+            }
             SelectQuestionForm selectQuestionForm = new SelectQuestionForm();
             selectQuestionForm.MedicalQcMsg = medicalQcMsg;
             selectQuestionForm.Text = "质检问题新增";
@@ -655,7 +658,7 @@ namespace MedQCSys.DockForms
                 row.Cells[this.colMsgStatus.Index].Style.ForeColor = Color.Red;
                 row.Cells[this.col_DOCTOR_IN_CHARGE.Index].Value = medicalQcMsg.DOCTOR_IN_CHARGE;
                 row.Tag = medicalQcMsg;
-               
+
                 this.CommitModify();
                 //this.UpdatePatientScore();
                 return;
@@ -748,7 +751,7 @@ namespace MedQCSys.DockForms
             this.MainForm.OpenHistoryDocument(questionInfo);
 
         }
-        
+
 
         /// <summary>
         /// 获取病程记录窗口选中节点的病历文档信息
@@ -817,23 +820,61 @@ namespace MedQCSys.DockForms
 
         private void AddNewQuestion()
         {
-            if (SystemParam.Instance.PatVisitInfo == null)
+            try
             {
-                MessageBoxEx.Show("请选择一个患者！", MessageBoxIcon.Warning);
+                if (SystemParam.Instance.PatVisitInfo == null)
+                {
+                    MessageBoxEx.Show("请选择一个患者！", MessageBoxIcon.Warning);
+                    return;
+                }
+                if (SystemParam.Instance.LocalConfigOption.DefaultEditor == "2")
+                {
+                    if (this.MainForm.PatientPageForm == null)
+                    {
+                        MessageBoxEx.ShowMessage("请选择被质控的患者病历");
+                        return;
+                    }
+                    DockContentBase content = null;
+                    this.MainForm.PatientPageForm.GetActiveContent(ref content);
+                    if (content == null)
+                    {
+                        MessageBoxEx.ShowMessage("请选择质检内容！");
+                        return;
+                    }
+                    if (content is DocumentListNewForm)
+                    {
+                        DocumentListNewForm frm = content as DocumentListNewForm;
+                        HerenDocForm document = null;
+                        frm.GetActiveDocument(ref document);
+                        if (document == null)
+                            this.AddNewItem("病历文书", null);
+                        else
+                            this.AddNewItem(null, document.Document);
+                    }
+                    else
+                    {
+                        this.AddNewItem(content.Text + "质控", null);
+                    }
+                }
+                else
+                {
+                    IDocumentForm documentForm = this.MainForm.ActiveDocument as IDocumentForm;
+                    DockContentBase ActiveDocument = this.MainForm.ActiveDocument as DockContentBase;
+                    //文档类型的质控
+                    if (documentForm != null)
+                    {
+                        this.AddNewItem("病历文书", documentForm.Documents[0]);
+                    }
+                    else if (ActiveDocument != null)
+                    {
+                        this.AddNewItem(ActiveDocument.Text + "质控", null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.ShowError("添加质检问题失败！",ex.ToString());
                 return;
-            }
-
-            IDocumentForm documentForm = this.MainForm.ActiveDocument as IDocumentForm;
-            DockContentBase ActiveDocument = this.MainForm.ActiveDocument as DockContentBase;
-
-            //文档类型的质控
-            if (documentForm != null)
-            {
-                this.AddNewItem("病历文书", documentForm.Documents[0]);
-            }
-            else if (ActiveDocument != null)
-            {
-                this.AddNewItem(ActiveDocument.Text + "质控", null);
             }
         }
 

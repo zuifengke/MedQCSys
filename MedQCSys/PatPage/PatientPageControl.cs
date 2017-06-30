@@ -10,6 +10,7 @@ using MedQCSys.DockForms;
 using EMRDBLib;
 using Heren.Common.Libraries;
 using Heren.Common.DockSuite;
+using MedQCSys.Document;
 
 namespace MedQCSys.PatPage
 {
@@ -237,7 +238,17 @@ namespace MedQCSys.PatPage
             }
 
         }
+        public void GetActiveDoument(ref DockContentBase activeDocument)
+        {
+            foreach (DockContentBase item in this.dockPanel1.Contents)
+            {
+                if (item.IsActivated)
+                {
+                    activeDocument = item;
+                }
 
+            }
+        }
         private void OpenDocument(string szDocTitle)
         {
             foreach (DockContent item in this.dockPanel1.Contents)

@@ -43,6 +43,10 @@ namespace MedQCSys
         private DocScoreForm m_DocScoreForm = null;
         private PatientIndexForm m_PatientIndexForm = null;
         public DocScoreNewForm DocScoreNewForm = null;
+        public PatientPageForm PatientPageForm
+        {
+            get;set;
+        }
         /// <summary>
         /// 获取当前停靠控件
         /// </summary>
@@ -713,7 +717,7 @@ namespace MedQCSys
         internal void AddMedicalQcMsg(MedDocInfo docInfo)
         {
             this.ShowQuestionListForm();
-            this.m_QuestionListForm.AddNewItem(docInfo.DOC_TITLE,docInfo);
+            this.m_QuestionListForm.AddNewItem(docInfo.DOC_TITLE, docInfo);
         }
 
         internal void ShowDocumentTimeForm()
@@ -837,28 +841,21 @@ namespace MedQCSys
         /// <param name="szDocID">文档记录ID</param>
         public void ShowPatientPageForm(PatVisitInfo patVisit, string szDocTypeID, string szDocID)
         {
-
-            PatPage.PatientPageForm patientPageForm = this.GetPatientPageForm(patVisit);
-            if (patientPageForm == null || patientPageForm.IsDisposed)
+            this.PatientPageForm = this.GetPatientPageForm(patVisit);
+            if (this.PatientPageForm == null || this.PatientPageForm.IsDisposed)
             {
-                patientPageForm = this.GetPatientPageForm();
+                this.PatientPageForm = this.GetPatientPageForm();
             }
-            if (patientPageForm == null || patientPageForm.IsDisposed)
+            if (this.PatientPageForm == null || this.PatientPageForm.IsDisposed)
             {
-                patientPageForm = new PatientPageForm(this);
-                patientPageForm.Show(this.dockPanel1);
+                this.PatientPageForm = new PatientPageForm(this);
+                this.PatientPageForm.Show(this.dockPanel1);
             }
 
-            patientPageForm.DockHandler.Activate();
-            if (!patientPageForm.SwitchPatient(patVisit))
+            this.PatientPageForm.DockHandler.Activate();
+            if (!this.PatientPageForm.SwitchPatient(patVisit))
                 return;
-
-            //打开并定位到指定的已保存的表单或新建表单
-            //if (!GlobalMethods.Misc.IsEmptyString(szDocTypeID))
-            //{
-            //    Application.DoEvents();
-            //    patientPageForm.LocateToModule(szDocTypeID, szDocID);
-            //}
+            
         }
 
         internal void ShowTestResultListForm()
@@ -1499,7 +1496,7 @@ namespace MedQCSys
                 return;
             if (this.m_PatientListForm != null && !this.m_PatientListForm.IsDisposed)
                 this.m_PatientListForm.RefreshDocScore();
-            
+
         }
 
     }
