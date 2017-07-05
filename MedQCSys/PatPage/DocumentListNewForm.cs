@@ -254,7 +254,6 @@ namespace MedQCSys.DockForms
             lastDocRootNode.Font = new Font("宋体", 10.5f, FontStyle.Regular);
             lastDocRootNode.Data = DOCTOR_NODE_TAG;
             lastDocRootNode.Expand();
-
             VirtualNode LastNurRootNode = new VirtualNode();
             LastNurRootNode.Text = "护士的病历";
             LastNurRootNode.ForeColor = Color.Blue;
@@ -433,7 +432,6 @@ namespace MedQCSys.DockForms
             lastDocRootNode.Font = new Font("宋体", 10.5f, FontStyle.Regular);
             lastDocRootNode.Data = DOCTOR_NODE_TAG;
             lastDocRootNode.Expand();
-
             VirtualNode LastNurRootNode = new VirtualNode();
             LastNurRootNode.Text = "护士的病历";
             LastNurRootNode.ForeColor = Color.Blue;

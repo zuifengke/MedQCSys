@@ -39,7 +39,11 @@ namespace Heren.MedQC.Core
         /// <summary>
         /// 纸质病历逐份接收
         /// </summary>
-        public static string MedRecord_ReceiveInOrder = "纸质病历逐份接收";
+        public static string MedRecord_ReceiveInOrder = "MedRecord_ReceiveInOrder";
+        /// <summary>
+        /// 纸质病历批量提交
+        /// </summary>
+        public static string MedRecord_RecMrBatchSend = "MedRecord_RecMrBatchSend";
 
 
         #region AbstractRight 成员
@@ -60,7 +64,8 @@ namespace Heren.MedQC.Core
             {
                 RightPoint[] rightPoint = new RightPoint[]{
                   new RightPoint(MedRecord_RecMrBatch,"纸质病历批次查询","纸质病历批次查询"),
-                  new RightPoint(MedRecord_ReceiveInOrder,"纸质病历逐份接收","纸质病历逐份接收")
+                  new RightPoint(MedRecord_ReceiveInOrder,"纸质病历逐份接收","纸质病历逐份接收"),
+                  new RightPoint(MedRecord_RecMrBatchSend,"纸质病历批量提交","纸质病历批量提交")
                 };
                 return rightPoint;
             }

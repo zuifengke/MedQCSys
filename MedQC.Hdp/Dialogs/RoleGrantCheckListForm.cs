@@ -67,8 +67,13 @@ namespace Heren.MedQC.Hdp
             {
                 HdpProduct hdpProduct = lstHdpProducts[index];
                 cboProduct.Items.Add(hdpProduct);
+                if (DataCache.Instance.HdpProduct.NAME_SHORT == hdpProduct.NAME_SHORT)
+                {
+                    cboProduct.SelectedIndex = index;
+                }
             }
-            this.cboProduct.SelectedIndex = 0;
+            if (this.cboProduct.SelectedIndex == -1)
+                this.cboProduct.SelectedIndex = 0;
             return true;
         }
         /// <summary>
@@ -101,6 +106,7 @@ namespace Heren.MedQC.Hdp
                 if (dicHdpRoleGrant.ContainsKey(hdpRoleGrant.RoleRightKey))
                     continue;
                 dicHdpRoleGrant.Add(hdpRoleGrant.RoleRightKey, hdpRoleGrant);
+
             }
         }
         private void LoadFlpGrantCheckList()
@@ -111,7 +117,7 @@ namespace Heren.MedQC.Hdp
                 return;
             }
             string szProduct = (this.cboProduct.SelectedItem as HdpProduct).NAME_SHORT;
-            RightPoint[] rights =RightResource.GetRightPoints(szProduct);
+            RightPoint[] rights = RightResource.GetRightPoints(szProduct);
             if (rights != null)
             {
                 foreach (RightPoint point in rights)

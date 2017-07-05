@@ -36,7 +36,7 @@ namespace Heren.MedQC.HomePage.PageCards
             if (chkUnModified.Checked)
             {
                 if (szMsgState == string.Empty)
-                    szMsgState = SystemData.MsgStatus.Modified.ToString();
+                    szMsgState = SystemData.MsgStatus.UnCheck.ToString();
                 else
                     szMsgState += "," + SystemData.MsgStatus.UnCheck.ToString();
             }

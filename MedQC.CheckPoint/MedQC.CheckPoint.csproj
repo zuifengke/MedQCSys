@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\common\时效检查Command.cs" />
     <Compile Include="Commands\common\元素空项检查Command.cs" />
     <Compile Include="Commands\newhis\入院记录\chubuzhenduanCommand.cs" />
     <Compile Include="Commands\newhis\入院记录\fuzhujianchaCommand.cs" />

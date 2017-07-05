@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cardPanel1 = new MedQC.Test.CardPanel();
+            this.cardPanel1 = new CardPanel();
             this.SuspendLayout();
             // 
             // cardPanel1

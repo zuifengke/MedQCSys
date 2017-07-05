@@ -12,6 +12,21 @@ namespace Heren.MedQC.Utilities
     public class StringHelper
     {
         /// <summary>
+        /// 检查字符串包含字符数组中任意一个关键词
+        /// </summary>
+        /// <param name="szSource"></param>
+        /// <param name="arrTarget"></param>
+        /// <returns></returns>
+        public static bool ArrayContains(string szSource, string[] arrTarget)
+        {
+            foreach (var item in arrTarget)
+            {
+                if (szSource.IndexOf(item) > -1)
+                    return true;
+            }
+            return false;
+        }
+        /// <summary>
         /// 获取字节数
         /// str：需要获取的字符串
         /// </summary>

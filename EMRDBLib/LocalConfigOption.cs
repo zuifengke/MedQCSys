@@ -526,7 +526,10 @@ namespace EMRDBLib
             {
                 option.IsDrawingPatientIdentification = true;
             }
+            if (option.HOSPITAL_NAME.IndexOf("中国人民解放军总医院")>=0)
+            {
 
+            }
 #if DEBUG //调试时系统开发设置
             option.IsOpenHomePage = true;
             option.IsOpenFinalQC = true;

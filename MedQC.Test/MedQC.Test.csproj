@@ -56,6 +56,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Common.DockSuite, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.DockSuite.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Forms">
       <HintPath>..\Include\Common.Forms.dll</HintPath>
     </Reference>
@@ -95,6 +99,12 @@
     <Compile Include="ComponentTest.Designer.cs">
       <DependentUpon>ComponentTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocumentCompare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentCompare.Designer.cs">
+      <DependentUpon>DocumentCompare.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerateCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +122,12 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MedQC.MedRecord.Test\MedRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MedQC.MedRecord.Test\MedRecordForm.Designer.cs">
+      <DependentUpon>MedRecordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintDemo.cs">
       <SubType>Form</SubType>
@@ -131,6 +147,9 @@
     <EmbeddedResource Include="ComponentTest.resx">
       <DependentUpon>ComponentTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DocumentCompare.resx">
+      <DependentUpon>DocumentCompare.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GenerateCode.resx">
       <DependentUpon>GenerateCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -139,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MedQC.MedRecord.Test\MedRecordForm.resx">
+      <DependentUpon>MedRecordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintDemo.resx">
       <DependentUpon>PrintDemo.cs</DependentUpon>

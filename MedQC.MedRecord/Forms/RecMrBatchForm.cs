@@ -77,7 +77,7 @@ namespace Heren.MedQC.MedRecord
             }
             szBatchNo = this.txt_BATCH_NO.Text.Trim();
             DateTime dtSendTimeBegin = this.dtTimeBegin.Value;
-            DateTime dtSendTimeEnd = this.dtTimeEnd.Value;
+            DateTime dtSendTimeEnd = this.dtTimeEnd.Value.AddDays(1).AddSeconds(-1);
             List<RecMrBatch> lstRecMrBatchs = null;
             short shRet = RecMrBatchAccess.Instance.GetRecMrBatchs(dtSendTimeBegin, dtSendTimeEnd, szDeptCode, szBatchNo, ref lstRecMrBatchs);
             if (lstRecMrBatchs == null)

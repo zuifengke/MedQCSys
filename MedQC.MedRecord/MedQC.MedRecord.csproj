@@ -131,6 +131,12 @@
     <Compile Include="Forms\MrArchiveTableForm.Designer.cs">
       <DependentUpon>MrArchiveTableForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RecMrBatchSendForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RecMrBatchSendForm.Designer.cs">
+      <DependentUpon>RecMrBatchSendForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RecUploadNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MrArchiveTableForm.resx">
       <DependentUpon>MrArchiveTableForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RecMrBatchSendForm.resx">
+      <DependentUpon>RecMrBatchSendForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RecUploadNewForm.resx">
       <DependentUpon>RecUploadNewForm.cs</DependentUpon>

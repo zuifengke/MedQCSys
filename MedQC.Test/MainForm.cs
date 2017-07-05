@@ -104,8 +104,10 @@ namespace MedQC.Test
 
         private void button11_Click(object sender, EventArgs e)
         {
-            StringHelper.SimilarityResult similarityResult = StringHelper.SimilarityRate("我是中国浙江人", "我是美国纽约人");
-            Console.Write(string.Format("相似度为：{0}，消耗时间：{1}", similarityResult.Rate, similarityResult.ExeTime));
+            //StringHelper.SimilarityResult similarityResult = StringHelper.SimilarityRate("我是中国浙江人", "我是美国纽约人");
+            //Console.Write(string.Format("相似度为：{0}，消耗时间：{1}", similarityResult.Rate, similarityResult.ExeTime));
+            DocumentCompare frm = new DocumentCompare();
+            frm.ShowDialog();
         }
     }
 }

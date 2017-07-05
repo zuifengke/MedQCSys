@@ -66,34 +66,7 @@ namespace Heren.MedQC.MedRecord
             string szMsgStatus = string.Empty;
             string szBatchNo = string.Empty;
         }
-
-        private void dataTableView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-            List<MedicalQcMsg> lstMedicalQcMsg = null;
-            if (lstMedicalQcMsg == null || lstMedicalQcMsg.Count <= 0)
-                return;
-            int rowIndex = 0;
-            if (string.IsNullOrEmpty(lstMedicalQcMsg[0].TOPIC_ID))
-            {
-                return;
-            }
-        }
-
-        private void dataTableView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-        }
-
-        private void dataTableView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-        }
-
+        
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0)

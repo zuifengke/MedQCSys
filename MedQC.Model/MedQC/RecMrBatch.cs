@@ -92,5 +92,9 @@ namespace EMRDBLib
             string szRand = rand.Next(0, 9999).ToString().PadLeft(4, '0');
             return string.Format("{0}{1}", DateTime.Now.ToString("yyyyMMddHHmmss"), szRand);
         }
+        public string MakeBatchNo(string szDeptCode)
+        {
+            return string.Format("{0}_{1}", szDeptCode, DateTime.Now.ToString("yyyyMMddHHmmss"));
+        }
     }
 }

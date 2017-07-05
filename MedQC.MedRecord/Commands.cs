@@ -476,4 +476,31 @@ namespace Heren.MedQC.MedRecord
             return false;
         }
     }
+    public class ShowSystemCommand19 : AbstractCommand
+    {
+        public ShowSystemCommand19()
+        {
+            this.m_name = "纸质病历批量提交";
+        }
+        public override bool Execute(object param, object data)
+        {
+            MainForm form = param as MainForm;
+            if (form == null)
+                return false;
+            foreach (DockContentBase item in form.DockPanel.Contents)
+            {
+                if (item is RecMrBatchSendForm)
+                {
+                    item.Activate();
+                    item.OnRefreshView();
+                    return true;
+                }
+            }
+            RecMrBatchSendForm frm = new RecMrBatchSendForm(form);
+            frm.Show(form.DockPanel, DockState.Document);
+            frm.Activate();
+            frm.OnRefreshView();
+            return true;
+        }
+    }
 }
