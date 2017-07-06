@@ -140,7 +140,7 @@ namespace MedQCSys.DockForms
             this.LoadSystemScoreInfos();
             this.ShowStatusMessage(null);
             this.Update();
-            
+
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -195,7 +195,7 @@ namespace MedQCSys.DockForms
                 LogManager.Instance.WriteLog("DocScoreNewForm.OnHummanScoreSaved", ex);
             }
         }
-      
+
         /// <summary>
         /// 加载系统检查扣分信息
         /// </summary>
@@ -265,6 +265,10 @@ namespace MedQCSys.DockForms
                                         row2.Cells[this.col_2_QC_EXPLAIN.Index].Tag = qcCheckResult;
                                         row2.DefaultCellStyle.ForeColor = Color.Red;
                                     }
+                                    else
+                                    {
+                                        this.dgvSystemScore.Rows.RemoveAt(nRowIndex);
+                                    }
                                 }
 
                             }
@@ -295,6 +299,8 @@ namespace MedQCSys.DockForms
                                 row2.Cells[this.col_2_QC_EXPLAIN.Index].Tag = qcCheckResult;
                                 row2.DefaultCellStyle.ForeColor = Color.Red;
                             }
+                            else
+                                this.dgvSystemScore.Rows.Remove(row2);
                         }
                     }
                 }
@@ -576,7 +582,7 @@ namespace MedQCSys.DockForms
                     CollapseDataGridViewRow FirstRow = (row as CollapseDataGridViewRow);
                     foreach (var item in FirstRow.Rows)
                     {
-                       
+
                         var qcMsgDict = item.Tag as QcMsgDict;
                         if (qcMsgDict == null || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
                             continue;
@@ -632,7 +638,6 @@ namespace MedQCSys.DockForms
         {
             try
             {
-
                 if (e.RowIndex < 0 || e.ColumnIndex < 0)
                     return;
 
@@ -709,7 +714,7 @@ namespace MedQCSys.DockForms
             {
                 row.Cells[this.colItem.Index].Value = singleModel.QA_EVENT_TYPE;
                 row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
-          
+
             }
             else
             {
@@ -746,9 +751,9 @@ namespace MedQCSys.DockForms
         }
         public void LoadHummanScoreInfos()
         {
-            
+
             this.dgvHummanScore.Rows.Clear();
-            
+
             List<QaEventTypeDict> lstQaEventTypeDict = null;
             short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
             List<QcMsgDict> lstQcMsgDict = null;
@@ -800,12 +805,12 @@ namespace MedQCSys.DockForms
                         secondQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
                         secondQaEventType.MESSAGE_TITLE = childItem.QA_EVENT_TYPE;
                         listQcMsgDict.Add(secondQaEventType);
-                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE ).ToList();
+                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
                         if (secondMsgdict.Count > 0)
                         {
                             foreach (var itemMsgDict in secondMsgdict)
                             {
-                                itemMsgDict.OrderNo = secondMsgdict.IndexOf(itemMsgDict)+1;
+                                itemMsgDict.OrderNo = secondMsgdict.IndexOf(itemMsgDict) + 1;
                                 //添加二级分类下的质检问题项
                                 listQcMsgDict.Add(itemMsgDict);
                             }
@@ -820,6 +825,13 @@ namespace MedQCSys.DockForms
             this.dgvHummanScore.Expand(0);
         }
 
+        private void dgvSystemScore_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //if (e.ColumnIndex == this.colItem.Index)
+            //{
+
+            //}
+        }
     }
 
     public class ListQcMsgDict : List<QcMsgDict>

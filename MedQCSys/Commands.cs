@@ -30,6 +30,41 @@ namespace MedQCSys
     /// <summary>
     /// 显示角色管理界面
     /// </summary>
+    public class ShowLogCommand : AbstractCommand
+    {
+        public ShowLogCommand()
+        {
+            this.m_name = "系统日志";
+        }
+        public override bool Execute(object param, object data)
+        {
+            try
+            {
+                string file = string.Format("{0}\\Logs\\TxtLog", GlobalMethods.Misc.GetWorkingPath());
+                if (!System.IO.Directory.Exists(file))
+                {
+                    MessageBoxEx.ShowMessage("本地还没有产生日志目录!", file);
+                    return true;
+                }
+                try
+                {
+                    System.Diagnostics.Process.Start(file);
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxEx.ShowMessage("无法打开运行日志目录!", ex.Message + file);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
+            return true;
+        }
+    }
+    /// <summary>
+    /// 显示角色管理界面
+    /// </summary>
     public class ShowHomePageCommand2 : AbstractCommand
     {
         public ShowHomePageCommand2()

@@ -101,7 +101,7 @@ namespace Heren.MedQC.Maintenance.Dialogs
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            this.Dispose();
+            //this.Dispose();
         }
     }
 }

@@ -16,7 +16,8 @@ using Heren.Common.Controls;
 
 using EMRDBLib.DbAccess;
 using EMRDBLib;
-
+using Heren.MedQC.Utilities;
+using System.Linq;
 namespace MedQCSys.Dialogs
 {
     public partial class QuestionTypeForm : HerenForm
@@ -79,6 +80,7 @@ namespace MedQCSys.Dialogs
 
         protected override void OnShown(EventArgs e)
         {
+            this.treeView1.Nodes.Clear();
             List<EMRDBLib.QaEventTypeDict> lstQCEventTypes = null;
             short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQCEventTypes);
             if (shRet != SystemData.ReturnValue.OK)
@@ -114,6 +116,7 @@ namespace MedQCSys.Dialogs
             {
                 cboQcMsgDict.Items.Add(item);
             }
+
         }
 
         /// <summary>
@@ -127,27 +130,14 @@ namespace MedQCSys.Dialogs
             short shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(szQaEventType, ref lstMessage);
             if (shRet != SystemData.ReturnValue.OK || lstMessage == null)
                 return;
-            //根据MessageTitle再分组
-            System.Collections.Hashtable ht = new System.Collections.Hashtable();
-            for (int index = 0; index < lstMessage.Count; index++)
+            var reuslt = lstMessage.Select(m => m.MESSAGE_TITLE).Distinct().ToList();
+            foreach (var entry in reuslt)
             {
-                EMRDBLib.QcMsgDict qcMessageTemplet = lstMessage[index];
-                if (!ht.ContainsKey(qcMessageTemplet.MESSAGE_TITLE))
-                {
-                    List<EMRDBLib.QcMsgDict> lstQCMessageTemplet = this.GetSameTitleTemplet(qcMessageTemplet.MESSAGE_TITLE, lstMessage);
-                    if (lstQCMessageTemplet == null || lstQCMessageTemplet.Count == 0)
-                        continue;
-                    ht.Add(qcMessageTemplet.MESSAGE_TITLE, lstQCMessageTemplet);
-                }
-            }
-
-            foreach (System.Collections.DictionaryEntry entry in ht)
-            {
-                List<EMRDBLib.QcMsgDict> lsts = (List<EMRDBLib.QcMsgDict>)entry.Value;
-                if (entry.Key.ToString() != "")
+                var lsts = lstMessage.Where(m => m.MESSAGE_TITLE == entry).ToList();
+                if (entry != string.Empty)
                 {
                     TreeNode level2Node = new TreeNode();
-                    level2Node.Text = entry.Key.ToString();
+                    level2Node.Text = entry.ToString();
                     level2Node.ImageIndex = 0;
                     level2Node.SelectedImageIndex = 0;
                     parentNode.Nodes.Add(level2Node);
@@ -162,20 +152,20 @@ namespace MedQCSys.Dialogs
                         level2Node.Nodes.Add(childNode);
                     }
                 }
-            }
+                else
+                {
+                    for (int index = 0; index < lsts.Count; index++)
+                    {
+                        TreeNode childNode = new TreeNode();
+                        childNode.Tag = lsts[index];
+                        childNode.Text = lsts[index].MESSAGE;
+                        childNode.ImageIndex = 2;
+                        childNode.SelectedImageIndex = 2;
+                        parentNode.Nodes.Add(childNode);
+                    }
+                }
 
-            //创建没有标题的节点
-            List<EMRDBLib.QcMsgDict> lstEmpytTitle = (List<EMRDBLib.QcMsgDict>)ht[string.Empty];
-            if (lstEmpytTitle == null || lstEmpytTitle.Count == 0)
-                return;
-            for (int index = 0; index < lstEmpytTitle.Count; index++)
-            {
-                TreeNode childNode = new TreeNode();
-                childNode.Tag = lstEmpytTitle[index];
-                childNode.Text = lstEmpytTitle[index].MESSAGE;
-                childNode.ImageIndex = 2;
-                childNode.SelectedImageIndex = 2;
-                parentNode.Nodes.Add(childNode);
+
             }
         }
 
@@ -269,6 +259,70 @@ namespace MedQCSys.Dialogs
         {
             e.Node.ImageIndex = 1;
             e.Node.SelectedImageIndex = 1;
+        }
+
+        private void cboQcMsgDict_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cboQcMsgDict.SelectedItem == null)
+                    return;
+                QcMsgDict qcMsgDict = cboQcMsgDict.SelectedItem as QcMsgDict;
+                foreach (TreeNode n in this.treeView1.Nodes)
+                {
+                    if (Recursion(qcMsgDict, n))
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
+        }
+        private void ExpendNode(TreeNode node)
+        {
+            if (node.Parent.Text != null)
+            {
+                node.Parent.Expand();
+                //当为项级节点时
+                if (node.Parent.Level == 0)
+                {
+                    node.Parent.Expand();
+                }
+                //不是项级节点时
+                else
+                {
+                    ExpendNode(node.Parent);
+                }
+
+            }
+        }
+        private bool Recursion(QcMsgDict qcMsgDict,TreeNode node)
+        {
+            foreach (TreeNode item in node.Nodes)
+            {
+                QcMsgDict nodeQcMsgDict = item.Tag as QcMsgDict;
+                if (nodeQcMsgDict != null)
+                {
+                    if (nodeQcMsgDict.QC_MSG_CODE == qcMsgDict.QC_MSG_CODE)
+                    {
+                        ExpendNode(item);
+                        item.BackColor = Color.LightGray;
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        item.Collapse();
+                        item.BackColor = Color.White;
+                    }
+                }
+                if (Recursion(qcMsgDict, item))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

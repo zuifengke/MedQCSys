@@ -162,6 +162,7 @@ namespace Heren.MedQC.Maintenance
                     break;
                 if (!bIsDeletedRow) index++;
             }
+
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
             string szMessageText = null;
             if (result == EMRDBLib.SystemData.ReturnValue.FAILED)
@@ -363,6 +364,8 @@ namespace Heren.MedQC.Maintenance
                 row.Tag = timeQCRule;
                 this.dataGridView1.SetRowState(row, RowState.Normal);
             }
+            //Ë¢ÐÂorderValue
+            EMRDBLib.DbAccess.TimeQCRuleAccess.Instance.UpdateTimeQCRule(timeQCRule);
             return EMRDBLib.SystemData.ReturnValue.OK;
         }
 
@@ -545,10 +548,17 @@ namespace Heren.MedQC.Maintenance
             else
                 timeQCRule = timeQCRule.Clone() as TimeQCRule;
             timeQCRule.RuleID = timeQCRule.MakeRuleID();
-            int nRowIndex = this.dataGridView1.Rows.Add();
+            int nRowIndex = 0;
+            if (currRow != null)
+            {
+                nRowIndex = currRow.Index + 1;
+                DataTableViewRow dataTableViewRow = new DataTableViewRow();
+                this.dataGridView1.Rows.Insert(nRowIndex, dataTableViewRow);
+            }
+            else
+                nRowIndex = this.dataGridView1.Rows.Add();
             DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
             this.SetRowData(row, timeQCRule);
-
             this.dataGridView1.Focus();
             this.dataGridView1.SelectRow(row);
             this.dataGridView1.SetRowState(row, RowState.New);

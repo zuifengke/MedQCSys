@@ -226,7 +226,6 @@ namespace Heren.MedQC.Maintenance
             // colCheckPointID
             // 
             this.colCheckPointID.FillWeight = 130F;
-            this.colCheckPointID.Frozen = true;
             this.colCheckPointID.HeaderText = "规则编号";
             this.colCheckPointID.Name = "colCheckPointID";
             this.colCheckPointID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -234,7 +233,6 @@ namespace Heren.MedQC.Maintenance
             // 
             // colCheckType
             // 
-            this.colCheckType.Frozen = true;
             this.colCheckType.HeaderText = "检查类型";
             this.colCheckType.Items.Add("合理性");
             this.colCheckType.Items.Add("一致性");
@@ -247,14 +245,12 @@ namespace Heren.MedQC.Maintenance
             // 
             // colQaEventType
             // 
-            this.colQaEventType.Frozen = true;
             this.colQaEventType.HeaderText = "内容分类";
             this.colQaEventType.Name = "colQaEventType";
             this.colQaEventType.Width = 80;
             // 
             // colMsgDictMessage
             // 
-            this.colMsgDictMessage.Frozen = true;
             this.colMsgDictMessage.HeaderText = "缺陷内容";
             this.colMsgDictMessage.Name = "colMsgDictMessage";
             this.colMsgDictMessage.Width = 300;
@@ -326,6 +322,7 @@ namespace Heren.MedQC.Maintenance
             this.colHandlerCommand.CandidateWidth = 250;
             this.colHandlerCommand.HeaderText = "处理命令";
             this.colHandlerCommand.Name = "colHandlerCommand";
+            this.colHandlerCommand.PinyinFuzzyMatch = true;
             this.colHandlerCommand.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.colHandlerCommand.Width = 200;
             // 

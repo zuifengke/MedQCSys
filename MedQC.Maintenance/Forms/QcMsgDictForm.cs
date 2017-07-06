@@ -42,7 +42,7 @@ namespace Heren.MedQC.Maintenance
             this.Update();
             this.OnRefreshView();
         }
-
+        private List<QcCheckPoint> m_lstQcCheckPoint = null;
         /// <summary>
         /// 刷新病案质量问题分类信息列表
         /// </summary>
@@ -69,7 +69,7 @@ namespace Heren.MedQC.Maintenance
             this.dataGridView1.Rows.Clear();
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
-            List<EMRDBLib.QcMsgDict> lstQcMsgDicts = null;
+            List<QcMsgDict> lstQcMsgDicts = null;
             short shRet = QcMsgDictAccess.Instance.GetAllQcMsgDictList(ref lstQcMsgDicts);
             if (shRet == SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -84,6 +84,10 @@ namespace Heren.MedQC.Maintenance
             if (lstQcMsgDicts == null || lstQcMsgDicts.Count <= 0)
                 return;
             this.RefreshQCEventTypeColumn();
+            if (m_lstQcCheckPoint == null)
+                m_lstQcCheckPoint = new List<QcCheckPoint>();
+            shRet= QcCheckPointAccess.Instance.GetQcCheckPoints(ref m_lstQcCheckPoint);
+
             for (int index = 0; index < lstQcMsgDicts.Count; index++)
             {
                 EMRDBLib.QcMsgDict qcMsgDict = lstQcMsgDicts[index];
@@ -243,6 +247,15 @@ namespace Heren.MedQC.Maintenance
                 Math.Round(new decimal(GlobalMethods.Convert.StringToValue(qcMsgDict.SCORE, 0f)), 1).ToString("F1");
             row.Cells[this.col_IS_VALID.Index].Value = qcMsgDict.IS_VALID == 1 ? true : false;
             row.Cells[this.colIsVeto.Index].Value = qcMsgDict.ISVETO ? "是" : "否";
+            if (m_lstQcCheckPoint == null)
+                m_lstQcCheckPoint = new List<QcCheckPoint>();
+            if (m_lstQcCheckPoint.Exists(m => m.MsgDictCode == qcMsgDict.QC_MSG_CODE))
+            {
+                row.Cells[this.colAuto.Index].Value = Properties.Resources.auto;
+                row.Cells[this.colAuto.Index].ToolTipText = "已支持自动质控";
+            }
+            else
+                row.Cells[this.colAuto.Index].Value = null;
             return true;
         }
 

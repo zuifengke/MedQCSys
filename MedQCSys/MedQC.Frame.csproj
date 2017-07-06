@@ -239,35 +239,35 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Document\PageProperty.cs" />
-    <Compile Include="PatPage\DocScoreNewForm.cs">
+    <Compile Include="PatientPage\DocScoreNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DocScoreNewForm.Designer.cs">
+    <Compile Include="PatientPage\DocScoreNewForm.Designer.cs">
       <DependentUpon>DocScoreNewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\OperationForm.cs">
+    <Compile Include="PatientPage\OperationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\OperationForm.Designer.cs">
+    <Compile Include="PatientPage\OperationForm.Designer.cs">
       <DependentUpon>OperationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\EventArgs.cs" />
-    <Compile Include="PatPage\PatientInfoStrip.cs">
+    <Compile Include="PatientPage\EventArgs.cs" />
+    <Compile Include="PatientPage\PatientInfoStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PatPage\PatientInfoStrip.Designer.cs">
+    <Compile Include="PatientPage\PatientInfoStrip.Designer.cs">
       <DependentUpon>PatientInfoStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\PatientPageControl.cs">
+    <Compile Include="PatientPage\PatientPageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PatPage\PatientPageControl.Designer.cs">
+    <Compile Include="PatientPage\PatientPageControl.Designer.cs">
       <DependentUpon>PatientPageControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\PatientPageForm.cs">
+    <Compile Include="PatientPage\PatientPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\PatientPageForm.Designer.cs">
+    <Compile Include="PatientPage\PatientPageForm.Designer.cs">
       <DependentUpon>PatientPageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -275,16 +275,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\DiagnosisListForm.cs">
+    <Compile Include="PatientPage\DiagnosisListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DiagnosisListForm.Designer.cs">
+    <Compile Include="PatientPage\DiagnosisListForm.Designer.cs">
       <DependentUpon>DiagnosisListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\DocScoreForm.cs">
+    <Compile Include="PatientPage\DocScoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DocScoreForm.Designer.cs">
+    <Compile Include="PatientPage\DocScoreForm.Designer.cs">
       <DependentUpon>DocScoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\QuestionTypeForm.cs">
@@ -305,28 +305,28 @@
     <Compile Include="DockForms\DocumentBugsFrom.designer.cs">
       <DependentUpon>DocumentBugsFrom.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\DocumentListForm.cs">
+    <Compile Include="PatientPage\DocumentListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DocumentListForm.Designer.cs">
+    <Compile Include="PatientPage\DocumentListForm.Designer.cs">
       <DependentUpon>DocumentListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\DocumentListNewForm.cs">
+    <Compile Include="PatientPage\DocumentListNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DocumentListNewForm.Designer.cs">
+    <Compile Include="PatientPage\DocumentListNewForm.Designer.cs">
       <DependentUpon>DocumentListNewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\PatientIndexForm.cs">
+    <Compile Include="PatientPage\PatientIndexForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\PatientIndexForm.Designer.cs">
+    <Compile Include="PatientPage\PatientIndexForm.Designer.cs">
       <DependentUpon>PatientIndexForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\PatientInfoForm.cs">
+    <Compile Include="PatientPage\PatientInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\PatientInfoForm.Designer.cs">
+    <Compile Include="PatientPage\PatientInfoForm.Designer.cs">
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DockForms\PatsDocmentListForm.cs">
@@ -341,25 +341,25 @@
     <Compile Include="StatusBars\MainStatusStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PatPage\OrdersListForm.cs">
+    <Compile Include="PatientPage\OrdersListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\OrdersListForm.Designer.cs">
+    <Compile Include="PatientPage\OrdersListForm.Designer.cs">
       <DependentUpon>OrdersListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DockForms\DockContentBase.Designer.cs">
       <DependentUpon>DockContentBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\DocumentTimeForm.cs">
+    <Compile Include="PatientPage\DocumentTimeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\DocumentTimeForm.Designer.cs">
+    <Compile Include="PatientPage\DocumentTimeForm.Designer.cs">
       <DependentUpon>DocumentTimeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\ExamResultListForm.cs">
+    <Compile Include="PatientPage\ExamResultListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\ExamResultListForm.Designer.cs">
+    <Compile Include="PatientPage\ExamResultListForm.Designer.cs">
       <DependentUpon>ExamResultListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DockForms\PatientListFrom.cs">
@@ -377,16 +377,16 @@
     <Compile Include="DockForms\DockContentBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\TestResultListForm.cs">
+    <Compile Include="PatientPage\TestResultListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\TestResultListForm.Designer.cs">
+    <Compile Include="PatientPage\TestResultListForm.Designer.cs">
       <DependentUpon>TestResultListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatPage\VitalSignsGraphForm.cs">
+    <Compile Include="PatientPage\VitalSignsGraphForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatPage\VitalSignsGraphForm.designer.cs">
+    <Compile Include="PatientPage\VitalSignsGraphForm.designer.cs">
       <DependentUpon>VitalSignsGraphForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Document\BaodianDocForm.cs">
@@ -500,31 +500,31 @@
     <EmbeddedResource Include="Document\HerenDocumentForm.resx">
       <DependentUpon>HerenDocumentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocScoreNewForm.resx">
+    <EmbeddedResource Include="PatientPage\DocScoreNewForm.resx">
       <DependentUpon>DocScoreNewForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\OperationForm.resx">
+    <EmbeddedResource Include="PatientPage\OperationForm.resx">
       <DependentUpon>OperationForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\PatientIndexForm.resx">
+    <EmbeddedResource Include="PatientPage\PatientIndexForm.resx">
       <DependentUpon>PatientIndexForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\PatientInfoStrip.resx">
+    <EmbeddedResource Include="PatientPage\PatientInfoStrip.resx">
       <DependentUpon>PatientInfoStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\PatientPageControl.resx">
+    <EmbeddedResource Include="PatientPage\PatientPageControl.resx">
       <DependentUpon>PatientPageControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\PatientPageForm.resx">
+    <EmbeddedResource Include="PatientPage\PatientPageForm.resx">
       <DependentUpon>PatientPageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DiagnosisListForm.resx">
+    <EmbeddedResource Include="PatientPage\DiagnosisListForm.resx">
       <DependentUpon>DiagnosisListForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocScoreForm.resx">
+    <EmbeddedResource Include="PatientPage\DocScoreForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DocScoreForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -540,22 +540,22 @@
       <DependentUpon>DocumentBugsFrom.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocumentListForm.resx">
+    <EmbeddedResource Include="PatientPage\DocumentListForm.resx">
       <DependentUpon>DocumentListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocumentListNewForm.resx">
+    <EmbeddedResource Include="PatientPage\DocumentListNewForm.resx">
       <DependentUpon>DocumentListNewForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\DocumentTimeForm.resx">
+    <EmbeddedResource Include="PatientPage\DocumentTimeForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DocumentTimeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\ExamResultListForm.resx">
+    <EmbeddedResource Include="PatientPage\ExamResultListForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ExamResultListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\PatientInfoForm.resx">
+    <EmbeddedResource Include="PatientPage\PatientInfoForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -563,7 +563,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>PatsDocmentListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\OrdersListForm.resx">
+    <EmbeddedResource Include="PatientPage\OrdersListForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>OrdersListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -579,11 +579,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>DockContentBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\TestResultListForm.resx">
+    <EmbeddedResource Include="PatientPage\TestResultListForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TestResultListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatPage\VitalSignsGraphForm.resx">
+    <EmbeddedResource Include="PatientPage\VitalSignsGraphForm.resx">
       <DependentUpon>VitalSignsGraphForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

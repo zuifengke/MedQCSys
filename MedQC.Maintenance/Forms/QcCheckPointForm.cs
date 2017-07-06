@@ -67,6 +67,7 @@ namespace Heren.MedQC.Maintenance
         }
         private void LoadGridComboxItems()
         {
+            this.colHandlerCommand.PinyinFuzzyMatch = true;
             this.colHandlerCommand.Items.Clear();
             if (CommandHandler.Instance.Commands.Count > 0)
             {
@@ -83,7 +84,7 @@ namespace Heren.MedQC.Maintenance
         private void LoadGridViewData()
         {
             this.dataGridView1.Rows.Clear();
-            Dictionary<string, string> dicTimeEventName =  new Dictionary<string, string>();
+            Dictionary<string, string> dicTimeEventName = new Dictionary<string, string>();
             List<TimeQCEvent> lstTimeQCEvents = null;
             short result = EMRDBLib.DbAccess.TimeQCEventAccess.Instance.GetTimeQCEvents(ref lstTimeQCEvents);
             if (result != EMRDBLib.SystemData.ReturnValue.OK
@@ -109,7 +110,7 @@ namespace Heren.MedQC.Maintenance
 
 
             List<QcCheckPoint> lstQcCheckPoints = null;
-             result = EMRDBLib.DbAccess.QcCheckPointAccess.Instance.GetQcCheckPoints(ref lstQcCheckPoints);
+            result = EMRDBLib.DbAccess.QcCheckPointAccess.Instance.GetQcCheckPoints(ref lstQcCheckPoints);
             if (result != EMRDBLib.SystemData.ReturnValue.OK
                 && result != EMRDBLib.SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -182,6 +183,7 @@ namespace Heren.MedQC.Maintenance
                     break;
                 if (!bIsDeletedRow) index++;
             }
+            this.RefreshOrderValue();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
             string szMessageText = null;
             if (result == EMRDBLib.SystemData.ReturnValue.FAILED)
@@ -191,7 +193,15 @@ namespace Heren.MedQC.Maintenance
             MessageBoxEx.Show(szMessageText, MessageBoxIcon.Information);
             return result == EMRDBLib.SystemData.ReturnValue.OK;
         }
-
+        private void RefreshOrderValue()
+        {
+            foreach (DataTableViewRow item in this.dataGridView1.Rows)
+            {
+                QcCheckPoint qcCheckPoint  =item.Tag as QcCheckPoint;
+                qcCheckPoint.OrderValue = item.Index;
+                QcCheckPointAccess.Instance.Update(qcCheckPoint);
+            }
+        }
         /// <summary>
         /// 设置指定行显示的数据,以及绑定的数据
         /// </summary>
@@ -307,7 +317,7 @@ namespace Heren.MedQC.Maintenance
                 qcCheckPoint.CheckPointContent = cellValue.ToString();
             else
                 qcCheckPoint.CheckPointContent = string.Empty;
-            
+
             cellValue = row.Cells[this.colEvent.Index].Tag;
             if (cellValue == null || cellValue.ToString().Trim() == string.Empty)
             {
@@ -425,7 +435,7 @@ namespace Heren.MedQC.Maintenance
             StringBuilder sbDocTypeNameList = new StringBuilder();
             for (int index = 0; index < lstDocTypeInfos.Count; index++)
             {
-                 DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
+                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
                 if (docTypeInfo == null)
                     continue;
                 sbDocTypeIDList.Append(docTypeInfo.DocTypeID);
@@ -532,7 +542,16 @@ namespace Heren.MedQC.Maintenance
             else
                 qcCheckPoint = qcCheckPoint.Clone() as QcCheckPoint;
             qcCheckPoint.CheckPointID = qcCheckPoint.MakeCheckPointID();
-            int nRowIndex = this.dataGridView1.Rows.Add();
+            int nRowIndex = 0;
+            if (currRow != null)
+            {
+                nRowIndex = currRow.Index + 1;
+                DataTableViewRow dataTableViewRow = new DataTableViewRow();
+                this.dataGridView1.Rows.Insert(nRowIndex, dataTableViewRow);
+
+            }
+            else
+                nRowIndex = this.dataGridView1.Rows.Add();
             DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
             this.SetRowData(row, qcCheckPoint);
 
@@ -645,7 +664,7 @@ namespace Heren.MedQC.Maintenance
             else if (e.ColumnIndex == this.col_ELEMENT_NAME.Index)
             {
                 SelectElementForm frm = new SelectElementForm();
-                string doctypeids =row.Cells[this.colDocType.Index].Tag as string;
+                string doctypeids = row.Cells[this.colDocType.Index].Tag as string;
                 if (string.IsNullOrEmpty(doctypeids))
                 {
                     MessageBoxEx.ShowMessage("请先选择相关文书");
@@ -655,9 +674,9 @@ namespace Heren.MedQC.Maintenance
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     row.Cells[this.col_ELEMENT_NAME.Index].Value = frm.SelectedElement.ElementName;
-                    qcCheckPoint.ELEMENT_NAME= frm.SelectedElement.ElementName;
+                    qcCheckPoint.ELEMENT_NAME = frm.SelectedElement.ElementName;
                 }
-                else if(frm.SelectedElement==null)
+                else if (frm.SelectedElement == null)
                 {
                     row.Cells[this.col_ELEMENT_NAME.Index].Value = string.Empty;
                     qcCheckPoint.ELEMENT_NAME = string.Empty;

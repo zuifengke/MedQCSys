@@ -299,6 +299,7 @@ namespace MedQCSys.DockForms
             this.dgvSystemScore.RowHeadersVisible = false;
             this.dgvSystemScore.Size = new System.Drawing.Size(723, 355);
             this.dgvSystemScore.TabIndex = 8;
+            this.dgvSystemScore.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSystemScore_ColumnHeaderMouseDoubleClick);
             // 
             // col_2_Item
             // 
@@ -329,7 +330,7 @@ namespace MedQCSys.DockForms
             this.col_2_QC_EXPLAIN.Name = "col_2_QC_EXPLAIN";
             this.col_2_QC_EXPLAIN.Width = 300;
             // 
-            // DocScoreNew2Form
+            // DocScoreNewForm
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -342,7 +343,7 @@ namespace MedQCSys.DockForms
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("ËÎÌו", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "DocScoreNew2Form";
+            this.Name = "DocScoreNewForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

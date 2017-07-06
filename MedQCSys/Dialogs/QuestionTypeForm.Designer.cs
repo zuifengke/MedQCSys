@@ -104,8 +104,10 @@ namespace MedQCSys.Dialogs
             // 
             this.cboQcMsgDict.Location = new System.Drawing.Point(12, 411);
             this.cboQcMsgDict.Name = "cboQcMsgDict";
+            this.cboQcMsgDict.PinyinFuzzyMatch = true;
             this.cboQcMsgDict.Size = new System.Drawing.Size(582, 25);
             this.cboQcMsgDict.TabIndex = 9;
+            this.cboQcMsgDict.SelectedIndexChanged += new System.EventHandler(this.cboQcMsgDict_SelectedIndexChanged);
             // 
             // QuestionTypeForm
             // 
