@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -59,8 +60,11 @@
             this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
             this.xLabel6 = new Heren.Common.Forms.XLabel();
             this.xLabel1 = new Heren.Common.Forms.XLabel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsBrowseRequest = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataTableView1
@@ -88,6 +92,7 @@
             this.col_1_DEPT_NAME,
             this.col_INCHARGE_DOCTOR,
             this.col_MR_STATUS});
+            this.dataTableView1.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -358,6 +363,20 @@
             this.xLabel1.TabIndex = 2;
             this.xLabel1.Text = "入院科室：";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsBrowseRequest});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
+            // 
+            // tsBrowseRequest
+            // 
+            this.tsBrowseRequest.Name = "tsBrowseRequest";
+            this.tsBrowseRequest.Size = new System.Drawing.Size(152, 22);
+            this.tsBrowseRequest.Text = "申请病历浏览";
+            this.tsBrowseRequest.Click += new System.EventHandler(this.tsBrowseRequest_Click);
+            // 
             // PatOutHospitalListForm
             // 
             this.AcceptButton = this.btnSearch;
@@ -372,6 +391,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -406,5 +426,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_1_DEPT_NAME;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_INCHARGE_DOCTOR;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_MR_STATUS;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem tsBrowseRequest;
     }
 }

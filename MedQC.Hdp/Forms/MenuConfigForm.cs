@@ -24,7 +24,7 @@ namespace Heren.MedQC.Hdp
 {
     public partial class MenuConfigForm : DockContentBase
     {
-        public MenuConfigForm(MainForm form):base(form)
+        public MenuConfigForm(MainForm form) : base(form)
         {
             this.InitializeComponent();
             this.ShowHint = DockState.Document;
@@ -278,7 +278,7 @@ namespace Heren.MedQC.Hdp
             }
             else
                 szMessageText = string.Format("保存成功,已保存{0}条记录！", count);
-            
+
             return shRet == SystemData.ReturnValue.OK;
         }
 
@@ -361,7 +361,7 @@ namespace Heren.MedQC.Hdp
             if (row.Cells[this.colShortCuts.Index].Value != null)
                 hdpUIConfig.ShortCuts = (string)row.Cells[this.colShortCuts.Index].Value;
 
-          
+
             if (row.Cells[this.colRightKey.Index].Value != null)
                 hdpUIConfig.UIRightKey = (string)row.Cells[this.colRightKey.Index].Value;
             if (row.Cells[this.colRightDesc.Index].Value != null)
@@ -467,11 +467,16 @@ namespace Heren.MedQC.Hdp
         /// </summary>
         private void AddNewItem()
         {
+            int index = 0;
+            if (this.dataGridView1.SelectedRows.Count > 0)
+                index = this.dataGridView1.SelectedRows[0].Index + 1;
             //创建数据
             HdpUIConfig hdpUIConfig = new HdpUIConfig();
             //创建行
-            int index = this.dataGridView1.Rows.Add();
-            DataTableViewRow row = this.dataGridView1.Rows[index];
+            //int index = this.dataGridView1.Rows.Add();
+            DataTableViewRow row = new DataTableViewRow();
+            this.dataGridView1.Rows.Insert(index, row);
+            //DataTableViewRow row = this.dataGridView1.Rows[index];
             hdpUIConfig.UIConfigID = hdpUIConfig.MakeUIConfigID();
             row.Tag = hdpUIConfig;
             this.dataGridView1.SetRowState(row, RowState.New);

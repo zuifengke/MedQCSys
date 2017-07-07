@@ -44,6 +44,10 @@ namespace Heren.MedQC.Core
         /// 纸质病历批量提交
         /// </summary>
         public static string MedRecord_RecMrBatchSend = "MedRecord_RecMrBatchSend";
+        /// <summary>
+        /// 病历浏览审核
+        /// </summary>
+        public static string MedRecord_RecBrowseRequest = "MedRecord_RecBrowseRequest";
 
 
         #region AbstractRight 成员
@@ -63,9 +67,11 @@ namespace Heren.MedQC.Core
             else if (szProduct == PRODUCT_MED_RECORD)
             {
                 RightPoint[] rightPoint = new RightPoint[]{
+                  new RightPoint(PRODUCT_MED_RECORD,"病案管理系统",""),
                   new RightPoint(MedRecord_RecMrBatch,"纸质病历批次查询","纸质病历批次查询"),
                   new RightPoint(MedRecord_ReceiveInOrder,"纸质病历逐份接收","纸质病历逐份接收"),
-                  new RightPoint(MedRecord_RecMrBatchSend,"纸质病历批量提交","纸质病历批量提交")
+                  new RightPoint(MedRecord_RecMrBatchSend,"纸质病历批量提交","纸质病历批量提交"),
+                  new RightPoint(MedRecord_RecBrowseRequest,"病历浏览审核","病历浏览审核")
                 };
                 return rightPoint;
             }

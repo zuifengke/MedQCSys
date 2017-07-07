@@ -21,10 +21,18 @@ namespace MedQC.Test
 
         private void button1_Click(object sender, EventArgs e)
         {
+            GenerateCode2("herenhis");
+        }
+
+        private string GenerateCode2(string dbname)
+        {
             string tableName = this.txtTableName.Text;
             string sql = string.Format(" select table_name,column_name,comments from user_col_comments where Table_Name='{0}'", tableName);
             DataSet ds = null;
-            HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
+            if (dbname == "herenhis")
+                HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
+            else if (dbname == "medqc")
+                CommonAccess.Instance.ExecuteQuery(sql, out ds);
             List<UserColComments> lstUserColComments = new List<UserColComments>();
             if (ds != null)
             {
@@ -49,7 +57,10 @@ namespace MedQC.Test
                 }
             }
             sql = string.Format("SELECT TABLE_NAME,COLUMN_NAME,t.DATA_TYPE FROM user_tab_columns t where t.table_name ='" + tableName + "'");
-            HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
+            if (dbname == "herenhis")
+                HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
+            else if (dbname == "medqc")
+                CommonAccess.Instance.ExecuteQuery(sql, out ds);
             if (ds != null)
             {
                 this.richTextBox2.Clear();
@@ -71,6 +82,13 @@ namespace MedQC.Test
                     this.richTextBox2.AppendText("\n");
                 }
             }
+
+            return sql;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GenerateCode2("medqc");
         }
     }
     public class UserColComments

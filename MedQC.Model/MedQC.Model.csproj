@@ -85,6 +85,7 @@
     <Compile Include="MedQC\RecCodeCompasion.cs" />
     <Compile Include="MedQC\KeyValueData.cs" />
     <Compile Include="MedQC\MrArchive.cs" />
+    <Compile Include="MedQC\RecBrowseRequest.cs" />
     <Compile Include="MedQC\RecPack.cs" />
     <Compile Include="MedQC\RecUpload.cs" />
     <Compile Include="MedQC\RecPrintLog.cs" />

@@ -113,6 +113,12 @@
     <Compile Include="Dialogs\HolidaySettingForm.Designer.cs">
       <DependentUpon>HolidaySettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\RecBrowseRequestDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\RecBrowseRequestDialog.Designer.cs">
+      <DependentUpon>RecBrowseRequestDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SettingCodeTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,17 +143,17 @@
     <Compile Include="Forms\RecMrBatchSendForm.Designer.cs">
       <DependentUpon>RecMrBatchSendForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RecBrowseRequestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RecBrowseRequestForm.designer.cs">
+      <DependentUpon>RecBrowseRequestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RecUploadNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\RecUploadNewForm.designer.cs">
       <DependentUpon>RecUploadNewForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RecUploadForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RecUploadForm.designer.cs">
-      <DependentUpon>RecUploadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RecPrintLogMoneyStatisticForm.cs">
       <SubType>Form</SubType>
@@ -241,6 +247,9 @@
     <EmbeddedResource Include="Dialogs\HolidaySettingForm.resx">
       <DependentUpon>HolidaySettingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\RecBrowseRequestDialog.resx">
+      <DependentUpon>RecBrowseRequestDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SettingCodeTypeForm.resx">
       <DependentUpon>SettingCodeTypeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,11 +262,11 @@
     <EmbeddedResource Include="Forms\RecMrBatchSendForm.resx">
       <DependentUpon>RecMrBatchSendForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RecBrowseRequestForm.resx">
+      <DependentUpon>RecBrowseRequestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RecUploadNewForm.resx">
       <DependentUpon>RecUploadNewForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RecUploadForm.resx">
-      <DependentUpon>RecUploadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RecPrintLogMoneyStatisticForm.resx">
       <DependentUpon>RecPrintLogMoneyStatisticForm.cs</DependentUpon>

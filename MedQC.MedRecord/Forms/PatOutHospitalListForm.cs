@@ -25,6 +25,7 @@ using MedQCSys.DockForms;
 using MedQCSys;
 using System.Collections;
 using MedQCSys.PatPage;
+using Heren.MedQC.MedRecord.Dialogs;
 
 namespace Heren.MedQC.MedRecord
 {
@@ -106,7 +107,10 @@ namespace Heren.MedQC.MedRecord
             List<PatVisitInfo> lstPatVisitInfo = null;
             short shRet = PatVisitAccess.Instance.GetPatVisits(szDeptCode, szUserID, szPatientID, szPatientName, dtVisitTimeBegin, dtVisitTimeEnd, dtDischargeTimeBegin, dtDischargeTimeEnd, szDichargeMode, ref lstPatVisitInfo);
             if (lstPatVisitInfo == null)
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
                 return;
+            }
             int rowIndex = 0;
             foreach (var item in lstPatVisitInfo)
             {
@@ -165,5 +169,54 @@ namespace Heren.MedQC.MedRecord
             this.MainForm.SwitchPatient(patVisitInfo);
         }
 
+        private void tsBrowseRequest_Click(object sender, EventArgs e)
+        {
+            if (this.dataTableView1.SelectedRows.Count <= 0)
+            {
+                MessageBoxEx.ShowMessage("请选择申请浏览病历");
+                return;
+            }
+            PatVisitInfo patVisitInfo = this.dataTableView1.SelectedRows[0].Tag as PatVisitInfo;
+            if (patVisitInfo == null)
+                return;
+            string szPatientID = patVisitInfo.PATIENT_ID;
+            string szVisitID = patVisitInfo.VISIT_ID;
+            string szPatientName = patVisitInfo.PATIENT_NAME;
+            string szRequestID = SystemParam.Instance.UserInfo.ID;
+            List<RecBrowseRequest> lstRecBrowseRequest = null;
+            short shRet = RecBrowseRequestAccess.Instance.GetList(szPatientID, szVisitID, szRequestID, ref lstRecBrowseRequest);
+            if (lstRecBrowseRequest != null 
+                && lstRecBrowseRequest.Count > 0 
+                && lstRecBrowseRequest[0].STATUS == 1)
+            {
+                MessageBoxEx.ShowMessage("审核已经通过，可直接打开浏览");
+                return;
+            }
+            if (MessageBoxEx.ShowConfirm("确定申请浏览病历吗？") == DialogResult.OK)
+            {
+                
+                RecBrowseRequestDialog dialog = new RecBrowseRequestDialog();
+                RecBrowseRequest recBrowseRequest = null;
+                if (lstRecBrowseRequest == null)
+                {
+                    recBrowseRequest = new RecBrowseRequest();
+                    recBrowseRequest.DISCHARGE_TIME = patVisitInfo.DISCHARGE_TIME;
+                    recBrowseRequest.PATIENT_ID = patVisitInfo.PATIENT_ID;
+                    recBrowseRequest.VISIT_ID = patVisitInfo.VISIT_ID;
+                    recBrowseRequest.VISIT_NO = patVisitInfo.VISIT_NO;
+                    recBrowseRequest.PATIENT_NAME = patVisitInfo.PATIENT_NAME;
+                    recBrowseRequest.REQUEST_ID = SystemParam.Instance.UserInfo.ID;
+                    recBrowseRequest.REQUEST_NAME = SystemParam.Instance.UserInfo.Name;
+                    recBrowseRequest.REQUEST_TIME = SysTimeHelper.Instance.Now;
+                }
+                else
+                    recBrowseRequest = lstRecBrowseRequest[0];
+                dialog.RecBrowseRequest = recBrowseRequest;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+
+                }
+            }
+        }
     }
 }

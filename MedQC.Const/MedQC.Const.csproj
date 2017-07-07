@@ -67,6 +67,7 @@
     <Compile Include="BAJK\BAJK11Table.cs" />
     <Compile Include="BAJK\BAJK09Table.cs" />
     <Compile Include="BAJK\GyGydmTable.cs" />
+    <Compile Include="DataTable\RecBrowseRequestTable.cs" />
     <Compile Include="HerenHis\InpBillDetailTable.cs" />
     <Compile Include="TypeConst\DataGroup.cs" />
     <Compile Include="DataTable\HdpParameterTable.cs" />

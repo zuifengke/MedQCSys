@@ -93,6 +93,10 @@ namespace EMRDBLib
         public struct DataTable
         {
             /// <summary>
+            /// 病历浏览申请    
+            /// </summary>
+            public const string REC_BROWSE_REQUEST = "REC_BROWSE_REQUEST";
+            /// <summary>
             /// 病案上传编码对照表
             /// </summary>
             public const string REC_CODE_COMPASION = "REC_CODE_COMPASION";

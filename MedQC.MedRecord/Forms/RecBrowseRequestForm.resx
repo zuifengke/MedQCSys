@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,40 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="col_1_PATIENT_NAME.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="txt_DEPT_NAME.BindingEvents" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
+        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
+        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAAAtEb3VibGVDbGljawYEAAAA
+        FVhUZXh0Qm94MV9Eb3VibGVDbGljaws=
+</value>
+  </data>
+  <data name="btnUpload.BindingEvents" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
+        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
+        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAAAVDbGljawYEAAAADlhCdXR0
+        b24yX0NsaWNrCw==
+</value>
+  </data>
+  <data name="btnSearch.BindingEvents" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
+        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
+        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAAAVDbGljawYEAAAADlhCdXR0
+        b24xX0NsaWNrCw==
+</value>
+  </data>
+  <data name="XDataGrid1.BindingEvents" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
+        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
+        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAAA5DZWxsTW91c2VDbGljawYE
+        AAAAGVhEYXRhR3JpZDFfQ2VsbE1vdXNlQ2xpY2sL
+</value>
+  </data>
+  <data name="XDataGrid1.BindingEvents1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
+        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
+        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAABRDZWxsTW91c2VEb3VibGVD
+        bGljawYEAAAAH1hEYXRhR3JpZDFfQ2VsbE1vdXNlRG91YmxlQ2xpY2sL
+</value>
+  </data>
+  <metadata name="col_Chk.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="col_PATIENT_SEX.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="col_入院次.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="col_AGE.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="col_就诊流水号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="col_PATIENT_ID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_VISIT_TIME.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_DISCHARGE_TIME.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_DISCHARGE_MODE.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_DIAGNOSIS.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_1_DEPT_NAME.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_INCHARGE_DOCTOR.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="col_MR_STATUS.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
   </metadata>
 </root>

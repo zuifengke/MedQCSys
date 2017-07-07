@@ -32,6 +32,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.txtTableName = new System.Windows.Forms.TextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -40,7 +41,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "生成";
+            this.button1.Text = "新军卫生成";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -67,6 +68,16 @@
             this.richTextBox2.TabIndex = 1;
             this.richTextBox2.Text = "";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(320, 14);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(90, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "质控系统生成";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // GenerateCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -75,6 +86,7 @@
             this.Controls.Add(this.txtTableName);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "GenerateCode";
             this.Text = "代码生成器";
@@ -89,5 +101,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TextBox txtTableName;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Button button2;
     }
 }

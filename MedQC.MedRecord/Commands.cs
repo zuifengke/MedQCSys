@@ -503,4 +503,31 @@ namespace Heren.MedQC.MedRecord
             return true;
         }
     }
+    public class ShowSystemCommand20 : AbstractCommand
+    {
+        public ShowSystemCommand20()
+        {
+            this.m_name = "病历浏览审核";
+        }
+        public override bool Execute(object param, object data)
+        {
+            MainForm form = param as MainForm;
+            if (form == null)
+                return false;
+            foreach (DockContentBase item in form.DockPanel.Contents)
+            {
+                if (item is RecBrowseRequestForm)
+                {
+                    item.Activate();
+                    item.OnRefreshView();
+                    return true;
+                }
+            }
+            RecBrowseRequestForm frm = new RecBrowseRequestForm(form);
+            frm.Show(form.DockPanel, DockState.Document);
+            frm.Activate();
+            frm.OnRefreshView();
+            return true;
+        }
+    }
 }
