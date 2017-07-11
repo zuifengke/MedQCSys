@@ -185,38 +185,36 @@ namespace Heren.MedQC.MedRecord
             string szRequestID = SystemParam.Instance.UserInfo.ID;
             List<RecBrowseRequest> lstRecBrowseRequest = null;
             short shRet = RecBrowseRequestAccess.Instance.GetList(szPatientID, szVisitID, szRequestID, ref lstRecBrowseRequest);
-            if (lstRecBrowseRequest != null 
-                && lstRecBrowseRequest.Count > 0 
+            if (lstRecBrowseRequest != null
+                && lstRecBrowseRequest.Count > 0
                 && lstRecBrowseRequest[0].STATUS == 1)
             {
                 MessageBoxEx.ShowMessage("审核已经通过，可直接打开浏览");
                 return;
             }
-            if (MessageBoxEx.ShowConfirm("确定申请浏览病历吗？") == DialogResult.OK)
-            {
-                
-                RecBrowseRequestDialog dialog = new RecBrowseRequestDialog();
-                RecBrowseRequest recBrowseRequest = null;
-                if (lstRecBrowseRequest == null)
-                {
-                    recBrowseRequest = new RecBrowseRequest();
-                    recBrowseRequest.DISCHARGE_TIME = patVisitInfo.DISCHARGE_TIME;
-                    recBrowseRequest.PATIENT_ID = patVisitInfo.PATIENT_ID;
-                    recBrowseRequest.VISIT_ID = patVisitInfo.VISIT_ID;
-                    recBrowseRequest.VISIT_NO = patVisitInfo.VISIT_NO;
-                    recBrowseRequest.PATIENT_NAME = patVisitInfo.PATIENT_NAME;
-                    recBrowseRequest.REQUEST_ID = SystemParam.Instance.UserInfo.ID;
-                    recBrowseRequest.REQUEST_NAME = SystemParam.Instance.UserInfo.Name;
-                    recBrowseRequest.REQUEST_TIME = SysTimeHelper.Instance.Now;
-                }
-                else
-                    recBrowseRequest = lstRecBrowseRequest[0];
-                dialog.RecBrowseRequest = recBrowseRequest;
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
 
-                }
+            RecBrowseRequestDialog dialog = new RecBrowseRequestDialog();
+            RecBrowseRequest recBrowseRequest = null;
+            if (lstRecBrowseRequest == null)
+            {
+                recBrowseRequest = new RecBrowseRequest();
+                recBrowseRequest.DISCHARGE_TIME = patVisitInfo.DISCHARGE_TIME;
+                recBrowseRequest.PATIENT_ID = patVisitInfo.PATIENT_ID;
+                recBrowseRequest.VISIT_ID = patVisitInfo.VISIT_ID;
+                recBrowseRequest.VISIT_NO = patVisitInfo.VISIT_NO;
+                recBrowseRequest.PATIENT_NAME = patVisitInfo.PATIENT_NAME;
+                recBrowseRequest.REQUEST_ID = SystemParam.Instance.UserInfo.ID;
+                recBrowseRequest.REQUEST_NAME = SystemParam.Instance.UserInfo.Name;
+                recBrowseRequest.REQUEST_TIME = SysTimeHelper.Instance.Now;
             }
+            else
+                recBrowseRequest = lstRecBrowseRequest[0];
+            dialog.RecBrowseRequest = recBrowseRequest;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+
         }
     }
 }

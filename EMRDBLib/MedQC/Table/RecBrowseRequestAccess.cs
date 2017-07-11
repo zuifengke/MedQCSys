@@ -394,6 +394,109 @@ namespace EMRDBLib
             }
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
+        public short GetList(string szStatus, DateTime dtRequestTimeBegin, DateTime dtRequestTimeEnd, string szPatientID, ref List<RecBrowseRequest> lst)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("*");
+            string szCondition = string.Format("1=1");
+            if (!string.IsNullOrEmpty(szStatus))
+            {
+                decimal status = SystemData.BrowseRequestStatus.GetMrStatusCode(szStatus);
+                szCondition = string.Format("{0} AND {1}={2}"
+                    , szCondition
+                    , SystemData.RecBrowseRequestTable.STATUS
+                    , status);
+            }
+
+            szCondition = string.Format("{0} AND {1}>={2} AND {1}<={3}"
+                , szCondition
+                , SystemData.RecBrowseRequestTable.REQUEST_TIME
+                , base.MedQCAccess.GetSqlTimeFormat(dtRequestTimeBegin)
+                , base.MedQCAccess.GetSqlTimeFormat(dtRequestTimeEnd));
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND {1}='{2}'"
+                    , szCondition
+                    , SystemData.RecBrowseRequestTable.PATIENT_ID
+                    , szPatientID);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
+                    , sbField.ToString(), TableName, szCondition);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lst == null)
+                    lst = new List<RecBrowseRequest>();
+                do
+                {
+                    RecBrowseRequest model = new RecBrowseRequest();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.RecBrowseRequestTable.APPROVAL_ID:
+                                model.APPROVAL_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.APPROVAL_NAME:
+                                model.APPROVAL_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.APPROVAL_TIME:
+                                model.APPROVAL_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.RecBrowseRequestTable.DISCHARGE_TIME:
+                                model.DISCHARGE_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.RecBrowseRequestTable.ID:
+                                model.ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.PATIENT_ID:
+                                model.PATIENT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.PATIENT_NAME:
+                                model.PATIENT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.REQUEST_ID:
+                                model.REQUEST_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.REQUEST_NAME:
+                                model.REQUEST_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.REQUEST_TIME:
+                                model.REQUEST_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.RecBrowseRequestTable.STATUS:
+                                model.STATUS = decimal.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.RecBrowseRequestTable.VISIT_ID:
+                                model.VISIT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.VISIT_NO:
+                                model.REQUEST_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecBrowseRequestTable.REMARK:
+                                model.REMARK = dataReader.GetValue(i).ToString();
+                                break;
+                        }
+                    }
+                    lst.Add(model);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+}, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
 
     }
 }

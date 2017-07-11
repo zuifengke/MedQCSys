@@ -2113,7 +2113,8 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.PatVisitView.VISIT_TIME);
             sbField.AppendFormat("{0}", SystemData.PatVisitView.VISIT_TYPE);
 
-            string szCondition = string.Format("1=1");
+            string szCondition = string.Format("1=1 AND {0} is not NULL"
+                , SystemData.PatVisitView.DISCHARGE_TIME);
 
             if (!string.IsNullOrEmpty(szDeptCode))
             {
@@ -2153,7 +2154,7 @@ namespace EMRDBLib.DbAccess
             if (dtVisitTimeBegin != SystemParam.Instance.DefaultTime
                 && dtVisitTimeEnd != SystemParam.Instance.DefaultTime)
             {
-                szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3}"
+                szCondition = string.Format("{0} AND {1} > {2} AND {1} < {3} "
                     , szCondition
                     , SystemData.PatVisitView.VISIT_TIME
                     , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)

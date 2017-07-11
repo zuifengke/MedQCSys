@@ -93,6 +93,7 @@
     <Compile Include="HerenHis\PatMasterIndexTable.cs" />
     <Compile Include="HerenHis\BaseCodeDictTable.cs" />
     <Compile Include="HerenHis\InpVisitTable.cs" />
+    <Compile Include="TypeConst\BrowseRequestStatus.cs" />
     <Compile Include="TypeConst\ReportTypeApplyEnv.cs" />
     <Compile Include="TypeConst\PaperState.cs" />
     <Compile Include="TypeConst\PaperReceive.cs" />
