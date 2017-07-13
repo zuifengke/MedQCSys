@@ -143,6 +143,10 @@ namespace EMRDBLib
         /// 错误次数
         /// </summary>
         public int ERROR_COUNT { get; set; }
+        /// <summary>
+        /// 病历ID号
+        /// </summary>
+        public string DOC_ID { get; set; }
 
         public MedicalQcMsg()
         {
@@ -151,6 +155,7 @@ namespace EMRDBLib
             this.DEPT_NAME = string.Empty;
             this.PATIENT_NAME = string.Empty;
             this.TOPIC_ID = string.Empty;
+            this.DOC_ID = string.Empty;
             this.TOPIC = string.Empty;
             this.PARENT_DOCTOR = string.Empty;
             this.SUPER_DOCTOR = string.Empty;

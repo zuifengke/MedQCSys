@@ -25,9 +25,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result= CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
 
-            string szSQl = string.Format("select DIAG_DATE, TREAT_DAYS, TREAT_RESULT from DIAGNOSIS@link_emr t where t.patient_id ='{0}' and t.visit_no = '{1}' and t.DIAG_TYPE = 3 "
+            string szSQl = string.Format("select DIAG_DATE, TREAT_DAYS, TREAT_RESULT from DIAGNOSIS_V t where t.patient_id ='{0}' and t.visit_no = '{1}' and t.DIAG_TYPE = 3 "
                 , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)

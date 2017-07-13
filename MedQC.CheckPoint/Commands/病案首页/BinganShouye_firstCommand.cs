@@ -10,13 +10,14 @@ using Heren.MedQC.Core;
 namespace Heren.MedQC.CheckPoint.Commands.newhis
 {
     /// <summary>
-    /// 处理规则：出院必须有出院医嘱
+    /// 缺陷内容：某项未填写、填写不规范、填写错误
+    /// 核查方法：入院诊断、确诊日期、确诊天数、住院天数、出院科室、入院科室及时间必填
     /// </summary>
-    public class ChuyuanOrderCommand : AbstractCommand
+    public class BinganShouye_firstCommand : AbstractCommand
     {
-        public ChuyuanOrderCommand()
+        public BinganShouye_firstCommand()
         {
-            this.m_name = "出院必须有出院医嘱规则处理";
+            this.m_name = "新军卫-某项未填写、填写不规范、填写错误";
         }
         public override bool Execute(object param, object data, out object result)
         {
@@ -24,22 +25,16 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             PatVisitInfo patVisitLog = data as PatVisitInfo;
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
-
-            if (patVisitLog.DISCHARGE_TIME == patVisitLog.DefaultTime)
-            {
-                qcCheckResult.QC_EXPLAIN = "患者未出院，规则通过";
-                qcCheckResult.QC_RESULT = 1;
-                return true;
-            }
-            string szSQl = string.Format("select DEPT_DISCHARGE_FROM,DEPT_ADMISSION_TO,ADMISSION_DATE_TIME from inp_visit@link_emr t where t.patient_id ='{0}' and t.visit_id = '{1}'"
+            string szSQl = string.Format("select DEPT_DISCHARGE_FROM,DEPT_ADMISSION_TO,ADMISSION_DATE_TIME from pat_visit_v t where t.patient_id ='{0}' and t.visit_no = '{1}'"
                 , patVisitLog.PATIENT_ID
-                ,patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             DataSet ds = null;
-            
-           
-            short shRet=CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
+            short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
-                return true;
+            {
+                qcCheckResult.QC_RESULT = 1;
+                return false;
+            }
             StringBuilder description = new StringBuilder();
             string DEPT_DISCHARGE_FROM = ds.Tables[0].Rows[0]["DEPT_DISCHARGE_FROM"].ToString();
             if (string.IsNullOrEmpty(DEPT_DISCHARGE_FROM))
@@ -56,9 +51,16 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             {
                 description.Append("入院时间为空;");
             }
+            if (description.Length == 0)
+            {
+                qcCheckResult.QC_RESULT = 1;
+                qcCheckResult.QC_EXPLAIN = "规则通过";
+                return true;
+            }
 
+            qcCheckResult.QC_RESULT = 0;
             qcCheckResult.QC_EXPLAIN = description.ToString();
-            qcCheckResult.SCORE = qcCheckPoint.Score;
+            qcCheckResult.ERROR_COUNT = 1;
             return true;
         }
     }

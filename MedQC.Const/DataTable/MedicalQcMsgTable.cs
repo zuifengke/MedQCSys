@@ -135,6 +135,10 @@ namespace EMRDBLib
             /// 错误次数
             /// </summary>
             public const string ERROR_COUNT = "ERROR_COUNT";
+            /// <summary>
+            /// 病历ID号
+            /// </summary>
+            public const string DOC_ID = "DOC_ID";
         }
     }
 }

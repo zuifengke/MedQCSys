@@ -637,6 +637,7 @@ namespace MedQCSys.DockForms
                 medicalQcMsg.DOCTOR_IN_CHARGE = docInfo.CREATOR_NAME;
                 medicalQcMsg.TOPIC = docInfo.DOC_TITLE;
                 medicalQcMsg.TOPIC_ID = docInfo.DOC_SETID;
+                medicalQcMsg.DOC_ID = docInfo.DOC_ID;
             }
             SelectQuestionForm selectQuestionForm = new SelectQuestionForm();
             selectQuestionForm.MedicalQcMsg = medicalQcMsg;
