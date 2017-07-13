@@ -26,9 +26,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
 
-            string szSQl = string.Format("select t.SPEC_LEVEL_NURS_DAYS,t.FIRST_LEVEL_NURS_DAYS,t.SECOND_LEVEL_NURS_DAYS,t.ADMISSION_DATE_TIME,t.DISCHARGE_DATE_TIME from INP_VISIT@link_emr t where t.PATIENT_ID = '{0}' and t.VISIT_NO = '{1}' "
-                , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+            string szSQl = string.Format("select t.SPEC_LEVEL_NURS_DAYS,t.FIRST_LEVEL_NURS_DAYS,t.SECOND_LEVEL_NURS_DAYS,t.ADMISSION_DATE_TIME,t.DISCHARGE_DATE_TIME from PAT_VISIT_V t where t.PATIENT_ID = '{0}' and t.VISIT_NO = '{1}' "
+                , patVisitLog.PATIENT_ID 
+                , patVisitLog.VISIT_NO);
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)

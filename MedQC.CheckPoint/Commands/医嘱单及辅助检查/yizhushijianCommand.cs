@@ -32,7 +32,7 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                 qcCheckResult.QC_RESULT = 1;
                 return true;
             }
-            string szSQl = string.Format("select a.order_text,a.STOP_DATE_TIME,a.START_DATE_TIME from perform_orders@link_emr a where a.VISIT_NO ='{1}' and a.PATIENT_ID ='{0}' and a.PERFORM_STATUS not in (4,7) and (STOP_DATE_TIME is null or START_DATE_TIME is null)"
+            string szSQl = string.Format("select a.order_text,a.END_DATE_TIME,a.START_DATE_TIME from orders_v a where a.VISIT_ID ='{1}' and a.PATIENT_ID ='{0}' and a.ORDER_STATUS not in (4,7) and (END_DATE_TIME is null or START_DATE_TIME is null)"
                 , patVisitLog.PATIENT_ID
                 , patVisitLog.VISIT_ID);
             DataSet ds = null;
@@ -47,12 +47,12 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             for (int i=0;i<ds.Tables[0].Rows.Count;i++)
             {
                 string order_text = ds.Tables[0].Rows[i]["order_text"].ToString();
-                string STOP_DATE_TIME = ds.Tables[0].Rows[i]["STOP_DATE_TIME"].ToString();
+                string END_DATE_TIME = ds.Tables[0].Rows[i]["END_DATE_TIME"].ToString();
                 string START_DATE_TIME = ds.Tables[0].Rows[i]["START_DATE_TIME"].ToString();
                 sb.AppendFormat("医嘱{0}，开始时间为{1}，停止时间为{2};"
                     , order_text
                     , string.IsNullOrEmpty(START_DATE_TIME) ? "空" : START_DATE_TIME
-                    , string.IsNullOrEmpty(STOP_DATE_TIME) ? "空" : STOP_DATE_TIME);
+                    , string.IsNullOrEmpty(END_DATE_TIME) ? "空" : END_DATE_TIME);
                 sb.AppendLine();
             }
             qcCheckResult.QC_EXPLAIN = sb.ToString();

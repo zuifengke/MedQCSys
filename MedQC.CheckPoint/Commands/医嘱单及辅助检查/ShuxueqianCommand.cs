@@ -25,8 +25,8 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             PatVisitInfo patVisitLog = data as PatVisitInfo;
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
-            //查询本次住院是否有发血记录，通过用血申请单医嘱判断
-            string szSQl = string.Format("select * from BLOOD_ORDERS@link_emr A,DOCTOR_ORDERS@link_emr B where a.ORDER_ID = b.ORDER_ID and b.PATIENT_ID = '{0}' and b.VISIT_NO = '{1}'"
+            //查询本次住院是否有发血记录
+            string szSQl = string.Format("select * from BLOOD_TRANSFUSION_V b where  b.PATIENT_ID = '{0}' and b.VISIT_ID = '{1}'"
                 , patVisitLog.PATIENT_ID
                 , patVisitLog.VISIT_ID);
             DataSet ds = null;
@@ -34,11 +34,11 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
             {
                 qcCheckResult.QC_RESULT = 1;//通过
-                qcCheckResult.QC_EXPLAIN = "不存在输血医嘱，规则通过";
+                qcCheckResult.QC_EXPLAIN = "规则通过";
                 return true;
             }
             //患者存在输血，查找检验结果中是否有乙肝表面抗原、丙型肝炎抗体、艾滋病抗体筛查试验、梅毒螺旋体特异抗体测定四项
-            szSQl = string.Format("select B.REPORT_ITEM_NAME from DOCTOR_ORDERS@link_emr A,LAB_RESULT@link_emr B where a.ORDER_ID = b.ORDER_ID and A.PATIENT_ID = '{0}' and A.VISIT_NO = '{1}' and B.REPORT_ITEM_NAME in('乙肝表面抗原', '丙肝抗体', '艾滋病抗体', '梅毒血清特异抗体测定')"
+            szSQl = string.Format("select b.ITEM_NAME from LAB_RESULT_V b,lab_master_v a where A.PATIENT_ID = '{0}' and A.VISIT_NO = '{1}' and b.test_id=a.TEST_ID and B.ITEM_NAME in('乙肝表面抗原', '丙肝抗体', '艾滋病抗体', '梅毒血清特异抗体测定')"
                 , patVisitLog.PATIENT_ID
                 , patVisitLog.VISIT_ID);
             shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);

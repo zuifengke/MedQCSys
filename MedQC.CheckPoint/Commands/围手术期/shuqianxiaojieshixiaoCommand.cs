@@ -26,8 +26,8 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
             //查询患者指定文书类型ID号
-            string szSQl = string.Format("select a.OPERATING_SCALE,a.START_DATE_TIME, a.end_date_time  from OPERATION_MASTER@link_emr a where a.VISIT_NO ='{0}' and a.PATIENT_ID ='{1}' and a.OPERATING_SCALE in ('中','大','特') and a.START_DATE_TIME is not null"
-                , patVisitLog.VISIT_ID
+            string szSQl = string.Format("select a.OPERATING_SCALE,a.START_DATE_TIME, a.end_date_time  from OPERATION_MASTER_V a where a.VISIT_NO ='{0}' and a.PATIENT_ID ='{1}' and a.OPERATING_SCALE in ('中','大','特') and a.START_DATE_TIME is not null"
+                , patVisitLog.VISIT_NO
                 , patVisitLog.PATIENT_ID);
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
@@ -54,7 +54,8 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                         sb.AppendFormat("患者{0}开始手术,{1}书写术前小结,结果正常"
                             , START_DATE_TIME.ToString("yyyy-MM-dd HH:mm")
                             , item.DOC_TIME.ToString("yyyy-MM-dd HH:mm"));
-                        break;
+                        sb.AppendLine();
+                        break; 
                     }
                 }
                 if (!exist)
@@ -62,6 +63,7 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                     errorCount++;
                     sb.AppendFormat("患者{0}开始手术,无术前小结"
                          , START_DATE_TIME.ToString("yyyy-MM-dd HH:mm"));
+                    sb.AppendLine();
                 }
             }
             if (errorCount > 0)

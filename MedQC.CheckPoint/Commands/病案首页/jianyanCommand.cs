@@ -26,7 +26,7 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
 
-            string szSQl = string.Format("select t.HBSAG_INDICATOR, t.HCV_AB_INDICATOR, t.HIV_AB_INDICATOR from INP_VISIT@link_emr t where t.PATIENT_ID = '{0}' and t.VISIT_NO = '{1}' "
+            string szSQl = string.Format("select t.HBSAG_INDICATOR, t.HCV_AB_INDICATOR, t.HIV_AB_INDICATOR from PAT_VISIT_V t where t.PATIENT_ID = '{0}' and t.VISIT_NO = '{1}' "
                 , patVisitLog.PATIENT_ID
                 , patVisitLog.VISIT_ID);
             DataSet ds = null;

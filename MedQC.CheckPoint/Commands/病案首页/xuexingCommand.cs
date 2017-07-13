@@ -44,9 +44,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                 return true;
             }
             //查询首页血型填写情况
-            szSQl = string.Format("select BLOOD_TYPE,b.CODE_NAME from INP_VISIT@link_emr a,BASE_CODE_DICT@link_emr b where b.CODETYPE_NAME = 'BLOOD_ABO_TYPE_DICT' and a.BLOOD_TYPE = b.CODE_ID(+) and a.PATIENT_ID ='{0}' and a.VISIT_NO ='{1}'"
+            szSQl = string.Format("select BLOOD_TYPE_NAME from pat_visit_v a where  a.PATIENT_ID ='{0}' and a.VISIT_NO ='{1}'"
                 , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
             {
@@ -55,7 +55,14 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                 qcCheckResult.ERROR_COUNT = 1;
                 return true;
             }
-            string CODE_NAME = ds.Tables[0].Rows[0]["CODE_NAME"].ToString();
+            string CODE_NAME = ds.Tables[0].Rows[0]["BLOOD_TYPE_NAME"].ToString();
+            if (string.IsNullOrEmpty(CODE_NAME))
+            {
+                qcCheckResult.QC_EXPLAIN = string.Format("检验记录中有血型结果{0}型，但首页未填", ITEM_RESULT);
+                qcCheckResult.QC_RESULT = 0;
+                qcCheckResult.ERROR_COUNT = 1;
+                return true;
+            }
             if (CODE_NAME != ITEM_RESULT)
             {
                 qcCheckResult.QC_EXPLAIN = string.Format("检验记录中有血型结果{0}型，首页填写血型为{1}型", ITEM_RESULT,CODE_NAME);

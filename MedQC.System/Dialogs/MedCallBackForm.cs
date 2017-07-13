@@ -75,8 +75,7 @@ namespace Heren.MedQC.Systems
         private void QueryByDept(PatVisitInfo patVisitLog)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-
-            //string szSql = string.Format("SELECT b.name,b.user_name FROM staff_vs_group@link_emr a,staff_dict@link_emr b,dept_dict@link_emr c WHERE b.emp_no=a.emp_no AND a.group_code='{0}' AND a.group_class='²¡ÇøÒ½Éú' and b.dept_code=c.DEPT_CODE and c.clinic_attr = '0' and c.OUTP_OR_INP = '1'and c.internal_or_sergery = '0' order by b.name", deptCode);
+            
             string szSql = string.Format("select d.creator_id,d.creator_Name  from emr_doc_t d where d.patient_id='{0}' and d.visit_id={1} group by d.creator_id,d.creator_name",patVisitLog.PATIENT_ID,patVisitLog.VISIT_ID);
             DataSet dataSet = new DataSet();
             short shRet = CommonAccess.Instance.ExecuteQuery(szSql, out dataSet);

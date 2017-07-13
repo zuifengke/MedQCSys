@@ -54,9 +54,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             }
             //入院记录中未转抄，则检查本次住院的化验结果
             DataSet ds = null;
-            string szSQl = string.Format("select b.REPORT_ITEM_NAME from doctor_orders@link_emr a,LAB_RESULT@link_emr b where a.PATIENT_ID = '{0}' and a.VISIT_NO = '{1}' and a.ORDER_ID = b.ORDER_ID and(b.REPORT_ITEM_NAME like '%血常规%' or b.REPORT_ITEM_NAME like '%尿常规%' or b.REPORT_ITEM_NAME like '%便常规%')"
+            string szSQl = string.Format("select b.ITEM_NAME from LAB_RESULT_V b,lab_master_v a where a.PATIENT_ID = '{0}' and a.VISIT_NO = '{1}' and b.test_id=a.TEST_ID and (b.ITEM_NAME like '%血常规%' or b.ITEM_NAME like '%尿常规%' or b.ITEM_NAME like '%便常规%')"
                 , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             StringBuilder description = new StringBuilder();
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
@@ -69,8 +69,8 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             string str = string.Empty;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                string REPORT_ITEM_NAME=ds.Tables[0].Rows[i]["REPORT_ITEM_NAME"].ToString();
-                str += REPORT_ITEM_NAME;
+                string ITEM_NAME = ds.Tables[0].Rows[i]["ITEM_NAME"].ToString();
+                str += ITEM_NAME;
             }
             StringBuilder sb = new StringBuilder();
             if (!str.Contains("血常规"))

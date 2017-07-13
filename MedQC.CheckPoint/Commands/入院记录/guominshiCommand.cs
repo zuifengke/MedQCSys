@@ -58,7 +58,7 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                 return true;
             }
             //存在过敏，则对比首页过敏信息
-            string szSQl = string.Format("select ALERGY_DRUGS from inp_visit@link_emr t where t.patient_id ='{0}' and t.visit_no = '{1}'"
+            string szSQl = string.Format("select ALLERGY_DRUGS from PAT_VISIT_V t where t.patient_id ='{0}' and t.visit_no = '{1}'"
               , patVisitLog.PATIENT_ID
               , patVisitLog.VISIT_ID);
             DataSet ds = null;
@@ -70,7 +70,7 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
                 return true;
             }
             StringBuilder description = new StringBuilder();
-            string ALERGY_DRUGS = ds.Tables[0].Rows[0]["ALERGY_DRUGS"].ToString();
+            string ALERGY_DRUGS = ds.Tables[0].Rows[0]["ALLERGY_DRUGS"].ToString();
             if (string.IsNullOrEmpty(ALERGY_DRUGS))
             {
                 qcCheckResult.QC_EXPLAIN = string.Format("入院记录内过敏史内容存在{0},但首页过敏药物为空",node.InnerText);

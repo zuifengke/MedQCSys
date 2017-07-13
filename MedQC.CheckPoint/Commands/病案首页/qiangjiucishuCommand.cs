@@ -26,9 +26,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
             //查询是否有检验记录
-            string szSQl = string.Format("select EMER_TREAT_TIMES,ESC_EMER_TIMES from inp_visit@link_emr a where a.PATIENT_ID ='{0}' and a.VISIT_NO ='{1}'"
+            string szSQl = string.Format("select EMER_TREAT_TIMES,ESC_EMER_TIMES from PAT_VISIT_V a where a.PATIENT_ID ='{0}' and a.VISIT_NO ='{1}'"
                 , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
