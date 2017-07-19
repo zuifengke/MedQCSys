@@ -506,6 +506,7 @@ namespace MedQCSys.Controls
             this.btnComplex.TabIndex = 27;
             this.btnComplex.Text = "∏¥∫œ≤È—Ø";
             this.btnComplex.UseVisualStyleBackColor = true;
+            this.btnComplex.Visible = false;
             this.btnComplex.Click += new System.EventHandler(this.btnComplex_Click);
             // 
             // PatSearchPane

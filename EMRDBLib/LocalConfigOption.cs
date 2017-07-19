@@ -476,6 +476,21 @@ namespace EMRDBLib
                 this.m_IsLinkHerenHis = value;
             }
         }
+        private bool m_IsOpenComplexSearch = false;
+        /// <summary>
+        /// 是否开启复合查询
+        /// </summary>
+        public bool IsOpenComplexSearch
+        {
+            get
+            {
+                return m_IsOpenComplexSearch;
+            }
+            set
+            {
+                this.m_IsOpenComplexSearch = value;
+            }
+        }
         public LocalConfigOption()
         {
 
@@ -562,6 +577,7 @@ namespace EMRDBLib
             option.DefaultEditor = "2";
             option.RecPrintLog = true;
             option.IsDrawingPatientIdentification = true;
+            option.IsOpenComplexSearch = true;
 #endif
             return option;
         }
