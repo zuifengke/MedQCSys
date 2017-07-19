@@ -71,7 +71,7 @@ namespace EMRDBLib
             set { bIsShowSpecialCheck = value; }
         }
 
-        private bool bIsShowPatientIndex = true;
+        private bool bIsShowPatientIndex = false;
 
         /// <summary>
         /// 是否显示病案首页
@@ -461,10 +461,24 @@ namespace EMRDBLib
             }
             set { this.m_RecPrintLog = value; }
         }
-
+        private bool m_IsLinkHerenHis = false;
+        /// <summary>
+        /// 使用HerenHisAccess直连HerenHis库
+        /// </summary>
+        public bool IsLinkHerenHis
+        {
+            get
+            {
+                return m_IsLinkHerenHis;
+            }
+            set
+            {
+                this.m_IsLinkHerenHis = value;
+            }
+        }
         public LocalConfigOption()
         {
-            
+
             this.IsOpenHomePage = false;
         }
     }
@@ -506,6 +520,7 @@ namespace EMRDBLib
                 option.IsShowVitalSignsGraph = true;
                 option.IsShowPatientIndex = true;
                 option.IsOpenOperation = true;
+                option.IsLinkHerenHis = true;
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
@@ -526,14 +541,20 @@ namespace EMRDBLib
             {
                 option.IsDrawingPatientIdentification = true;
             }
-            if (option.HOSPITAL_NAME.IndexOf("中国人民解放军总医院")>=0)
+            if (option.HOSPITAL_NAME.IndexOf("中国人民解放军总医院") >= 0)
             {
 
+            }
+            if (!option.IsLinkHerenHis)
+            {
+                //因直连HerenHis造成某些功能不能用，需关闭一些功能
+                option.IsOpenOperation = false;
             }
 #if DEBUG //调试时系统开发设置
             option.IsOpenHomePage = true;
             option.IsOpenFinalQC = true;
             option.IsOpenOperation = true;
+            option.IsLinkHerenHis = true;
             option.IsScoreRightShow = true;
             option.IsNewScore = true;
             option.IsShowPatientIndex = true;

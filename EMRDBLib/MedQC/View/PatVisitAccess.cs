@@ -38,10 +38,10 @@ namespace EMRDBLib.DbAccess
         /// <param name="patientType">病人类型(所有病人、出院病人或在院病人)</param>
         /// <param name="dtBeginTime">入院时间开始时间</param>
         /// <param name="dtEndTime">入院时间截止时间</param>
-        /// <param name="lstPatVisitLogs">该科室在院患者列表</param>
+        /// <param name="lstPatVisitInfos">该科室在院患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatVisitList(string szDeptCode, PatientType patientType, DateTime dtBeginTime, DateTime dtEndTime
-            , ref List<PatVisitInfo> lstPatVisitLogs)
+            , ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -49,7 +49,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
             if (patientType == PatientType.PatInHosptial)
-                return InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, dtBeginTime, dtEndTime, ref lstPatVisitLogs);
+                return InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, dtBeginTime, dtEndTime, ref lstPatVisitInfos);
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
@@ -86,32 +86,32 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
                     if (!dataReader.IsDBNull(10))
-                        patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.ALLERGY_DRUGS = dataReader.GetString(17);
-                    if (!dataReader.IsDBNull(18)) patVisitLog.VISIT_NO = dataReader.GetString(18);
-                    lstPatVisitLogs.Add(patVisitLog);
+                        PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.ALLERGY_DRUGS = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.VISIT_NO = dataReader.GetString(18);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -138,9 +138,9 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtBeginTime">起始时间</param>
         /// <param name="dtEndTime">截止时间</param>
         /// <param name="szDeptCode">当前用户所在科室代码</param>
-        /// <param name="lstPatVisitLogs">该时间段内的死亡患者列表</param>
+        /// <param name="lstPatVisitInfos">该时间段内的死亡患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetPatsListByDeadTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatsListByDeadTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -183,31 +183,31 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
                     if (!dataReader.IsDBNull(10))
-                        patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetString(17);
-                    lstPatVisitLogs.Add(patVisitLog);
+                        PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -235,10 +235,10 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtEndTime">截止时间</param>
         /// <param name="patientType">病人类型(所有病人、出院病人或在院病人)</param>
         /// <param name="szDeptCode">当前用户所在科室代码</param>
-        /// <param name="lstPatVisitLogs">该入院时间段内的患者列表</param>
+        /// <param name="lstPatVisitInfos">该入院时间段内的患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatsListByAdmTime(DateTime dtBeginTime, DateTime dtEndTime, PatientType patientType, string szDeptCode
-            , ref List<PatVisitInfo> lstPatVisitLogs)
+            , ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -247,7 +247,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
             if (patientType == PatientType.PatInHosptial)
-                return InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, dtBeginTime, dtEndTime, ref lstPatVisitLogs);
+                return InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, dtBeginTime, dtEndTime, ref lstPatVisitInfos);
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
@@ -288,32 +288,32 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
                     if (!dataReader.IsDBNull(10))
-                        patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    lstPatVisitLogs.Add(patVisitLog);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetString(17);
-                    lstPatVisitLogs.Add(patVisitLog);
+                        PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -340,9 +340,9 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtBeginTime">起始时间</param>
         /// <param name="dtEndTime">截止时间</param>
         /// <param name="szDeptCode">当前用户所在科室代码</param>
-        /// <param name="lstPatVisitLogs">该入院时间段内的患者列表</param>
+        /// <param name="lstPatVisitInfos">该入院时间段内的患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetPatientListByDisChargeTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatientListByDisChargeTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -374,32 +374,32 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
                     if (!dataReader.IsDBNull(10))
-                        patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    lstPatVisitLogs.Add(patVisitLog);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetString(17);
-                    lstPatVisitLogs.Add(patVisitLog);
+                        PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -429,9 +429,9 @@ namespace EMRDBLib.DbAccess
         /// <param name="szDeptCode">科室编号</param>
         /// <param name="dtBeginTime">入院起始时间</param>
         /// <param name="dtEndTime">入院截止时间</param>
-        /// <param name="lstPatVisitLog">病人就诊日志列表</param>
+        /// <param name="lstPatVisitInfo">病人就诊日志列表</param>
         /// <returns></returns>
-        public short GetDeathPatList(string szDeptCode, DateTime dtBeginTime, DateTime dtEndTime, ref List<EMRDBLib.PatVisitInfo> lstPatVisitLog)
+        public short GetDeathPatList(string szDeptCode, DateTime dtBeginTime, DateTime dtEndTime, ref List<EMRDBLib.PatVisitInfo> lstPatVisitInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -471,28 +471,28 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLog == null)
-                    lstPatVisitLog = new List<PatVisitInfo>();
+                if (lstPatVisitInfo == null)
+                    lstPatVisitInfo = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.PATIENT_NAME = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) patVisitLog.PATIENT_SEX = dataReader.GetString(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.INP_NO = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.VISIT_ID = dataReader.GetValue(4).ToString();
-                    if (!dataReader.IsDBNull(5)) patVisitLog.DEPT_NAME = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_CODE = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
-                    if (!dataReader.IsDBNull(10)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.LogDateTime = dataReader.GetDateTime(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.VISIT_NO = dataReader.GetString(15);
-                    lstPatVisitLog.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.INP_NO = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.VISIT_ID = dataReader.GetValue(4).ToString();
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.DEPT_NAME = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_CODE = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.LogDateTime = dataReader.GetDateTime(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.VISIT_NO = dataReader.GetString(15);
+                    lstPatVisitInfo.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -623,10 +623,10 @@ namespace EMRDBLib.DbAccess
         /// <param name="bIsPatientID">指示第一个参数是否是病人ID</param>
         /// <param name="szPatientName">病人姓名</param>
         /// <param name="szDeptCode">当前用户所在科室代码</param>
-        /// <param name="lstPatVisitLogs">病人ID或者姓名对应的患者列表</param>
+        /// <param name="lstPatVisitInfos">病人ID或者姓名对应的患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetPatsListByPatient(string szPatientIDOrInpNo, bool bIsPatientID, string szPatientName, string szDeptCode
-            , ref List<PatVisitInfo> lstPatVisitLogs)
+            , ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -662,29 +662,29 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -713,10 +713,10 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtBeginTime">检索其实时间</param>
         /// <param name="dtEndTime">检索截止时间</param>
         /// <param name="szOperationCode">手术编码</param>
-        /// <param name="lstPatVisitLogs">做过手术的患者列表</param>
+        /// <param name="lstPatVisitInfos">做过手术的患者列表</param>
         /// <returns>MedDocSys.Common.SystemData.ReturnValue</returns>
         public short GetPatListByOperation(string szDeptCode, PatientType patientType, DateTime dtBeginTime, DateTime dtEndTime
-            , string szOperationCode, ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
+            , string szOperationCode, ref List<EMRDBLib.PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -724,7 +724,7 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
             if (patientType == PatientType.PatInHosptial)
-                return InpVisitAccess.Instance.GetInpPatListByOperation(szDeptCode, dtBeginTime, dtEndTime, szOperationCode, ref lstPatVisitLogs);
+                return InpVisitAccess.Instance.GetInpPatListByOperation(szDeptCode, dtBeginTime, dtEndTime, szOperationCode, ref lstPatVisitInfos);
 
             string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17}"
                , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
@@ -765,30 +765,30 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetString(17);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -817,16 +817,16 @@ namespace EMRDBLib.DbAccess
         /// <param name="nInHospDays">住院天数</param>
         /// <param name="operatorType">操作符类型</param>
         /// <param name="patientType">病人类型</param>
-        /// <param name="lstPatVisitLogs">患者列表</param>
+        /// <param name="lstPatVisitInfos">患者列表</param>
         /// <returns>MedDocSys.Common.SystemData.ReturnValue</returns>
         public short GetPatListByInHospDays(string szDeptCode, int nInHospDays, OperatorType operatorType, PatientType patientType
-            , ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
+            , ref List<EMRDBLib.PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (patientType == PatientType.PatInHosptial)
-                return InpVisitAccess.Instance.GetPatListByInHospDays(szDeptCode, nInHospDays, operatorType, ref lstPatVisitLogs);
+                return InpVisitAccess.Instance.GetPatListByInHospDays(szDeptCode, nInHospDays, operatorType, ref lstPatVisitInfos);
 
             string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
@@ -877,29 +877,29 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -989,7 +989,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="szVisitID">就诊ID</param>
         /// <param name="patBasicInfo">病人基本信息</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetPatVisitInfo(string szPatientID, string szVisitID, ref PatVisitInfo patVisitLog)
+        public short GetPatVisitInfo(string szPatientID, string szVisitID, ref PatVisitInfo PatVisitInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1017,31 +1017,31 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (patVisitLog == null)
-                    patVisitLog = new PatVisitInfo();
+                if (PatVisitInfo == null)
+                    PatVisitInfo = new PatVisitInfo();
                 do
                 {
-                    if (!dataReader.IsDBNull(0)) patVisitLog.INP_NO = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.PATIENT_NAME = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.CHARGE_TYPE = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.DEPT_NAME = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.BED_CODE = dataReader.GetValue(7).ToString();
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DIAGNOSIS = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.SERVICE_AGENCY = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.ADDRESS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.PATIENT_ID = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.VISIT_ID = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.DEPT_CODE = dataReader.GetString(17);
-                    if (!dataReader.IsDBNull(18)) patVisitLog.VISIT_NO = dataReader.GetString(18);
-                    if (!dataReader.IsDBNull(19)) patVisitLog.INCHARGE_DOCTOR_ID = dataReader.GetString(19);
-                    if (!dataReader.IsDBNull(20)) patVisitLog.ID_NO = dataReader.GetString(20);
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.INP_NO = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.DEPT_NAME = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.BED_CODE = dataReader.GetValue(7).ToString();
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.SERVICE_AGENCY = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.ADDRESS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.PATIENT_ID = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.VISIT_ID = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.DEPT_CODE = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.VISIT_NO = dataReader.GetString(18);
+                    if (!dataReader.IsDBNull(19)) PatVisitInfo.INCHARGE_DOCTOR_ID = dataReader.GetString(19);
+                    if (!dataReader.IsDBNull(20)) PatVisitInfo.ID_NO = dataReader.GetString(20);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1069,7 +1069,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="szVisitNo">就诊流水号</param>
         /// <param name="patBasicInfo">病人基本信息</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetPatVisit(string szPatientID, string szVisitNo, ref PatVisitInfo patVisitLog)
+        public short GetPatVisit(string szPatientID, string szVisitNo, ref PatVisitInfo PatVisitInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1097,31 +1097,31 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (patVisitLog == null)
-                    patVisitLog = new PatVisitInfo();
+                if (PatVisitInfo == null)
+                    PatVisitInfo = new PatVisitInfo();
                 do
                 {
-                    if (!dataReader.IsDBNull(0)) patVisitLog.INP_NO = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.PATIENT_NAME = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.CHARGE_TYPE = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.DEPT_NAME = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.BED_CODE = dataReader.GetValue(7).ToString();
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DIAGNOSIS = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.SERVICE_AGENCY = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.ADDRESS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.PATIENT_ID = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.VISIT_ID = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.DEPT_CODE = dataReader.GetString(17);
-                    if (!dataReader.IsDBNull(18)) patVisitLog.VISIT_NO = dataReader.GetString(18);
-                    if (!dataReader.IsDBNull(19)) patVisitLog.INCHARGE_DOCTOR_ID = dataReader.GetString(19);
-                    if (!dataReader.IsDBNull(20)) patVisitLog.ID_NO = dataReader.GetString(20);
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.INP_NO = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.DEPT_NAME = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.BED_CODE = dataReader.GetValue(7).ToString();
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.SERVICE_AGENCY = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.ADDRESS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.PATIENT_ID = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.VISIT_ID = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.DEPT_CODE = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.VISIT_NO = dataReader.GetString(18);
+                    if (!dataReader.IsDBNull(19)) PatVisitInfo.INCHARGE_DOCTOR_ID = dataReader.GetString(19);
+                    if (!dataReader.IsDBNull(20)) PatVisitInfo.ID_NO = dataReader.GetString(20);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1142,7 +1142,7 @@ namespace EMRDBLib.DbAccess
             }
         }
 
-        public short GetPatVisitInfos(string szPatientID, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatVisitInfos(string szPatientID, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1171,31 +1171,31 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.PATIENT_SEX = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.CHARGE_TYPE = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.DEPT_NAME = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9)) patVisitLog.BED_CODE = dataReader.GetValue(9).ToString();
-                    if (!dataReader.IsDBNull(10)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DIAGNOSIS = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.DEPT_CODE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16)) patVisitLog.MR_STATUS = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17)) patVisitLog.DischargeDeptCode = dataReader.GetString(17);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.INP_NO = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.DEPT_NAME = dataReader.GetString(8);
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.BED_CODE = dataReader.GetValue(9).ToString();
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.DEPT_CODE = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.DischargeDeptCode = dataReader.GetString(17);
 
-                    lstPatVisitLogs.Add(patVisitLog);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1320,7 +1320,7 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 根据质检病历信息获取患者列表 
         /// </summary>
-        public short GetPatListByCheckedDoc(string szCheckerName, DateTime dtBeginTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatListByCheckedDoc(string szCheckerName, DateTime dtBeginTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1354,28 +1354,28 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.PATIENT_SEX = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.CHARGE_TYPE = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.DEPT_NAME = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.BED_CODE = dataReader.GetValue(8).ToString();
-                    if (!dataReader.IsDBNull(9)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DIAGNOSIS = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DEPT_CODE = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.INP_NO = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1426,11 +1426,11 @@ namespace EMRDBLib.DbAccess
                     newlstPatVistLogs = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(2);
-                    newlstPatVistLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(2);
+                    newlstPatVistLogs.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1451,15 +1451,15 @@ namespace EMRDBLib.DbAccess
             }
         }
 
-        public short GetPatListByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatListByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            short shRet = GetPidByMutiVisit(dtStartTime, dtEndTime, ref lstPatVisitLogs);
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count <= 0)
+            short shRet = GetPidByMutiVisit(dtStartTime, dtEndTime, ref lstPatVisitInfos);
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count <= 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szPids = GetPidList(lstPatVisitLogs);
+            string szPids = GetPidList(lstPatVisitInfos);
             if (string.IsNullOrEmpty(szPids))
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1485,29 +1485,29 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.PATIENT_SEX = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.CHARGE_TYPE = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.DEPT_NAME = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.BED_CODE = dataReader.GetValue(8).ToString();
-                    if (!dataReader.IsDBNull(9)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DIAGNOSIS = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DEPT_CODE = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.INP_NO = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1530,7 +1530,7 @@ namespace EMRDBLib.DbAccess
 
 
 
-        private short GetPidByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        private short GetPidByMutiVisit(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1550,14 +1550,14 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    //if (!dataReader.IsDBNull(1)) patVisitLog.VisitID = dataReader.GetValue(1).ToString();
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    //if (!dataReader.IsDBNull(1)) PatVisitInfo.VisitID = dataReader.GetValue(1).ToString();
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1578,15 +1578,15 @@ namespace EMRDBLib.DbAccess
             }
         }
 
-        public short GetPatListByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatListByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            short shRet = GetPidVidByTransferTime(dtStartTime, dtEndTime, ref lstPatVisitLogs);
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count <= 0)
+            short shRet = GetPidVidByTransferTime(dtStartTime, dtEndTime, ref lstPatVisitInfos);
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count <= 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szPidVids = GetPidVidList(lstPatVisitLogs);
+            string szPidVids = GetPidVidList(lstPatVisitInfos);
             if (string.IsNullOrEmpty(szPidVids))
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1611,29 +1611,29 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.PATIENT_SEX = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.CHARGE_TYPE = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.DEPT_NAME = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.BED_CODE = dataReader.GetValue(8).ToString();
-                    if (!dataReader.IsDBNull(9)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DIAGNOSIS = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DEPT_CODE = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.INP_NO = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1658,9 +1658,9 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="dtStartTime">问题提交开始时间</param>
         /// <param name="dtEndTime">问题提交结束时间</param>
-        /// <param name="lstPatVisitLogs"></param>
+        /// <param name="lstPatVisitInfos"></param>
         /// <returns></returns>
-        public short GetPatListByDocReview(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatListByDocReview(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1694,29 +1694,29 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) patVisitLog.PATIENT_SEX = dataReader.GetString(4);
-                    if (!dataReader.IsDBNull(5)) patVisitLog.BIRTH_TIME = dataReader.GetDateTime(5);
-                    if (!dataReader.IsDBNull(6)) patVisitLog.CHARGE_TYPE = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7)) patVisitLog.DEPT_NAME = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8)) patVisitLog.BED_CODE = dataReader.GetValue(8).ToString();
-                    if (!dataReader.IsDBNull(9)) patVisitLog.PATIENT_CONDITION = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11)) patVisitLog.DIAGNOSIS = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12)) patVisitLog.DEPT_CODE = dataReader.GetString(12);
-                    if (!dataReader.IsDBNull(13)) patVisitLog.MR_STATUS = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14)) patVisitLog.INP_NO = dataReader.GetString(14);
-                    if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1737,14 +1737,14 @@ namespace EMRDBLib.DbAccess
             }
         }
 
-        private string GetPidList(List<PatVisitInfo> lstPatVisitLogs)
+        private string GetPidList(List<PatVisitInfo> lstPatVisitInfos)
         {
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count == 0)
                 return string.Empty;
             try
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (PatVisitInfo item in lstPatVisitLogs)
+                foreach (PatVisitInfo item in lstPatVisitInfos)
                 {
                     sb.AppendFormat("(PATIENT_ID='{0}') OR ", item.PATIENT_ID);
                 }
@@ -1758,14 +1758,14 @@ namespace EMRDBLib.DbAccess
             return string.Empty;
         }
 
-        private string GetPidVidList(List<PatVisitInfo> lstPatVisitLogs)
+        private string GetPidVidList(List<PatVisitInfo> lstPatVisitInfos)
         {
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count == 0)
                 return string.Empty;
             try
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (PatVisitInfo item in lstPatVisitLogs)
+                foreach (PatVisitInfo item in lstPatVisitInfos)
                 {
                     sb.AppendFormat("(PATIENT_ID='{0}' AND VISIT_ID='{1}') OR ", item.PATIENT_ID, item.VISIT_ID);
                 }
@@ -1779,7 +1779,7 @@ namespace EMRDBLib.DbAccess
             return string.Empty;
         }
 
-        private short GetPidVidByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitLogs)
+        private short GetPidVidByTransferTime(DateTime dtStartTime, DateTime dtEndTime, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1798,15 +1798,15 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1830,21 +1830,21 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 获取病人第一个出院诊断
         /// </summary>
-        /// <param name="lstPatVisitLog"></param>
+        /// <param name="lstPatVisitInfo"></param>
         /// <returns></returns>
-        public short GetOutPatientFirstDiagnosis(List<PatVisitInfo> lstPatVisitLogs, List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo)
+        public short GetOutPatientFirstDiagnosis(List<PatVisitInfo> lstPatVisitInfos, List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sb = new StringBuilder();
-            for (int index = 0; index < lstPatVisitLogs.Count; index++)
+            for (int index = 0; index < lstPatVisitInfos.Count; index++)
             {
                 sb.AppendFormat("(PATIENT_ID = '{0}' AND VISIT_ID = {1})",
-                    lstPatVisitLogs[index].PATIENT_ID,
-                    lstPatVisitLogs[index].VISIT_ID);
-                if (index + 1 != lstPatVisitLogs.Count)
+                    lstPatVisitInfos[index].PATIENT_ID,
+                    lstPatVisitInfos[index].VISIT_ID);
+                if (index + 1 != lstPatVisitInfos.Count)
                     sb.Append(" OR ");
             }
             string szSQL = string.Format("SELECT PATIENT_ID,VISIT_ID,DIAGNOSIS_DESC,TREAT_RESULT" +
@@ -1892,21 +1892,21 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 获取病人主诊断
         /// </summary>
-        /// <param name="lstPatVisitLog"></param>
+        /// <param name="lstPatVisitInfo"></param>
         /// <returns></returns>
-        public short GetPatientMainDiagnosis(List<PatVisitInfo> lstPatVisitLogs)
+        public short GetPatientMainDiagnosis(List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sb = new StringBuilder();
-            for (int index = 0; index < lstPatVisitLogs.Count; index++)
+            for (int index = 0; index < lstPatVisitInfos.Count; index++)
             {
                 sb.AppendFormat("(PATIENT_ID = '{0}' AND VISIT_ID = {1})",
-                    lstPatVisitLogs[index].PATIENT_ID,
-                    lstPatVisitLogs[index].VISIT_ID);
-                if (index + 1 != lstPatVisitLogs.Count)
+                    lstPatVisitInfos[index].PATIENT_ID,
+                    lstPatVisitInfos[index].VISIT_ID);
+                if (index + 1 != lstPatVisitInfos.Count)
                     sb.Append(" OR ");
             }
             string szSQL = string.Format("SELECT PATIENT_ID,VISIT_ID,DIAGNOSIS_DESC" +
@@ -1920,16 +1920,16 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.DIAGNOSIS = dataReader.GetString(2);
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(2);
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1953,19 +1953,19 @@ namespace EMRDBLib.DbAccess
         /// 获取出院病人的费用信息
         /// </summary>
         /// <param name="lstPatConstInfo"></param>
-        public short GetPatConstInfo(ref List<EMRDBLib.PatVisitInfo> lstPatVisitLogs)
+        public short GetPatConstInfo(ref List<EMRDBLib.PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
+            if (lstPatVisitInfos == null || lstPatVisitInfos.Count == 0)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sb = new StringBuilder();
-            for (int index = 0; index < lstPatVisitLogs.Count; index++)
+            for (int index = 0; index < lstPatVisitInfos.Count; index++)
             {
                 sb.AppendFormat("(PATIENT_ID = '{0}' AND VISIT_ID = {1})",
-                    lstPatVisitLogs[index].PATIENT_ID,
-                    lstPatVisitLogs[index].VISIT_ID);
-                if (index + 1 != lstPatVisitLogs.Count)
+                    lstPatVisitInfos[index].PATIENT_ID,
+                    lstPatVisitInfos[index].VISIT_ID);
+                if (index + 1 != lstPatVisitInfos.Count)
                     sb.Append(" OR ");
             }
             string szSQL = string.Format("SELECT PATIENT_ID,VISIT_ID,TOTAL_COSTS,TOTAL_PAYMENTS FROM PAT_COST_V WHERE {0}",
@@ -1978,17 +1978,17 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstPatVisitLogs == null)
-                    lstPatVisitLogs = new List<PatVisitInfo>();
-                lstPatVisitLogs.Clear();
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                lstPatVisitInfos.Clear();
                 do
                 {
-                    PatVisitInfo patVisitLog = new PatVisitInfo();
-                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) patVisitLog.TOTAL_COSTS = float.Parse(dataReader.GetValue(2).ToString()); ;
-                    if (!dataReader.IsDBNull(3)) patVisitLog.PREPAYMENTS = float.Parse(dataReader.GetValue(3).ToString()); ;
-                    lstPatVisitLogs.Add(patVisitLog);
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.TOTAL_COSTS = float.Parse(dataReader.GetValue(2).ToString()); ;
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PREPAYMENTS = float.Parse(dataReader.GetValue(3).ToString()); ;
+                    lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -2295,6 +2295,565 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.EXCEPTION;
             }
             finally { base.MedQCAccess.CloseConnnection(false); }
+        }
+        public short GetPatsListByComplexSearch(string szPatientStatus, string szDeptCode, string szPatientID, string szPatientName
+           , string szDoctor, string szDiagnosis, string szNursingClass, string szPatientCondition
+           , string szIdentity, string szChargeType, int nBeginAge, int nEndAge
+           , DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd
+           , DateTime dtStartDischargeTime, DateTime dtEndDischargeTime, ref List<PatVisitInfo> lstPatVisitInfos)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17},floor(MONTHS_BETWEEN(A.visit_time,A.BIRTH_TIME)/12) as {18}"
+                , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
+                , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
+                , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
+                , SystemData.PatVisitView.NURSING_CLASS
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE
+                , SystemData.PatVisitView.INP_NO,"AGE");
+
+            string szCondition = string.Format(" 1=1 AND {0}='IP'", SystemData.PatVisitView.VISIT_TYPE);
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.PATIENT_ID, szPatientID);
+            if (!string.IsNullOrEmpty(szPatientName))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.PATIENT_NAME, szPatientName);
+            if (!string.IsNullOrEmpty(szDoctor))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.INCHARGE_DOCTOR, szDoctor);
+            if (!string.IsNullOrEmpty(szDiagnosis))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.DIAGNOSIS, szDiagnosis);
+            if (!string.IsNullOrEmpty(szNursingClass))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.NURSING_CLASS, szNursingClass);
+            if (!string.IsNullOrEmpty(szPatientCondition))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.PATIENT_CONDITION, szPatientCondition);
+            if (!string.IsNullOrEmpty(szIdentity))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.IDENTITY, szIdentity);
+            if (!string.IsNullOrEmpty(szChargeType))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.CHARGE_TYPE, szChargeType);
+
+            if (dtVisitTimeBegin != DateTime.Parse("1900-1-1")
+                && dtVisitTimeEnd != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.VISIT_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+            }
+            if (dtStartDischargeTime != DateTime.Parse("1900-1-1")
+                && dtEndDischargeTime != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.DISCHARGE_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtStartDischargeTime)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtEndDischargeTime));
+            }
+            if (!string.IsNullOrEmpty(szPatientStatus))
+            {
+                if (szPatientStatus == "在院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+                else if (szPatientStatus == "出院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is not null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+
+            }
+            string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
+            string szTable = string.Format("{0} A", SystemData.DataView.PAT_VISIT_V);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
+                , szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.IDENTITY = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.NURSING_CLASS = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.INP_NO = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.Age = int.Parse(dataReader.GetValue(18).ToString());
+
+                    if (nBeginAge != 0 && nBeginAge > PatVisitInfo.Age)
+                        continue;
+                    if (nEndAge != 0 && nEndAge < PatVisitInfo.Age)
+                        continue;
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatsListByComplexSearch", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+
+        /// <summary>
+        /// 根据科室代码查询做过手术的患者列表
+        /// </summary>
+        /// <param name="szDeptCode"></param>
+        /// <param name="szPatientID"></param>
+        /// <param name="szPatientName"></param>
+        /// <param name="szDoctor"></param>
+        /// <param name="szDiagnosis"></param>
+        /// <param name="szNursingClass"></param>
+        /// <param name="szPatientCondition"></param>
+        /// <param name="szIdentity"></param>
+        /// <param name="szChargeType"></param>
+        /// <param name="nBeginAge"></param>
+        /// <param name="nEndAge"></param>
+        /// <param name="szOperationCode"></param>
+        /// <param name="lstPatVisitInfos"></param>
+        /// <returns></returns>
+        public short GetPatsListByComplexSearchWithOperation(string szPatientStatus, string szDeptCode, string szPatientID, string szPatientName
+           , string szDoctor, string szDiagnosis, string szNursingClass, string szPatientCondition
+           , string szIdentity, string szChargeType, int nBeginAge, int nEndAge, string szOperationCode
+            , DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd
+             , DateTime dtStartDischargeTime, DateTime dtEndDischargeTime
+            , ref List<PatVisitInfo> lstPatVisitInfos)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17},floor(MONTHS_BETWEEN(A.visit_time,A.BIRTH_TIME)/12) as {18}"
+                , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
+                , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
+                , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
+                , SystemData.PatVisitView.NURSING_CLASS
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.INP_NO
+                , "AGE");
+
+            string szCondition = string.Format("A.{0}=B.{1} AND A.{2}=B.{3} AND VISIT_TYPE ='IP'", SystemData.PatVisitView.PATIENT_ID, SystemData.OperationView.PATIENT_ID
+               , SystemData.PatVisitView.VISIT_ID, SystemData.OperationView.VISIT_ID);
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.PATIENT_ID, szPatientID);
+            if (!string.IsNullOrEmpty(szPatientName))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.PATIENT_NAME, szPatientName);
+            if (!string.IsNullOrEmpty(szDoctor))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.INCHARGE_DOCTOR, szDoctor);
+            if (!string.IsNullOrEmpty(szDiagnosis))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.DIAGNOSIS, szDiagnosis);
+            if (!string.IsNullOrEmpty(szNursingClass))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.NURSING_CLASS, szNursingClass);
+            if (!string.IsNullOrEmpty(szPatientCondition))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.PATIENT_CONDITION, szPatientCondition);
+            if (!string.IsNullOrEmpty(szIdentity))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.IDENTITY, szIdentity);
+            if (!string.IsNullOrEmpty(szChargeType))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.CHARGE_TYPE, szChargeType);
+
+            if (!string.IsNullOrEmpty(szOperationCode))
+                szCondition = string.Format("{0} AND B.{1}='{2}'", szCondition, SystemData.OperationView.OPERATION_CODE, szOperationCode);
+            if (dtVisitTimeBegin != DateTime.Parse("1900-1-1")
+               && dtVisitTimeEnd != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.VISIT_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+            }
+            if (dtEndDischargeTime != DateTime.Parse("1900-1-1")
+                && dtStartDischargeTime != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.DISCHARGE_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtStartDischargeTime)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtEndDischargeTime));
+            }
+            if (!string.IsNullOrEmpty(szPatientStatus))
+            {
+                if (szPatientStatus == "在院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+                else if (szPatientStatus == "出院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is not null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+
+            }
+            string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
+            string szTable = string.Format("{0} A,{1} B", SystemData.DataView.PAT_VISIT_V, SystemData.DataView.OPERATION_V);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
+                , szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.IDENTITY = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.NURSING_CLASS = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.INP_NO = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.Age = int.Parse(dataReader.GetValue(18).ToString());
+                    if (nBeginAge != 0 && nBeginAge > PatVisitInfo.Age)
+                        continue;
+                    if (nEndAge != 0 && nEndAge < PatVisitInfo.Age)
+                        continue;
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatsListByComplexSearchWithOperation", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+        /// <summary>
+        /// 复合条件查询诊断相关的患者列表
+        /// </summary>
+        /// <param name="szDeptCode"></param>
+        /// <param name="szPatientID"></param>
+        /// <param name="szPatientName"></param>
+        /// <param name="szDoctor"></param>
+        /// <param name="szDiagnosis"></param>
+        /// <param name="szNursingClass"></param>
+        /// <param name="szPatientCondition"></param>
+        /// <param name="szIdentity"></param>
+        /// <param name="szChargeType"></param>
+        /// <param name="nBeginAge"></param>
+        /// <param name="nEndAge"></param>
+        /// <param name="szOperationCode"></param>
+        /// <param name="lstPatVisitInfos"></param>
+        /// <returns></returns>
+        public short GetPatsListByComplexSearchWithDiagnosis(string szPatientStatus, string szDeptCode, string szPatientID, string szPatientName
+           , string szDoctor, string szDiagnosis, string szNursingClass, string szPatientCondition
+           , string szIdentity, string szChargeType, int nBeginAge, int nEndAge, string szOperationCode
+            , DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd
+             , DateTime dtStartDischargeTime, DateTime dtEndDischargeTime
+            , ref List<PatVisitInfo> lstPatVisitInfos)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("DISTINCT A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17},floor(MONTHS_BETWEEN(A.visit_time,A.BIRTH_TIME)/12) as {18}"
+                , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
+                , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
+                , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
+                , SystemData.PatVisitView.NURSING_CLASS
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.INP_NO
+                , "AGE");
+
+            string szCondition = string.Format("A.{0}=B.{1} AND A.{2}=B.{3} AND VISIT_TYPE ='IP'", SystemData.PatVisitView.PATIENT_ID, SystemData.DiagnosisView.PATIENT_ID
+               , SystemData.PatVisitView.VISIT_ID, SystemData.DiagnosisView.VISIT_ID);
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.PATIENT_ID, szPatientID);
+            if (!string.IsNullOrEmpty(szPatientName))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.PATIENT_NAME, szPatientName);
+            if (!string.IsNullOrEmpty(szDoctor))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.INCHARGE_DOCTOR, szDoctor);
+            if (!string.IsNullOrEmpty(szDiagnosis))
+                szCondition = string.Format("{0} AND  B.{1} like '%{2}%' AND B.{3} ='2'", szCondition, SystemData.DiagnosisView.DIAGNOSIS_DESC, szDiagnosis, SystemData.DiagnosisView.DIAGNOSIS_TYPE);
+            if (!string.IsNullOrEmpty(szNursingClass))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.NURSING_CLASS, szNursingClass);
+            if (!string.IsNullOrEmpty(szPatientCondition))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.PATIENT_CONDITION, szPatientCondition);
+            if (!string.IsNullOrEmpty(szIdentity))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.IDENTITY, szIdentity);
+            if (!string.IsNullOrEmpty(szChargeType))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.CHARGE_TYPE, szChargeType);
+            if (dtVisitTimeBegin != DateTime.Parse("1900-1-1")
+               && dtVisitTimeEnd != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.VISIT_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+            }
+            if (dtEndDischargeTime != DateTime.Parse("1900-1-1")
+                && dtStartDischargeTime != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.DISCHARGE_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtStartDischargeTime)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtEndDischargeTime));
+            }
+            if (!string.IsNullOrEmpty(szPatientStatus))
+            {
+                if (szPatientStatus == "在院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+                else if (szPatientStatus == "出院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is not null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+
+            }
+            string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
+            string szTable = string.Format("{0} A,{1} B", SystemData.DataView.PAT_VISIT_V, SystemData.DataView.DIAGNOSIS_V);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
+                , szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.IDENTITY = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.NURSING_CLASS = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.INP_NO = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.Age = int.Parse(dataReader.GetValue(18).ToString());
+                    if (nBeginAge != 0 && nBeginAge > PatVisitInfo.Age)
+                        continue;
+                    if (nEndAge != 0 && nEndAge < PatVisitInfo.Age)
+                        continue;
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatsListByComplexSearchWithOperation", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+        /// <summary>
+        /// 根据复杂查询条件获取检验异常的患者列表
+        /// </summary>
+        /// <param name="szDeptCode"></param>
+        /// <param name="szPatientID"></param>
+        /// <param name="szPatientName"></param>
+        /// <param name="szDoctor"></param>
+        /// <param name="szDiagnosis"></param>
+        /// <param name="szNursingClass"></param>
+        /// <param name="szPatientCondition"></param>
+        /// <param name="szIdentity"></param>
+        /// <param name="szChargeType"></param>
+        /// <param name="nBeginAge"></param>
+        /// <param name="nEndAge"></param>
+        /// <param name="szOperationCode"></param>
+        /// <param name="lstPatVisitInfos"></param>
+        /// <returns></returns>
+        public short GetPatsListByComplexSearchWithLabResult(string szPatientStatus, string szDeptCode, string szPatientID, string szPatientName
+           , string szDoctor, string szDiagnosis, string szNursingClass, string szPatientCondition
+           , string szIdentity, string szChargeType, int nBeginAge, int nEndAge
+            , DateTime dtVisitTimeBegin, DateTime dtVisitTimeEnd
+             , DateTime dtStartDischargeTime, DateTime dtEndDischargeTime
+            , ref List<PatVisitInfo> lstPatVisitInfos)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("distinct A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17},floor(MONTHS_BETWEEN(A.visit_time,A.BIRTH_TIME)/12) as {18}"
+                , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
+                , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
+                , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
+                , SystemData.PatVisitView.NURSING_CLASS
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE
+                , SystemData.PatVisitView.INP_NO, "AGE");
+
+            string szCondition = string.Format("1=1 AND VISIT_TYPE ='IP'");
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.PATIENT_ID, szPatientID);
+            if (!string.IsNullOrEmpty(szPatientName))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.PATIENT_NAME, szPatientName);
+            if (!string.IsNullOrEmpty(szDoctor))
+                szCondition = string.Format("{0} AND  A.{1}='{2}'", szCondition, SystemData.PatVisitView.INCHARGE_DOCTOR, szDoctor);
+            if (!string.IsNullOrEmpty(szDiagnosis))
+                szCondition = string.Format("{0} AND  A.{1} like '%{2}%'", szCondition, SystemData.PatVisitView.DIAGNOSIS, szDiagnosis);
+            if (!string.IsNullOrEmpty(szNursingClass))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.NURSING_CLASS, szNursingClass);
+            if (!string.IsNullOrEmpty(szPatientCondition))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.PATIENT_CONDITION, szPatientCondition);
+            if (!string.IsNullOrEmpty(szIdentity))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.IDENTITY, szIdentity);
+            if (!string.IsNullOrEmpty(szChargeType))
+                szCondition = string.Format("{0} AND  A.{1} = '{2}'", szCondition, SystemData.PatVisitView.CHARGE_TYPE, szChargeType);
+
+            if (dtVisitTimeBegin != DateTime.Parse("1900-1-1")
+               && dtVisitTimeEnd != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.VISIT_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeBegin)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtVisitTimeEnd));
+            }
+            if (dtEndDischargeTime != DateTime.Parse("1900-1-1")
+                && dtStartDischargeTime != DateTime.Parse("1900-1-1"))
+            {
+                szCondition = string.Format("{0} AND  A.{1} >= {2} AND A.{1} <= {3}"
+                    , szCondition, SystemData.PatVisitView.DISCHARGE_TIME
+                    , base.MedQCAccess.GetSqlTimeFormat(dtStartDischargeTime)
+                    , base.MedQCAccess.GetSqlTimeFormat(dtEndDischargeTime));
+            }
+            if (!string.IsNullOrEmpty(szPatientStatus))
+            {
+                if (szPatientStatus == "在院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+                else if (szPatientStatus == "出院病人")
+                    szCondition = string.Format("{0} AND  A.{1} is not null "
+                        , szCondition, SystemData.PatVisitView.DISCHARGE_TIME);
+
+            }
+            szCondition = string.Format("{4} AND A.{0}=B.{1} AND A.{2}=B.{3} AND B.test_id =C.test_id AND C.abnormal_indicator is not null ", SystemData.PatVisitView.PATIENT_ID, SystemData.OperationView.PATIENT_ID
+               , SystemData.PatVisitView.VISIT_ID, SystemData.OperationView.VISIT_ID
+               , szCondition);
+
+            string szOrderBy = string.Format("A.{0},A.{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.BED_CODE);
+            string szTable = string.Format("{0} A,{1} B,{2} C", SystemData.DataView.PAT_VISIT_V, "lab_master_v", "lab_result_v");
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTable, szCondition
+                , szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo PatVisitInfo = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) PatVisitInfo.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) PatVisitInfo.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) PatVisitInfo.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) PatVisitInfo.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) PatVisitInfo.PATIENT_SEX = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) PatVisitInfo.BIRTH_TIME = dataReader.GetDateTime(5);
+                    if (!dataReader.IsDBNull(6)) PatVisitInfo.CHARGE_TYPE = dataReader.GetString(6);
+                    if (!dataReader.IsDBNull(7)) PatVisitInfo.DEPT_NAME = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) PatVisitInfo.BED_CODE = dataReader.GetValue(8).ToString();
+                    if (!dataReader.IsDBNull(9)) PatVisitInfo.PATIENT_CONDITION = dataReader.GetString(9);
+                    if (!dataReader.IsDBNull(10)) PatVisitInfo.INCHARGE_DOCTOR= dataReader.GetString(10);
+                    if (!dataReader.IsDBNull(11)) PatVisitInfo.DIAGNOSIS = dataReader.GetString(11);
+                    if (!dataReader.IsDBNull(12)) PatVisitInfo.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) PatVisitInfo.IDENTITY = dataReader.GetString(13);
+                    if (!dataReader.IsDBNull(14)) PatVisitInfo.NURSING_CLASS = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.INP_NO = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.Age = int.Parse(dataReader.GetValue(18).ToString());
+                    if (nBeginAge != 0 && nBeginAge > PatVisitInfo.Age)
+                        continue;
+                    if (nEndAge != 0 && nEndAge < PatVisitInfo.Age)
+                        continue;
+                    lstPatVisitInfos.Add(PatVisitInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatsListByComplexSearchWithOperation", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
         }
     }
 }

@@ -71,7 +71,98 @@ namespace EMRDBLib.DbAccess
             }
             return SystemData.ReturnValue.OK;
         }
+        public short GetIdentityDictInfos(ref List<IDentityDictInfo> lstIDentityDictInfo)
+        {
 
+            string szField = string.Format("{0},{1},{2}"
+               , SystemData.IDentityDicView.SERIAL_NO, SystemData.IDentityDicView.IDENTITY_CODE
+               , SystemData.IDentityDicView.IDENTITY_NAME
+               );
+
+            string szSQL = string.Format(SystemData.SQL.SELECT_FROM, szField, SystemData.DataView.IDENTITY_DICT_V
+              );
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstIDentityDictInfo == null)
+                    lstIDentityDictInfo = new List<IDentityDictInfo>();
+                do
+                {
+                    IDentityDictInfo iDentityDictInfo = new IDentityDictInfo();
+                    if (!dataReader.IsDBNull(0)) iDentityDictInfo.SerialNo = int.Parse(dataReader.GetValue(0).ToString());
+                    if (!dataReader.IsDBNull(1)) iDentityDictInfo.IdentityCode = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) iDentityDictInfo.IdentityName = dataReader.GetString(2);
+                    lstIDentityDictInfo.Add(iDentityDictInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("EMRDBAccess.GetChargeTypeDictInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
+        public short GetChargeTypeDictInfos(ref List<ChargeTypeDictInfo> lstChargeTypeDictInfo)
+        {
+
+            string szField = string.Format("{0},{1},{2}"
+               , SystemData.ChargeTypeDicView.SERIAL_NO, SystemData.ChargeTypeDicView.CHARGE_TYPE_CODE
+               , SystemData.ChargeTypeDicView.CHARGE_TYPE_NAME
+               );
+
+            string szSQL = string.Format(SystemData.SQL.SELECT_FROM, szField, SystemData.DataView.CHARGE_TYPE_DICT_V
+              );
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstChargeTypeDictInfo == null)
+                    lstChargeTypeDictInfo = new List<ChargeTypeDictInfo>();
+                do
+                {
+                    ChargeTypeDictInfo chargeTypeDictInfo = new ChargeTypeDictInfo();
+                    if (!dataReader.IsDBNull(0)) chargeTypeDictInfo.SerialNo = int.Parse(dataReader.GetValue(0).ToString());
+                    if (!dataReader.IsDBNull(1)) chargeTypeDictInfo.ChargeTypeCode = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) chargeTypeDictInfo.ChargeTypeName = dataReader.GetString(2);
+                    lstChargeTypeDictInfo.Add(chargeTypeDictInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("EMRDBAccess.GetChargeTypeDictInfos", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
         public short GetDocAdminDeptsList(string szUserID, ref List<DeptInfo> lstDeptInfos)
         {
             if (string.IsNullOrEmpty(szUserID))

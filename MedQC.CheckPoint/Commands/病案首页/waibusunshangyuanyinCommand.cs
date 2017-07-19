@@ -26,9 +26,9 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             result = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitLog);
             QcCheckResult qcCheckResult = result as QcCheckResult;
 
-            string szSQl = string.Format("select b.DIAGNOSIS_CODE,a.DIAG_TYPE,a.DIAG_DESC from DIAGNOSIS_V where a.DIAG_DESC =b.DIAGNOSIS_NAME(+) and a.VISIT_NO ='{1}' and a.PATIENT_ID ='{0}' and a.DIAG_TYPE = 7 "
+            string szSQl = string.Format("select a.DIAGNOSIS_CODE,a.DIAG_TYPE,a.DIAGNOSIS_DESC from DIAGNOSIS_V a where  a.VISIT_NO ='{1}' and a.PATIENT_ID ='{0}' and a.DIAG_TYPE = 7 "
                 , patVisitLog.PATIENT_ID
-                , patVisitLog.VISIT_ID);
+                , patVisitLog.VISIT_NO);
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
@@ -39,14 +39,16 @@ namespace Heren.MedQC.CheckPoint.Commands.newhis
             }
             string DIAGNOSIS_CODE = ds.Tables[0].Rows[0]["DIAGNOSIS_CODE"].ToString();
             string DIAG_TYPE = ds.Tables[0].Rows[0]["DIAG_TYPE"].ToString();
-            string DIAG_DESC = ds.Tables[0].Rows[0]["DIAG_DESC"].ToString();
+            string DIAG_DESC = ds.Tables[0].Rows[0]["DIAGNOSIS_DESC"].ToString();
             if (DIAGNOSIS_CODE != "X59.801" && DIAGNOSIS_CODE != "W28.801")
             {
                 qcCheckResult.QC_EXPLAIN = "规则通过";
                 qcCheckResult.QC_RESULT = 1;
                 return true;
             }
-            szSQl = string.Format("select TRAINING_INJURY from INP_VISIT a where a.PATIENT_ID='{0}' and a.VISIT_NO='{1}'");
+            szSQl = string.Format("select TRAINING_INJURY from pat_visit_v a where a.PATIENT_ID='{0}' and a.VISIT_NO='{1}'"
+                ,patVisitLog.PATIENT_ID
+                ,patVisitLog.VISIT_NO);
             shRet = CommonAccess.Instance.ExecuteQuery(szSQl, out ds);
             if (ds == null || ds.Tables[0].Rows.Count <= 0)
             {

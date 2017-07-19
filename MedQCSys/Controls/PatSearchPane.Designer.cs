@@ -66,6 +66,7 @@ namespace MedQCSys.Controls
             this.rdbSpecialAll = new System.Windows.Forms.RadioButton();
             this.rdbSpecialMine = new System.Windows.Forms.RadioButton();
             this.lable10 = new System.Windows.Forms.Label();
+            this.btnComplex = new System.Windows.Forms.Button();
             this.pnlSearchType.SuspendLayout();
             this.pnlDeptName.SuspendLayout();
             this.pnlPatientStatus.SuspendLayout();
@@ -245,6 +246,7 @@ namespace MedQCSys.Controls
             // 
             // pnlSearchBtn
             // 
+            this.pnlSearchBtn.Controls.Add(this.btnComplex);
             this.pnlSearchBtn.Controls.Add(this.chBoxShowTime);
             this.pnlSearchBtn.Controls.Add(this.pictureBox1);
             this.pnlSearchBtn.Controls.Add(this.btnSearch);
@@ -492,6 +494,20 @@ namespace MedQCSys.Controls
             this.lable10.TabIndex = 29;
             this.lable10.Text = "分配筛选";
             // 
+            // btnComplex
+            // 
+            this.btnComplex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnComplex.AutoSize = true;
+            this.btnComplex.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnComplex.Location = new System.Drawing.Point(169, 4);
+            this.btnComplex.Margin = new System.Windows.Forms.Padding(1);
+            this.btnComplex.Name = "btnComplex";
+            this.btnComplex.Size = new System.Drawing.Size(93, 28);
+            this.btnComplex.TabIndex = 27;
+            this.btnComplex.Text = "复合查询";
+            this.btnComplex.UseVisualStyleBackColor = true;
+            this.btnComplex.Click += new System.EventHandler(this.btnComplex_Click);
+            // 
             // PatSearchPane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -582,5 +598,6 @@ namespace MedQCSys.Controls
         private System.Windows.Forms.RadioButton rdbSpecialAll;
         private System.Windows.Forms.RadioButton rdbSpecialMine;
         private System.Windows.Forms.Label lable10;
+        private System.Windows.Forms.Button btnComplex;
     }
 }

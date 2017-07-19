@@ -163,6 +163,12 @@
     <Compile Include="Controls\PatSearchPane.Designer.cs">
       <DependentUpon>PatSearchPane.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ComplexSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ComplexSearchForm.Designer.cs">
+      <DependentUpon>ComplexSearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\IcdQueryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -461,6 +467,9 @@
     <EmbeddedResource Include="Controls\PatSearchPane.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PatSearchPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ComplexSearchForm.resx">
+      <DependentUpon>ComplexSearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\IcdQueryForm.resx">
       <DependentUpon>IcdQueryForm.cs</DependentUpon>

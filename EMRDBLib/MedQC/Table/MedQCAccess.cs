@@ -973,5 +973,87 @@ namespace EMRDBLib.DbAccess
             }
             return SystemData.ReturnValue.OK;
         }
+
+        /// <summary>
+        /// 获取手术操作字典数据列表
+        /// </summary>
+        /// <param name="lstOperationDict">手术操作字典数据列表</param>
+        /// <returns>MedDocSys.Common.SystemData.ReturnValue</returns>
+        public short GetOperationDict(ref List<EMRDBLib.OperationDict> lstOperationDict)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+
+            string szField = string.Format("{0},{1},{2}", SystemData.OperationDictView.OPERATION_CODE, SystemData.OperationDictView.OPERATION_NAME
+                , SystemData.OperationDictView.INPUT_CODE);
+            string szSQL = string.Format(SystemData.SQL.SELECT_FROM, szField, SystemData.DataView.OPERATION_DICT_V);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstOperationDict == null)
+                    lstOperationDict = new List<OperationDict>();
+                do
+                {
+                    OperationDict operationDict = new OperationDict();
+                    if (!dataReader.IsDBNull(0))
+                        operationDict.OperationCode = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1))
+                        operationDict.OperationName = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2))
+                        operationDict.InputCode = dataReader.GetString(2);
+                    lstOperationDict.Add(operationDict);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("MedDocAccess.GetOperationDict", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
+        /// <summary>
+        /// 获取检验报告字典
+        /// </summary>
+        public short GetLabReportDict(ref List<EMRDBLib.LabReportDict> lstLabReportDict)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+
+            string szField = string.Format("item_code,item_name");
+            string szSQL = string.Format(SystemData.SQL.SELECT_FROM, szField, "lab_report_dict_V");
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstLabReportDict == null)
+                    lstLabReportDict = new List<LabReportDict>();
+                do
+                {
+                    LabReportDict labReportDict = new LabReportDict();
+                    if (!dataReader.IsDBNull(0))
+                        labReportDict.ItemCode = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1))
+                        labReportDict.ItemName = dataReader.GetString(1);
+                    lstLabReportDict.Add(labReportDict);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("MedDocAccess.GetLabReportDict", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
     }
 }
