@@ -77,7 +77,7 @@ namespace Heren.MedQC.MedRecord
             nBegin = 1000;
 #endif
 
-            string szUserID = SystemParam.Instance.UserInfo.ID;
+            string szUserID = SystemParam.Instance.UserInfo.USER_ID;
             //从数据库获得最新包号，然后加1
             List<RecPack> lstRecPacks = new List<RecPack>();
             short shRet = RecPackAccess.Instance.GetRecPacks(szUserID, ref lstRecPacks);

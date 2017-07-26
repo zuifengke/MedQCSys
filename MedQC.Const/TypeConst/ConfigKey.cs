@@ -155,6 +155,18 @@ namespace EMRDBLib
             /// </summary>
             public const string HIS_CONN_STRING = "HisDbConnString";
             /// <summary>
+            /// 护理病历数据库类型
+            /// </summary>
+            public const string NDS_DB_TYPE = "NdsDbType";
+            /// <summary>
+            /// 护理病历数据库驱动类型
+            /// </summary>
+            public const string NDS_PROVIDER_TYPE = "NdsDbProvider";
+            /// <summary>
+            /// 护理病历数据库连接串
+            /// </summary>
+            public const string NDS_CONN_STRING = "NdsDbConnString";
+            /// <summary>
             /// 病历数据库类型
             /// </summary>
             public const string MDS_DB_TYPE = "MdsDbType";

@@ -812,10 +812,10 @@ namespace MedQCSys.DockForms
             qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
             qcActionLog.DOC_SETID = docInfo.DOC_SETID;
-            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
-            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
-            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.USER_NAME;
+            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.USER_ID;
+            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcActionLog.CHECK_TYPE = 0;
             qcActionLog.CHECK_DATE = dtCheckTime;
             qcActionLog.LOG_TYPE = 1;
@@ -876,28 +876,28 @@ namespace MedQCSys.DockForms
             }
             this.Update();
             this.OpenDocument(docInfo);
-            
-                //提示已经被质控过，确认后才更新质控阅读记录
-                //提示文档被质控过的信息，如果最新质控记录为当前用户，则不提示，如果为其他用户，则提示。
-                MedicalQcLog qcActionLog = null;
-                short shRet = MedicalQcLogAccess.Instance.GetQCLogInfo(docInfo.DOC_SETID, 1, ref qcActionLog);
-                if (shRet == SystemData.ReturnValue.OK)
+
+            //提示已经被质控过，确认后才更新质控阅读记录
+            //提示文档被质控过的信息，如果最新质控记录为当前用户，则不提示，如果为其他用户，则提示。
+            MedicalQcLog qcActionLog = null;
+            short shRet = MedicalQcLogAccess.Instance.GetQCLogInfo(docInfo.DOC_SETID, 1, ref qcActionLog);
+            if (shRet == SystemData.ReturnValue.OK)
+            {
+                if (qcActionLog.CHECKED_ID != SystemParam.Instance.UserInfo.USER_ID)
                 {
-                    if (qcActionLog.CHECKED_ID != SystemParam.Instance.UserInfo.ID)
+                    string msg = string.Format("当前病历已经被{0}于{1}质控阅读过!\t\n如需重新质控，请单击【确定】按钮"
+                        , qcActionLog.CHECKED_BY
+                        , qcActionLog.CHECK_DATE.ToString("yyyy-MM-dd HH:mm:ss"));
+                    if (MessageBoxEx.ShowConfirm(msg) != DialogResult.OK)
                     {
-                        string msg = string.Format("当前病历已经被{0}于{1}质控阅读过!\t\n如需重新质控，请单击【确定】按钮"
-                            , qcActionLog.CHECKED_BY
-                            , qcActionLog.CHECK_DATE.ToString("yyyy-MM-dd HH:mm:ss"));
-                        if (MessageBoxEx.ShowConfirm(msg) != DialogResult.OK)
-                        {
-                            this.ShowStatusMessage(null);
-                            GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                            return;
-                        }
+                        this.ShowStatusMessage(null);
+                        GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                        return;
                     }
                 }
-                this.SaveReadLogInfo(docInfo, dtCheckTime, e.Node);
-           
+            }
+            this.SaveReadLogInfo(docInfo, dtCheckTime, e.Node);
+
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
             return;
@@ -948,6 +948,7 @@ namespace MedQCSys.DockForms
 
             HerenDocForm docForm = new HerenDocForm(this.MainForm);
             docForm.OpenDocument(docInfo);
+            
             docForm.Show(this.dockPanel1, true);
         }
         public void ShowDockPanel()
@@ -1018,9 +1019,9 @@ namespace MedQCSys.DockForms
             string szDeptCode = string.Empty;
             byte[] byteDocData = null;
             MedDocInfo docInfo = selectedNode.Data as MedDocInfo;
-            if (docInfo == null )
+            if (docInfo == null)
             {
-                if(!SystemParam.Instance.LocalConfigOption.AllowAddQuestionToParDocType)
+                if (!SystemParam.Instance.LocalConfigOption.AllowAddQuestionToParDocType)
                 {
                     MessageBoxEx.Show("没有选中病历文书中任何一份病历，无法添加质检问题！", MessageBoxIcon.Warning);
                     return;
@@ -1048,7 +1049,7 @@ namespace MedQCSys.DockForms
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-           
+
         }
 
         public void SelectDocNodeByDocSetID(VirtualNode node, string szDocSetId)

@@ -41,10 +41,13 @@
             this.rtb_MODIFY_REMARK = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
+            this.col_INCHARGE_DOCTOR = new Heren.Common.Controls.TableView.FindComboBoxColumn();
+            this.col_DEPT_IN_CHARGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_MSG_DICT_MESSAGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_SCORE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_ERROR_COUNT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_QA_EVENT_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_MSG_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label11 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lbl_QC_LEVEL = new System.Windows.Forms.Label();
@@ -93,7 +96,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(636, 461);
+            this.panel1.Size = new System.Drawing.Size(832, 461);
             this.panel1.TabIndex = 0;
             // 
             // cbo_MODIFY_PERIOD
@@ -112,7 +115,7 @@
             // 
             this.herenButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.herenButton2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.herenButton2.Location = new System.Drawing.Point(541, 426);
+            this.herenButton2.Location = new System.Drawing.Point(737, 426);
             this.herenButton2.Name = "herenButton2";
             this.herenButton2.Size = new System.Drawing.Size(87, 23);
             this.herenButton2.TabIndex = 3;
@@ -134,7 +137,7 @@
             // 
             this.herenButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.herenButton1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.herenButton1.Location = new System.Drawing.Point(422, 425);
+            this.herenButton1.Location = new System.Drawing.Point(618, 425);
             this.herenButton1.Name = "herenButton1";
             this.herenButton1.Size = new System.Drawing.Size(116, 23);
             this.herenButton1.TabIndex = 3;
@@ -170,7 +173,7 @@
             this.rtb_MODIFY_REMARK.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rtb_MODIFY_REMARK.Location = new System.Drawing.Point(2, 346);
             this.rtb_MODIFY_REMARK.Name = "rtb_MODIFY_REMARK";
-            this.rtb_MODIFY_REMARK.Size = new System.Drawing.Size(628, 73);
+            this.rtb_MODIFY_REMARK.Size = new System.Drawing.Size(824, 73);
             this.rtb_MODIFY_REMARK.TabIndex = 2;
             this.rtb_MODIFY_REMARK.Text = "";
             // 
@@ -198,13 +201,15 @@
             this.dataTableView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataTableView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTableView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_INCHARGE_DOCTOR,
+            this.col_DEPT_IN_CHARGE,
             this.col_MSG_DICT_MESSAGE,
             this.col_SCORE,
             this.col_ERROR_COUNT,
-            this.col_QA_EVENT_TYPE});
+            this.col_QA_EVENT_TYPE,
+            this.col_MSG_ID});
             this.dataTableView1.Location = new System.Drawing.Point(3, 118);
             this.dataTableView1.Name = "dataTableView1";
-            this.dataTableView1.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -214,35 +219,49 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(630, 202);
+            this.dataTableView1.Size = new System.Drawing.Size(826, 202);
             this.dataTableView1.TabIndex = 1;
+            this.dataTableView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataTableView1_EditingControlShowing);
+            // 
+            // col_INCHARGE_DOCTOR
+            // 
+            this.col_INCHARGE_DOCTOR.HeaderText = "责任医生";
+            this.col_INCHARGE_DOCTOR.Name = "col_INCHARGE_DOCTOR";
+            this.col_INCHARGE_DOCTOR.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // col_DEPT_IN_CHARGE
+            // 
+            this.col_DEPT_IN_CHARGE.HeaderText = "责任科室";
+            this.col_DEPT_IN_CHARGE.Name = "col_DEPT_IN_CHARGE";
             // 
             // col_MSG_DICT_MESSAGE
             // 
             this.col_MSG_DICT_MESSAGE.HeaderText = "项目";
             this.col_MSG_DICT_MESSAGE.Name = "col_MSG_DICT_MESSAGE";
-            this.col_MSG_DICT_MESSAGE.ReadOnly = true;
             this.col_MSG_DICT_MESSAGE.Width = 330;
             // 
             // col_SCORE
             // 
             this.col_SCORE.HeaderText = "扣分标准";
             this.col_SCORE.Name = "col_SCORE";
-            this.col_SCORE.ReadOnly = true;
             this.col_SCORE.Width = 85;
             // 
             // col_ERROR_COUNT
             // 
             this.col_ERROR_COUNT.HeaderText = "错误次数";
             this.col_ERROR_COUNT.Name = "col_ERROR_COUNT";
-            this.col_ERROR_COUNT.ReadOnly = true;
             this.col_ERROR_COUNT.Width = 85;
             // 
             // col_QA_EVENT_TYPE
             // 
             this.col_QA_EVENT_TYPE.HeaderText = "病历主题";
             this.col_QA_EVENT_TYPE.Name = "col_QA_EVENT_TYPE";
-            this.col_QA_EVENT_TYPE.ReadOnly = true;
+            // 
+            // col_MSG_ID
+            // 
+            this.col_MSG_ID.HeaderText = "消息ID";
+            this.col_MSG_ID.Name = "col_MSG_ID";
+            this.col_MSG_ID.Visible = false;
             // 
             // label11
             // 
@@ -280,9 +299,9 @@
             this.lbl_RECEIVER_DEPT_NAME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbl_RECEIVER_DEPT_NAME.Location = new System.Drawing.Point(299, 69);
             this.lbl_RECEIVER_DEPT_NAME.Name = "lbl_RECEIVER_DEPT_NAME";
-            this.lbl_RECEIVER_DEPT_NAME.Size = new System.Drawing.Size(91, 14);
+            this.lbl_RECEIVER_DEPT_NAME.Size = new System.Drawing.Size(63, 14);
             this.lbl_RECEIVER_DEPT_NAME.TabIndex = 1;
-            this.lbl_RECEIVER_DEPT_NAME.Text = "内分泌科病房";
+            this.lbl_RECEIVER_DEPT_NAME.Text = "出院科室";
             // 
             // lbl_QC_MAN
             // 
@@ -312,7 +331,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(82, 14);
             this.label9.TabIndex = 1;
-            this.label9.Text = "接收科室：";
+            this.label9.Text = "出院科室：";
             // 
             // label3
             // 
@@ -331,9 +350,9 @@
             this.lbl_MODIFY_SCORE.ForeColor = System.Drawing.Color.Red;
             this.lbl_MODIFY_SCORE.Location = new System.Drawing.Point(83, 92);
             this.lbl_MODIFY_SCORE.Name = "lbl_MODIFY_SCORE";
-            this.lbl_MODIFY_SCORE.Size = new System.Drawing.Size(35, 14);
+            this.lbl_MODIFY_SCORE.Size = new System.Drawing.Size(14, 14);
             this.lbl_MODIFY_SCORE.TabIndex = 1;
-            this.lbl_MODIFY_SCORE.Text = "2 分";
+            this.lbl_MODIFY_SCORE.Text = "0";
             // 
             // lbl_RECEIVER
             // 
@@ -371,9 +390,9 @@
             this.label7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(4, 69);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 14);
+            this.label7.Size = new System.Drawing.Size(82, 14);
             this.label7.TabIndex = 1;
-            this.label7.Text = "接收人：";
+            this.label7.Text = "经治医生：";
             // 
             // label2
             // 
@@ -400,7 +419,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 461);
+            this.ClientSize = new System.Drawing.Size(832, 461);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ModifyNoticeForm";
@@ -421,28 +440,31 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbl_QC_MAN;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lbl_NOTICE_STATUS;
         private System.Windows.Forms.Label lbl_QC_DEPT_NAME;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lbl_QC_LEVEL;
-        private System.Windows.Forms.Label lbl_RECEIVER_DEPT_NAME;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lbl_MODIFY_SCORE;
-        private System.Windows.Forms.Label lbl_RECEIVER;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbo_MODIFY_PERIOD;
         private Heren.Common.Controls.TableView.DataTableView dataTableView1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox rtb_MODIFY_REMARK;
         private Heren.Common.Controls.HerenButton herenButton1;
         private Heren.Common.Controls.HerenButton herenButton2;
+        private System.Windows.Forms.Label lbl_NOTICE_STATUS;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lbl_RECEIVER_DEPT_NAME;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lbl_RECEIVER;
+        private System.Windows.Forms.Label label7;
+        private Heren.Common.Controls.TableView.FindComboBoxColumn col_INCHARGE_DOCTOR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_DEPT_IN_CHARGE;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_MSG_DICT_MESSAGE;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_SCORE;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_ERROR_COUNT;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_QA_EVENT_TYPE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_MSG_ID;
     }
 }

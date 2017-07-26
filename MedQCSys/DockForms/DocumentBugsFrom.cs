@@ -66,10 +66,10 @@ namespace MedQCSys.DockForms
         {
             UserInfo userInfo = SystemParam.Instance.UserInfo;
             UserInfo clientUserInfo = new UserInfo();
-            clientUserInfo.ID = userInfo.ID;
-            clientUserInfo.Name = userInfo.Name;
-            clientUserInfo.DeptCode = userInfo.DeptCode;
-            clientUserInfo.DeptName = userInfo.DeptName;
+            clientUserInfo.USER_ID = userInfo.USER_ID;
+            clientUserInfo.USER_NAME = userInfo.USER_NAME;
+            clientUserInfo.DEPT_CODE = userInfo.DEPT_CODE;
+            clientUserInfo.DEPT_NAME = userInfo.DEPT_NAME;
             return clientUserInfo;
         }
 

@@ -101,7 +101,7 @@ namespace Heren.MedQC.Systems
             for (int index = 0; index < lstUserInfo.Count; index++)
             {
                 UserInfo userInfo = lstUserInfo[index];
-                string szInputCode = GlobalMethods.Convert.GetInputCode(userInfo.Name, false, 10);
+                string szInputCode = GlobalMethods.Convert.GetInputCode(userInfo.USER_NAME, false, 10);
                 this.cobRequestDoc.Items.Add(userInfo);
                 this.cobParentDoc.Items.Add(userInfo);
             }
@@ -238,7 +238,7 @@ namespace Heren.MedQC.Systems
                 || string.IsNullOrEmpty(this.cobParentDoc.Text))
                 return string.Empty;
            UserInfo userInfo = this.cobParentDoc.SelectedItem as UserInfo;
-            return userInfo.ID;
+            return userInfo.USER_ID;
         }
 
         private string GetRequestDoctorID()
@@ -247,7 +247,7 @@ namespace Heren.MedQC.Systems
                 || string.IsNullOrEmpty(this.cobRequestDoc.Text))
                 return string.Empty;
             UserInfo userInfo = this.cobRequestDoc.SelectedItem as UserInfo;
-            return userInfo.ID;
+            return userInfo.USER_ID;
         }
 
         private  DeptInfo GetSelectecDeptInfo()
@@ -300,7 +300,7 @@ namespace Heren.MedQC.Systems
             {
                 foreach (DataGridViewRow row in this.dataGridView1.Rows)
                 {
-                    row.Cells[this.colDoctor.Index].Value = userInfo.Name;
+                    row.Cells[this.colDoctor.Index].Value = userInfo.USER_NAME;
                 }
             }
 
@@ -579,7 +579,7 @@ namespace Heren.MedQC.Systems
             {
                 this.m_QcSpecialCheck = new QcSpecialCheck();
                 this.m_QcSpecialCheck.ConfigID = this.m_QcSpecialCheck.MakeConfigID();
-                this.m_QcSpecialCheck.Creater = SystemParam.Instance.UserInfo.Name;
+                this.m_QcSpecialCheck.Creater = SystemParam.Instance.UserInfo.USER_NAME;
                 this.m_QcSpecialCheck.CreateTime = DateTime.Now;
             }
             this.m_QcSpecialCheck.Name = this.txtName.Text.Trim();

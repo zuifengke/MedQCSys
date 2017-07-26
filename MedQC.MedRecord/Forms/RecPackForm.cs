@@ -196,7 +196,7 @@ namespace Heren.MedQC.MedRecord
 #if DEBUG
             nBegin = 1000;
 #endif 
-            string szUserID = SystemParam.Instance.UserInfo.ID;
+            string szUserID = SystemParam.Instance.UserInfo.USER_ID;
             //从数据库获得最新包号，然后加1
             List<RecPack> lstRecPacks = new List<RecPack>();
             short shRet = RecPackAccess.Instance.GetRecPacks(szUserID, ref lstRecPacks);
@@ -300,8 +300,8 @@ namespace Heren.MedQC.MedRecord
                 recPack.CASE_NO = string.Empty;
                 recPack.DISCHARGE_TIME = patVisitInfo.DISCHARGE_TIME;
                 recPack.HOSPITAL_DISTRICT = string.Empty;//院区字段不明
-                recPack.PACKER = SystemParam.Instance.UserInfo.Name;
-                recPack.PACKER_ID = SystemParam.Instance.UserInfo.ID;
+                recPack.PACKER = SystemParam.Instance.UserInfo.USER_NAME;
+                recPack.PACKER_ID = SystemParam.Instance.UserInfo.USER_ID;
                 recPack.PACK_ID = recPack.MakeID();
                 recPack.PACK_NO = this.txt_PACK_NO.Text;
                 recPack.PACK_TIME = SysTimeHelper.Instance.Now;
@@ -315,8 +315,8 @@ namespace Heren.MedQC.MedRecord
             else
             {
                 recPack.PACK_TIME = SysTimeHelper.Instance.Now;
-                recPack.PACKER = SystemParam.Instance.UserInfo.Name;
-                recPack.PACKER_ID = SystemParam.Instance.UserInfo.ID;
+                recPack.PACKER = SystemParam.Instance.UserInfo.USER_NAME;
+                recPack.PACKER_ID = SystemParam.Instance.UserInfo.USER_ID;
                 recPack.PAPER_NUMBER = paperNumber;
                 shRet = RecPackAccess.Instance.Update(recPack);
                 this.txt_PACK_NO.Text = recPack.PACK_NO;

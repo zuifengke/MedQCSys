@@ -127,7 +127,7 @@ namespace MedQC.ChatClient
             this.Cursor = Cursors.Default;
             SystemParam.Instance.QChatArgs = new QChatArgs();
             SystemParam.Instance.QChatArgs.Listener = string.Empty;
-            SystemParam.Instance.QChatArgs.Sender = userInfo.ID;
+            SystemParam.Instance.QChatArgs.Sender = userInfo.USER_ID;
             SystemParam.Instance.QChatArgs.ArgType = "2";
             SystemConfig.Instance.Write(SystemData.ConfigKey.MEDTASK_DEFAULT_USERID, szUserID);
             this.DialogResult = DialogResult.OK;

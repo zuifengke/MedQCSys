@@ -142,7 +142,7 @@ namespace Heren.MedQC.CheckPoint
             TimeEventHandler.Instance.TimeCheckQuery = new TimeCheckQuery();
             TimeEventHandler.Instance.TimeCheckQuery.PatientID = patVisitLog.PATIENT_ID;
             TimeEventHandler.Instance.TimeCheckQuery.PatientName = patVisitLog.PATIENT_NAME;
-            TimeEventHandler.Instance.TimeCheckQuery.VisitID = patVisitLog.VISIT_ID;
+            TimeEventHandler.Instance.TimeCheckQuery.VisitID = patVisitLog.VISIT_NO;//兼容新军卫 病历文书visit_id=visit_no
             TimeEventHandler.Instance.TimeCheckQuery.BedCode = patVisitLog.BED_CODE;
             TimeEventHandler.Instance.TimeCheckQuery.VisitTime = patVisitLog.VISIT_TIME;
 

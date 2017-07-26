@@ -69,7 +69,7 @@ namespace Heren.MedQC.Core
                     List<QcAdminDepts> lstQcAdminDeptsList = new List<QcAdminDepts>();
                     if (SystemParam.Instance.UserInfo == null)
                         return string.Empty;
-                    short shRet = QcAdminDeptsAccess.Instance.GetQcAdminDeptsList(SystemParam.Instance.UserInfo.ID, ref lstQcAdminDeptsList);
+                    short shRet = QcAdminDeptsAccess.Instance.GetQcAdminDeptsList(SystemParam.Instance.UserInfo.USER_ID, ref lstQcAdminDeptsList);
                     if (lstQcAdminDeptsList.Count > 0)
                     {
                         m_QcAdminDepts = string.Join(",", lstQcAdminDeptsList.Select(m => m.DEPT_NAME).ToArray());

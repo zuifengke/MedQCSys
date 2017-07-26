@@ -75,10 +75,10 @@ namespace Heren.MedQC.Systems
                 return false;
             }
             SystemParam.Instance.UserInfo = new UserInfo();
-            SystemParam.Instance.UserInfo.DeptCode = SystemParam.Instance.UserInfo.DeptCode;
-             SystemParam.Instance.UserInfo.DeptName = SystemParam.Instance.UserInfo.DeptName;
-             SystemParam.Instance.UserInfo.ID = SystemParam.Instance.UserInfo.ID;
-             SystemParam.Instance.UserInfo.Name = SystemParam.Instance.UserInfo.Name;
+            SystemParam.Instance.UserInfo.DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+             SystemParam.Instance.UserInfo.DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
+             SystemParam.Instance.UserInfo.USER_ID = SystemParam.Instance.UserInfo.USER_ID;
+             SystemParam.Instance.UserInfo.USER_NAME = SystemParam.Instance.UserInfo.USER_NAME;
              SystemParam.Instance.UserInfo.Password = SystemParam.Instance.UserInfo.Password;
 
              SystemParam.Instance.UserInfo.Role = UserRole.InDoctor;

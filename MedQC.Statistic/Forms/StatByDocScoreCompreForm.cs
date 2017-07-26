@@ -70,7 +70,7 @@ namespace Heren.MedQC.Statistic
             for (int index = 0; index < lstUserInfo.Count; index++)
             {
                 UserInfo userInfo = lstUserInfo[index];
-                string szInputCode = GlobalMethods.Convert.GetInputCode(userInfo.Name, false, 10);
+                string szInputCode = GlobalMethods.Convert.GetInputCode(userInfo.USER_NAME, false, 10);
                 this.cboUserList.Items.Add(userInfo);
             }
             this.ShowStatusMessage(null);
@@ -113,7 +113,7 @@ namespace Heren.MedQC.Statistic
             {
                  UserInfo userInfo = this.cboUserList.SelectedItem as  UserInfo;
                 if (userInfo != null)
-                    szCheckerName = userInfo.Name;
+                    szCheckerName = userInfo.USER_NAME;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在统计病案等级，请稍候...");

@@ -341,7 +341,7 @@ namespace MedQCSys
         {
             StringBuilder sbArgs = new StringBuilder();
             //参数：当前用户ID;对方ID；1/0 (1登陆后关闭，0,停留在当前消息窗口)
-            sbArgs.AppendFormat("{0};{1};{2};", SystemParam.Instance.UserInfo.ID, "", "1");
+            sbArgs.AppendFormat("{0};{1};{2};", SystemParam.Instance.UserInfo.USER_ID, "", "1");
             Process proc = new Process();
             proc.StartInfo = new ProcessStartInfo();
             proc.StartInfo.Arguments = sbArgs.ToString();
@@ -442,7 +442,7 @@ namespace MedQCSys
 
             if (SystemParam.Instance.UserInfo == null)
                 return;
-            string szConfigKey = "Readme." + SystemParam.Instance.UserInfo.ID;
+            string szConfigKey = "Readme." + SystemParam.Instance.UserInfo.USER_ID;
             string szCurrModifyTime = SystemConfig.Instance.Get(szConfigKey, string.Empty);
             if (szCurrModifyTime != szLastModifyTime)
             {
@@ -460,7 +460,7 @@ namespace MedQCSys
             if (SystemParam.Instance.UserInfo == null)
                 szUserName = "未登录";
             else
-                szUserName = SystemParam.Instance.UserInfo.Name;
+                szUserName = SystemParam.Instance.UserInfo.USER_NAME;
             string szPatientName = string.Empty;
             if (SystemParam.Instance.PatVisitInfo == null)
                 szPatientName = "未选择";

@@ -111,8 +111,8 @@ namespace MedQC.ChatClient
                 return null;
             MessageInfo info = new MessageInfo();
             info.MessageID = chatLog.ChatID;
-            info.MessageFrom = SystemCache.LstUserInfo.Find(i => i.ID == chatLog.Sender);
-            info.MessageTo = SystemCache.LstUserInfo.Find(i => i.ID == chatLog.Listener);
+            info.MessageFrom = SystemCache.LstUserInfo.Find(i => i.USER_ID == chatLog.Sender);
+            info.MessageTo = SystemCache.LstUserInfo.Find(i => i.USER_ID == chatLog.Listener);
             info.MessageContent = chatLog.ChatContent;
             info.SendTime = chatLog.ChatSendDate;
             info.MessageAction = chatLog.MsgChatDataType == "0" ? (int)ActionType.SendMessage : (int)ActionType.SendPIc;

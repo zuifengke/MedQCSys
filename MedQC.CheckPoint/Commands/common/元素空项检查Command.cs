@@ -51,8 +51,21 @@ namespace Heren.MedQC.CheckPoint.Commands
             qcCheckResult.DOC_TIME = documentlist[0].DOC_TIME;
             XmlDocument doc = new XmlDocument();
             doc.Load(szXMLFile);
-                      
-            XmlNode node = doc.SelectSingleNode(string.Format("//Field[@Name='{0}']", qcCheckPoint.ELEMENT_NAME));
+            XmlNode docNode = null;
+            if(documentlist[0].DOC_ID!=documentlist[0].DOC_SETID)
+            {
+                 docNode = doc.SelectSingleNode(string.Format("//Section[@ID='{0}']", documentlist[0].DOC_ID));
+
+            }
+            XmlNode node = null;
+            if (docNode != null)
+            {
+                node = docNode.SelectSingleNode(string.Format("//Field[@Name='{0}']", qcCheckPoint.ELEMENT_NAME));
+            }
+            else
+            {
+                node = doc.SelectSingleNode(string.Format("//Field[@Name='{0}']", qcCheckPoint.ELEMENT_NAME));
+            }
             if (node == null || string.IsNullOrEmpty(node.InnerText))//存在一项为空则直接返回不继续判断
             {
                 qcCheckResult.QC_EXPLAIN = string.Format("{0}为空", qcCheckPoint.ELEMENT_NAME);

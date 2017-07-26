@@ -232,7 +232,7 @@ namespace Heren.MedQC.MedRecord
                     && row.Cells[this.col_Chk.Index].Value.ToString().ToLower() == "true")
                 {
                     RecBrowseRequest recBrowseRequest = row.Tag as RecBrowseRequest;
-                    recBrowseRequest.APPROVAL_NAME = SystemParam.Instance.UserInfo.Name;
+                    recBrowseRequest.APPROVAL_NAME = SystemParam.Instance.UserInfo.USER_NAME;
                     recBrowseRequest.APPROVAL_TIME = SysTimeHelper.Instance.Now;
                     recBrowseRequest.STATUS = status;
                     shRet = RecBrowseRequestAccess.Instance.Update(recBrowseRequest);

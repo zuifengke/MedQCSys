@@ -105,23 +105,23 @@ namespace Heren.MedQC.Hdp
                     continue;
                 int nRowIndex = this.dataGridView1.Rows.Add();
                 DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
-                if (htUserRow.Contains(userInfo.ID))
+                if (htUserRow.Contains(userInfo.USER_ID))
                     continue;
-                htUserRow.Add(userInfo.ID, row);
+                htUserRow.Add(userInfo.USER_ID, row);
                 row.Tag = userInfo;
-                if (userInfo.ID != null)
-                    row.Cells[this.colUserID.Index].Value = userInfo.ID.Trim();
-                if (userInfo.Name != null)
-                    row.Cells[this.colUserName.Index].Value = userInfo.Name.Trim();
-                if (userInfo.DeptName != null)
-                    row.Cells[this.colDeptName.Index].Value = userInfo.DeptName.Trim();
+                if (userInfo.USER_ID != null)
+                    row.Cells[this.colUserID.Index].Value = userInfo.USER_ID.Trim();
+                if (userInfo.USER_NAME != null)
+                    row.Cells[this.colUserName.Index].Value = userInfo.USER_NAME.Trim();
+                if (userInfo.DEPT_NAME != null)
+                    row.Cells[this.colDeptName.Index].Value = userInfo.DEPT_NAME.Trim();
 
                 if (index % 2 == 0)
                     row.DefaultCellStyle.BackColor = Color.White;
                 else
                     row.DefaultCellStyle.BackColor = Color.WhiteSmoke;
                 List<HdpRoleUser> lstHdpRoleUser = null;
-                shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(userInfo.ID, ref lstHdpRoleUser);
+                shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(userInfo.USER_ID, ref lstHdpRoleUser);
                 if (shRet == SystemData.ReturnValue.OK)
                 {
                     string szRoleName = null;
@@ -134,7 +134,7 @@ namespace Heren.MedQC.Hdp
                     }
                     row.Cells[this.colRoleName.Index].Value = szRoleName;
                 }
-                var result = lstQcAdminDepts.Where(m => m.USER_ID == userInfo.ID).ToList();
+                var result = lstQcAdminDepts.Where(m => m.USER_ID == userInfo.USER_ID).ToList();
                 if (result.Count > 0)
                 {
                     row.Cells[this.colAdminDepts.Index].Value = string.Join(",", result.Select(m => m.DEPT_NAME).ToArray());
@@ -242,8 +242,8 @@ namespace Heren.MedQC.Hdp
             if (userInfo == null)
             {
                 userInfo = new UserInfo();
-                userInfo.ID = szUserID;
-                userInfo.Name = "外部人员";
+                userInfo.USER_ID = szUserID;
+                userInfo.USER_NAME = "外部人员";
             }
 
             List<UserInfo> lstUserInfos = new List<UserInfo>();

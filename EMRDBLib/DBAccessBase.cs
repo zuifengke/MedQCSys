@@ -16,7 +16,7 @@ namespace EMRDBLib.DbAccess
         private DataAccess m_MeddocAccess = null;
         private DataAccess m_MedQCAccess = null;
         private DataAccess m_HerenHisAccess = null;
-        private DataAccess m_NursringDbAccess = null;
+        private DataAccess m_NurDocAccess = null;
         private DataAccess m_HisLoginAccess = null;
         public DBAccessBase()
         {
@@ -151,6 +151,37 @@ namespace EMRDBLib.DbAccess
         /// 获取数据库访问对象
         /// </summary>
         /// <returns></returns>
+        public DataAccess GetNurDocAccess()
+        {
+            if (this.m_NurDocAccess != null)
+                return this.m_NurDocAccess;
+
+            //读取配置文件中数据库配置
+            string szDBType = SystemConfig.Instance.Get(SystemData.ConfigKey.NDS_DB_TYPE, string.Empty);
+            string szDBDriverType = SystemConfig.Instance.Get(SystemData.ConfigKey.NDS_PROVIDER_TYPE, string.Empty);
+            string szConnectionString = SystemConfig.Instance.Get(SystemData.ConfigKey.NDS_CONN_STRING, string.Empty);
+            szDBType = GlobalMethods.Security.DecryptText(szDBType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szDBDriverType = GlobalMethods.Security.DecryptText(szDBDriverType, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+            szConnectionString = GlobalMethods.Security.DecryptText(szConnectionString, SystemData.ConfigKey.CONFIG_ENCRYPT_KEY);
+
+            if (GlobalMethods.Misc.IsEmptyString(szDBType) || GlobalMethods.Misc.IsEmptyString(szDBDriverType)
+                || GlobalMethods.Misc.IsEmptyString(szConnectionString))
+            {
+                LogManager.Instance.WriteLog("SystemParam.GetHerenHisAccess", new string[] { "ConfigFile" }
+                    , new object[] { SystemConfig.Instance.ConfigFile }, "数据库配置参数中包含非法的值!");
+                return null;
+            }
+            this.m_NurDocAccess = new DataAccess();
+            this.m_NurDocAccess.ConnectionString = szConnectionString;
+            this.m_NurDocAccess.ClearPoolEnabled = this.m_bAutoClearPool;
+            this.m_NurDocAccess.DatabaseType = this.GetDatabaseType(szDBType);
+            this.m_NurDocAccess.DataProvider = this.GetDataProvider(szDBDriverType);
+            return this.m_NurDocAccess;
+        }
+        /// <summary>
+        /// 获取数据库访问对象
+        /// </summary>
+        /// <returns></returns>
         public DataAccess GetBAJKAccess()
         {
             if (this.m_BAJKAccess != null)
@@ -243,6 +274,19 @@ namespace EMRDBLib.DbAccess
                 if (this.m_HerenHisAccess == null)
                     this.m_HerenHisAccess = this.GetHerenHisAccess();
                 return this.m_HerenHisAccess;
+            }
+        }
+
+        /// <summary>
+        /// 获取His数据库访问对象实例
+        /// </summary>
+        protected DataAccess NurDocAccess
+        {
+            get
+            {
+                if (this.m_NurDocAccess == null)
+                    this.m_NurDocAccess = this.GetNurDocAccess();
+                return this.m_NurDocAccess;
             }
         }
         /// <summary>

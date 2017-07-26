@@ -86,7 +86,7 @@ namespace Heren.MedQC.MedRecord
             }
             if (this.cboUserList.Text.Trim() != string.Empty && this.cboUserList.SelectedItem != null)
             {
-                szUserID = (this.cboUserList.SelectedItem as UserInfo).ID;
+                szUserID = (this.cboUserList.SelectedItem as UserInfo).USER_ID;
             }
             DateTime dtVisitTimeBegin = SystemParam.Instance.DefaultTime;
             DateTime dtVisitTimeEnd = SystemParam.Instance.DefaultTime;

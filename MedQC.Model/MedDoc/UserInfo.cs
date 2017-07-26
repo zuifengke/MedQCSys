@@ -21,7 +21,7 @@ namespace EMRDBLib
         /// <summary>
         /// 获取或设置用户ID
         /// </summary>
-        public string ID
+        public string USER_ID
         {
             get { return this.m_szID; }
             set { this.m_szID = value; }
@@ -29,7 +29,7 @@ namespace EMRDBLib
         /// <summary>
         /// 获取或设置用户姓名
         /// </summary>
-        public string Name
+        public string USER_NAME
         {
             get { return this.m_szName; }
             set { this.m_szName = value; }
@@ -37,7 +37,7 @@ namespace EMRDBLib
         /// <summary>
         /// 获取或设置科室编码
         /// </summary>
-        public string DeptCode
+        public string DEPT_CODE
         {
             get { return this.m_szDeptCode; }
             set { this.m_szDeptCode = value; }
@@ -45,7 +45,7 @@ namespace EMRDBLib
         /// <summary>
         /// 获取或设置科室名称
         /// </summary>
-        public string DeptName
+        public string DEPT_NAME
         {
             get { return this.m_szDeptName; }
             set { this.m_szDeptName = value; }
@@ -102,15 +102,15 @@ namespace EMRDBLib
                 userInfo = new UserInfo();
 
             StringBuilder sbUserInfo = new StringBuilder();
-            sbUserInfo.Append(userInfo.ID);
+            sbUserInfo.Append(userInfo.USER_ID);
             sbUserInfo.Append(szSplitChar);
-            sbUserInfo.Append(userInfo.Name);
+            sbUserInfo.Append(userInfo.USER_NAME);
             sbUserInfo.Append(szSplitChar);
             sbUserInfo.Append(userInfo.Password);
             sbUserInfo.Append(szSplitChar);
-            sbUserInfo.Append(userInfo.DeptCode);
+            sbUserInfo.Append(userInfo.DEPT_CODE);
             sbUserInfo.Append(szSplitChar);
-            sbUserInfo.Append(userInfo.DeptName);
+            sbUserInfo.Append(userInfo.DEPT_NAME);
             sbUserInfo.Append(szSplitChar);
             sbUserInfo.Append(((int)userInfo.Role));
             sbUserInfo.Append(szSplitChar);
@@ -122,7 +122,7 @@ namespace EMRDBLib
         }
         public override string ToString()
         {
-            return this.Name;
+            return this.USER_NAME;
         }
     }
 

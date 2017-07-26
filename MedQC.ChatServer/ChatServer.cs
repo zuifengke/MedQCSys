@@ -32,8 +32,8 @@ namespace MedQC.ChatServer
                 if (m_Server == null)
                 {
                     m_Server = new UserInfo();
-                    m_Server.ID = "Server";
-                    m_Server.Name = "Server";
+                    m_Server.USER_ID = "Server";
+                    m_Server.USER_NAME = "Server";
                 }
                 return m_Server;
             }
@@ -269,7 +269,7 @@ namespace MedQC.ChatServer
             if (info == null)
                 return;
 
-            ChatClientInfo clientInfo = lstClientInfo.Find(i => i.UesrID == info.MessageTo.ID);//获取接收端socket信息
+            ChatClientInfo clientInfo = lstClientInfo.Find(i => i.UesrID == info.MessageTo.USER_ID);//获取接收端socket信息
             if (clientInfo == null || !clientInfo.SocketClient.Connected)
                 return;
             clientInfo.SocketClient.Send(SerilizeContent(info));
@@ -284,7 +284,7 @@ namespace MedQC.ChatServer
         {
             if (!string.IsNullOrEmpty(clientInfo.UesrID))
                 return;
-            if (!lstClientInfo.Exists(i => i.UesrID == info.MessageFrom.ID))//不存在则登陆
+            if (!lstClientInfo.Exists(i => i.UesrID == info.MessageFrom.USER_ID))//不存在则登陆
             {
                 AddLogInUser(clientInfo, info);
                 //更新完新增连接用户后通知其他在线用户
@@ -293,7 +293,7 @@ namespace MedQC.ChatServer
             else //已存在该用户连接，则删除后在登陆
             {
                 //退出
-                ChatClientInfo existClientInfo = lstClientInfo.Find(i => i.UesrID == info.MessageFrom.ID);
+                ChatClientInfo existClientInfo = lstClientInfo.Find(i => i.UesrID == info.MessageFrom.USER_ID);
                 info.MessageAction = (int)ActionType.LogOut;
                 HandleLogOutMessage(existClientInfo, info);
                 //重新登录
@@ -331,7 +331,7 @@ namespace MedQC.ChatServer
             byte[] msgBuff = SerilizeContent(message);
             foreach (var item in lstClientInfo)
             {
-                if (!string.IsNullOrEmpty(item.UesrID) && item.UesrID == info.MessageFrom.ID)//不必要通知消息发送者
+                if (!string.IsNullOrEmpty(item.UesrID) && item.UesrID == info.MessageFrom.USER_ID)//不必要通知消息发送者
                     continue;
                 item.SocketClient.Send(msgBuff);
             }
@@ -347,11 +347,11 @@ namespace MedQC.ChatServer
         {
             if (info == null || clientInfo == null)
                 return;
-            clientInfo.UesrID = info.MessageFrom.ID;
+            clientInfo.UesrID = info.MessageFrom.USER_ID;
             tViewUser.BeginInvoke(new Action(() =>
                 {
                     TreeNode node = new TreeNode();
-                    node.Text = string.Format("{0}-{1}({2})", info.MessageFrom.DeptName, info.MessageFrom.Name, info.MessageFrom.ID);
+                    node.Text = string.Format("{0}-{1}({2})", info.MessageFrom.DEPT_NAME, info.MessageFrom.USER_NAME, info.MessageFrom.USER_ID);
                     node.Tag = info.MessageFrom;
                     tViewUser.Nodes.Add(node);
                 }));
@@ -362,7 +362,7 @@ namespace MedQC.ChatServer
             rtbServerLog.BeginInvoke(new Action(() =>
             {
                 rtbServerLog.Text += string.Format("用户{0}从{1}成功连接服务器. {2}{3}",
-                    string.Format("{0}-{1}({2})", info.MessageFrom.DeptName, info.MessageFrom.Name, info.MessageFrom.ID),
+                    string.Format("{0}-{1}({2})", info.MessageFrom.DEPT_NAME, info.MessageFrom.USER_NAME, info.MessageFrom.USER_ID),
                     clientInfo.SocketClient.RemoteEndPoint.ToString(),
                     DateTime.Now.ToString("yyyy MM-dd HH:mm:ss"), Environment.NewLine);
             }));
@@ -378,14 +378,14 @@ namespace MedQC.ChatServer
         {
             if (info == null || clientInfo == null)
                 return;
-            clientInfo.UesrID = info.MessageFrom.ID;
+            clientInfo.UesrID = info.MessageFrom.USER_ID;
             tViewUser.BeginInvoke(new Action(() =>
             {
                 for (int i = 0; i < tViewUser.Nodes.Count; i++)
                 {
                     TreeNode item = tViewUser.Nodes[i];
                     EMRDBLib.UserInfo user = item.Tag as EMRDBLib.UserInfo;
-                    if (user.ID == clientInfo.UesrID)
+                    if (user.USER_ID == clientInfo.UesrID)
                     { tViewUser.Nodes.Remove(item); break; }
                 }
             }));
@@ -396,7 +396,7 @@ namespace MedQC.ChatServer
             rtbServerLog.BeginInvoke(new Action(() =>
             {
                 rtbServerLog.Text += string.Format("用户{0}从{1}成功退出服务器. {2}{3}",
-                    string.Format("{0}-{1}({2})", info.MessageFrom.DeptName, info.MessageFrom.Name, info.MessageFrom.ID),
+                    string.Format("{0}-{1}({2})", info.MessageFrom.DEPT_NAME, info.MessageFrom.USER_NAME, info.MessageFrom.USER_ID),
                     clientInfo.SocketClient.RemoteEndPoint.ToString(),
                     DateTime.Now.ToString("yyyy MM-dd HH:mm:ss"), Environment.NewLine);
             }));

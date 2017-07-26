@@ -24,29 +24,8 @@ namespace MedQCSys.DockForms
 {
     public partial class DocScoreNewForm : DockContentBase
     {
-
-        private float m_fDocScore = 0;
-        /// <summary>
-        /// 获取病历得分
-        /// </summary>
-        public float DocScore
-        {
-            get { return this.m_fDocScore; }
-        }
-
-
-
-        private string m_szQcChecker = string.Empty;
-        /// <summary>
-        /// 获取评分检查人
-        /// </summary>
-        public string QcChecker
-        {
-            get { return this.m_szQcChecker; }
-        }
         private bool m_NeedSave = false;
         private List<QcCheckResult> m_lstQcCheckResult;
-
         /// <summary>
         /// 是否需要保存病案评分
         /// </summary>
@@ -55,23 +34,6 @@ namespace MedQCSys.DockForms
             get { return m_NeedSave; }
             set { m_NeedSave = value; }
         }
-
-        public DocScoreNewForm(MainForm parent)
-            : base(parent)
-        {
-            this.InitializeComponent();
-            this.ShowHint = DockState.DockRight;
-            this.HideOnClose = true;
-            this.CloseButtonVisible = true;
-            this.DockAreas = DockAreas.Document | DockAreas.DockBottom | DockAreas.DockLeft
-                | DockAreas.DockRight | DockAreas.DockTop;
-            //this.dgvHummanScore.Font = new Font("宋体", 10.5f);
-            //this.dgvSystemScore.Font = new Font("宋体", 10.5f);
-            this.dgvHummanScore.IsFreezeGroupHeader = true;
-            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
-            this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
-        }
-
         public DocScoreNewForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
             : base(parent, patientPageControl)
         {
@@ -110,7 +72,6 @@ namespace MedQCSys.DockForms
             //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
             this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
         }
-
         protected override void OnPatientScoreChanged()
         {
             base.OnPatientScoreChanged();
@@ -143,9 +104,6 @@ namespace MedQCSys.DockForms
 
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
-
-
-
         /// <summary>
         /// 患者信息改变方法重写
         /// </summary>
@@ -161,7 +119,6 @@ namespace MedQCSys.DockForms
                 base.OnRefreshView();
             }
         }
-
         /// <summary>
         /// 停靠窗体变换时重写
         /// </summary>
@@ -175,8 +132,6 @@ namespace MedQCSys.DockForms
             if (this.Pane.ActiveContent == this && this.NeedRefreshView)
                 this.OnRefreshView();
         }
-
-
         /// <summary>
         /// 当患者列表的信息改变时触发
         /// </summary>
@@ -195,7 +150,6 @@ namespace MedQCSys.DockForms
                 LogManager.Instance.WriteLog("DocScoreNewForm.OnHummanScoreSaved", ex);
             }
         }
-
         /// <summary>
         /// 加载系统检查扣分信息
         /// </summary>
@@ -307,11 +261,10 @@ namespace MedQCSys.DockForms
             }
             this.dgvSystemScore.Refresh();
             //加载评分结果
+            this.CalSystemScore();
             QCScore qcScore = new QCScore();
             shRet = QcScoreAccess.Instance.GetQCScore(szPatientID, szVisitID, ref qcScore);
             this.tpHummanScore.Tag = qcScore;
-            this.CalSystemScore();
-            this.tpHummanScore.Text = string.Format("人工检测（{0}）", qcScore.HOS_ASSESS);
         }
         /// <summary>
         /// 保存病历内容扣分
@@ -322,201 +275,150 @@ namespace MedQCSys.DockForms
                 return;
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
-
+            
             short shRet = SystemData.ReturnValue.OK;
+            if (this.m_lstQcCheckResult == null)
+                this.m_lstQcCheckResult = new List<QcCheckResult>();
+            this.m_lstQcCheckResult.Clear();
+            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.PatVisitInfo.PATIENT_ID, SystemParam.Instance.PatVisitInfo.VISIT_ID, SystemData.StatType.Artificial, ref this.m_lstQcCheckResult);
             for (int index = 0; index < this.dgvHummanScore.Rows.Count; index++)
             {
                 DataGridViewRow row = this.dgvHummanScore.Rows[index];
-                QcMsgDict qcMsgDict = row.Tag as QcMsgDict;
-                if (qcMsgDict == null
-                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
-                    continue;
-
-                QcCheckResult qcCheckResult = row.Cells[this.colRemark.Index].Tag as QcCheckResult;
-                if (row.Cells[this.colCheckBox.Index].Value == null)
-                    continue;
-                bool isCheck = bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString());
-                //如果扣分项未勾选并且系统已经有扣分记录，则删除
-                if (!isCheck && qcCheckResult != null)
+                if (row is CollapseDataGridViewRow)
                 {
-                    shRet = QcCheckResultAccess.Instance.Delete(qcCheckResult.CHECK_RESULT_ID);
-                    if (shRet != SystemData.ReturnValue.OK)
+                    foreach (var item in (row as CollapseDataGridViewRow).Rows)
                     {
-                        MessageBoxEx.Show(string.Format("第{0}行取消病历扣分信息保存失败！", index + 1), MessageBoxIcon.Error);
-                        continue;
-                    }
-                    row.Cells[this.colRemark.Index].Tag = null;
-                }
-                if (!isCheck)
-                    continue;
-                DateTime dtCheckTime = DateTime.Now;
-                string szMessgCode = string.Empty;
-                if (qcCheckResult == null)
-                {
-                    qcCheckResult = new EMRDBLib.QcCheckResult();
-                    qcCheckResult.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-                    qcCheckResult.CHECKER_NAME = SystemParam.Instance.UserInfo.Name;
-                    qcCheckResult.CHECKER_ID = SystemParam.Instance.UserInfo.ID;
-                    qcCheckResult.CHECK_DATE = SysTimeHelper.Instance.Now;
-                    qcCheckResult.BUG_CLASS = SystemData.BugClass.ERROR;
-                    qcCheckResult.CHECK_POINT_ID = string.Empty;
-                    qcCheckResult.CHECK_RESULT_ID = qcCheckResult.MakeID();
-                    qcCheckResult.CHECK_TYPE = string.Empty;
-                    qcCheckResult.CREATE_ID = string.Empty;
-                    qcCheckResult.CREATE_NAME = string.Empty;
-                    qcCheckResult.DEPT_CODE = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
-                    qcCheckResult.DEPT_IN_CHARGE = SystemParam.Instance.PatVisitInfo.DEPT_NAME;//需要和文档相关，患者转科前的文书责任科室为创建科室
-                    qcCheckResult.INCHARGE_DOCTOR = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
-                    qcCheckResult.DOCTYPE_ID = string.Empty;
-                    qcCheckResult.DOC_SETID = string.Empty;
-                    qcCheckResult.DOC_TIME = SysTimeHelper.Instance.DefaultTime;
-                    qcCheckResult.DOC_TITLE = string.Empty;
-                    qcCheckResult.ERROR_COUNT = int.Parse(row.Cells[this.colErrorCount.Index].Value.ToString());
-                    qcCheckResult.ISVETO = false;
-                    qcCheckResult.MODIFY_TIME = SysTimeHelper.Instance.DefaultTime;
-                    qcCheckResult.MR_STATUS = SystemParam.Instance.PatVisitInfo.MR_STATUS;
-                    qcCheckResult.MSG_DICT_CODE = qcMsgDict.QC_MSG_CODE;
-                    qcCheckResult.MSG_DICT_MESSAGE = qcMsgDict.MESSAGE;
-                    qcCheckResult.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-                    qcCheckResult.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
-                    qcCheckResult.QA_EVENT_TYPE = qcMsgDict.QA_EVENT_TYPE;
-                    qcCheckResult.QC_EXPLAIN = string.Empty;
-                    qcCheckResult.QC_RESULT = SystemData.QcResult.UnPass;
-                    qcCheckResult.SCORE = qcMsgDict.SCORE;
-                    qcCheckResult.ORDER_VALUE = qcMsgDict.SERIAL_NO;
-                    qcCheckResult.STAT_TYPE = SystemData.StatType.Artificial;
-                    qcCheckResult.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-                    qcCheckResult.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
-                    if (row.Cells[this.colRemark.Index].Value != null)
-                        qcCheckResult.REMARKS = row.Cells[this.colRemark.Index].Value.ToString();
-                    shRet = QcCheckResultAccess.Instance.Insert(qcCheckResult);
-                    if (shRet != SystemData.ReturnValue.OK)
-                    {
-                        MessageBoxEx.Show(string.Format("第{0}行病历扣分信息保存失败！", index + 1), MessageBoxIcon.Error);
-                        continue;
-                    }
-                    row.Cells[this.colRemark.Index].Tag = qcCheckResult;
-                }
-                else
-                {
-                    qcCheckResult.CHECKER_ID = SystemParam.Instance.UserInfo.ID;
-                    qcCheckResult.CHECKER_NAME = SystemParam.Instance.UserInfo.Name;
-                    qcCheckResult.ORDER_VALUE = qcMsgDict.SERIAL_NO;
-                    qcCheckResult.MR_STATUS = SystemParam.Instance.PatVisitInfo.MR_STATUS;
-                    qcCheckResult.CHECK_DATE = SysTimeHelper.Instance.Now;
-                    qcCheckResult.ERROR_COUNT = int.Parse(row.Cells[this.colErrorCount.Index].Value.ToString());
-                    if (row.Cells[this.colRemark.Index].Value != null)
-                        qcCheckResult.REMARKS = row.Cells[this.colRemark.Index].Value.ToString();
-                    shRet = QcCheckResultAccess.Instance.Update(qcCheckResult);
-                    if (shRet != SystemData.ReturnValue.OK)
-                    {
-                        MessageBoxEx.Show(string.Format("第{0}行病历扣分信息更新失败！", index + 1), MessageBoxIcon.Error);
-                        continue;
+                        if (!SaveQcCheckResult(item))
+                            continue;
                     }
                 }
             }
+
             //评分明细项保存完毕，保存评分结果到QC_SCORE表
             this.CalHummanScore();
             QCScore qcScore = this.tpHummanScore.Tag as QCScore;
-
             shRet = QcScoreAccess.Instance.Save(qcScore);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.Show("评分结果保存失败");
                 return;
             }
-            MessageBoxEx.ShowMessage("保存成功");
+
             this.OnHummanScoreSaved(System.EventArgs.Empty);
 
-        }
-        private ReportExplorerForm GetReportExplorerForm()
-        {
-            ReportExplorerForm reportExplorerForm = new ReportExplorerForm();
-            reportExplorerForm.WindowState = FormWindowState.Maximized;
-            reportExplorerForm.QueryContext +=
-                new QueryContextEventHandler(this.ReportExplorerForm_QueryContext);
-            reportExplorerForm.NotifyNextReport +=
-                new NotifyNextReportEventHandler(this.ReportExplorerForm_NotifyNextReport);
-            return reportExplorerForm;
-        }
-
-        /// <summary>
-        /// 加载打印模板
-        /// </summary>
-        private byte[] GetReportFileData(string szReportName)
-        {
-            if (GlobalMethods.Misc.IsEmptyString(szReportName))
-                szReportName = string.Format("{0}\\Templet\\{1}.hrdt", GlobalMethods.Misc.GetWorkingPath(), "病历评分清单");
-            if (!System.IO.File.Exists(szReportName))
+            if (MessageBoxEx.ShowConfirm("评分保存成功,是否通知相关医生整改") == DialogResult.OK)
             {
-                MessageBoxEx.ShowError("病历评分清单报表还没有制作!");
-                return null;
+                try
+                {
+                    Dialogs.ModifyNoticeForm frm = new Dialogs.ModifyNoticeForm();
+                    frm.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxEx.ShowMessage("操作失败，系统发生异常，请联系管理员", ex.ToString());
+                }
             }
-
-            byte[] byteTempletData = null;
-            if (!GlobalMethods.IO.GetFileBytes(szReportName, ref byteTempletData))
-            {
-                MessageBoxEx.ShowError("病历评分清单报表内容下载失败!");
-                return null;
-            }
-            return byteTempletData;
         }
+        private bool SaveQcCheckResult(DataGridViewRow row)
+        {
+            short shRet = SystemData.ReturnValue.OK;
+            QcMsgDict qcMsgDict = row.Tag as QcMsgDict;
+            if (qcMsgDict == null
+                || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                return false;
+            if (this.m_lstQcCheckResult == null)
+                this.m_lstQcCheckResult = new List<QcCheckResult>();
+            QcCheckResult qcCheckResult = this.m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == qcMsgDict.QC_MSG_CODE).FirstOrDefault(); 
+            if (row.Cells[this.colCheckBox.Index].Value == null)
+                return false;
+            bool isCheck = bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString());
+            //如果扣分项未勾选并且系统已经有扣分记录，则删除
+            if (!isCheck && qcCheckResult != null)
+            {
+                shRet = QcCheckResultAccess.Instance.Delete(qcCheckResult.CHECK_RESULT_ID);
+                if (!string.IsNullOrEmpty(qcCheckResult.MSG_ID))
+                    MedicalQcMsgAccess.Instance.Delete(qcCheckResult.MSG_ID);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    //MessageBoxEx.Show(string.Format("第{0}行取消病历扣分信息保存失败！", row.Index + 1), MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            if (!isCheck)
+                return false;
+            DateTime dtCheckTime = DateTime.Now;
+            string szMessgCode = string.Empty;
+            if (qcCheckResult == null)
+            {
+                qcCheckResult = new EMRDBLib.QcCheckResult();
+                qcCheckResult.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+                qcCheckResult.CHECKER_NAME = SystemParam.Instance.UserInfo.USER_NAME;
+                qcCheckResult.CHECKER_ID = SystemParam.Instance.UserInfo.USER_ID;
+                qcCheckResult.CHECK_DATE = SysTimeHelper.Instance.Now;
+                qcCheckResult.BUG_CLASS = SystemData.BugClass.ERROR;
+                qcCheckResult.CHECK_POINT_ID = string.Empty;
+                qcCheckResult.CHECK_RESULT_ID = qcCheckResult.MakeID();
+                qcCheckResult.CHECK_TYPE = string.Empty;
+                qcCheckResult.CREATE_ID = string.Empty;
+                qcCheckResult.CREATE_NAME = string.Empty;
+                qcCheckResult.DEPT_CODE = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
+                qcCheckResult.DEPT_IN_CHARGE = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
+                qcCheckResult.INCHARGE_DOCTOR = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
+                qcCheckResult.INCHARGE_DOCTOR_ID = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR_ID;
+                qcCheckResult.DOCTYPE_ID = string.Empty;
+                qcCheckResult.DOC_SETID = string.Empty;
+                qcCheckResult.DOC_TIME = SysTimeHelper.Instance.DefaultTime;
+                qcCheckResult.DOC_TITLE = string.Empty;
+                qcCheckResult.ERROR_COUNT = int.Parse(row.Cells[this.colErrorCount.Index].Value.ToString());
+                qcCheckResult.ISVETO = false;
+                qcCheckResult.MODIFY_TIME = SysTimeHelper.Instance.DefaultTime;
+                qcCheckResult.MR_STATUS = SystemParam.Instance.PatVisitInfo.MR_STATUS;
+                qcCheckResult.MSG_DICT_CODE = qcMsgDict.QC_MSG_CODE;
+                qcCheckResult.MSG_DICT_MESSAGE = qcMsgDict.MESSAGE;
+                qcCheckResult.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+                qcCheckResult.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
+                qcCheckResult.QA_EVENT_TYPE = qcMsgDict.QA_EVENT_TYPE;
+                qcCheckResult.QC_EXPLAIN = string.Empty;
+                qcCheckResult.QC_RESULT = SystemData.QcResult.UnPass;
+                qcCheckResult.SCORE = qcMsgDict.SCORE;
+                qcCheckResult.ORDER_VALUE = qcMsgDict.SERIAL_NO;
+                qcCheckResult.STAT_TYPE = SystemData.StatType.Artificial;
+                qcCheckResult.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+                qcCheckResult.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+                if (row.Cells[this.colRemark.Index].Value != null)
+                    qcCheckResult.REMARKS = row.Cells[this.colRemark.Index].Value.ToString();
+                shRet = QcCheckResultAccess.Instance.Insert(qcCheckResult);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    //MessageBoxEx.Show(string.Format("第{0}行病历扣分信息保存失败！", row.Index + 1), MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            else
+            {
+                qcCheckResult.CHECKER_ID = SystemParam.Instance.UserInfo.USER_ID;
+                qcCheckResult.CHECKER_NAME = SystemParam.Instance.UserInfo.USER_NAME;
+                qcCheckResult.ORDER_VALUE = qcMsgDict.SERIAL_NO;
+                qcCheckResult.MR_STATUS = SystemParam.Instance.PatVisitInfo.MR_STATUS;
+                qcCheckResult.CHECK_DATE = SysTimeHelper.Instance.Now;
+                qcCheckResult.ERROR_COUNT = int.Parse(row.Cells[this.colErrorCount.Index].Value.ToString());
+                if (row.Cells[this.colRemark.Index].Value != null)
+                    qcCheckResult.REMARKS = row.Cells[this.colRemark.Index].Value.ToString();
+                shRet = QcCheckResultAccess.Instance.Update(qcCheckResult);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    //MessageBoxEx.Show(string.Format("第{0}行病历扣分信息更新失败！", row.Index + 1), MessageBoxIcon.Error);
 
+                    return false;
+                }
+            }
+            
+            return true;
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             this.SaveHummanScore();
         }
-        /// <summary>
-        /// 获取打印数据
-        /// </summary>
-        /// <returns>System.Data.DataTable</returns>
-        private DataTable GetPrintData()
-        {
-            System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dgvHummanScore, false, 0);
-            DataRow row = null;
-
-            row = table.NewRow();
-            row[0] = string.Format("总得分：{0} 等级：{1} "
-              , this.txtLevel.Text);
-            row[1] = string.Empty;
-            row[2] = string.Empty;
-            table.Rows.Add(row);
-            return table;
-        }
-
-        private bool GetSystemContext(string name, ref object value)
-        {
-            if (name == "所在科室")
-            {
-                value = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
-                return true;
-            }
-            if (name == "患者姓名")
-            {
-
-                value = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
-                return true;
-            }
-            if (name == "患者ID")
-            {
-                value = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-                return true;
-            }
-            return false;
-        }
-
-        private void ReportExplorerForm_QueryContext(object sender, Heren.Common.Report.QueryContextEventArgs e)
-        {
-            object value = e.Value;
-            e.Success = this.GetSystemContext(e.Name, ref value);
-            if (e.Success) e.Value = value;
-        }
-
-        private void ReportExplorerForm_NotifyNextReport(object sender, Heren.Common.Report.NotifyNextReportEventArgs e)
-        {
-            e.ReportData = this.GetReportFileData(e.ReportName);
-        }
-
         protected override void OnPatientInfoChanging(CancelEventArgs e)
         {
             base.OnPatientInfoChanging(e);
@@ -529,7 +431,6 @@ namespace MedQCSys.DockForms
             }
             this.NeedSave = false;
         }
-
         private void dgvHummanScore_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -611,8 +512,8 @@ namespace MedQCSys.DockForms
             qcScore.DOC_LEVEL = DocLevel.GetDocLevel(totalScore);
             qcScore.HOS_ASSESS = totalScore;
             qcScore.HOS_DATE = SysTimeHelper.Instance.Now;
-            qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.Name;
-            qcScore.HOS_QCMAN_ID = SystemParam.Instance.UserInfo.ID;
+            qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.USER_NAME;
+            qcScore.HOS_QCMAN_ID = SystemParam.Instance.UserInfo.USER_ID;
             qcScore.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcScore.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             qcScore.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
@@ -670,7 +571,6 @@ namespace MedQCSys.DockForms
             }
 
         }
-
         private void btnSystemCheck_Click(object sender, EventArgs e)
         {
             if (SystemParam.Instance.PatVisitInfo == null)
@@ -694,16 +594,11 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.ShowErrorFormat("单患者运行所有规则出错", ex.ToString(), null);
             }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             Dialogs.ModifyNoticeForm frm = new Dialogs.ModifyNoticeForm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-
-            }
+            frm.ShowDialog();
         }
-        //行绑定处理方法
         void dgvHummanScore_OnBindDataDetail(object item, int rowIndex, bool isMainItem)
         {
             DataGridViewRow row = this.dgvHummanScore.Rows[rowIndex];
@@ -739,7 +634,6 @@ namespace MedQCSys.DockForms
                             row.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
                             row.Cells[this.colCheckBox.Index].Value = true;
                             row.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                            row.Cells[this.colRemark.Index].Tag = qcCheckResult;
                             row.Cells[this.colErrorCount.Index].ReadOnly = false;
                             row.Cells[this.colRemark.Index].ReadOnly = false;
                         }
@@ -751,9 +645,7 @@ namespace MedQCSys.DockForms
         }
         public void LoadHummanScoreInfos()
         {
-
             this.dgvHummanScore.Rows.Clear();
-
             List<QaEventTypeDict> lstQaEventTypeDict = null;
             short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
             List<QcMsgDict> lstQcMsgDict = null;
@@ -823,14 +715,7 @@ namespace MedQCSys.DockForms
             this.dgvHummanScore.BindDataSource<GroupQcMsgDict, QcMsgDict>(groupQcMsgDict);
             //默认展开第一组
             this.dgvHummanScore.Expand(0);
-        }
-
-        private void dgvSystemScore_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //if (e.ColumnIndex == this.colItem.Index)
-            //{
-
-            //}
+            this.CalHummanScore();
         }
     }
 

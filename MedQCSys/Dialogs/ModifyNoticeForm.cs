@@ -6,6 +6,7 @@
 using EMRDBLib;
 using EMRDBLib.DbAccess;
 using Heren.Common.Controls;
+using Heren.Common.Controls.TableView;
 using Heren.Common.Controls.VirtualTreeView;
 using Heren.Common.Libraries;
 using System;
@@ -34,12 +35,17 @@ namespace MedQCSys.Dialogs
                 if (item.Index == this.col_ERROR_COUNT.Index
                     || item.Index == this.col_SCORE.Index)
                     item.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                if (item.Index == this.col_INCHARGE_DOCTOR.Index)
+                    item.ReadOnly = false;
+                else
+                    item.ReadOnly = true;
             }
         }
-
+        private QcModifyNotice m_QcModifyNotice = null;
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            LoadGridComboBoxItem();
             LoadData();
         }
         /// <summary>
@@ -49,29 +55,52 @@ namespace MedQCSys.Dialogs
         {
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            this.lbl_NOTICE_TIME.Text = SysTimeHelper.Instance.Now.ToString("yyyy-MM-dd HH:mm");
-            this.lbl_QC_DEPT_NAME.Text = SystemParam.Instance.UserInfo.DeptName;
-            this.lbl_QC_MAN.Text = SystemParam.Instance.UserInfo.Name;
-            this.lbl_RECEIVER.Text = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
-            this.lbl_RECEIVER_DEPT_NAME.Text = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
-            this.lbl_QC_LEVEL.Text = SystemData.QcLevel.GetCnName(SystemData.QcLevel.GetCodeByMrStatus(SystemParam.Instance.PatVisitInfo.MR_STATUS));
+            string szVisitNO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+            short shRet = QcModifyNoticeAccess.Instance.GetQcModifyNotice(szPatientID, szVisitID, ref this.m_QcModifyNotice);
+            if (this.m_QcModifyNotice == null)
+            {
+
+                this.lbl_NOTICE_TIME.Text = SysTimeHelper.Instance.Now.ToString("yyyy-MM-dd HH:mm");
+                this.lbl_QC_DEPT_NAME.Text = SystemParam.Instance.UserInfo.DEPT_NAME;
+                this.lbl_QC_MAN.Text = SystemParam.Instance.UserInfo.USER_NAME;
+                this.lbl_RECEIVER.Text = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
+                this.lbl_RECEIVER_DEPT_NAME.Text = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
+                this.lbl_QC_LEVEL.Text = SystemData.QcLevel.GetCnName(SystemData.QcLevel.GetCodeByMrStatus(SystemParam.Instance.PatVisitInfo.MR_STATUS));
+            }
+            else
+            {
+                this.herenButton1.Text = "修改整改通知单";
+                this.lbl_NOTICE_TIME.Text = this.m_QcModifyNotice.NOTICE_TIME.ToString("yyyy-MM-dd HH:mm");
+                this.lbl_NOTICE_STATUS.Text = SystemData.NotifyStatus.GetCnName(this.m_QcModifyNotice.NOTICE_STATUS);
+                this.cbo_MODIFY_PERIOD.Text = this.m_QcModifyNotice.MODIFY_PERIOD;
+                this.rtb_MODIFY_REMARK.Text = this.m_QcModifyNotice.MODIFY_REMARK;
+            }
             List<QcCheckResult> lstQcCheckResult = null;
-            short shRet = QcCheckResultAccess.Instance.GetQcCheckResults(szPatientID, szVisitID, SystemData.StatType.Artificial, ref lstQcCheckResult);
+            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(szPatientID, szVisitID, SystemData.StatType.Artificial, ref lstQcCheckResult);
+            List<MedicalQcMsg> lstMedicalQcMsg = null;
+            shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList(szPatientID, szVisitID, ref lstMedicalQcMsg);
             if (lstQcCheckResult == null || lstQcCheckResult.Count <= 0)
                 return;
+
             int rowIndex = 0;
             float fModifyScore = 0;
             foreach (var item in lstQcCheckResult)
             {
                 rowIndex = this.dataTableView1.Rows.Add();
-                MedicalQcMsg medicalQcMsg = this.ToQcMsg(item);
                 DataGridViewRow row = this.dataTableView1.Rows[rowIndex];
-                row.Cells[this.col_ERROR_COUNT.Index].Value = medicalQcMsg.ERROR_COUNT;
-                row.Cells[this.col_MSG_DICT_MESSAGE.Index].Value = string.Format("{0}.{1}", lstQcCheckResult.IndexOf(item) + 1, medicalQcMsg.MESSAGE);
+                row.Cells[this.col_ERROR_COUNT.Index].Value = item.ERROR_COUNT;
+                row.Cells[this.col_MSG_DICT_MESSAGE.Index].Value = string.Format("{0}.{1}", lstQcCheckResult.IndexOf(item) + 1, item.MSG_DICT_MESSAGE);
                 row.Cells[this.col_QA_EVENT_TYPE.Index].Value = item.QA_EVENT_TYPE;
-                row.Cells[this.col_SCORE.Index].Value = medicalQcMsg.POINT;
-                row.Tag = medicalQcMsg;
-                fModifyScore += medicalQcMsg.POINT * medicalQcMsg.ERROR_COUNT;
+                row.Cells[this.col_SCORE.Index].Value = item.SCORE;
+                row.Cells[this.col_INCHARGE_DOCTOR.Index].Value = item.INCHARGE_DOCTOR;
+                row.Cells[this.col_DEPT_IN_CHARGE.Index].Value = item.DEPT_IN_CHARGE;
+                if (!string.IsNullOrEmpty(item.MSG_ID) && lstMedicalQcMsg != null)
+                {
+                    row.Cells[this.col_MSG_ID.Index].Value = item.MSG_ID;
+                    row.Cells[this.col_MSG_ID.Index].Tag = lstMedicalQcMsg.Where(m => m.MSG_ID == item.MSG_ID).FirstOrDefault();
+                }
+                row.Tag = item;
+                fModifyScore += item.SCORE * item.ERROR_COUNT;
                 if (!string.IsNullOrEmpty(item.REMARKS))
                 {
                     this.rtb_MODIFY_REMARK.AppendText(item.REMARKS);
@@ -117,22 +146,31 @@ namespace MedQCSys.Dialogs
             medicalQcMsg.TOPIC_ID = qcCheckResult.DOC_SETID;
             medicalQcMsg.VISIT_ID = qcCheckResult.VISIT_ID;
             medicalQcMsg.VISIT_NO = qcCheckResult.VISIT_NO;
+            medicalQcMsg.MODIFY_NOTICE_ID = qcCheckResult.MODIFY_NOTICE_ID;
+            medicalQcMsg.DOCTOR_IN_CHARGE_ID = qcCheckResult.INCHARGE_DOCTOR_ID;
+
+
             return medicalQcMsg;
         }
         private void herenButton1_Click(object sender, EventArgs e)
         {
-            QcModifyNotice qcModifyNotice = this.Tag as QcModifyNotice;
-            if (qcModifyNotice == null)
-                qcModifyNotice = new QcModifyNotice();
-            if (qcModifyNotice.NOTICE_STATUS == SystemData.NotifyStatus.Draft)
+            try
             {
-                this.InsertModifyNotice(qcModifyNotice);
+                if (m_QcModifyNotice == null)
+                    m_QcModifyNotice = new QcModifyNotice();
+                if (m_QcModifyNotice.NOTICE_STATUS == SystemData.NotifyStatus.Draft)
+                {
+                    this.InsertModifyNotice(m_QcModifyNotice);
+                }
+                else
+                {
+                    this.UpdateModifyNotice(m_QcModifyNotice);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.UpdateModifyNotice(qcModifyNotice);
+                MessageBoxEx.ShowMessage("操作失败", (ex.ToString()));
             }
-
         }
         /// <summary>
         /// 新增整改通知书
@@ -143,18 +181,18 @@ namespace MedQCSys.Dialogs
             {
                 return;
             }
-            qcModifyNotice.MODIFY_NOTICE_ID = qcModifyNotice.MakeID(); 
+            qcModifyNotice.MODIFY_NOTICE_ID = qcModifyNotice.MakeID();
             qcModifyNotice.MODIFY_PERIOD = this.cbo_MODIFY_PERIOD.Text;
             qcModifyNotice.MODIFY_REMARK = this.rtb_MODIFY_REMARK.Text;
             qcModifyNotice.MODIFY_SCORE = float.Parse(this.lbl_MODIFY_SCORE.Text);
             qcModifyNotice.NOTICE_TIME = DateTime.Parse(this.lbl_NOTICE_TIME.Text);
             qcModifyNotice.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcModifyNotice.PATIENT_NAME = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
-            qcModifyNotice.QC_DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcModifyNotice.QC_DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcModifyNotice.QC_DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcModifyNotice.QC_DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcModifyNotice.QC_LEVEL = SystemData.QcLevel.GetCodeByMrStatus(SystemParam.Instance.PatVisitInfo.MR_STATUS);
-            qcModifyNotice.QC_MAN = SystemParam.Instance.UserInfo.Name;
-            qcModifyNotice.QC_MAN_ID = SystemParam.Instance.UserInfo.ID;
+            qcModifyNotice.QC_MAN = SystemParam.Instance.UserInfo.USER_NAME;
+            qcModifyNotice.QC_MAN_ID = SystemParam.Instance.UserInfo.USER_ID;
             qcModifyNotice.RECEIVER = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
             qcModifyNotice.RECEIVER_ID = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR_ID;
             qcModifyNotice.RECEIVER_DEPT_CODE = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
@@ -163,40 +201,52 @@ namespace MedQCSys.Dialogs
             qcModifyNotice.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
             qcModifyNotice.NOTICE_STATUS = SystemData.NotifyStatus.Sended;
             short shRet = QcModifyNoticeAccess.Instance.Insert(qcModifyNotice);
-            //新增质检信息
+            //新增质检信息 更新人工质控结果 新增
             foreach (DataGridViewRow item in this.dataTableView1.Rows)
             {
-                MedicalQcMsg medicalQcMsg = item.Tag as MedicalQcMsg;
-                medicalQcMsg.MODIFY_NOTICE_ID = qcModifyNotice.MODIFY_NOTICE_ID;
-                shRet = MedicalQcMsgAccess.Instance.Insert(medicalQcMsg);
+                QcCheckResult qcCheckResult = item.Tag as QcCheckResult;
+                qcCheckResult.MODIFY_NOTICE_ID = qcModifyNotice.MODIFY_NOTICE_ID;
+                MedicalQcMsg medicalQcMsg = item.Cells[this.col_MSG_ID.Index].Tag as MedicalQcMsg;
+                UserInfo userInfo = item.Cells[this.col_INCHARGE_DOCTOR.Index].Tag as UserInfo;
+                if (userInfo != null)
+                {
+                    qcCheckResult.DEPT_CODE = userInfo.DEPT_CODE;
+                    qcCheckResult.DEPT_IN_CHARGE = userInfo.DEPT_NAME;
+                    qcCheckResult.INCHARGE_DOCTOR = userInfo.USER_NAME;
+                    qcCheckResult.INCHARGE_DOCTOR_ID = userInfo.USER_ID;
+                }
+                if (medicalQcMsg == null)
+                {
+                    medicalQcMsg = this.ToQcMsg(qcCheckResult);
+                    shRet = MedicalQcMsgAccess.Instance.Insert(medicalQcMsg);
+                }
+                qcCheckResult.MSG_ID = medicalQcMsg.MSG_ID;
+                shRet = QcCheckResultAccess.Instance.Update(qcCheckResult);
             }
             if (shRet == SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.ShowMessage("发送成功");
                 this.lbl_NOTICE_STATUS.Text = SystemData.NotifyStatus.GetCnName(qcModifyNotice.NOTICE_STATUS);
                 this.lbl_NOTICE_STATUS.ForeColor = Color.Blue;
+                this.herenButton1.Text = "修改整改通知单";
             }
-            this.Tag = qcModifyNotice;
         }
         /// <summary>
         /// 修改整改通知书
         /// </summary>
         private void UpdateModifyNotice(QcModifyNotice qcModifyNotice)
         {
-            if (MessageBoxEx.ShowConfirm("通知书已成功发送，您需要修改通知书内容重新提交吗？") != DialogResult.OK)
-            {
-                return;
-            }
+            
             qcModifyNotice.MODIFY_PERIOD = this.cbo_MODIFY_PERIOD.Text;
             qcModifyNotice.MODIFY_REMARK = this.rtb_MODIFY_REMARK.Text;
             qcModifyNotice.MODIFY_SCORE = float.Parse(this.lbl_MODIFY_SCORE.Text);
             qcModifyNotice.NOTICE_TIME = DateTime.Parse(this.lbl_NOTICE_TIME.Text);
             qcModifyNotice.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            qcModifyNotice.QC_DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcModifyNotice.QC_DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcModifyNotice.QC_DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcModifyNotice.QC_DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcModifyNotice.QC_LEVEL = SystemData.QcLevel.GetCodeByMrStatus(SystemParam.Instance.PatVisitInfo.MR_STATUS);
-            qcModifyNotice.QC_MAN = SystemParam.Instance.UserInfo.Name;
-            qcModifyNotice.QC_MAN_ID = SystemParam.Instance.UserInfo.ID;
+            qcModifyNotice.QC_MAN = SystemParam.Instance.UserInfo.USER_NAME;
+            qcModifyNotice.QC_MAN_ID = SystemParam.Instance.UserInfo.USER_ID;
             qcModifyNotice.RECEIVER = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
             qcModifyNotice.RECEIVER_ID = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR_ID;
             qcModifyNotice.RECEIVER_DEPT_CODE = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
@@ -204,11 +254,48 @@ namespace MedQCSys.Dialogs
             qcModifyNotice.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             qcModifyNotice.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
             qcModifyNotice.NOTICE_STATUS = SystemData.NotifyStatus.Sended;
+            qcModifyNotice.NOTICE_TIME = SysTimeHelper.Instance.Now;
             short shRet = QcModifyNoticeAccess.Instance.Update(qcModifyNotice);
+            //更新人工质控和质检信息 更新人工质控责任医生和责任科室，同步更新反馈消息
+            foreach (DataGridViewRow item in this.dataTableView1.Rows)
+            {
+                QcCheckResult qcCheckResult = item.Tag as QcCheckResult;
+                qcCheckResult.MODIFY_NOTICE_ID = qcModifyNotice.MODIFY_NOTICE_ID;
+                MedicalQcMsg medicalQcMsg = item.Cells[this.col_MSG_ID.Index].Tag as MedicalQcMsg;
+                UserInfo userInfo = item.Cells[this.col_INCHARGE_DOCTOR.Index].Tag as UserInfo;
+                if (userInfo != null)
+                {
+                    qcCheckResult.DEPT_CODE = userInfo.DEPT_CODE;
+                    qcCheckResult.DEPT_IN_CHARGE = userInfo.DEPT_NAME;
+                    qcCheckResult.INCHARGE_DOCTOR = userInfo.USER_NAME;
+                    qcCheckResult.INCHARGE_DOCTOR_ID = userInfo.USER_ID;
+                }
+                if (medicalQcMsg == null)
+                {
+                    medicalQcMsg = this.ToQcMsg(qcCheckResult);
+                    shRet = MedicalQcMsgAccess.Instance.Insert(medicalQcMsg);
+                    item.Cells[this.col_MSG_ID.Index].Tag = medicalQcMsg;
+                }
+                else
+                {
+                    if (userInfo != null)
+                    {
+                        medicalQcMsg.DEPT_STAYED = userInfo.DEPT_CODE;
+                        medicalQcMsg.DEPT_NAME = userInfo.DEPT_NAME;
+                        medicalQcMsg.DOCTOR_IN_CHARGE = userInfo.USER_NAME;
+                        medicalQcMsg.DOCTOR_IN_CHARGE_ID = userInfo.USER_ID;
+                        shRet = MedicalQcMsgAccess.Instance.Update(medicalQcMsg);
+                    }
+                }
+                qcCheckResult.MSG_ID = medicalQcMsg.MSG_ID;
+                shRet = QcCheckResultAccess.Instance.Update(qcCheckResult);
+
+            }
             if (shRet == SystemData.ReturnValue.OK)
             {
-                MessageBoxEx.ShowMessage("发送成功");
+                MessageBoxEx.ShowMessage("修改成功");
                 this.lbl_NOTICE_STATUS.Text = SystemData.NotifyStatus.GetCnName(qcModifyNotice.NOTICE_STATUS);
+                this.lbl_NOTICE_TIME.Text = this.m_QcModifyNotice.NOTICE_TIME.ToString("yyyy-MM-dd HH:mm");
                 this.lbl_NOTICE_STATUS.ForeColor = Color.Blue;
             }
             this.Tag = qcModifyNotice;
@@ -216,6 +303,53 @@ namespace MedQCSys.Dialogs
         private void herenButton2_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void dataTableView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (this.dataTableView1.CurrentCell.ColumnIndex == this.col_INCHARGE_DOCTOR.Index)
+            {
+                FindComboBoxEditingControl control = (e.Control as FindComboBoxEditingControl);
+                control.SelectedIndexChanged -= new EventHandler(colRight_SelectedIndexChanged);
+                control.SelectedIndexChanged += new EventHandler(colRight_SelectedIndexChanged);
+            }
+        }
+        private void colRight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            Heren.Common.Controls.TableView.FindComboBoxEditingControl control = sender as Heren.Common.Controls.TableView.FindComboBoxEditingControl;
+            if (control.SelectedItem != null)
+            {
+                UserInfo userInfo = control.SelectedItem as UserInfo;
+                QcCheckResult qcCheckResult = this.dataTableView1.CurrentRow.Tag as QcCheckResult;
+                if (qcCheckResult == null)
+                    return;
+                qcCheckResult.INCHARGE_DOCTOR = userInfo.USER_NAME;
+                qcCheckResult.INCHARGE_DOCTOR_ID = userInfo.USER_ID;
+                qcCheckResult.DEPT_CODE = userInfo.DEPT_CODE;
+                qcCheckResult.DEPT_IN_CHARGE = userInfo.DEPT_NAME;
+                this.dataTableView1.CurrentRow.Cells[this.col_DEPT_IN_CHARGE.Index].Value = userInfo.DEPT_NAME;
+                this.dataTableView1.CurrentRow.Cells[this.col_INCHARGE_DOCTOR.Index].Value = userInfo.USER_ID;
+                this.dataTableView1.CurrentRow.Cells[this.col_INCHARGE_DOCTOR.Index].Tag = userInfo;
+            }
+        }
+        /// <summary>
+        /// 绑定
+        /// </summary>
+        private void LoadGridComboBoxItem()
+        {
+
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitNO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+            List<UserInfo> lstUserInfos = null;
+            short shRet = EmrDocAccess.Instance.GetInchargeDoctorList(szPatientID, szVisitNO, ref lstUserInfos);
+            this.col_INCHARGE_DOCTOR.Items.Clear();
+            if (lstUserInfos == null)
+                return;
+            foreach (UserInfo item in lstUserInfos)
+            {
+                this.col_INCHARGE_DOCTOR.Items.Add(item);
+            }
         }
     }
 }

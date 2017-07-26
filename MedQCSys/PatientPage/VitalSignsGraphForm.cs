@@ -388,28 +388,28 @@ namespace MedQCSys.DockForms
             {
                 if (SystemParam.Instance.UserInfo == null)
                     return false;
-                value = SystemParam.Instance.UserInfo.ID;
+                value = SystemParam.Instance.UserInfo.USER_ID;
                 return true;
             }
             if (name == "用户姓名")
             {
                 if (SystemParam.Instance.UserInfo == null)
                     return false;
-                value = SystemParam.Instance.UserInfo.Name;
+                value = SystemParam.Instance.UserInfo.USER_NAME;
                 return true;
             }
             if (name == "用户科室代码")
             {
                 if (SystemParam.Instance.UserInfo == null)
                     return false;
-                value = SystemParam.Instance.UserInfo.DeptCode;
+                value = SystemParam.Instance.UserInfo.DEPT_CODE;
                 return true;
             }
             if (name == "用户科室名称")
             {
                 if (SystemParam.Instance.UserInfo == null)
                     return false;
-                value = SystemParam.Instance.UserInfo.DeptName;
+                value = SystemParam.Instance.UserInfo.DEPT_NAME;
                 return true;
             }
 

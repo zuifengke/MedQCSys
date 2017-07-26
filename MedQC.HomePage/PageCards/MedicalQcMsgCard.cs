@@ -40,7 +40,7 @@ namespace Heren.MedQC.HomePage.PageCards
                 else
                     szMsgState += "," + SystemData.MsgStatus.UnCheck.ToString();
             }
-            string szIssuedBy = SystemParam.Instance.UserInfo.Name;
+            string szIssuedBy = SystemParam.Instance.UserInfo.USER_NAME;
             List<MedicalQcMsg> lstMedicalQcMsg = null;
             short shRet = MedicalQcMsgAccess.Instance.GetMedicalQcMsgList2(szMsgState, szIssuedBy, ref lstMedicalQcMsg);
             if (lstMedicalQcMsg != null)

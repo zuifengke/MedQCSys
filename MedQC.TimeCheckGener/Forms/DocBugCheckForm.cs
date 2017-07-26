@@ -109,8 +109,8 @@ namespace Heren.MedQC.TimeCheckGener.Forms
         private UserInfo GetUserInfo()
         {
             UserInfo clientUserInfo = new UserInfo();
-            clientUserInfo.ID = "System";
-            clientUserInfo.Name = "System";
+            clientUserInfo.USER_ID = "System";
+            clientUserInfo.USER_NAME = "System";
             return clientUserInfo;
         }
         private PatientInfo GetPatientInfo(string patientId, string visitId)

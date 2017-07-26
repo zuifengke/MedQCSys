@@ -338,7 +338,7 @@ namespace Heren.MedQC.Statistic
             }
             else
             {
-                if (qcQuestionInfo.ISSUED_BY == SystemParam.Instance.UserInfo.Name)
+                if (qcQuestionInfo.ISSUED_BY == SystemParam.Instance.UserInfo.USER_NAME)
                     row.Cells[this.colCheckName.Index].Value = qcQuestionInfo.ISSUED_BY;
             }
 
@@ -492,8 +492,8 @@ namespace Heren.MedQC.Statistic
         {
             if (string.IsNullOrEmpty(szDocSetId))
                 return;
-            string szUserID = SystemParam.Instance.UserInfo.ID;
-            string szUserName = SystemParam.Instance.UserInfo.Name;
+            string szUserID = SystemParam.Instance.UserInfo.USER_ID;
+            string szUserName = SystemParam.Instance.UserInfo.USER_NAME;
             DateTime now = DateTime.Now;
             short shRet = QcContentRecordAccess.Instance.UpdateQCContentRecord(szDocSetId, szUserID, szUserName, now);
             if (shRet != SystemData.ReturnValue.OK)

@@ -30,7 +30,7 @@ namespace Heren.MedQC.Hdp
             base.OnShown(e);
             this.OnRefreshView();
             if (this.m_roleInfo != null)
-                this.Text = string.Format("正在给{0}设置管辖科室", this.UserInfo.Name);
+                this.Text = string.Format("正在给{0}设置管辖科室", this.UserInfo.USER_NAME);
         }
         public override void OnRefreshView()
         {
@@ -64,7 +64,7 @@ namespace Heren.MedQC.Hdp
         private void LoadAdminDeptsList()
         {
             ListQcAdminDepts.Clear();
-            short shRet = QcAdminDeptsAccess.Instance.GetQcAdminDeptsList(this.UserInfo.ID, ref ListQcAdminDepts);
+            short shRet = QcAdminDeptsAccess.Instance.GetQcAdminDeptsList(this.UserInfo.USER_ID, ref ListQcAdminDepts);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -126,11 +126,11 @@ namespace Heren.MedQC.Hdp
                 QcAdminDepts qcAdminDepts = new QcAdminDepts();
                 qcAdminDepts.DEPT_CODE = dpetDict.DEPT_CODE;
                 qcAdminDepts.DEPT_NAME = dpetDict.DEPT_NAME;
-                qcAdminDepts.USER_ID = this.UserInfo.ID;
-                qcAdminDepts.USER_NAME = this.UserInfo.Name;
+                qcAdminDepts.USER_ID = this.UserInfo.USER_ID;
+                qcAdminDepts.USER_NAME = this.UserInfo.USER_NAME;
                 ListQcAdminDepts.Add(qcAdminDepts);
             }
-            short shRet = QcAdminDeptsAccess.Instance.SaveQcAdminDeptsList(this.UserInfo.ID, ListQcAdminDepts);
+            short shRet = QcAdminDeptsAccess.Instance.SaveQcAdminDeptsList(this.UserInfo.USER_ID, ListQcAdminDepts);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.Show("管辖科室设置失败！");

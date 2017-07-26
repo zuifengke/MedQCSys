@@ -96,7 +96,7 @@ namespace Heren.MedQC.MedRecord
                 && this.cboUserList.SelectedItem != null)
             {
                 UserInfo user = this.cboUserList.SelectedItem as UserInfo;
-                szCheckerID = user.ID;
+                szCheckerID = user.USER_ID;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在统计工作量，请稍候...");

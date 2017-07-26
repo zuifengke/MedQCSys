@@ -156,10 +156,10 @@ namespace Heren.MedQC.MedRecord
                     if (MessageBoxEx.ShowConfirm("确认接收吗？") != DialogResult.OK)
                         return;
                 }
-                recMrBatch.RECEIVE_DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-                recMrBatch.RECEIVE_DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
-                recMrBatch.RECEIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.ID;
-                recMrBatch.RECEIVE_DOCTOR_NAME = SystemParam.Instance.UserInfo.Name;
+                recMrBatch.RECEIVE_DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+                recMrBatch.RECEIVE_DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
+                recMrBatch.RECEIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.USER_ID;
+                recMrBatch.RECEIVE_DOCTOR_NAME = SystemParam.Instance.UserInfo.USER_NAME;
                 recMrBatch.RECEIVE_TIME = SysTimeHelper.Instance.Now;
                 short shRet = RecMrBatchAccess.Instance.Update(recMrBatch);
                 if (shRet != SystemData.ReturnValue.OK)

@@ -461,10 +461,10 @@ namespace MedQCSys.DockForms
                 qcActionLog.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DischargeDeptCode;
             qcActionLog.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
-            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
-            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.USER_NAME;
+            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.USER_ID;
+            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcActionLog.DOC_SETID = string.Empty;
             qcActionLog.CHECK_TYPE = 5;
             qcActionLog.LOG_TYPE = 1;
@@ -610,9 +610,9 @@ namespace MedQCSys.DockForms
             medicalQcMsg.APPLY_ENV = "MEDDOC";
             medicalQcMsg.ERROR_COUNT = 1;
             medicalQcMsg.InpNo = SystemParam.Instance.PatVisitInfo.INP_NO;
-            medicalQcMsg.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
+            medicalQcMsg.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
             medicalQcMsg.ISSUED_DATE_TIME = SysTimeHelper.Instance.Now;
-            medicalQcMsg.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
+            medicalQcMsg.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
             medicalQcMsg.ISSUED_TYPE = 0;
             medicalQcMsg.LOCK_STATUS = false;
             medicalQcMsg.MSG_STATUS = 0;
@@ -677,7 +677,7 @@ namespace MedQCSys.DockForms
             if (medicalQcMsg == null)
                 return;
 
-            if (medicalQcMsg.ISSUED_BY != SystemParam.Instance.UserInfo.Name
+            if (medicalQcMsg.ISSUED_BY != SystemParam.Instance.UserInfo.USER_NAME
                 && !SystemConfig.Instance.Get(SystemData.ConfigKey.MODIFY_OR_DELETE_QUESTION, false))
             {
                 MessageBoxEx.Show("该质检问题不是您添加的，不允许您修改！", MessageBoxIcon.Warning);
@@ -727,7 +727,7 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.Show("该质检问题已被确认，不能删除！", MessageBoxIcon.Warning);
                 return;
             }
-            if (questionInfo.ISSUED_BY != SystemParam.Instance.UserInfo.Name
+            if (questionInfo.ISSUED_BY != SystemParam.Instance.UserInfo.USER_NAME
                 && !SystemConfig.Instance.Get(SystemData.ConfigKey.MODIFY_OR_DELETE_QUESTION, false))
             {
                 MessageBoxEx.Show("该质检问题不是您添加的，不允许您删除！", MessageBoxIcon.Warning);
@@ -1068,7 +1068,7 @@ namespace MedQCSys.DockForms
             StringBuilder sbArgs = new StringBuilder();
             string sbContent = GetMsgContent(questionInfo);
             UserInfo u = GetLinstenID(questionInfo);
-            sbArgs.AppendFormat("{0};{1};{2}", SystemParam.Instance.UserInfo.ID, u == null ? "" : u.ID, sbContent);
+            sbArgs.AppendFormat("{0};{1};{2}", SystemParam.Instance.UserInfo.USER_ID, u == null ? "" : u.USER_ID, sbContent);
 
             IntPtr fromHandle = GlobalMethods.Win32.GetSystemHandle(SystemData.MappingName.QUESTION_CHAT_CLIENT_SYS);
             IntPtr intParam = GlobalMethods.Win32.StringToPtr(sbArgs.ToString());
@@ -1081,11 +1081,11 @@ namespace MedQCSys.DockForms
             UserInfo u = null;
             if (questionInfo == null || string.IsNullOrEmpty(questionInfo.DOCTOR_IN_CHARGE))
             {
-                u = ListUserInfo.Find(i => i.Name == SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR);
+                u = ListUserInfo.Find(i => i.USER_NAME == SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR);
             }
             else
             {
-                u = ListUserInfo.Find(i => i.Name == questionInfo.DOCTOR_IN_CHARGE);
+                u = ListUserInfo.Find(i => i.USER_NAME == questionInfo.DOCTOR_IN_CHARGE);
             }
             return u;
         }
@@ -1202,7 +1202,7 @@ namespace MedQCSys.DockForms
             int i = 0, width = 740, x = 50, y = 90, fontSize = 10;
             if (this.m_iPrintingPageIndex == 1)
             {
-                e.Graphics.DrawString(string.Format("打印者：{0}    打印时间：{1}", SystemParam.Instance.UserInfo.Name, DateTime.Now.ToString()), new Font(new FontFamily("宋体"), 10, FontStyle.Regular), System.Drawing.Brushes.Black, 400, 70);
+                e.Graphics.DrawString(string.Format("打印者：{0}    打印时间：{1}", SystemParam.Instance.UserInfo.USER_NAME, DateTime.Now.ToString()), new Font(new FontFamily("宋体"), 10, FontStyle.Regular), System.Drawing.Brushes.Black, 400, 70);
             }
             else
             {

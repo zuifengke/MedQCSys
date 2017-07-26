@@ -257,10 +257,10 @@ namespace EMRDBLib.DbAccess
                 do
                 {
                     UserInfo userInfo = new UserInfo();
-                    if (!dataReader.IsDBNull(0)) userInfo.ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) userInfo.Name = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) userInfo.DeptCode = dataReader.GetString(2);
-                    if (!dataReader.IsDBNull(3)) userInfo.DeptName = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(0)) userInfo.USER_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) userInfo.USER_NAME = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) userInfo.DEPT_CODE = dataReader.GetString(2);
+                    if (!dataReader.IsDBNull(3)) userInfo.DEPT_NAME = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) userInfo.Password = dataReader.GetString(4);
                     lstUserInfos.Add(userInfo);
                 } while (dataReader.Read());

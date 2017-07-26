@@ -229,10 +229,10 @@ namespace EMRDBLib
                     return new UserRight();
 
                 //用户权限为空时或用户ID已改变时,重新获取
-                if (this.m_userRight == null || this.m_userRight.UserID != this.m_userInfo.ID)
+                if (this.m_userRight == null || this.m_userRight.UserID != this.m_userInfo.USER_ID)
                 {
                     UserRightBase userRight = null;
-                    RightAccess.Instance.GetUserRight(this.m_userInfo.ID, UserRightType.MedDoc,
+                    RightAccess.Instance.GetUserRight(this.m_userInfo.USER_ID, UserRightType.MedDoc,
                         ref userRight);
                     this.m_userRight = userRight as UserRight;
                 }

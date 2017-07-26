@@ -84,7 +84,7 @@ namespace Heren.MedQC.MedRecord
             }
             if (this.cboUserList.Text.Trim() != string.Empty && this.cboUserList.SelectedItem != null)
             {
-                szUserID = (this.cboUserList.SelectedItem as UserInfo).ID;
+                szUserID = (this.cboUserList.SelectedItem as UserInfo).USER_ID;
             }
             DateTime dtVisitTimeBegin = SystemParam.Instance.DefaultTime;
             DateTime dtVisitTimeEnd = SystemParam.Instance.DefaultTime;
@@ -182,7 +182,7 @@ namespace Heren.MedQC.MedRecord
             string szPatientID = patVisitInfo.PATIENT_ID;
             string szVisitID = patVisitInfo.VISIT_ID;
             string szPatientName = patVisitInfo.PATIENT_NAME;
-            string szRequestID = SystemParam.Instance.UserInfo.ID;
+            string szRequestID = SystemParam.Instance.UserInfo.USER_ID;
             List<RecBrowseRequest> lstRecBrowseRequest = null;
             short shRet = RecBrowseRequestAccess.Instance.GetList(szPatientID, szVisitID, szRequestID, ref lstRecBrowseRequest);
             if (lstRecBrowseRequest != null
@@ -203,8 +203,8 @@ namespace Heren.MedQC.MedRecord
                 recBrowseRequest.VISIT_ID = patVisitInfo.VISIT_ID;
                 recBrowseRequest.VISIT_NO = patVisitInfo.VISIT_NO;
                 recBrowseRequest.PATIENT_NAME = patVisitInfo.PATIENT_NAME;
-                recBrowseRequest.REQUEST_ID = SystemParam.Instance.UserInfo.ID;
-                recBrowseRequest.REQUEST_NAME = SystemParam.Instance.UserInfo.Name;
+                recBrowseRequest.REQUEST_ID = SystemParam.Instance.UserInfo.USER_ID;
+                recBrowseRequest.REQUEST_NAME = SystemParam.Instance.UserInfo.USER_NAME;
                 recBrowseRequest.REQUEST_TIME = SysTimeHelper.Instance.Now;
             }
             else

@@ -2059,22 +2059,22 @@ namespace EMRDBLib.DbAccess
             shRet = this.GetPatDoctors(ref lstPatDoctorInfos);
             foreach (PatDoctorInfo patDoctorInfo in lstPatDoctorInfos)
             {
-                UserInfo requestUser = lstUserInfo.Find(delegate (UserInfo p) { return p.ID == patDoctorInfo.RequestDoctorID; });
-                UserInfo parentUser = lstUserInfo.Find(delegate (UserInfo p) { return p.ID == patDoctorInfo.ParentDoctorID; });
-                UserInfo superUser = lstUserInfo.Find(delegate (UserInfo p) { return p.ID == patDoctorInfo.SuperDoctorID; });
+                UserInfo requestUser = lstUserInfo.Find(delegate (UserInfo p) { return p.USER_ID == patDoctorInfo.RequestDoctorID; });
+                UserInfo parentUser = lstUserInfo.Find(delegate (UserInfo p) { return p.USER_ID == patDoctorInfo.ParentDoctorID; });
+                UserInfo superUser = lstUserInfo.Find(delegate (UserInfo p) { return p.USER_ID == patDoctorInfo.SuperDoctorID; });
 
                 if (requestUser != null)
-                    patDoctorInfo.RequestDoctorName = requestUser.Name;
+                    patDoctorInfo.RequestDoctorName = requestUser.USER_NAME;
                 else
                     patDoctorInfo.RequestDoctorName = patDoctorInfo.RequestDoctorID;
 
                 if (parentUser != null)
-                    patDoctorInfo.ParentDoctorName = parentUser.Name;
+                    patDoctorInfo.ParentDoctorName = parentUser.USER_NAME;
                 else
                     patDoctorInfo.ParentDoctorName = patDoctorInfo.ParentDoctorID;
 
                 if (superUser != null)
-                    patDoctorInfo.SuperDoctorName = superUser.Name;
+                    patDoctorInfo.SuperDoctorName = superUser.USER_NAME;
                 else
                     patDoctorInfo.SuperDoctorName = patDoctorInfo.SuperDoctorID;
             }

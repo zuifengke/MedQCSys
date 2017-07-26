@@ -47,7 +47,7 @@ namespace Heren.MedQC.Maintenance
                 return;
             }
 
-            string szUserID = SystemParam.Instance.UserInfo.ID;
+            string szUserID = SystemParam.Instance.UserInfo.USER_ID;
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             short shRet = RightAccess.Instance.ModifyUserPwd(szUserID, szOldPwd, szNewPwd);

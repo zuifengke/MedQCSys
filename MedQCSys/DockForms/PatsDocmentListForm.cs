@@ -533,10 +533,10 @@ namespace MedQCSys.DockForms
             qcActionLog.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             qcActionLog.DOC_SETID = docInfo.DOC_SETID;
-            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
-            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
-            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.USER_NAME;
+            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.USER_ID;
+            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcActionLog.CHECK_TYPE = 0;
             qcActionLog.CHECK_DATE = dtCheckTime;
             qcActionLog.LOG_TYPE = 1;

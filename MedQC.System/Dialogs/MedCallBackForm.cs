@@ -92,8 +92,8 @@ namespace Heren.MedQC.Systems
                 for (int index = 0; index < dataSet.Tables[0].Rows.Count; index++)
                 {
                     UserInfo userInfo = new UserInfo();
-                    userInfo.Name = dataSet.Tables[0].Rows[index]["creator_id"].ToString();
-                    userInfo.ID = dataSet.Tables[0].Rows[index]["creator_Name"].ToString();
+                    userInfo.USER_NAME = dataSet.Tables[0].Rows[index]["creator_id"].ToString();
+                    userInfo.USER_ID = dataSet.Tables[0].Rows[index]["creator_Name"].ToString();
                     lstUserInfos.Add(userInfo);
                 }
             }
@@ -114,8 +114,8 @@ namespace Heren.MedQC.Systems
                         for (int index = 0; index < dataSet.Tables[0].Rows.Count; index++)
                         {
                             UserInfo userInfo = new UserInfo();
-                            userInfo.Name = dataSet.Tables[0].Rows[index]["name"].ToString();
-                            userInfo.ID = dataSet.Tables[0].Rows[index]["user_name"].ToString();
+                            userInfo.USER_NAME = dataSet.Tables[0].Rows[index]["name"].ToString();
+                            userInfo.USER_ID = dataSet.Tables[0].Rows[index]["user_name"].ToString();
                             lstUserInfos.Add(userInfo);
                         }
                     }
@@ -145,14 +145,14 @@ namespace Heren.MedQC.Systems
                     continue;
                 int nRowIndex = this.dgvDoctors.Rows.Add();
                 DataTableViewRow row = this.dgvDoctors.Rows[nRowIndex];
-                if (htUserRow.Contains(userInfo.ID))
+                if (htUserRow.Contains(userInfo.USER_ID))
                     continue;
-                htUserRow.Add(userInfo.ID, row);
+                htUserRow.Add(userInfo.USER_ID, row);
 
-                if (userInfo.ID != null)
-                    row.Cells[this.colUserID.Index].Value = userInfo.ID.Trim();
-                if (userInfo.Name != null)
-                    row.Cells[this.colUserName.Index].Value = userInfo.Name.Trim();
+                if (userInfo.USER_ID != null)
+                    row.Cells[this.colUserID.Index].Value = userInfo.USER_ID.Trim();
+                if (userInfo.USER_NAME != null)
+                    row.Cells[this.colUserName.Index].Value = userInfo.USER_NAME.Trim();
 
                 if (index % 2 == 0)
                     row.DefaultCellStyle.BackColor = Color.White;
@@ -254,7 +254,7 @@ namespace Heren.MedQC.Systems
                 MessageBoxEx.Show(string.Format("该患者在{0}名下未出院，不能召回", szRequestDoctorID));
                 return;
             }
-            short shRet = EmrDocAccess.Instance.MedCallBack(patVisitLog.PATIENT_ID, patVisitLog.VISIT_ID, userInfo.ID);
+            short shRet = EmrDocAccess.Instance.MedCallBack(patVisitLog.PATIENT_ID, patVisitLog.VISIT_ID, userInfo.USER_ID);
             if (shRet != SystemData.ReturnValue.OK)
             {
                 MessageBoxEx.Show("召回失败");

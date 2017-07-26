@@ -81,10 +81,10 @@ namespace Heren.MedQC.Systems
                 if (shRet ==SystemData.ReturnValue.OK && userInfo != null)
                 {
                     Specialist item = new Specialist();
-                    item.UserID = userInfo.ID;
-                    item.UserName = userInfo.Name;
-                    item.DeptCode=userInfo.DeptCode;
-                    item.DeptName=userInfo.DeptName;
+                    item.UserID = userInfo.USER_ID;
+                    item.UserName = userInfo.USER_NAME;
+                    item.DeptCode=userInfo.DEPT_CODE;
+                    item.DeptName=userInfo.DEPT_NAME;
                     lstSpecialist.Add(item);
                 }
             }

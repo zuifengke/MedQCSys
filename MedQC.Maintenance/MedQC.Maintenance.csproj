@@ -231,6 +231,10 @@
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MedQC.ScriptEngine\MedQC.ScriptEngine.csproj">
+      <Project>{5af400fa-b5b2-45a6-b88f-32756715a1d0}</Project>
+      <Name>MedQC.ScriptEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MedQC.Utilities\MedQC.Utilities.csproj">
       <Project>{1C3E0F8C-8B38-4DFD-B789-ED3DD45C6A37}</Project>
       <Name>MedQC.Utilities</Name>

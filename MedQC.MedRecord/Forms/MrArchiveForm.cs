@@ -238,8 +238,8 @@ namespace Heren.MedQC.MedRecord
                 {
                     qcMrIndex = new QcMrIndex(mrAchive);
                 }
-                qcMrIndex.ARCHIVE_DOCTOR = SystemParam.Instance.UserInfo.Name;
-                qcMrIndex.ARCHIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.ID;
+                qcMrIndex.ARCHIVE_DOCTOR = SystemParam.Instance.UserInfo.USER_NAME;
+                qcMrIndex.ARCHIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.USER_ID;
                 qcMrIndex.ARCHIVE_TIME = SysTimeHelper.Instance.Now;
                 if (shRet == SystemData.ReturnValue.RES_NO_FOUND)
                 {
@@ -321,8 +321,8 @@ namespace Heren.MedQC.MedRecord
                 {
                     qcMrIndex = new QcMrIndex(mrArchive);
                 }
-                qcMrIndex.ARCHIVE_DOCTOR = SystemParam.Instance.UserInfo.Name;
-                qcMrIndex.ARCHIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.ID;
+                qcMrIndex.ARCHIVE_DOCTOR = SystemParam.Instance.UserInfo.USER_NAME;
+                qcMrIndex.ARCHIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.USER_ID;
                 qcMrIndex.ARCHIVE_TIME = SysTimeHelper.Instance.Now;
                 if (shRet == SystemData.ReturnValue.RES_NO_FOUND)
                 {

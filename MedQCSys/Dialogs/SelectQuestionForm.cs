@@ -87,7 +87,7 @@ namespace MedQCSys.Dialogs
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.txtChecker.Text = SystemParam.Instance.UserInfo.ID;
+            this.txtChecker.Text = SystemParam.Instance.UserInfo.USER_ID;
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
             if (String.IsNullOrEmpty(SystemParam.Instance.PatVisitInfo.DISCHARGE_MODE))

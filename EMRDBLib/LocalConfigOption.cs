@@ -571,7 +571,7 @@ namespace EMRDBLib
             option.IsOpenOperation = true;
             option.IsLinkHerenHis = true;
             option.IsScoreRightShow = true;
-            option.IsNewScore = true;
+            //option.IsNewScore = true;
             option.IsShowPatientIndex = true;
             option.IsShowVitalSignsGraph = true;
             option.DefaultEditor = "2";

@@ -142,6 +142,7 @@
     <Compile Include="MedDoc\TimeQCEventAccess.cs" />
     <Compile Include="MedDoc\UserAccess.cs" />
     <Compile Include="MedDoc\EMRDBAccess.cs" />
+    <Compile Include="NurDoc\NurDocCommonAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MedQC\Table\QCContentRecordAccess.cs" />
     <Compile Include="Reflect.cs" />

@@ -961,7 +961,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             model.APPLY_ENV = "MEDDOC";
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32}"
                , SystemData.MedicalQcMsgTable.APPLY_ENV
                , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
                , SystemData.MedicalQcMsgTable.CREATOR_ID
@@ -993,9 +993,10 @@ namespace EMRDBLib.DbAccess
                , SystemData.MedicalQcMsgTable.VISIT_NO
                , SystemData.MedicalQcMsgTable.MODIFY_NOTICE_ID
                , SystemData.MedicalQcMsgTable.ERROR_COUNT
-               , SystemData.MedicalQcMsgTable.DOC_ID);
+               , SystemData.MedicalQcMsgTable.DOC_ID
+               , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
 
-            string szValue = string.Format("'{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}',{8},'{9}',{10},'{11}','{12}','{13}',{14},'{15}','{16}','{17}',{18},{19},'{20}',{21},'{22}','{23}','{24}','{25}','{26}','{27}','{28}','{29}',{30},'{31}'"
+            string szValue = string.Format("'{0}',{1},'{2}','{3}','{4}','{5}','{6}','{7}',{8},'{9}',{10},'{11}','{12}','{13}',{14},'{15}','{16}','{17}',{18},{19},'{20}',{21},'{22}','{23}','{24}','{25}','{26}','{27}','{28}','{29}',{30},'{31}','{32}'"
                 , model.APPLY_ENV
                 , base.MedQCAccess.GetSqlTimeFormat(model.ASK_DATE_TIME)
                 , model.CREATOR_ID
@@ -1027,7 +1028,8 @@ namespace EMRDBLib.DbAccess
                 , model.VISIT_NO
                 , model.MODIFY_NOTICE_ID
                 , model.ERROR_COUNT
-                , model.DOC_ID);
+                , model.DOC_ID
+                , model.DOCTOR_IN_CHARGE_ID);
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.MEDICAL_QC_MSG, szField, szValue);
             int nCount = 0;
             try
@@ -1059,7 +1061,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}='{1}',{2}={3},{4}='{5}',{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}='{15}',{16}={17},{18}='{19}',{20}='{21}',{22}={23},{24}='{25}',{26}={27},{28}='{29}',{30}='{31}',{32}='{33}',{34}={35},{36}={37},{38}='{39}',{40}={41},{42}='{43}',{44}='{45}',{46}='{47}',{48}='{49}',{50}='{51}',{52}='{53}',{54}='{55}'"
+            string szField = string.Format("{0}='{1}',{2}={3},{4}='{5}',{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}='{15}',{16}={17},{18}='{19}',{20}='{21}',{22}={23},{24}='{25}',{26}={27},{28}='{29}',{30}='{31}',{32}='{33}',{34}={35},{36}={37},{38}='{39}',{40}={41},{42}='{43}',{44}='{45}',{46}='{47}',{48}='{49}',{50}='{51}',{52}='{53}',{54}='{55}',{56}='{57}'"
                 , SystemData.MedicalQcMsgTable.APPLY_ENV, model.APPLY_ENV
                 , SystemData.MedicalQcMsgTable.ASK_DATE_TIME, base.MedQCAccess.GetSqlTimeFormat(model.ASK_DATE_TIME)
                 , SystemData.MedicalQcMsgTable.CREATOR_ID, model.CREATOR_ID
@@ -1087,7 +1089,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.TOPIC, model.TOPIC
                 , SystemData.MedicalQcMsgTable.TOPIC_ID, model.TOPIC_ID
                 , SystemData.MedicalQcMsgTable.VISIT_ID, model.VISIT_ID
-                , SystemData.MedicalQcMsgTable.VISIT_NO, model.VISIT_NO);
+                , SystemData.MedicalQcMsgTable.VISIT_NO, model.VISIT_NO
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID, model.DOCTOR_IN_CHARGE_ID);
 
             string szCondition = string.Format("{0}='{1}'", SystemData.MedicalQcMsgTable.MSG_ID, model.MSG_ID);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.MEDICAL_QC_MSG, szField, szCondition);

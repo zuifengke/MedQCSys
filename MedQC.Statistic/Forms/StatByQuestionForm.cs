@@ -83,7 +83,7 @@ namespace Heren.MedQC.Statistic
             UserInfo userInfo = this.cboDoctor.SelectedItem as UserInfo;
             string szUserID = null;
             if (userInfo != null)
-                szUserID = userInfo.ID;
+                szUserID = userInfo.USER_ID;
             if (szTypeDesc == null && szUserID == null)
             {
                 MessageBoxEx.Show("请指定质量问题分类或者医生！", MessageBoxIcon.Information);
@@ -320,7 +320,7 @@ namespace Heren.MedQC.Statistic
             this.cboDoctor.Items.Clear();
             foreach (UserInfo userInfo in LstUserInfo)
             {
-                if (deptInfo.DEPT_CODE == userInfo.DeptCode)
+                if (deptInfo.DEPT_CODE == userInfo.DEPT_CODE)
                     this.cboDoctor.Items.Add(userInfo);
             }
             this.ShowStatusMessage(null);

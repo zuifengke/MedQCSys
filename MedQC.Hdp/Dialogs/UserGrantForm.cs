@@ -32,7 +32,7 @@ namespace Heren.MedQC.Hdp
             this.LoadRoleUserList();
             this.LoadHdpRoleList();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
-            this.Text = string.Format("正在给{0}授权", this.m_UserInfo.Name);
+            this.Text = string.Format("正在给{0}授权", this.m_UserInfo.USER_NAME);
         }
 
         private void LoadRoleUserList()
@@ -42,7 +42,7 @@ namespace Heren.MedQC.Hdp
             if (this.m_UserInfo == null)
                 return;
             this.m_lstHdpRoleUser.Clear();
-            short shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(this.m_UserInfo.ID, ref m_lstHdpRoleUser);
+            short shRet = HdpRoleUserAccess.Instance.GetHdpRoleUserList(this.m_UserInfo.USER_ID, ref m_lstHdpRoleUser);
 
         }
 
@@ -120,17 +120,17 @@ namespace Heren.MedQC.Hdp
                 if ((bool)this.dataGridView1.Rows[index].Cells[this.colCheckBox.Index].Value == true)
                 {
                     HdpRoleUser hdpRoleUser = new HdpRoleUser();
-                    hdpRoleUser.UserID = this.m_UserInfo.ID;
+                    hdpRoleUser.UserID = this.m_UserInfo.USER_ID;
                     hdpRoleUser.RoleCode = hdpRole.RoleCode;
                     m_lstCheckHdpRoleUser.Add(hdpRoleUser);
                 }
             }
-            short shRet =HdpRoleUserAccess.Instance.SaveRoleUserList(this.m_UserInfo.ID, CheckHdpRoleUserList);
+            short shRet =HdpRoleUserAccess.Instance.SaveRoleUserList(this.m_UserInfo.USER_ID, CheckHdpRoleUserList);
             //兼容用户登录，插入一条用户账号密码信息到USER_RIGHT_T表中
             UserRightBase userRight = UserRightBase.Create(UserRightType.MedQC);
-            userRight.UserID = this.m_UserInfo.ID;
+            userRight.UserID = this.m_UserInfo.USER_ID;
             userRight.RightType = UserRightType.MedQC;
-            shRet =RightAccess.Instance.GetUserRight(this.m_UserInfo.ID, UserRightType.MedQC, ref userRight);
+            shRet =RightAccess.Instance.GetUserRight(this.m_UserInfo.USER_ID, UserRightType.MedQC, ref userRight);
 
             shRet =RightAccess.Instance.SaveUserRight(userRight);
             if (shRet != SystemData.ReturnValue.OK)
@@ -153,7 +153,7 @@ namespace Heren.MedQC.Hdp
                 if ((bool)this.dataGridView1.Rows[index].Cells[this.colCheckBox.Index].Value == true)
                 {
                     HdpRoleUser hdpRoleUser = new HdpRoleUser();
-                    hdpRoleUser.UserID = this.m_UserInfo.ID;
+                    hdpRoleUser.UserID = this.m_UserInfo.USER_ID;
                     hdpRoleUser.RoleCode = hdpRole.RoleCode;
                     hdpRoleUser.RoleName = this.dataGridView1.Rows[index].Cells[this.colRoleName.Index].Value.ToString();
                     this.m_lstCheckHdpRoleUser.Add(hdpRoleUser);

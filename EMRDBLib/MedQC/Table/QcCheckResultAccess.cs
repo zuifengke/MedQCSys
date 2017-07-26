@@ -42,31 +42,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}"
-                , SystemData.QcCheckResultTable.BUG_CLASS, SystemData.QcCheckResultTable.CHECKER_NAME
-                , SystemData.QcCheckResultTable.CHECK_DATE, SystemData.QcCheckResultTable.CHECK_POINT_ID
-                , SystemData.QcCheckResultTable.CHECK_RESULT_ID, SystemData.QcCheckResultTable.CHECK_TYPE
-                , SystemData.QcCheckResultTable.CREATE_ID, SystemData.QcCheckResultTable.CREATE_NAME
-                , SystemData.QcCheckResultTable.DEPT_IN_CHARGE, SystemData.QcCheckResultTable.INCHARGE_DOCTOR
-                , SystemData.QcCheckResultTable.DOCTYPE_ID
-                , SystemData.QcCheckResultTable.DOC_SETID
-                , SystemData.QcCheckResultTable.DOC_TIME
-                , SystemData.QcCheckResultTable.DOC_TITLE, SystemData.QcCheckResultTable.MODIFY_TIME
-                , SystemData.QcCheckResultTable.PATIENT_ID, SystemData.QcCheckResultTable.PATIENT_NAME
-                , SystemData.QcCheckResultTable.SOCRE
-                , SystemData.QcCheckResultTable.QC_EXPLAIN
-                , SystemData.QcCheckResultTable.QC_RESULT
-                , SystemData.QcCheckResultTable.VISIT_ID
-                , SystemData.QcCheckResultTable.ORDER_VALUE
-                , SystemData.QcCheckResultTable.MSG_DICT_MESSAGE
-                , SystemData.QcCheckResultTable.DEPT_CODE
-                , SystemData.QcCheckResultTable.ERROR_COUNT
-                , SystemData.QcCheckResultTable.QA_EVENT_TYPE
-                , SystemData.QcCheckResultTable.MSG_DICT_CODE
-                , SystemData.QcCheckResultTable.VISIT_NO
-                , SystemData.QcCheckResultTable.ISVETO
-                , SystemData.QcCheckResultTable.REMARKS
-                , SystemData.QcCheckResultTable.CHECKER_ID);
+            string szField = string.Format("*");
             string szCondition = string.Format("1=1 ");
             if (!string.IsNullOrEmpty(szPatientID) && !string.IsNullOrEmpty(szVisitID))
             {
@@ -108,7 +84,7 @@ namespace EMRDBLib.DbAccess
                         switch (dataReader.GetName(i))
                         {
                             case SystemData.QcCheckResultTable.BUG_CLASS:
-                                qcCheckResult.BUG_CLASS =int.Parse( dataReader.GetValue(i).ToString());
+                                qcCheckResult.BUG_CLASS = int.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.QcCheckResultTable.CHECKER_NAME:
                                 qcCheckResult.CHECKER_NAME = dataReader.GetString(i);
@@ -195,7 +171,7 @@ namespace EMRDBLib.DbAccess
                                 qcCheckResult.REMARKS = dataReader.GetString(i);
                                 break;
                             case SystemData.QcCheckResultTable.SOCRE:
-                                qcCheckResult.SCORE =float.Parse( dataReader.GetValue(i).ToString());
+                                qcCheckResult.SCORE = float.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.QcCheckResultTable.STAT_TYPE:
                                 qcCheckResult.STAT_TYPE = int.Parse(dataReader.GetValue(i).ToString());
@@ -205,6 +181,15 @@ namespace EMRDBLib.DbAccess
                                 break;
                             case SystemData.QcCheckResultTable.VISIT_NO:
                                 qcCheckResult.VISIT_NO = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MSG_ID:
+                                qcCheckResult.MSG_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MODIFY_NOTICE_ID:
+                                qcCheckResult.MODIFY_NOTICE_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID:
+                                qcCheckResult.INCHARGE_DOCTOR_ID = dataReader.GetString(i);
                                 break;
                             default: break;
                         }
@@ -231,29 +216,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28}"
-                , SystemData.QcCheckResultTable.BUG_CLASS, SystemData.QcCheckResultTable.CHECKER_NAME
-                , SystemData.QcCheckResultTable.CHECK_DATE, SystemData.QcCheckResultTable.CHECK_POINT_ID
-                , SystemData.QcCheckResultTable.CHECK_RESULT_ID, SystemData.QcCheckResultTable.CHECK_TYPE
-                , SystemData.QcCheckResultTable.CREATE_ID, SystemData.QcCheckResultTable.CREATE_NAME
-                , SystemData.QcCheckResultTable.DEPT_IN_CHARGE, SystemData.QcCheckResultTable.INCHARGE_DOCTOR
-                , SystemData.QcCheckResultTable.DOCTYPE_ID
-                , SystemData.QcCheckResultTable.DOC_SETID
-                , SystemData.QcCheckResultTable.DOC_TIME
-                , SystemData.QcCheckResultTable.DOC_TITLE, SystemData.QcCheckResultTable.MODIFY_TIME
-                , SystemData.QcCheckResultTable.PATIENT_ID, SystemData.QcCheckResultTable.PATIENT_NAME
-                , SystemData.QcCheckResultTable.SOCRE
-                , SystemData.QcCheckResultTable.QC_EXPLAIN
-                , SystemData.QcCheckResultTable.QC_RESULT
-                , SystemData.QcCheckResultTable.VISIT_ID
-                , SystemData.QcCheckResultTable.ORDER_VALUE
-                , SystemData.QcCheckResultTable.MSG_DICT_MESSAGE
-                , SystemData.QcCheckResultTable.DEPT_CODE
-                , SystemData.QcCheckResultTable.ERROR_COUNT
-                , SystemData.QcCheckResultTable.QA_EVENT_TYPE
-                , SystemData.QcCheckResultTable.MSG_DICT_CODE
-                , SystemData.QcCheckResultTable.VISIT_NO
-                , SystemData.QcCheckResultTable.ISVETO);
+            string szField = string.Format("*");
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID) && !string.IsNullOrEmpty(szVisitID))
             {
@@ -316,64 +279,123 @@ namespace EMRDBLib.DbAccess
                 do
                 {
                     QcCheckResult qcCheckResult = new QcCheckResult();
-                    if (!dataReader.IsDBNull(0))
-                        qcCheckResult.BUG_CLASS = int.Parse(dataReader.GetValue(0).ToString());
-                    if (!dataReader.IsDBNull(1))
-                        qcCheckResult.CHECKER_NAME = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2))
-                        qcCheckResult.CHECK_DATE = dataReader.GetDateTime(2);
-                    if (!dataReader.IsDBNull(3))
-                        qcCheckResult.CHECK_POINT_ID = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4))
-                        qcCheckResult.CHECK_RESULT_ID = dataReader.GetValue(4).ToString();
-                    if (!dataReader.IsDBNull(5))
-                        qcCheckResult.CHECK_TYPE = dataReader.GetString(5);
-                    if (!dataReader.IsDBNull(6))
-                        qcCheckResult.CREATE_ID = dataReader.GetString(6);
-                    if (!dataReader.IsDBNull(7))
-                        qcCheckResult.CREATE_NAME = dataReader.GetString(7);
-                    if (!dataReader.IsDBNull(8))
-                        qcCheckResult.DEPT_IN_CHARGE = dataReader.GetString(8);
-                    if (!dataReader.IsDBNull(9))
-                        qcCheckResult.INCHARGE_DOCTOR = dataReader.GetString(9);
-                    if (!dataReader.IsDBNull(10))
-                        qcCheckResult.DOCTYPE_ID = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11))
-                        qcCheckResult.DOC_SETID = dataReader.GetString(11);
-                    if (!dataReader.IsDBNull(12))
-                        qcCheckResult.DOC_TIME = dataReader.GetDateTime(12);
-                    if (!dataReader.IsDBNull(13))
-                        qcCheckResult.DOC_TITLE = dataReader.GetString(13);
-                    if (!dataReader.IsDBNull(14))
-                        qcCheckResult.MODIFY_TIME = dataReader.GetDateTime(14);
-                    if (!dataReader.IsDBNull(15))
-                        qcCheckResult.PATIENT_ID = dataReader.GetString(15);
-                    if (!dataReader.IsDBNull(16))
-                        qcCheckResult.PATIENT_NAME = dataReader.GetString(16);
-                    if (!dataReader.IsDBNull(17))
-                        qcCheckResult.SCORE = float.Parse(dataReader.GetValue(17).ToString());
-                    if (!dataReader.IsDBNull(18))
-                        qcCheckResult.QC_EXPLAIN = dataReader.GetString(18);
-                    if (!dataReader.IsDBNull(19))
-                        qcCheckResult.QC_RESULT = int.Parse(dataReader.GetValue(19).ToString());
-                    if (!dataReader.IsDBNull(20))
-                        qcCheckResult.VISIT_ID = dataReader.GetString(20);
-                    if (!dataReader.IsDBNull(21))
-                        qcCheckResult.ORDER_VALUE = int.Parse(dataReader.GetValue(21).ToString());
-                    if (!dataReader.IsDBNull(22))
-                        qcCheckResult.MSG_DICT_MESSAGE = dataReader.GetString(22);
-                    if (!dataReader.IsDBNull(23))
-                        qcCheckResult.DEPT_CODE = dataReader.GetString(23);
-                    if (!dataReader.IsDBNull(24))
-                        qcCheckResult.ERROR_COUNT = int.Parse(dataReader.GetValue(24).ToString());
-                    if (!dataReader.IsDBNull(25))
-                        qcCheckResult.QA_EVENT_TYPE = dataReader.GetString(25);
-                    if (!dataReader.IsDBNull(26))
-                        qcCheckResult.MSG_DICT_CODE = dataReader.GetString(26);
-                    if (!dataReader.IsDBNull(27))
-                        qcCheckResult.VISIT_NO = dataReader.GetString(27);
-                    if (!dataReader.IsDBNull(28))
-                        qcCheckResult.ISVETO = dataReader.GetValue(28).ToString() == "1";
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.QcCheckResultTable.BUG_CLASS:
+                                qcCheckResult.BUG_CLASS = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.CHECKER_NAME:
+                                qcCheckResult.CHECKER_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CHECKER_ID:
+                                qcCheckResult.CHECKER_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CHECK_DATE:
+                                qcCheckResult.CHECK_DATE = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CHECK_POINT_ID:
+                                qcCheckResult.CHECK_POINT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CHECK_RESULT_ID:
+                                qcCheckResult.CHECK_RESULT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.QcCheckResultTable.CHECK_TYPE:
+                                qcCheckResult.CHECK_TYPE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CREATE_ID:
+                                qcCheckResult.CREATE_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.CREATE_NAME:
+                                qcCheckResult.CREATE_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DEPT_CODE:
+                                qcCheckResult.DEPT_CODE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DEPT_IN_CHARGE:
+                                qcCheckResult.DEPT_IN_CHARGE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.INCHARGE_DOCTOR:
+                                qcCheckResult.INCHARGE_DOCTOR = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DOCTYPE_ID:
+                                qcCheckResult.DOCTYPE_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DOC_SETID:
+                                qcCheckResult.DOC_SETID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DOC_TIME:
+                                qcCheckResult.DOC_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.QcCheckResultTable.DOC_TITLE:
+                                qcCheckResult.DOC_TITLE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.ERROR_COUNT:
+                                qcCheckResult.ERROR_COUNT = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.ISVETO:
+                                qcCheckResult.ISVETO = int.Parse(dataReader.GetValue(i).ToString()) == 1;
+                                break;
+                            case SystemData.QcCheckResultTable.MODIFY_TIME:
+                                qcCheckResult.MODIFY_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MR_STATUS:
+                                qcCheckResult.MR_STATUS = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MSG_DICT_CODE:
+                                qcCheckResult.MSG_DICT_CODE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MSG_DICT_MESSAGE:
+                                qcCheckResult.MSG_DICT_MESSAGE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.ORDER_VALUE:
+                                qcCheckResult.ORDER_VALUE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.PATIENT_ID:
+                                qcCheckResult.PATIENT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.PATIENT_NAME:
+                                qcCheckResult.PATIENT_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.QA_EVENT_TYPE:
+                                qcCheckResult.QA_EVENT_TYPE = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.QC_EXPLAIN:
+                                qcCheckResult.QC_EXPLAIN = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.QC_RESULT:
+                                qcCheckResult.QC_RESULT = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.REMARKS:
+                                qcCheckResult.REMARKS = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.SOCRE:
+                                qcCheckResult.SCORE = float.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.STAT_TYPE:
+                                qcCheckResult.STAT_TYPE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcCheckResultTable.VISIT_ID:
+                                qcCheckResult.VISIT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.VISIT_NO:
+                                qcCheckResult.VISIT_NO = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MSG_ID:
+                                qcCheckResult.MSG_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.MODIFY_NOTICE_ID:
+                                qcCheckResult.MODIFY_NOTICE_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID:
+                                qcCheckResult.INCHARGE_DOCTOR_ID = dataReader.GetString(i);
+                                break;
+                            default: break;
+                        }
+                    }
                     lstQcCheckResults.Add(qcCheckResult);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -396,26 +418,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27}"
-                , SystemData.QcCheckResultTable.BUG_CLASS, SystemData.QcCheckResultTable.CHECKER_NAME
-                , SystemData.QcCheckResultTable.CHECK_DATE, SystemData.QcCheckResultTable.CHECK_POINT_ID
-                , SystemData.QcCheckResultTable.CHECK_RESULT_ID, SystemData.QcCheckResultTable.CHECK_TYPE
-                , SystemData.QcCheckResultTable.CREATE_ID, SystemData.QcCheckResultTable.CREATE_NAME
-                , SystemData.QcCheckResultTable.DEPT_IN_CHARGE, SystemData.QcCheckResultTable.INCHARGE_DOCTOR
-                , SystemData.QcCheckResultTable.DOCTYPE_ID
-                , SystemData.QcCheckResultTable.DOC_SETID, SystemData.QcCheckResultTable.DOC_TIME
-                , SystemData.QcCheckResultTable.DOC_TITLE, SystemData.QcCheckResultTable.MODIFY_TIME
-                , SystemData.QcCheckResultTable.PATIENT_ID, SystemData.QcCheckResultTable.PATIENT_NAME
-                , SystemData.QcCheckResultTable.SOCRE, SystemData.QcCheckResultTable.QC_EXPLAIN
-                , SystemData.QcCheckResultTable.QC_RESULT
-                , SystemData.QcCheckResultTable.VISIT_ID
-                , SystemData.QcCheckResultTable.ORDER_VALUE
-                , SystemData.QcCheckResultTable.MSG_DICT_MESSAGE
-                , SystemData.QcCheckResultTable.DEPT_CODE
-                , SystemData.QcCheckResultTable.ERROR_COUNT
-                , SystemData.QcCheckResultTable.QA_EVENT_TYPE
-                , SystemData.QcCheckResultTable.MSG_DICT_CODE
-                , SystemData.QcCheckResultTable.VISIT_NO);
+            string szField = string.Format("*");
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID) && !string.IsNullOrEmpty(szVisitID))
             {
@@ -445,62 +448,123 @@ namespace EMRDBLib.DbAccess
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
                 qcCheckResult = new QcCheckResult();
-                if (!dataReader.IsDBNull(0))
-                    qcCheckResult.BUG_CLASS = int.Parse(dataReader.GetValue(0).ToString());
-                if (!dataReader.IsDBNull(1))
-                    qcCheckResult.CHECKER_NAME = dataReader.GetString(1);
-                if (!dataReader.IsDBNull(2))
-                    qcCheckResult.CHECK_DATE = dataReader.GetDateTime(2);
-                if (!dataReader.IsDBNull(3))
-                    qcCheckResult.CHECK_POINT_ID = dataReader.GetString(3);
-                if (!dataReader.IsDBNull(4))
-                    qcCheckResult.CHECK_RESULT_ID = dataReader.GetValue(4).ToString();
-                if (!dataReader.IsDBNull(5))
-                    qcCheckResult.CHECK_TYPE = dataReader.GetString(5);
-                if (!dataReader.IsDBNull(6))
-                    qcCheckResult.CREATE_ID = dataReader.GetString(6);
-                if (!dataReader.IsDBNull(7))
-                    qcCheckResult.CREATE_NAME = dataReader.GetString(7);
-                if (!dataReader.IsDBNull(8))
-                    qcCheckResult.DEPT_IN_CHARGE = dataReader.GetString(8);
-                if (!dataReader.IsDBNull(9))
-                    qcCheckResult.INCHARGE_DOCTOR = dataReader.GetString(9);
-                if (!dataReader.IsDBNull(10))
-                    qcCheckResult.DOCTYPE_ID = dataReader.GetString(10);
-                if (!dataReader.IsDBNull(11))
-                    qcCheckResult.DOC_SETID = dataReader.GetString(11);
-                if (!dataReader.IsDBNull(12))
-                    qcCheckResult.DOC_TIME = dataReader.GetDateTime(12);
-                if (!dataReader.IsDBNull(13))
-                    qcCheckResult.DOC_TITLE = dataReader.GetString(13);
-                if (!dataReader.IsDBNull(14))
-                    qcCheckResult.MODIFY_TIME = dataReader.GetDateTime(14);
-                if (!dataReader.IsDBNull(15))
-                    qcCheckResult.PATIENT_ID = dataReader.GetString(15);
-                if (!dataReader.IsDBNull(16))
-                    qcCheckResult.PATIENT_NAME = dataReader.GetString(16);
-                if (!dataReader.IsDBNull(17))
-                    qcCheckResult.SCORE = float.Parse(dataReader.GetValue(17).ToString());
-                if (!dataReader.IsDBNull(18))
-                    qcCheckResult.QC_EXPLAIN = dataReader.GetString(18);
-                if (!dataReader.IsDBNull(19))
-                    qcCheckResult.QC_RESULT = int.Parse(dataReader.GetValue(19).ToString());
-                if (!dataReader.IsDBNull(20))
-                    qcCheckResult.VISIT_ID = dataReader.GetString(20);
-                if (!dataReader.IsDBNull(21))
-                    qcCheckResult.ORDER_VALUE = int.Parse(dataReader.GetValue(21).ToString());
-                if (!dataReader.IsDBNull(22))
-                    qcCheckResult.MSG_DICT_MESSAGE = dataReader.GetString(22);
-                if (!dataReader.IsDBNull(23))
-                    qcCheckResult.DEPT_CODE = dataReader.GetString(23);
-                if (!dataReader.IsDBNull(24))
-                    qcCheckResult.ERROR_COUNT = int.Parse(dataReader.GetValue(24).ToString());
-                if (!dataReader.IsDBNull(25))
-                    qcCheckResult.QA_EVENT_TYPE = dataReader.GetString(25);
-                if (!dataReader.IsDBNull(26))
-                    qcCheckResult.MSG_DICT_CODE = dataReader.GetString(26);
-                if (!dataReader.IsDBNull(27))
-                    qcCheckResult.VISIT_NO = dataReader.GetString(27);
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    if (dataReader.IsDBNull(i))
+                        continue;
+                    switch (dataReader.GetName(i))
+                    {
+                        case SystemData.QcCheckResultTable.BUG_CLASS:
+                            qcCheckResult.BUG_CLASS = int.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.CHECKER_NAME:
+                            qcCheckResult.CHECKER_NAME = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CHECKER_ID:
+                            qcCheckResult.CHECKER_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CHECK_DATE:
+                            qcCheckResult.CHECK_DATE = dataReader.GetDateTime(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CHECK_POINT_ID:
+                            qcCheckResult.CHECK_POINT_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CHECK_RESULT_ID:
+                            qcCheckResult.CHECK_RESULT_ID = dataReader.GetValue(i).ToString();
+                            break;
+                        case SystemData.QcCheckResultTable.CHECK_TYPE:
+                            qcCheckResult.CHECK_TYPE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CREATE_ID:
+                            qcCheckResult.CREATE_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.CREATE_NAME:
+                            qcCheckResult.CREATE_NAME = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DEPT_CODE:
+                            qcCheckResult.DEPT_CODE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DEPT_IN_CHARGE:
+                            qcCheckResult.DEPT_IN_CHARGE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.INCHARGE_DOCTOR:
+                            qcCheckResult.INCHARGE_DOCTOR = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DOCTYPE_ID:
+                            qcCheckResult.DOCTYPE_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DOC_SETID:
+                            qcCheckResult.DOC_SETID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DOC_TIME:
+                            qcCheckResult.DOC_TIME = dataReader.GetDateTime(i);
+                            break;
+                        case SystemData.QcCheckResultTable.DOC_TITLE:
+                            qcCheckResult.DOC_TITLE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.ERROR_COUNT:
+                            qcCheckResult.ERROR_COUNT = int.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.ISVETO:
+                            qcCheckResult.ISVETO = int.Parse(dataReader.GetValue(i).ToString()) == 1;
+                            break;
+                        case SystemData.QcCheckResultTable.MODIFY_TIME:
+                            qcCheckResult.MODIFY_TIME = dataReader.GetDateTime(i);
+                            break;
+                        case SystemData.QcCheckResultTable.MR_STATUS:
+                            qcCheckResult.MR_STATUS = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.MSG_DICT_CODE:
+                            qcCheckResult.MSG_DICT_CODE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.MSG_DICT_MESSAGE:
+                            qcCheckResult.MSG_DICT_MESSAGE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.ORDER_VALUE:
+                            qcCheckResult.ORDER_VALUE = int.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.PATIENT_ID:
+                            qcCheckResult.PATIENT_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.PATIENT_NAME:
+                            qcCheckResult.PATIENT_NAME = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.QA_EVENT_TYPE:
+                            qcCheckResult.QA_EVENT_TYPE = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.QC_EXPLAIN:
+                            qcCheckResult.QC_EXPLAIN = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.QC_RESULT:
+                            qcCheckResult.QC_RESULT = int.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.REMARKS:
+                            qcCheckResult.REMARKS = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.SOCRE:
+                            qcCheckResult.SCORE = float.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.STAT_TYPE:
+                            qcCheckResult.STAT_TYPE = int.Parse(dataReader.GetValue(i).ToString());
+                            break;
+                        case SystemData.QcCheckResultTable.VISIT_ID:
+                            qcCheckResult.VISIT_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.VISIT_NO:
+                            qcCheckResult.VISIT_NO = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.MSG_ID:
+                            qcCheckResult.MSG_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.MODIFY_NOTICE_ID:
+                            qcCheckResult.MODIFY_NOTICE_ID = dataReader.GetString(i);
+                            break;
+                        case SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID:
+                            qcCheckResult.INCHARGE_DOCTOR_ID = dataReader.GetString(i);
+                            break;
+                        default: break;
+                    }
+                }
                 return SystemData.ReturnValue.OK;
             }
             catch (Exception ex)
@@ -539,79 +603,12 @@ namespace EMRDBLib.DbAccess
                 //生成自增主键
                 qcCheckResult.CHECK_RESULT_ID = qcCheckResult.MakeID();
             }
-            if (qcCheckResult.CHECK_RESULT_ID ==string.Empty)
+            if (qcCheckResult.CHECK_RESULT_ID == string.Empty)
             {
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29}"
-                , SystemData.QcCheckResultTable.BUG_CLASS, SystemData.QcCheckResultTable.CHECKER_NAME
-                , SystemData.QcCheckResultTable.CHECK_DATE, SystemData.QcCheckResultTable.CHECK_POINT_ID
-                , SystemData.QcCheckResultTable.CHECK_RESULT_ID, SystemData.QcCheckResultTable.CHECK_TYPE
-                , SystemData.QcCheckResultTable.CREATE_ID, SystemData.QcCheckResultTable.CREATE_NAME
-                , SystemData.QcCheckResultTable.DEPT_IN_CHARGE, SystemData.QcCheckResultTable.INCHARGE_DOCTOR
-                , SystemData.QcCheckResultTable.DOCTYPE_ID, SystemData.QcCheckResultTable.DOC_SETID
-                , SystemData.QcCheckResultTable.DOC_TIME, SystemData.QcCheckResultTable.DOC_TITLE
-                , SystemData.QcCheckResultTable.MODIFY_TIME, SystemData.QcCheckResultTable.ORDER_VALUE
-                , SystemData.QcCheckResultTable.PATIENT_ID, SystemData.QcCheckResultTable.PATIENT_NAME
-                , SystemData.QcCheckResultTable.SOCRE, SystemData.QcCheckResultTable.QC_EXPLAIN
-                , SystemData.QcCheckResultTable.QC_RESULT, SystemData.QcCheckResultTable.VISIT_ID
-                , SystemData.QcCheckResultTable.MSG_DICT_MESSAGE, SystemData.QcCheckResultTable.DEPT_CODE
-                , SystemData.QcCheckResultTable.ERROR_COUNT, SystemData.QcCheckResultTable.QA_EVENT_TYPE
-                , SystemData.QcCheckResultTable.MSG_DICT_CODE
-                , SystemData.QcCheckResultTable.STAT_TYPE
-                , SystemData.QcCheckResultTable.MR_STATUS
-                , SystemData.QcCheckResultTable.VISIT_NO);
-
-            string szValue = string.Format("{0},'{1}',{2},'{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}',{14},{15},'{16}','{17}',{18},'{19}',{20},'{21}','{22}','{23}',{24},'{25}','{26}',{27},'{28}','{29}'"
-                , qcCheckResult.BUG_CLASS.ToString()
-                , qcCheckResult.CHECKER_NAME
-                , base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.CHECK_DATE)
-                , qcCheckResult.CHECK_POINT_ID
-                , qcCheckResult.CHECK_RESULT_ID.ToString()
-                , qcCheckResult.CHECK_TYPE
-                , qcCheckResult.CREATE_ID
-                , qcCheckResult.CREATE_NAME
-                , qcCheckResult.DEPT_IN_CHARGE
-                , qcCheckResult.INCHARGE_DOCTOR
-                , qcCheckResult.DOCTYPE_ID
-                , qcCheckResult.DOC_SETID
-                , base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.DOC_TIME)
-                , qcCheckResult.DOC_TITLE
-                , base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.MODIFY_TIME)
-                , qcCheckResult.ORDER_VALUE
-                , qcCheckResult.PATIENT_ID
-                , qcCheckResult.PATIENT_NAME
-                , qcCheckResult.SCORE
-                , qcCheckResult.QC_EXPLAIN
-                , qcCheckResult.QC_RESULT
-                , qcCheckResult.VISIT_ID
-                , qcCheckResult.MSG_DICT_MESSAGE
-                , qcCheckResult.DEPT_CODE
-                , qcCheckResult.ERROR_COUNT
-                , qcCheckResult.QA_EVENT_TYPE
-                , qcCheckResult.MSG_DICT_CODE
-                , qcCheckResult.STAT_TYPE
-                , qcCheckResult.MR_STATUS
-                , qcCheckResult.VISIT_NO);
-
-            string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_CHECK_RESULT, szField, szValue);
-
-            int nCount = 0;
-            try
-            {
-                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.WriteLog("QcCheckResultAccess.SaveQcCheckResult", new string[] { "szSQL" }, new object[] { szSQL }, ex);
-                return SystemData.ReturnValue.EXCEPTION;
-            }
-            if (nCount <= 0)
-            {
-                LogManager.Instance.WriteLog("QcCheckResultAccess.SaveQcCheckResult", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
-                return SystemData.ReturnValue.EXCEPTION;
-            }
-            return SystemData.ReturnValue.OK;
+            
+            return this.Insert(qcCheckResult);
         }
         /// <summary>
         /// 新增一条人工核查结果信息
@@ -630,7 +627,7 @@ namespace EMRDBLib.DbAccess
             {
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34}"
                 , SystemData.QcCheckResultTable.BUG_CLASS, SystemData.QcCheckResultTable.CHECKER_NAME
                 , SystemData.QcCheckResultTable.CHECK_DATE, SystemData.QcCheckResultTable.CHECK_POINT_ID
                 , SystemData.QcCheckResultTable.CHECK_RESULT_ID, SystemData.QcCheckResultTable.CHECK_TYPE
@@ -649,8 +646,11 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckResultTable.MR_STATUS
                 , SystemData.QcCheckResultTable.VISIT_NO
                 , SystemData.QcCheckResultTable.REMARKS
-                , SystemData.QcCheckResultTable.CHECKER_ID);
-            string szValue = string.Format("{0},'{1}',{2},'{3}',{4},'{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}',{14},{15},'{16}','{17}',{18},'{19}',{20},'{21}','{22}','{23}',{24},'{25}','{26}',{27},'{28}','{29}','{30}','{31}'"
+                , SystemData.QcCheckResultTable.CHECKER_ID
+                , SystemData.QcCheckResultTable.MSG_ID
+                , SystemData.QcCheckResultTable.MODIFY_NOTICE_ID
+                , SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID);
+            string szValue = string.Format("{0},'{1}',{2},'{3}',{4},'{5}','{6}','{7}','{8}','{9}','{10}','{11}',{12},'{13}',{14},{15},'{16}','{17}',{18},'{19}',{20},'{21}','{22}','{23}',{24},'{25}','{26}',{27},'{28}','{29}','{30}','{31}','{32}','{33}','{34}'"
                 , qcCheckResult.BUG_CLASS.ToString()
                 , qcCheckResult.CHECKER_NAME
                 , base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.CHECK_DATE)
@@ -682,7 +682,10 @@ namespace EMRDBLib.DbAccess
                 , qcCheckResult.MR_STATUS
                 , qcCheckResult.VISIT_NO
                 , qcCheckResult.REMARKS
-                , qcCheckResult.CHECKER_ID);
+                , qcCheckResult.CHECKER_ID
+                , qcCheckResult.MSG_ID
+                , qcCheckResult.MODIFY_NOTICE_ID
+                , qcCheckResult.INCHARGE_DOCTOR_ID);
 
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.QC_CHECK_RESULT, szField, szValue);
 
@@ -720,7 +723,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0}={1},{2}='{3}',{4}={5},{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}='{15}',{16}='{17}',{18}='{19}',{20}='{21}',{22}={23},{24}='{25}',{26}={27},{28}={29},{30}='{31}',{32}='{33}',{34}={35},{36}='{37}',{38}={39},{40}='{41}',{42}='{43}',{44}='{45}',{46}={47},{48}='{49}',{50}='{51}',{52}='{53}',{54}='{55}',{56}='{57}',{58}='{59}'"
+            string szField = string.Format("{0}={1},{2}='{3}',{4}={5},{6}='{7}',{8}='{9}',{10}='{11}',{12}='{13}',{14}='{15}',{16}='{17}',{18}='{19}',{20}='{21}',{22}={23},{24}='{25}',{26}={27},{28}={29},{30}='{31}',{32}='{33}',{34}={35},{36}='{37}',{38}={39},{40}='{41}',{42}='{43}',{44}='{45}',{46}={47},{48}='{49}',{50}='{51}',{52}='{53}',{54}='{55}',{56}='{57}',{58}='{59}',{60}='{61}',{62}='{63}',{64}='{65}'"
                 , SystemData.QcCheckResultTable.BUG_CLASS, qcCheckResult.BUG_CLASS
                 , SystemData.QcCheckResultTable.CHECKER_NAME, qcCheckResult.CHECKER_NAME
                 , SystemData.QcCheckResultTable.CHECK_DATE, base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.CHECK_DATE)
@@ -750,7 +753,10 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcCheckResultTable.MR_STATUS, qcCheckResult.MR_STATUS
                 , SystemData.QcCheckResultTable.VISIT_NO, qcCheckResult.VISIT_NO
                 , SystemData.QcCheckResultTable.REMARKS, qcCheckResult.REMARKS
-                , SystemData.QcCheckResultTable.CHECKER_ID, qcCheckResult.CHECKER_ID);
+                , SystemData.QcCheckResultTable.CHECKER_ID, qcCheckResult.CHECKER_ID
+                , SystemData.QcCheckResultTable.MSG_ID, qcCheckResult.MSG_ID
+                , SystemData.QcCheckResultTable.MODIFY_NOTICE_ID, qcCheckResult.MODIFY_NOTICE_ID
+                , SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID, qcCheckResult.INCHARGE_DOCTOR_ID);
 
             string szCondition = string.Format("{0}='{1}'", SystemData.QcCheckResultTable.CHECK_RESULT_ID, qcCheckResult.CHECK_RESULT_ID);
             string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QC_CHECK_RESULT, szField, szCondition);

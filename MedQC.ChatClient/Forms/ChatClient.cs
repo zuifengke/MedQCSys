@@ -42,8 +42,8 @@ namespace MedQC.ChatClient
                 if (value != null)
                 {
                     m_ToUserInfo = value;
-                    lblUserInfo.Text = string.Format("{0}-{1}", value.DeptName, value.Name);
-                    if (htChating.Contains(value.ID))
+                    lblUserInfo.Text = string.Format("{0}-{1}", value.DEPT_NAME, value.USER_NAME);
+                    if (htChating.Contains(value.USER_ID))
                     {
                         lblUserInfo.ForeColor = Color.Blue;
                     }
@@ -99,7 +99,7 @@ namespace MedQC.ChatClient
                 if (value != null)
                 {
                     m_CurrentUser = value;
-                    this.Text = string.Format("病案问题沟通   {0}-{1}", value.DeptName, value.Name);
+                    this.Text = string.Format("病案问题沟通   {0}-{1}", value.DEPT_NAME, value.USER_NAME);
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace MedQC.ChatClient
             base.OnShown(e);
             InitVirtualTree();
             //初始化聊天双方信息
-            CurrentUser = SystemCache.LstUserInfo.Find(i => i.ID == SystemParam.Instance.QChatArgs.Sender);
+            CurrentUser = SystemCache.LstUserInfo.Find(i => i.USER_ID == SystemParam.Instance.QChatArgs.Sender);
             if (CurrentUser != null)
             {
                 ConnetServer();
@@ -131,7 +131,7 @@ namespace MedQC.ChatClient
                 MessageBoxEx.Show("启动参数错误！");
                 return;
             }
-            ToUserInfo = SystemCache.LstUserInfo.Find(i => i.ID == SystemParam.Instance.QChatArgs.Listener);
+            ToUserInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == SystemParam.Instance.QChatArgs.Listener);
             DeleteChatContent();//删除上次本地缓存聊天记录
             if (SystemParam.Instance.QChatArgs.ArgType == "1")
                 this.Close();
@@ -166,26 +166,26 @@ namespace MedQC.ChatClient
                 return;
             TreeNode rootNode = new TreeNode();
             rootNode.Text = "所有用户";
-            SystemCache.LstUserInfo.Sort(delegate (UserInfo a, UserInfo b) { return string.Compare(a.DeptName, b.DeptName, StringComparison.CurrentCulture); });
+            SystemCache.LstUserInfo.Sort(delegate (UserInfo a, UserInfo b) { return string.Compare(a.DEPT_NAME, b.DEPT_NAME, StringComparison.CurrentCulture); });
 
             //加载所有户用
             vTreeAlluser.SuspendLayout();
 
             VirtualNode dept = new VirtualNode();
-            dept.Text = SystemCache.LstUserInfo[0].DeptName;
+            dept.Text = SystemCache.LstUserInfo[0].DEPT_NAME;
             dept.ForeColor = Color.Blue;
             foreach (UserInfo userInfo in SystemCache.LstUserInfo)
             {
-                if (string.IsNullOrEmpty(userInfo.Name) || string.IsNullOrEmpty(userInfo.DeptName))
+                if (string.IsNullOrEmpty(userInfo.USER_NAME) || string.IsNullOrEmpty(userInfo.DEPT_NAME))
                     continue;
-                if (dept.Text != userInfo.DeptName)
+                if (dept.Text != userInfo.DEPT_NAME)
                 {
                     vTreeAlluser.Nodes.Add(dept);
                     dept = new VirtualNode();
                     dept.ForeColor = Color.Blue;
-                    dept.Text = userInfo.DeptName;
+                    dept.Text = userInfo.DEPT_NAME;
                 }
-                VirtualNode userNode = new VirtualNode(userInfo.Name);
+                VirtualNode userNode = new VirtualNode(userInfo.USER_NAME);
                 userNode.ForeColor = Color.Gray;
                 userNode.ImageIndex = 0;
                 userNode.Tag = userInfo;
@@ -310,7 +310,7 @@ namespace MedQC.ChatClient
         private void BindUnReadMessage()
         {
             List<QcMsgChatLog> lstLog = null;
-            QcMsgChatAccess.Instance.GetQCMsgChatLogList(CurrentUser.ID, false, ref lstLog);
+            QcMsgChatAccess.Instance.GetQCMsgChatLogList(CurrentUser.USER_ID, false, ref lstLog);
             List<MessageInfo> lstMsg = CommonHelper.Instance.ConvertoMessageInfoList(lstLog);
             if (lstMsg == null || lstMsg.Count == 0)
                 return;
@@ -351,7 +351,7 @@ namespace MedQC.ChatClient
             foreach (VirtualNode item in vTreeChating.Nodes)
             {
                 userInfo = item.Tag as UserInfo;
-                if (userInfo != null && userInfo.ID == info.MessageFrom.ID)
+                if (userInfo != null && userInfo.USER_ID == info.MessageFrom.USER_ID)
                 {
                     userNode = item;
                     break;
@@ -359,14 +359,14 @@ namespace MedQC.ChatClient
             }
             if (userNode == null)//添加离线节点
             {
-                userInfo = SystemCache.LstUserInfo.Find(i => i.ID == info.MessageFrom.ID);
+                userInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == info.MessageFrom.USER_ID);
                 userNode = AddChatingTreeNode(userInfo, 0);
             }
-            if (userNode == null || userInfo == null || string.IsNullOrEmpty(userInfo.ID))
+            if (userNode == null || userInfo == null || string.IsNullOrEmpty(userInfo.USER_ID))
                 return;
             //获取发送用户的消息
             List<MessageInfo> lstInfo = new List<MessageInfo>();
-            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.ID == userInfo.ID);
+            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.USER_ID == userInfo.USER_ID);
             vTreeChating.SuspendLayout();
             userNode.SubItems[0].Text = string.Format("{0}", lstInfo.Count == 0 ? "" : string.Format("{0}", lstInfo.Count));
             vTreeChating.PerformLayout();
@@ -397,7 +397,7 @@ namespace MedQC.ChatClient
             //发送者
             Font font = new Font("宋体", 10, FontStyle.Bold);
             rtbView.SelectionFont = font;
-            rtbView.SelectionColor = info.MessageFrom.ID == ToUserInfo.ID ? Color.Red : Color.Blue;
+            rtbView.SelectionColor = info.MessageFrom.USER_ID == ToUserInfo.USER_ID ? Color.Red : Color.Blue;
             rtbView.AppendText(info.MessageFrom + ":");
             rtbView.AppendText(Environment.NewLine);
 
@@ -433,7 +433,7 @@ namespace MedQC.ChatClient
             //发送者
             Font font = new Font("宋体", 10, FontStyle.Bold);
             rtbView.SelectionFont = font;
-            rtbView.SelectionColor = info.MessageFrom.ID == ToUserInfo.ID ? Color.Red : Color.Blue;
+            rtbView.SelectionColor = info.MessageFrom.USER_ID == ToUserInfo.USER_ID ? Color.Red : Color.Blue;
             rtbView.AppendText(info.MessageFrom + ":");
             rtbView.AppendText(Environment.NewLine);
 
@@ -485,7 +485,7 @@ namespace MedQC.ChatClient
         /// <param name="info"></param>
         private void RemoveChaingUserInfo(MessageInfo info)
         {
-            string szUserID = info.MessageFrom.ID;
+            string szUserID = info.MessageFrom.USER_ID;
             //更换成离线图片
             vTreeChating.BeginInvoke(new Action(() =>
             {
@@ -497,7 +497,7 @@ namespace MedQC.ChatClient
                 UpdateAllUserNode(info.MessageFrom, 0);
             }));
 
-            if (ToUserInfo.ID == szUserID)
+            if (ToUserInfo.USER_ID == szUserID)
                 ToUserInfo = info.MessageFrom;
         }
 
@@ -507,8 +507,8 @@ namespace MedQC.ChatClient
         /// <param name="info"></param>
         private void AddChatingInfo(MessageInfo info)
         {
-            string szUserID = info.MessageFrom.ID;
-            UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.ID == szUserID);
+            string szUserID = info.MessageFrom.USER_ID;
+            UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == szUserID);
             if (userInfo == null)
                 return;
             //更新右侧所用用户
@@ -550,7 +550,7 @@ namespace MedQC.ChatClient
             foreach (VirtualNode item in vTreeChating.Nodes)
             {
                 itemInfo = item.Tag as UserInfo;
-                if (itemInfo != null && itemInfo.ID == user.ID)
+                if (itemInfo != null && itemInfo.USER_ID == user.USER_ID)
                 {
                     userNode = item;
                     break;
@@ -574,18 +574,18 @@ namespace MedQC.ChatClient
         /// <param name="iOnLine">1,在线，0，离线</param>
         private VirtualNode AddChatingTreeNode(UserInfo userInfo, int iOnLine)
         {
-            if (userInfo.ID == CurrentUser.ID)
+            if (userInfo.USER_ID == CurrentUser.USER_ID)
                 return null;
-            if (!htChating.ContainsKey(userInfo.ID))
-                htChating.Add(userInfo.ID, userInfo);
+            if (!htChating.ContainsKey(userInfo.USER_ID))
+                htChating.Add(userInfo.USER_ID, userInfo);
             else
                 return null;
 
             //在线用户树中添加该用户
             vTreeChating.SuspendLayout();
             VirtualNode userNode = new VirtualNode();
-            userNode.Text = string.Format("{0}", userInfo.Name);
-            userNode.ToolTipText = string.Format("{0}-{1}", userInfo.DeptName, userInfo.Name);
+            userNode.Text = string.Format("{0}", userInfo.USER_NAME);
+            userNode.ToolTipText = string.Format("{0}-{1}", userInfo.DEPT_NAME, userInfo.USER_NAME);
             userNode.Tag = userInfo;
             userNode.ForeColor = iOnLine == 1 ? Color.Blue : Color.Gray;
             userNode.ImageIndex = iOnLine;
@@ -607,12 +607,12 @@ namespace MedQC.ChatClient
             {
                 foreach (VirtualNode itemNode in deptNode.Nodes)
                 {
-                    if (itemNode.Text != userInfo.Name)//判断名字相同之后再判断拆箱判断ID
+                    if (itemNode.Text != userInfo.USER_NAME)//判断名字相同之后再判断拆箱判断ID
                         continue;
                     UserInfo itemUser = itemNode.Tag as UserInfo;
                     if (itemUser == null)
                         continue;
-                    if (itemUser.ID == userInfo.ID)
+                    if (itemUser.USER_ID == userInfo.USER_ID)
                     {
                         itemNode.ImageIndex = iOnLine;
                         itemNode.ForeColor = iOnLine == 1 ? Color.Blue : Color.Gray;
@@ -639,7 +639,7 @@ namespace MedQC.ChatClient
           {
               foreach (var item in szUserIDs)
               {
-                  UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.ID == item);
+                  UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == item);
                   if (userInfo == null)
                       continue;
                   AddChatingTreeNode(userInfo, 1);
@@ -650,7 +650,7 @@ namespace MedQC.ChatClient
             {
                 foreach (var item in szUserIDs)
                 {
-                    UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.ID == item);
+                    UserInfo userInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == item);
                     if (userInfo == null)
                         continue;
                     UpdateAllUserNode(userInfo, 1);
@@ -694,8 +694,8 @@ namespace MedQC.ChatClient
             qcMsgChatLog.ChatID = message.MessageID;
             qcMsgChatLog.ChatContent = message.MessageContent;
             qcMsgChatLog.ChatSendDate = message.SendTime;
-            qcMsgChatLog.Sender = message.MessageFrom.ID;
-            qcMsgChatLog.Listener = message.MessageTo.ID;
+            qcMsgChatLog.Sender = message.MessageFrom.USER_ID;
+            qcMsgChatLog.Listener = message.MessageTo.USER_ID;
             byte[] byteChatImage = null;
             short shRet = QcMsgChatAccess.Instance.SaveQCMsgChatLog(qcMsgChatLog, byteChatImage);
             if (shRet != SystemData.ReturnValue.OK)
@@ -711,8 +711,8 @@ namespace MedQC.ChatClient
             qcMsgChatLog.ChatID = message.MessageID;
             qcMsgChatLog.ChatContent = message.MessageContent;
             qcMsgChatLog.ChatSendDate = message.SendTime;
-            qcMsgChatLog.Sender = message.MessageFrom.ID;
-            qcMsgChatLog.Listener = message.MessageTo.ID;
+            qcMsgChatLog.Sender = message.MessageFrom.USER_ID;
+            qcMsgChatLog.Listener = message.MessageTo.USER_ID;
             qcMsgChatLog.MsgChatDataType = "1";
             byte[] byteChatImage = ImageAccess.Instance.ImageToBuffer(image, ImageFormat.Png);
             short shRet = QcMsgChatAccess.Instance.SaveQCMsgChatLog(qcMsgChatLog, byteChatImage);
@@ -758,7 +758,7 @@ namespace MedQC.ChatClient
             message.MessageAction = (int)ActionType.LogIn;
             message.MessageFrom = CurrentUser;
             message.SendTime = DateTime.Now;
-            message.MessageContent = string.Format("{0}已登录.", CurrentUser.ID);
+            message.MessageContent = string.Format("{0}已登录.", CurrentUser.USER_ID);
             return message;
         }
         private MessageInfo GetLogOutConetent()
@@ -768,7 +768,7 @@ namespace MedQC.ChatClient
             message.MessageAction = (int)ActionType.LogOut;
             message.MessageFrom = CurrentUser;
             message.SendTime = DateTime.Now;
-            message.MessageContent = string.Format("{0}已退出.", CurrentUser.ID);
+            message.MessageContent = string.Format("{0}已退出.", CurrentUser.USER_ID);
             return message;
         }
 
@@ -836,7 +836,7 @@ namespace MedQC.ChatClient
             string szText = rtbView.Rtf;
             if (!Directory.Exists("ChatCache"))
                 Directory.CreateDirectory("ChatCache");
-            string szFileName = string.Format("ChatCache\\{0}_{1}.txt", ToUserInfo.ID, CurrentUser.ID);
+            string szFileName = string.Format("ChatCache\\{0}_{1}.txt", ToUserInfo.USER_ID, CurrentUser.USER_ID);
             using (FileStream fs = new FileStream(szFileName, FileMode.OpenOrCreate))
             {
                 StreamWriter sw = new StreamWriter(fs);
@@ -852,7 +852,7 @@ namespace MedQC.ChatClient
         private void LoadChatContent()
         {
             rtbView.Clear();
-            string szFileName = string.Format("ChatCache\\{0}_{1}.txt", ToUserInfo.ID, CurrentUser.ID);
+            string szFileName = string.Format("ChatCache\\{0}_{1}.txt", ToUserInfo.USER_ID, CurrentUser.USER_ID);
             if (!File.Exists(szFileName))
                 return;
             rtbView.Rtf = File.ReadAllText(szFileName);
@@ -887,7 +887,7 @@ namespace MedQC.ChatClient
                 return;
             //获取节点用户发送过来的未读消息
             List<MessageInfo> lstInfo = new List<MessageInfo>();
-            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.ID == ToUserInfo.ID);
+            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.USER_ID == ToUserInfo.USER_ID);
             if (lstInfo == null || lstInfo.Count == 0)
                 return;
             foreach (MessageInfo item in lstInfo)
@@ -956,7 +956,7 @@ namespace MedQC.ChatClient
             if (CurrentUser == null)
                 return;
             UserInfo userInfo = vTreeAlluser.SelectedNode.Tag as UserInfo;
-            if (userInfo == null || userInfo.ID == CurrentUser.ID)
+            if (userInfo == null || userInfo.USER_ID == CurrentUser.USER_ID)
                 return;
 
             //保存当前聊天内容到本地
@@ -964,11 +964,11 @@ namespace MedQC.ChatClient
             ToUserInfo = userInfo;
             //加载本地已有聊天记录
             LoadChatContent();
-            if (!htChating.ContainsKey(ToUserInfo.ID))
+            if (!htChating.ContainsKey(ToUserInfo.USER_ID))
                 return;
             //获取节点用户发送过来的未读消息
             List<MessageInfo> lstInfo = new List<MessageInfo>();
-            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.ID == ToUserInfo.ID);
+            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.USER_ID == ToUserInfo.USER_ID);
             foreach (MessageInfo item in lstInfo)
             {
                 if (item.MessageAction == (int)ActionType.SendMessage)
@@ -999,7 +999,7 @@ namespace MedQC.ChatClient
             LoadChatContent();
             //获取节点用户发送过来的未读消息
             List<MessageInfo> lstInfo = new List<MessageInfo>();
-            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.ID == ToUserInfo.ID);
+            lstInfo = ListMessageInfo.FindAll(i => i.MessageFrom.USER_ID == ToUserInfo.USER_ID);
             foreach (MessageInfo item in lstInfo)
             {
                 if (item.MessageAction == (int)ActionType.SendMessage)
@@ -1076,13 +1076,13 @@ namespace MedQC.ChatClient
                 MessageBoxEx.Show("沟通参数出错！");
                 return;
             }
-            if (CurrentUser == null || CurrentUser.ID != args[0])
+            if (CurrentUser == null || CurrentUser.USER_ID != args[0])
             {
-                CurrentUser = SystemCache.LstUserInfo.Find(i => i.ID == args[0]);
+                CurrentUser = SystemCache.LstUserInfo.Find(i => i.USER_ID == args[0]);
             }
-            if (ToUserInfo == null || ToUserInfo.ID != args[0])
+            if (ToUserInfo == null || ToUserInfo.USER_ID != args[0])
             {
-                ToUserInfo = SystemCache.LstUserInfo.Find(i => i.ID == args[1]);
+                ToUserInfo = SystemCache.LstUserInfo.Find(i => i.USER_ID == args[1]);
             }
             rtbEdit.Text = args[2];
             this.Show();

@@ -21,6 +21,8 @@ using Heren.MedQC.Core;
 using MedQCSys.DockForms;
 using MedQCSys;
 using Heren.MedQC.Maintenance.Dialogs;
+using Heren.MedQC.ScriptEngine.Debugger;
+using Heren.Common.ScriptEngine.Script;
 
 namespace Heren.MedQC.Maintenance
 {
@@ -690,6 +692,37 @@ namespace Heren.MedQC.Maintenance
         private void ShowScriptEditForm(DataTableViewRow row)
         {
             QcCheckScript qcCheckScript = row.Cells[this.colScriptSource.Index].Tag as QcCheckScript;
+            if (row == null || row.Index < 0 || this.dataGridView1.IsDeletedRow(row))
+                return;
+
+            string szScriptID = string.Empty;
+            string szScriptName = string.Empty;
+            if (qcCheckScript != null)
+                szScriptID = qcCheckScript.ScriptID;
+            if (row.Cells[this.colScriptName.Index].Value != null)
+                szScriptName = row.Cells[this.colScriptName.Index].Value.ToString();
+
+            string szScriptText = string.Empty;
+            if (row.Cells[this.colScriptSource.Index].Value != null)
+                szScriptText = row.Cells[this.colScriptSource.Index].Value.ToString();
+
+            byte[] byteScriptData = row.Cells[this.colScriptSource.Index].Tag as byte[];
+
+            DebuggerForm scriptEditForm = new DebuggerForm();
+            scriptEditForm.WorkingPath = GlobalMethods.Misc.GetWorkingPath();
+            scriptEditForm.ScriptProperty = new ScriptProperty();
+            scriptEditForm.ScriptProperty.ScriptName = szScriptName;
+            scriptEditForm.ScriptProperty.ScriptText = szScriptText;
+            scriptEditForm.ScriptProperty.FilePath = string.Format("{0}\\Script\\Caches\\{1}.vbs"
+                , scriptEditForm.WorkingPath, szScriptID);
+            scriptEditForm.MinimizeBox = false;
+            scriptEditForm.ShowInTaskbar = false;
+            if (scriptEditForm.ShowDialog() != DialogResult.OK)
+                return;
+            row.Cells[this.colScriptSource.Index].Tag = scriptEditForm.ScriptProperty.ScriptData;
+            row.Cells[this.colScriptSource.Index].Value = scriptEditForm.ScriptProperty.ScriptText;
+            if (this.dataGridView1.IsNormalRowUndeleted(row))
+                this.dataGridView1.SetRowState(row, RowState.Update);
 
         }
 
@@ -821,6 +854,7 @@ namespace Heren.MedQC.Maintenance
                 }
             }
         }
+        
 
         private void btnExport_Click(object sender, EventArgs e)
         {

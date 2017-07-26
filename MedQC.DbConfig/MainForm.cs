@@ -144,6 +144,7 @@ namespace Heren.MedQC.DbConfig
                 this.tp.TabPages.Add(this.tpMdsConfig);
                 this.tp.TabPages.Add(this.tpBAJK);
                 this.tp.TabPages.Add(this.tpHisConfig);
+                this.tp.TabPages.Add(this.tpNdsConfig);
             }
             else if (szFileName == "mdsdblib.xml")
             {

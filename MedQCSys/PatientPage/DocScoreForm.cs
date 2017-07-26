@@ -648,7 +648,7 @@ namespace MedQCSys.DockForms
                     qcQuestionInfo = new EMRDBLib.MedicalQcMsg();
                     qcQuestionInfo.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
                     qcQuestionInfo.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
+                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
                     qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                     qcQuestionInfo.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
                     qcQuestionInfo.DEPT_NAME = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
@@ -661,7 +661,7 @@ namespace MedQCSys.DockForms
                     qcQuestionInfo.MSG_STATUS = 0;
                     qcQuestionInfo.QA_EVENT_TYPE = qcMessageTemplet.QA_EVENT_TYPE;
                     qcQuestionInfo.POINT_TYPE = 1;
-                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
+                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
                     qcQuestionInfo.POINT = int.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
                     shRet = MedicalQcMsgAccess.Instance.Insert(qcQuestionInfo);
                     if (shRet != SystemData.ReturnValue.OK)
@@ -727,7 +727,7 @@ namespace MedQCSys.DockForms
                     qcTimeCheckInfo = new EMRDBLib.QCTimeCheck();
                     qcTimeCheckInfo.PatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
                     qcTimeCheckInfo.VisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-                    qcTimeCheckInfo.CheckerName = SystemParam.Instance.UserInfo.Name;
+                    qcTimeCheckInfo.CheckerName = SystemParam.Instance.UserInfo.USER_NAME;
                     qcTimeCheckInfo.CheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                     qcTimeCheckInfo.EventID = resultInfo.EventID;
                     qcTimeCheckInfo.DocTypeID = resultInfo.DocTypeID;
@@ -748,7 +748,7 @@ namespace MedQCSys.DockForms
                     if (GlobalMethods.Convert.StringToValue(qcTimeCheckInfo.Point, 0f) == fPoint)
                         continue;
                     qcTimeCheckInfo.Point = fPoint.ToString();
-                    qcTimeCheckInfo.CheckerName = SystemParam.Instance.UserInfo.Name;
+                    qcTimeCheckInfo.CheckerName = SystemParam.Instance.UserInfo.USER_NAME;
                     qcTimeCheckInfo.CheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                     shRet = QcTimeCheckAccess.Instance.UpdateQCTimeCheck(qcTimeCheckInfo);
                     if (shRet != SystemData.ReturnValue.OK)
@@ -817,7 +817,7 @@ namespace MedQCSys.DockForms
                 qcScore.PATIENT_ID = szPatientID;
                 qcScore.VISIT_ID = szVisitID;
                 qcScore.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
-                qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.Name;
+                qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.USER_NAME;
                 qcScore.HOS_ASSESS = float.Parse(this.txtScore.Text);
                 qcScore.HOS_DATE = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                 qcScore.DOC_LEVEL = this.txtLevel.Text;
@@ -828,7 +828,7 @@ namespace MedQCSys.DockForms
                 qcScore.PATIENT_ID = szPatientID;
                 qcScore.VISIT_ID = szVisitID;
                 qcScore.VISIT_NO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
-                qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.Name;
+                qcScore.HOS_QCMAN = SystemParam.Instance.UserInfo.USER_NAME;
                 qcScore.HOS_ASSESS = float.Parse(this.txtScore.Text);
                 qcScore.HOS_DATE = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
                 qcScore.DOC_LEVEL = this.txtLevel.Text;
@@ -841,7 +841,7 @@ namespace MedQCSys.DockForms
             }
             this.m_fDocScore = qcScore.HOS_ASSESS;
             this.m_szDocLevel = this.txtLevel.Text;
-            this.m_szQcChecker = SystemParam.Instance.UserInfo.Name;
+            this.m_szQcChecker = SystemParam.Instance.UserInfo.USER_NAME;
             this.SaveDocContentPoints();
             this.SaveDocTimePoints();
             MessageBoxEx.ShowMessage("病历评分保存成功！");
@@ -868,10 +868,10 @@ namespace MedQCSys.DockForms
             qcActionLog.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             qcActionLog.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
        
-            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.Name;
-            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.ID;
-            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
+            qcActionLog.CHECKED_BY = SystemParam.Instance.UserInfo.USER_NAME;
+            qcActionLog.CHECKED_ID = SystemParam.Instance.UserInfo.USER_ID;
+            qcActionLog.DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            qcActionLog.DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
             qcActionLog.DOC_SETID = string.Empty;
             qcActionLog.CHECK_TYPE = 2;
             qcActionLog.LOG_TYPE = 1;

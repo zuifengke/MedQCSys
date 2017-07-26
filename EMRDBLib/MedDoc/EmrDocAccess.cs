@@ -296,7 +296,60 @@ namespace EMRDBLib.DbAccess
             }
 
         }
-
+        public short GetInchargeDoctorList(string szPatientID, string szVisitNO, ref List<UserInfo> lstUserInfos)
+        {
+            if (string.IsNullOrEmpty(szPatientID) || string.IsNullOrEmpty(szVisitNO))
+            {
+                return SystemData.ReturnValue.PARAM_ERROR;
+            }
+            string szSQL = string.Format("select distinct creator_id as USER_ID,creator_name as USER_NAME,DEPT_CODE,DEPT_NAME  from emr_doc_t t where t.patient_id ='{0}' and t.visit_id ='{1}'"
+                ,szPatientID
+                ,szVisitNO);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstUserInfos == null)
+                    lstUserInfos = new List<UserInfo>();
+                do
+                {
+                    UserInfo model = new UserInfo();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.UserView.DEPT_CODE:
+                                model.DEPT_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.UserView.DEPT_NAME:
+                                model.DEPT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.UserView.USER_ID:
+                                model.USER_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.UserView.USER_NAME:
+                                model.USER_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            default: break;
+                        }
+                    }
+                    lstUserInfos.Add(model);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MeddocAccess.CloseConnnection(false); }
+        }
         /// <summary>
         /// 获取指定医生一段时间内书写的所有病历的列表
         /// </summary>

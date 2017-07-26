@@ -83,7 +83,7 @@ namespace Heren.MedQC.Statistic
                 this.ShowStatusMessage(string.Format("正在查询{0}第{1}/{2}患者病历修改次数，请稍候...", deptInfo.DEPT_NAME,index + 1, lstUserInfo.Count));
                  UserInfo userInfo = lstUserInfo[index];
                 List< MedDocInfo> lstDocInfo = null;
-                shRet =EmrDocAccess.Instance.GetDocInfos(userInfo.ID, DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
+                shRet =EmrDocAccess.Instance.GetDocInfos(userInfo.USER_ID, DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
                 DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), ref lstDocInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                     continue;

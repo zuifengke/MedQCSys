@@ -214,14 +214,14 @@ namespace Heren.MedQC.MedRecord
                 return;
             }
             RecMrBatch recMrBatch = new RecMrBatch();
-            recMrBatch.BATCH_NO = recMrBatch.MakeBatchNo(SystemParam.Instance.UserInfo.DeptCode);
+            recMrBatch.BATCH_NO = recMrBatch.MakeBatchNo(SystemParam.Instance.UserInfo.DEPT_CODE);
             recMrBatch.INP_NOS = string.Join("|", m_lstPatVisit.Select(m => m.INP_NO).ToArray());
             recMrBatch.MR_COUNT = this.m_lstPatVisit.Count;
             recMrBatch.PAPER_COUNT = this.m_paperCount++;
-            recMrBatch.SEND_DEPT_CODE = SystemParam.Instance.UserInfo.DeptCode;
-            recMrBatch.SEND_DEPT_NAME = SystemParam.Instance.UserInfo.DeptName;
-            recMrBatch.SEND_DOCTOR_ID = SystemParam.Instance.UserInfo.ID;
-            recMrBatch.SEND_DOCTOR_NAME = SystemParam.Instance.UserInfo.Name;
+            recMrBatch.SEND_DEPT_CODE = SystemParam.Instance.UserInfo.DEPT_CODE;
+            recMrBatch.SEND_DEPT_NAME = SystemParam.Instance.UserInfo.DEPT_NAME;
+            recMrBatch.SEND_DOCTOR_ID = SystemParam.Instance.UserInfo.USER_ID;
+            recMrBatch.SEND_DOCTOR_NAME = SystemParam.Instance.UserInfo.USER_NAME;
             recMrBatch.SEND_TIME = SysTimeHelper.Instance.Now;
             recMrBatch.VISIT_NOS = string.Join("|", m_lstPatVisit.Select(m => m.VISIT_NO).ToArray());
             recMrBatch.WORKER_ID = this.txt_WORKER_ID.Text;

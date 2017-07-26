@@ -69,9 +69,9 @@ namespace Heren.MedQC.Statistic
 
             UserInfo userInfo = null;
             UserAccess.Instance.GetUserInfo(qcWorkloadStatInfo.CheckerID, ref userInfo);
-            row.Cells[this.colCheckID.Index].Value = userInfo != null ? userInfo.ID : "";
-            row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = userInfo != null ? userInfo.Name : "";
-            row.Cells[this.colDeptName.Index].Value = userInfo != null ? userInfo.DeptName : "";
+            row.Cells[this.colCheckID.Index].Value = userInfo != null ? userInfo.USER_ID : "";
+            row.Cells[this.checkerDataGridViewTextBoxColumn.Index].Value = userInfo != null ? userInfo.USER_NAME : "";
+            row.Cells[this.colDeptName.Index].Value = userInfo != null ? userInfo.DEPT_NAME : "";
         }
 
         private ReportExplorerForm GetReportExplorerForm()
@@ -129,7 +129,7 @@ namespace Heren.MedQC.Statistic
                 && this.cboUserList.SelectedItem!=null)
             {
                 UserInfo user = this.cboUserList.SelectedItem as UserInfo;
-                szCheckerID = user.ID;
+                szCheckerID = user.USER_ID;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在统计工作量，请稍候...");

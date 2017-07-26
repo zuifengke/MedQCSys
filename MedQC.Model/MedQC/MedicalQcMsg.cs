@@ -147,6 +147,10 @@ namespace EMRDBLib
         /// 病历ID号
         /// </summary>
         public string DOC_ID { get; set; }
+        /// <summary>
+        /// 责任医生ID
+        /// </summary>
+        public string DOCTOR_IN_CHARGE_ID { get; set; }
 
         public MedicalQcMsg()
         {

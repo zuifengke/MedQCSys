@@ -601,7 +601,7 @@ namespace MedQCSys.DockForms
             short shRet = SystemData.ReturnValue.OK;
             List<EMRDBLib.PatVisitInfo> lstPatVisitLogs = null;
             string szDeptCode = null;
-            szDeptCode = SystemParam.Instance.UserInfo.DeptCode;
+            szDeptCode = SystemParam.Instance.UserInfo.DEPT_CODE;
 
             //科室检索
             if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.Department)
@@ -774,7 +774,7 @@ namespace MedQCSys.DockForms
                 string szCheckerName = string.Empty;
                 UserInfo userInfo = this.patSearchPane1.UserInfo;
                 if (userInfo != null)
-                    szCheckerName = userInfo.Name;
+                    szCheckerName = userInfo.USER_NAME;
 
                 shRet = PatVisitAccess.Instance.GetPatListByCheckedDoc(szCheckerName, this.patSearchPane1.IssusdTimeBegin, this.patSearchPane1.IssusdTimeEnd
                         , ref lstPatVisitLogs);
@@ -784,7 +784,7 @@ namespace MedQCSys.DockForms
                 if (this.patSearchPane1.QcSpecialCheck != null)
                 {
                     string szConfigID = this.patSearchPane1.QcSpecialCheck.ConfigID;
-                    string szUserID = this.patSearchPane1.IsSpecialAll ? "" : SystemParam.Instance.UserInfo.ID;//仅显示分配的病人再传用户ID
+                    string szUserID = this.patSearchPane1.IsSpecialAll ? "" : SystemParam.Instance.UserInfo.USER_ID;//仅显示分配的病人再传用户ID
                     shRet = SpecialAccess.Instance.GetPatientList(szConfigID, szUserID, ref lstPatVisitLogs);
                     if (this.m_comparison == null)
                         this.m_comparison = new Comparison<EMRDBLib.PatVisitInfo>(this.ComparePatVisitLog);

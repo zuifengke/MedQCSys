@@ -95,7 +95,7 @@ namespace Heren.MedQC.Systems
             }
             if (this.cboUserList.Text.Trim() != string.Empty && this.cboUserList.SelectedItem != null)
             {
-                szUserID = (this.cboUserList.SelectedItem as UserInfo).ID;
+                szUserID = (this.cboUserList.SelectedItem as UserInfo).USER_ID;
             }
             if (lstMsgState.Count == 0)
             {

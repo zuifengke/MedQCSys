@@ -83,6 +83,12 @@ namespace EMRDBLib
             public const string STAT_TYPE = "STAT_TYPE";
             public const string MR_STATUS = "MR_STATUS";
             public const string VISIT_NO = "VISIT_NO";
+
+            public const string MSG_ID = "MSG_ID";
+            /// <summary>
+            /// 通知单ID
+            /// </summary>
+            public const string MODIFY_NOTICE_ID = "MODIFY_NOTICE_ID";
             /// <summary>
             /// 是否为单项否决 0:否;1:是
             /// </summary>

@@ -37,12 +37,12 @@ namespace MedQC.ChatClient
             }
             List<string> lstUserID = new List<string>();
             string szListener = SystemParam.Instance.QChatArgs.Sender;//当前发送者是消息的监听者
-            short shRet = QcMsgChatAccess.Instance.GetQCMsgLogUserID(CurrentUser.ID, ref lstUserID);
+            short shRet = QcMsgChatAccess.Instance.GetQCMsgLogUserID(CurrentUser.USER_ID, ref lstUserID);
             foreach (var item in lstUserID)
             {
-                UserInfo user = SystemCache.LstUserInfo.Find(i => i.ID == item);
-                if (user != null && user.ID != CurrentUser.ID)
-                    fBox.Items.Add(GlobalMethods.Convert.GetInputCode(user.Name, false, 10), user);
+                UserInfo user = SystemCache.LstUserInfo.Find(i => i.USER_ID == item);
+                if (user != null && user.USER_ID != CurrentUser.USER_ID)
+                    fBox.Items.Add(GlobalMethods.Convert.GetInputCode(user.USER_NAME, false, 10), user);
             }
 
         }
@@ -62,8 +62,8 @@ namespace MedQC.ChatClient
             DateTime dtBeginTime = DateTime.Parse(this.dtpBeginTime.Value.ToString("yyyy-MM-dd"));
             DateTime dtEndTime = DateTime.Parse(this.dtpEndTime.Value.AddDays(1).ToString("yyyy-MM-dd"));
             List<QcMsgChatLog> QcMsgChatLogList = new List<QcMsgChatLog>();
-            string szListener = CurrentUser.ID;//当前发送者是消息的监听者
-            short shRet = QcMsgChatAccess.Instance.GetQCMsgChatLogView(szListener, ToUserInfo.ID,dtBeginTime,dtEndTime, ref QcMsgChatLogList);
+            string szListener = CurrentUser.USER_ID;//当前发送者是消息的监听者
+            short shRet = QcMsgChatAccess.Instance.GetQCMsgChatLogView(szListener, ToUserInfo.USER_ID,dtBeginTime,dtEndTime, ref QcMsgChatLogList);
             if (QcMsgChatLogList == null || QcMsgChatLogList.Count == 0)
             {
                 MessageBoxEx.Show("未找到聊天记录!");
@@ -106,7 +106,7 @@ namespace MedQC.ChatClient
             //发送者
             Font font = new Font("宋体", 10, FontStyle.Bold);
             rtbView.SelectionFont = font;
-            rtbView.SelectionColor = info.MessageFrom.ID == ToUserInfo.ID ? Color.Red : Color.Blue;
+            rtbView.SelectionColor = info.MessageFrom.USER_ID == ToUserInfo.USER_ID ? Color.Red : Color.Blue;
             rtbView.AppendText(info.MessageFrom + ":");
             rtbView.AppendText(Environment.NewLine);
 
@@ -142,7 +142,7 @@ namespace MedQC.ChatClient
             //发送者
             Font font = new Font("宋体", 10, FontStyle.Bold);
             rtbView.SelectionFont = font;
-            rtbView.SelectionColor = info.MessageFrom.ID == ToUserInfo.ID ? Color.Red : Color.Blue;
+            rtbView.SelectionColor = info.MessageFrom.USER_ID == ToUserInfo.USER_ID ? Color.Red : Color.Blue;
             rtbView.AppendText(info.MessageFrom + ":");
             rtbView.AppendText(Environment.NewLine);
 

@@ -139,6 +139,7 @@ namespace EMRDBLib
             /// 病历ID号
             /// </summary>
             public const string DOC_ID = "DOC_ID";
+            public const string DOCTOR_IN_CHARGE_ID = "DOCTOR_IN_CHARGE_ID";
         }
     }
 }

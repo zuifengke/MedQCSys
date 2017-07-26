@@ -33,6 +33,8 @@ namespace MedQC.Test
                 HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
             else if (dbname == "medqc")
                 CommonAccess.Instance.ExecuteQuery(sql, out ds);
+            else if (dbname == "nurdoc")
+                NurDocCommonAccess.Instance.ExecuteQuery(sql, out ds);
             List<UserColComments> lstUserColComments = new List<UserColComments>();
             if (ds != null)
             {
@@ -61,6 +63,8 @@ namespace MedQC.Test
                 HerenHisCommonAccess.Instance.ExecuteQuery(sql, out ds);
             else if (dbname == "medqc")
                 CommonAccess.Instance.ExecuteQuery(sql, out ds);
+            else if (dbname == "nurdoc")
+                NurDocCommonAccess.Instance.ExecuteQuery(sql, out ds);
             if (ds != null)
             {
                 this.richTextBox2.Clear();
@@ -89,6 +93,11 @@ namespace MedQC.Test
         private void button2_Click(object sender, EventArgs e)
         {
             GenerateCode2("medqc");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            GenerateCode2("nurdoc");
         }
     }
     public class UserColComments

@@ -90,10 +90,10 @@ namespace MedQCSys.Document
         {
             UserInfo userInfo = SystemParam.Instance.UserInfo;
             MedDocSys.DataLayer.UserInfo clientUserInfo = new MedDocSys.DataLayer.UserInfo();
-            clientUserInfo.ID = userInfo.ID;
-            clientUserInfo.Name = userInfo.Name;
-            clientUserInfo.DeptCode = userInfo.DeptCode;
-            clientUserInfo.DeptName = userInfo.DeptName;
+            clientUserInfo.ID = userInfo.USER_ID;
+            clientUserInfo.Name = userInfo.USER_NAME;
+            clientUserInfo.DeptCode = userInfo.DEPT_CODE;
+            clientUserInfo.DeptName = userInfo.DEPT_NAME;
             return clientUserInfo;
         }
 
@@ -517,9 +517,9 @@ namespace MedQCSys.Document
                     qcQuestionInfo.MSG_STATUS = 0;
                     qcQuestionInfo.QA_EVENT_TYPE = "其他严重质量问题";
                     qcQuestionInfo.POINT_TYPE = 1;
-                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
+                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
                     qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
+                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
                     qcQuestionInfo.POINT_TYPE = 0;
                     qcQuestionInfo.POINT = 0;
 

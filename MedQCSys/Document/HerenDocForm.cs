@@ -428,9 +428,9 @@ namespace MedQCSys.Document
             if (userInfo == null)
                 return false;
             DocumentHistory history = new DocumentHistory();
-            history.Author.Code = userInfo.ID;
-            history.Author.Name = userInfo.Name;
-            history.Author.Organization = userInfo.DeptName;
+            history.Author.Code = userInfo.USER_ID;
+            history.Author.Name = userInfo.USER_NAME;
+            history.Author.Organization = userInfo.DEPT_NAME;
             history.Timestamp = DateTime.Now;
             if (this.textEditor1.DocumentInfo.Histories.Count <= 0)
                 history.Description = "创建";
@@ -508,9 +508,9 @@ namespace MedQCSys.Document
                     qcQuestionInfo.MSG_STATUS = 0;
                     qcQuestionInfo.QA_EVENT_TYPE = "质控退回原因";
                     qcQuestionInfo.POINT_TYPE = 1;
-                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.Name;
+                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
                     qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.ID;
+                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
                     qcQuestionInfo.POINT_TYPE = 0;
                     qcQuestionInfo.POINT = 0;
 

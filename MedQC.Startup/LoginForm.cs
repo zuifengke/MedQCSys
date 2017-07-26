@@ -156,8 +156,8 @@ namespace MedQCSys.Dialogs
             {
                 szUserID = "administrator";//管理员账户要小写
                 userInfo = new UserInfo();
-                userInfo.ID = szUserID;
-                userInfo.Name = "管理员";
+                userInfo.USER_ID = szUserID;
+                userInfo.USER_NAME = "管理员";
                 goto ADMINISTRATOR_LOGIN;
             }
             short shRet = UserAccess.Instance.GetUserInfo(szUserID, ref userInfo);

@@ -146,6 +146,14 @@ namespace EMRDBLib
         /// 备注，质控人工检查时填写
         /// </summary>
         public string REMARKS { get; set; }
+        /// <summary>
+        /// 人工质控结果生成对应的质检反馈消息
+        /// </summary>
+        public string MSG_ID { get; set; }
+        /// <summary>
+        /// 通知单ID
+        /// </summary>
+        public string MODIFY_NOTICE_ID { get; set; }
         public string MakeID()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);

@@ -105,7 +105,7 @@ namespace MedQCSys.DockForms
             // 
             this.btnSystemCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSystemCheck.Font = new System.Drawing.Font("ËÎÌו", 10.5F);
-            this.btnSystemCheck.Location = new System.Drawing.Point(312, 390);
+            this.btnSystemCheck.Location = new System.Drawing.Point(215, 390);
             this.btnSystemCheck.Name = "btnSystemCheck";
             this.btnSystemCheck.Size = new System.Drawing.Size(90, 28);
             this.btnSystemCheck.TabIndex = 16;
@@ -117,7 +117,7 @@ namespace MedQCSys.DockForms
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Font = new System.Drawing.Font("ËÎÌו", 10.5F);
-            this.button2.Location = new System.Drawing.Point(215, 390);
+            this.button2.Location = new System.Drawing.Point(311, 390);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 28);
             this.button2.TabIndex = 16;
@@ -299,7 +299,7 @@ namespace MedQCSys.DockForms
             this.dgvSystemScore.RowHeadersVisible = false;
             this.dgvSystemScore.Size = new System.Drawing.Size(723, 355);
             this.dgvSystemScore.TabIndex = 8;
-            this.dgvSystemScore.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSystemScore_ColumnHeaderMouseDoubleClick);
+           
             // 
             // col_2_Item
             // 
