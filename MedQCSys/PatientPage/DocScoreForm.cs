@@ -622,76 +622,84 @@ namespace MedQCSys.DockForms
         /// </summary>
         private void SaveDocContentPoints()
         {
-            if (this.dgvDocContent.Rows.Count <= 0)
-                return;
-            if (SystemParam.Instance.PatVisitInfo == null)
-                return;
-
-            short shRet = SystemData.ReturnValue.OK;
-            for (int index = 0; index < this.dgvDocContent.Rows.Count; index++)
+            try
             {
-                DataGridViewRow row = this.dgvDocContent.Rows[index];
-                EMRDBLib.QcMsgDict qcMessageTemplet = row.Tag as EMRDBLib.QcMsgDict;
-                if (qcMessageTemplet == null)
-                    continue;
 
-                if (row.Cells[this.colHosPoint.Index].Value == null)
-                    continue;
-                if (string.IsNullOrEmpty(row.Cells[this.colHosPoint.Index].Value.ToString()))
-                    continue;
+                if (this.dgvDocContent.Rows.Count <= 0)
+                    return;
+                if (SystemParam.Instance.PatVisitInfo == null)
+                    return;
 
-                EMRDBLib.MedicalQcMsg qcQuestionInfo = row.Cells[this.colItem.Index].Tag as EMRDBLib.MedicalQcMsg;
-                DateTime dtCheckTime = DateTime.Now;
-                string szMessgCode = string.Empty;
-                if (qcQuestionInfo == null)
+                short shRet = SystemData.ReturnValue.OK;
+                for (int index = 0; index < this.dgvDocContent.Rows.Count; index++)
                 {
-                    qcQuestionInfo = new EMRDBLib.MedicalQcMsg();
-                    qcQuestionInfo.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-                    qcQuestionInfo.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-                    qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
-                    qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-                    qcQuestionInfo.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
-                    qcQuestionInfo.DEPT_NAME = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
-                    qcQuestionInfo.DOCTOR_IN_CHARGE = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
-                    qcQuestionInfo.PARENT_DOCTOR = SystemParam.Instance.PatVisitInfo.AttendingDoctor;
-                    qcQuestionInfo.SUPER_DOCTOR = SystemParam.Instance.PatVisitInfo.SUPER_DOCTOR;
-                    qcQuestionInfo.QC_MODULE = "DOCTOR_MR";
-                    qcQuestionInfo.QC_MSG_CODE = qcMessageTemplet.QC_MSG_CODE;
-                    qcQuestionInfo.MESSAGE = qcMessageTemplet.MESSAGE;
-                    qcQuestionInfo.MSG_STATUS = 0;
-                    qcQuestionInfo.QA_EVENT_TYPE = qcMessageTemplet.QA_EVENT_TYPE;
-                    qcQuestionInfo.POINT_TYPE = 1;
-                    qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
-                    qcQuestionInfo.POINT = int.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
-                    shRet = MedicalQcMsgAccess.Instance.Insert(qcQuestionInfo);
-                    if (shRet != SystemData.ReturnValue.OK)
-                    {
-                        MessageBoxEx.Show(string.Format("第{0}行病历扣分信息保存失败！", index + 1), MessageBoxIcon.Error);
+                    DataGridViewRow row = this.dgvDocContent.Rows[index];
+                    EMRDBLib.QcMsgDict qcMessageTemplet = row.Tag as EMRDBLib.QcMsgDict;
+                    if (qcMessageTemplet == null)
                         continue;
-                    }
-                    row.Cells[this.colItem.Index].Tag = qcQuestionInfo;
 
-                }
-                else
-                {
-                    float fPoint = 0f;
-                    if (qcQuestionInfo.POINT_TYPE == 0)//自动扣分的在此不再重复扣分，只能在添加质检问题中针对一份病历修改分数
+                    if (row.Cells[this.colHosPoint.Index].Value == null)
                         continue;
-                    if (row.Cells[this.colHosPoint.Index].Value != null)
-                        fPoint = float.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
-                    if (GlobalMethods.Convert.StringToValue(qcQuestionInfo.POINT, 0f) == fPoint)
+                    if (string.IsNullOrEmpty(row.Cells[this.colHosPoint.Index].Value.ToString()))
                         continue;
-                    qcQuestionInfo.POINT = fPoint;
-                    dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
-                    szMessgCode = qcQuestionInfo.QC_MSG_CODE;
-                    shRet = MedicalQcMsgAccess.Instance.Update(qcQuestionInfo);
-                    if (shRet != SystemData.ReturnValue.OK)
+
+                    EMRDBLib.MedicalQcMsg qcQuestionInfo = row.Cells[this.colItem.Index].Tag as EMRDBLib.MedicalQcMsg;
+                    DateTime dtCheckTime = DateTime.Now;
+                    string szMessgCode = string.Empty;
+                    if (qcQuestionInfo == null)
                     {
-                        MessageBoxEx.Show(string.Format("第{0}行病历扣分信息更新失败！", index + 1), MessageBoxIcon.Error);
-                        continue;
+                        qcQuestionInfo = new EMRDBLib.MedicalQcMsg();
+                        qcQuestionInfo.PATIENT_ID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+                        qcQuestionInfo.VISIT_ID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+                        qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
+                        qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                        qcQuestionInfo.DEPT_STAYED = SystemParam.Instance.PatVisitInfo.DEPT_CODE;
+                        qcQuestionInfo.DEPT_NAME = SystemParam.Instance.PatVisitInfo.DEPT_NAME;
+                        qcQuestionInfo.DOCTOR_IN_CHARGE = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR;
+                        qcQuestionInfo.PARENT_DOCTOR = SystemParam.Instance.PatVisitInfo.AttendingDoctor;
+                        qcQuestionInfo.SUPER_DOCTOR = SystemParam.Instance.PatVisitInfo.SUPER_DOCTOR;
+                        qcQuestionInfo.QC_MODULE = "DOCTOR_MR";
+                        qcQuestionInfo.QC_MSG_CODE = qcMessageTemplet.QC_MSG_CODE;
+                        qcQuestionInfo.MESSAGE = qcMessageTemplet.MESSAGE;
+                        qcQuestionInfo.MSG_STATUS = 0;
+                        qcQuestionInfo.QA_EVENT_TYPE = qcMessageTemplet.QA_EVENT_TYPE;
+                        qcQuestionInfo.POINT_TYPE = 1;
+                        qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
+                        qcQuestionInfo.POINT = float.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
+                        shRet = MedicalQcMsgAccess.Instance.Insert(qcQuestionInfo);
+                        if (shRet != SystemData.ReturnValue.OK)
+                        {
+                            MessageBoxEx.Show(string.Format("第{0}行病历扣分信息保存失败！", index + 1), MessageBoxIcon.Error);
+                            continue;
+                        }
+                        row.Cells[this.colItem.Index].Tag = qcQuestionInfo;
+
                     }
-                    qcQuestionInfo.ISSUED_DATE_TIME = dtCheckTime;
+                    else
+                    {
+                        float fPoint = 0f;
+                        if (qcQuestionInfo.POINT_TYPE == 0)//自动扣分的在此不再重复扣分，只能在添加质检问题中针对一份病历修改分数
+                            continue;
+                        if (row.Cells[this.colHosPoint.Index].Value != null)
+                            fPoint = float.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
+                        if (GlobalMethods.Convert.StringToValue(qcQuestionInfo.POINT, 0f) == fPoint)
+                            continue;
+                        qcQuestionInfo.POINT = fPoint;
+                        dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                        szMessgCode = qcQuestionInfo.QC_MSG_CODE;
+                        shRet = MedicalQcMsgAccess.Instance.Update(qcQuestionInfo);
+                        if (shRet != SystemData.ReturnValue.OK)
+                        {
+                            MessageBoxEx.Show(string.Format("第{0}行病历扣分信息更新失败！", index + 1), MessageBoxIcon.Error);
+                            continue;
+                        }
+                        qcQuestionInfo.ISSUED_DATE_TIME = dtCheckTime;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
             }
         }
 

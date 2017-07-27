@@ -168,8 +168,10 @@ namespace MedQCSys.PatPage
             contents.Add(new ExamResultListForm(this.MainForm, this));
             contents.Add(new TestResultListForm(this.MainForm, this));
             contents.Add(new DocumentTimeForm(this.MainForm, this));
-            contents.Add(new VitalSignsGraphForm(this.MainForm, this));
-            contents.Add(new PatientIndexForm(this.MainForm, this));
+            if (SystemParam.Instance.LocalConfigOption.IsShowVitalSignsGraph)
+                contents.Add(new VitalSignsGraphForm(this.MainForm, this));
+            if (SystemParam.Instance.LocalConfigOption.IsShowPatientIndex)
+                contents.Add(new PatientIndexForm(this.MainForm, this));
             if (SystemParam.Instance.LocalConfigOption.IsNewScore)
             {
                 DocScoreNewForm docScoreNewForm = new DocScoreNewForm(this.MainForm, this);
