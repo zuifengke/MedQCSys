@@ -253,7 +253,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29}"
                 , SystemData.MedicalQcMsgTable.APPLY_ENV
                 , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
                 , SystemData.MedicalQcMsgTable.CREATOR_ID
@@ -282,7 +282,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.TOPIC
                 , SystemData.MedicalQcMsgTable.TOPIC_ID
                 , SystemData.MedicalQcMsgTable.VISIT_ID
-                , SystemData.MedicalQcMsgTable.VISIT_NO);
+                , SystemData.MedicalQcMsgTable.VISIT_NO
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
 
             string szCondition = string.Format("1=1");
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} < ={3} AND {4}='MEDDOC' "
@@ -342,6 +343,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(26)) item.TOPIC_ID = dataReader.GetString(26);
                     if (!dataReader.IsDBNull(27)) item.VISIT_ID = dataReader.GetString(27);
                     if (!dataReader.IsDBNull(28)) item.VISIT_NO = dataReader.GetString(28);
+                    if (!dataReader.IsDBNull(29)) item.DOCTOR_IN_CHARGE_ID = dataReader.GetString(29);
                     lstQcMsg.Add(item);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -376,7 +378,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29}"
                 , SystemData.MedicalQcMsgTable.APPLY_ENV
                 , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
                 , SystemData.MedicalQcMsgTable.CREATOR_ID
@@ -405,7 +407,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.TOPIC
                 , SystemData.MedicalQcMsgTable.TOPIC_ID
                 , SystemData.MedicalQcMsgTable.VISIT_ID
-                , SystemData.MedicalQcMsgTable.VISIT_NO);
+                , SystemData.MedicalQcMsgTable.VISIT_NO
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
 
             string szCondition = string.Format("1=1");
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} < ={3} AND {4}='MEDDOC' "
@@ -463,6 +466,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(26)) item.TOPIC_ID = dataReader.GetString(26);
                     if (!dataReader.IsDBNull(27)) item.VISIT_ID = dataReader.GetString(27);
                     if (!dataReader.IsDBNull(28)) item.VISIT_NO = dataReader.GetString(28);
+                    if (!dataReader.IsDBNull(29)) item.DOCTOR_IN_CHARGE_ID = dataReader.GetString(29);
                     lstQcMsg.Add(item);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -497,7 +501,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29}"
                 , SystemData.MedicalQcMsgTable.APPLY_ENV
                 , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
                 , SystemData.MedicalQcMsgTable.CREATOR_ID
@@ -526,7 +530,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.TOPIC
                 , SystemData.MedicalQcMsgTable.TOPIC_ID
                 , SystemData.MedicalQcMsgTable.VISIT_ID
-                , SystemData.MedicalQcMsgTable.VISIT_NO);
+                , SystemData.MedicalQcMsgTable.VISIT_NO
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
 
             string szCondition = string.Format("1=1");
 
@@ -584,6 +589,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(26)) item.TOPIC_ID = dataReader.GetString(26);
                     if (!dataReader.IsDBNull(27)) item.VISIT_ID = dataReader.GetString(27);
                     if (!dataReader.IsDBNull(28)) item.VISIT_NO = dataReader.GetString(28);
+                    if (!dataReader.IsDBNull(29)) item.DOCTOR_IN_CHARGE_ID = dataReader.GetString(29);
                     lstQcMsg.Add(item);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -745,6 +751,9 @@ namespace EMRDBLib.DbAccess
                             case SystemData.MedicalQcMsgTable.VISIT_NO:
                                 item.VISIT_NO = dataReader.GetValue(i).ToString();
                                 break;
+                            case SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID:
+                                item.DOCTOR_IN_CHARGE_ID = dataReader.GetValue(i).ToString();
+                                break;
                             default: break;
                         }
                     }
@@ -810,7 +819,8 @@ namespace EMRDBLib.DbAccess
             sbField.AppendFormat("{0},", SystemData.MedicalQcMsgTable.VISIT_ID);
             sbField.AppendFormat("{0},", SystemData.MedicalQcMsgTable.ERROR_COUNT);
             sbField.AppendFormat("{0},", SystemData.MedicalQcMsgTable.DOC_ID);
-            sbField.AppendFormat("{0}", SystemData.MedicalQcMsgTable.VISIT_NO);
+            sbField.AppendFormat("{0},", SystemData.MedicalQcMsgTable.VISIT_NO);
+            sbField.AppendFormat("{0}", SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
             string szCondition = string.Format("1=1");
             szCondition = string.Format("{0} AND {1} = {2}"
                 , szCondition
@@ -933,6 +943,9 @@ namespace EMRDBLib.DbAccess
                                 break;
                             case SystemData.MedicalQcMsgTable.DOC_ID:
                                 medicalQcMsg.DOC_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID:
+                                medicalQcMsg.DOCTOR_IN_CHARGE_ID = dataReader.GetString(i);
                                 break;
                             default: break;
                         }

@@ -305,8 +305,12 @@ namespace MedQCSys.DockForms
             }
 
             this.OnHummanScoreSaved(System.EventArgs.Empty);
-
-            if (MessageBoxEx.ShowConfirm("评分保存成功,是否通知相关医生整改") == DialogResult.OK)
+            if (qcScore.HOS_ASSESS == 100)
+            {
+                MessageBoxEx.ShowMessage("评分保存成功");
+                return;
+            }
+            else if (MessageBoxEx.ShowConfirm("评分保存成功,是否通知相关医生整改") == DialogResult.OK)
             {
                 try
                 {

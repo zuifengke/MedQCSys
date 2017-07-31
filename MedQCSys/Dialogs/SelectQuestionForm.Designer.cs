@@ -71,6 +71,8 @@ namespace MedQCSys.Dialogs
             this.rdbDeath = new System.Windows.Forms.RadioButton();
             this.rdbIn = new System.Windows.Forms.RadioButton();
             this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.fcbo_DOCTOR_IN_CHARGE = new Heren.Common.Controls.DictInput.FindComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picVetoDesc)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,17 +80,17 @@ namespace MedQCSys.Dialogs
             // 
             this.txtAskDateTime.BackColor = System.Drawing.Color.Lavender;
             this.txtAskDateTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtAskDateTime.Location = new System.Drawing.Point(81, 512);
+            this.txtAskDateTime.Location = new System.Drawing.Point(255, 411);
             this.txtAskDateTime.Name = "txtAskDateTime";
             this.txtAskDateTime.ReadOnly = true;
-            this.txtAskDateTime.Size = new System.Drawing.Size(317, 23);
+            this.txtAskDateTime.Size = new System.Drawing.Size(143, 23);
             this.txtAskDateTime.TabIndex = 19;
             // 
             // txtDoctorComment
             // 
             this.txtDoctorComment.BackColor = System.Drawing.Color.Lavender;
             this.txtDoctorComment.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtDoctorComment.Location = new System.Drawing.Point(81, 412);
+            this.txtDoctorComment.Location = new System.Drawing.Point(81, 445);
             this.txtDoctorComment.Multiline = true;
             this.txtDoctorComment.Name = "txtDoctorComment";
             this.txtDoctorComment.ReadOnly = true;
@@ -99,7 +101,7 @@ namespace MedQCSys.Dialogs
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(12, 517);
+            this.label10.Location = new System.Drawing.Point(186, 416);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 14);
             this.label10.TabIndex = 18;
@@ -109,18 +111,18 @@ namespace MedQCSys.Dialogs
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(12, 415);
+            this.label9.Location = new System.Drawing.Point(12, 445);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(63, 14);
             this.label9.TabIndex = 16;
             this.label9.Text = "医生反馈";
             // 
-            // txtCheckDate
+            // txt_ISSUED_DATE_TIME
             // 
             this.txt_ISSUED_DATE_TIME.BackColor = System.Drawing.Color.Lavender;
             this.txt_ISSUED_DATE_TIME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txt_ISSUED_DATE_TIME.Location = new System.Drawing.Point(255, 381);
-            this.txt_ISSUED_DATE_TIME.Name = "txtCheckDate";
+            this.txt_ISSUED_DATE_TIME.Name = "txt_ISSUED_DATE_TIME";
             this.txt_ISSUED_DATE_TIME.ReadOnly = true;
             this.txt_ISSUED_DATE_TIME.Size = new System.Drawing.Size(143, 23);
             this.txt_ISSUED_DATE_TIME.TabIndex = 15;
@@ -500,6 +502,24 @@ namespace MedQCSys.Dialogs
             this.label16.TabIndex = 41;
             this.label16.Text = "病历类型";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(12, 416);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(63, 14);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "责任医生";
+            // 
+            // fcbo_DOCTOR_IN_CHARGE
+            // 
+            this.fcbo_DOCTOR_IN_CHARGE.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.fcbo_DOCTOR_IN_CHARGE.Location = new System.Drawing.Point(81, 412);
+            this.fcbo_DOCTOR_IN_CHARGE.Name = "fcbo_DOCTOR_IN_CHARGE";
+            this.fcbo_DOCTOR_IN_CHARGE.Size = new System.Drawing.Size(100, 22);
+            this.fcbo_DOCTOR_IN_CHARGE.TabIndex = 45;
+            // 
             // SelectQuestionForm
             // 
             this.AcceptButton = this.btnOK;
@@ -507,6 +527,7 @@ namespace MedQCSys.Dialogs
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(412, 611);
+            this.Controls.Add(this.fcbo_DOCTOR_IN_CHARGE);
             this.Controls.Add(this.rdbOut);
             this.Controls.Add(this.rdbDeath);
             this.Controls.Add(this.rdbIn);
@@ -538,6 +559,7 @@ namespace MedQCSys.Dialogs
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtChecker);
             this.Controls.Add(this.txtPatName);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtMessage);
@@ -606,5 +628,7 @@ namespace MedQCSys.Dialogs
         private System.Windows.Forms.RadioButton rdbDeath;
         private System.Windows.Forms.RadioButton rdbIn;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private Heren.Common.Controls.DictInput.FindComboBox fcbo_DOCTOR_IN_CHARGE;
     }
 }

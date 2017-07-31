@@ -89,6 +89,7 @@ namespace Heren.MedQC.MedRecord
                 dtDischargeTimeBegin = this.dtTimeBegin.Value;
                 dtDischargeTimeEnd = this.dtTimeEnd.Value;
             }
+            
             List<MrArchive> lstMrArchives = null;
             short shRet = MrArchiveAccess.Instance.GetMrArchives(dtVisitTimeBegin, dtVisitTimeEnd, dtDischargeTimeBegin, dtDischargeTimeEnd, null, null, null, null, ref lstMrArchives);
             if (lstMrArchives == null)
@@ -96,6 +97,9 @@ namespace Heren.MedQC.MedRecord
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
                 return;
             }
+            List<HolidayKeyValue> lstHolidayKeyValue = null;
+            shRet = KeyValueDataAccess.Instance.GetHolidays(ref lstHolidayKeyValue);
+
             int rowIndex = 0;
             List<DeptInfo> lstDeptInfo = null;
             shRet = DeptAccess.Instance.GetClinicInpDeptList(ref lstDeptInfo);
@@ -114,14 +118,18 @@ namespace Heren.MedQC.MedRecord
                 szDeptName = item.DEPT_NAME;
                 if (result.Count > 0)
                     totalCount = result.Count;
+                int holidayCount = 0;//节假日天数
                 foreach (var mrArchive in result)
                 {
                     if (mrArchive.ARCHIVE_TIME == SystemParam.Instance.DefaultTime)
                         continue;
-                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(3) > mrArchive.ARCHIVE_TIME)
+                    if (lstHolidayKeyValue != null)
+                        holidayCount = lstHolidayKeyValue.Where(m => m.DATA_VALUE >= mrArchive.DISCHARGE_DATE_TIME && m.DATA_VALUE <= mrArchive.ARCHIVE_TIME).Count();
+                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(3).AddDays(holidayCount) > mrArchive.ARCHIVE_TIME)
                         day3Count++;
-                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(7) > mrArchive.ARCHIVE_TIME)
+                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(7).AddDays(holidayCount) > mrArchive.ARCHIVE_TIME)
                         day7Count++;
+                    holidayCount = 0;
                 }
                 decimal rate3 =totalCount==0?0: Math.Round((decimal)day3Count / totalCount, 4) * 100;
                 decimal rate7 = totalCount == 0 ? 0 : Math.Round((decimal)day7Count / totalCount, 4) * 100;

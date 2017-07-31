@@ -13,23 +13,23 @@ namespace EMRDBLib
         /// <summary>
         /// 键名
         /// </summary>
-        public string DATA_KEY = "DATA_KEY";
+        public string DATA_KEY { get; set; }
         /// <summary>
         /// 键值
         /// </summary>
-        public string DATA_VALUE = "DATA_VALUE";
+        public string DATA_VALUE { get; set; }
         /// <summary>
         /// 键值对分组名
         /// </summary>
-        public string DATA_GROUP = "DATA_GROUP";
+        public string DATA_GROUP { get; set; }
         /// <summary>
         /// 扩展字段1
         /// </summary>
-        public string VALUE1 = "VALUE1";
+        public string VALUE1 { get; set; }
         /// <summary>
         /// 主键
         /// </summary>
-        public string ID = "ID";
+        public string ID { get; set; }
 
         public string MakeID()
         {

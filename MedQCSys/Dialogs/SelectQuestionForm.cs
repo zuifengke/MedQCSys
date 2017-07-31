@@ -48,7 +48,10 @@ namespace MedQCSys.Dialogs
                 return SelectQuestionForm.lstQCEventTypes;
             }
         }
-
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+        }
         private static List<QcMsgDict> m_lstQcMsgDicts = null;
 
         public static List<QcMsgDict> ListQcMsgDict
@@ -83,7 +86,7 @@ namespace MedQCSys.Dialogs
             }
             this.toolTip1.SetToolTip(this.picVetoDesc, caption);
         }
-
+        
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
@@ -157,8 +160,36 @@ namespace MedQCSys.Dialogs
                     }
                 }
             }
+            LoadComboboxDoctorInCharge();
         }
-
+        /// <summary>
+        /// 绑定
+        /// </summary>
+        private void LoadComboboxDoctorInCharge()
+        {
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitNO = SystemParam.Instance.PatVisitInfo.VISIT_NO;
+            List<UserInfo> lstUserInfos = null;
+            short shRet = EmrDocAccess.Instance.GetInchargeDoctorList(szPatientID, szVisitNO, ref lstUserInfos);
+            this.fcbo_DOCTOR_IN_CHARGE.Items.Clear();
+            if (lstUserInfos == null)
+            {
+                if (SystemParam.Instance.PatVisitInfo != null)
+                {
+                    UserInfo userInfo = new UserInfo() { USER_ID = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR_ID, USER_NAME = SystemParam.Instance.PatVisitInfo.INCHARGE_DOCTOR,DEPT_NAME=SystemParam.Instance.PatVisitInfo.DEPT_NAME,DEPT_CODE=SystemParam.Instance.PatVisitInfo.DEPT_CODE };
+                    this.fcbo_DOCTOR_IN_CHARGE.Items.Add(userInfo);
+                }
+                return;
+            }
+            foreach (UserInfo item in lstUserInfos)
+            {
+                this.fcbo_DOCTOR_IN_CHARGE.Items.Add(item);
+                if (this.m_MedicalQcMsg != null && this.m_MedicalQcMsg.DOCTOR_IN_CHARGE_ID == item.USER_ID)
+                {
+                    this.fcbo_DOCTOR_IN_CHARGE.SelectedItem = item;
+                }
+            }
+        }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -178,6 +209,20 @@ namespace MedQCSys.Dialogs
                 MessageBoxEx.Show("请输入质检问题描述!");
                 this.txtMessage.Focus();
                 return;
+            }
+            if (this.fcbo_DOCTOR_IN_CHARGE.SelectedItem == null)
+            {
+                MessageBoxEx.Show("请选择责任医生!");
+                this.fcbo_DOCTOR_IN_CHARGE.Focus();
+                return;
+            }
+            UserInfo userInfo= this.fcbo_DOCTOR_IN_CHARGE.SelectedItem as UserInfo;
+            if (userInfo.USER_ID != this.m_MedicalQcMsg.DOCTOR_IN_CHARGE_ID)
+            {
+                this.m_MedicalQcMsg.DOCTOR_IN_CHARGE = userInfo.USER_NAME;
+                this.m_MedicalQcMsg.DOCTOR_IN_CHARGE_ID = userInfo.USER_ID;
+                this.m_MedicalQcMsg.DEPT_NAME = userInfo.DEPT_NAME;
+                this.m_MedicalQcMsg.DEPT_STAYED = userInfo.DEPT_CODE;
             }
             bool bPassed = CheckBoxScore();
             if (!bPassed)

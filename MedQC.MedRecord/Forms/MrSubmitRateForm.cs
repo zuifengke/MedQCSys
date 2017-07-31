@@ -105,7 +105,8 @@ namespace Heren.MedQC.MedRecord
             int rowIndex = 0;
             List<DeptInfo> lstDeptInfo = null;
             shRet = DeptAccess.Instance.GetClinicInpDeptList(ref lstDeptInfo);
-
+            List<HolidayKeyValue> lstHolidayKeyValue = null;
+            shRet = KeyValueDataAccess.Instance.GetHolidays(ref lstHolidayKeyValue);
             WorkProcess.Instance.Initialize(this, lstDeptInfo.Count, "正在计算提交率......");
             foreach (var item in lstDeptInfo)
             {
@@ -121,15 +122,20 @@ namespace Heren.MedQC.MedRecord
                 szDeptName = item.DEPT_NAME;
                 if (result.Count > 0)
                     totalCount = result.Count;
+                int nHolidayCount = 0;
                 foreach (var mrArchive in result)
                 {
                     if (mrArchive.SUBMIT_TIME == SystemParam.Instance.DefaultTime)
                         continue;
-                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(2) > mrArchive.SUBMIT_TIME)
+                    if (lstHolidayKeyValue != null)
+                    {
+                        nHolidayCount = lstHolidayKeyValue.Where(m => m.DATA_VALUE > mrArchive.DISCHARGE_DATE_TIME && m.DATA_VALUE < mrArchive.SUBMIT_TIME).Count();
+                    }
+                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(2+nHolidayCount) > mrArchive.SUBMIT_TIME)
                         day2Count++;
-                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(4) > mrArchive.SUBMIT_TIME)
+                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(4+nHolidayCount) > mrArchive.SUBMIT_TIME)
                         day4Count++;
-                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(7) > mrArchive.SUBMIT_TIME)
+                    if (mrArchive.DISCHARGE_DATE_TIME.AddDays(7+nHolidayCount) > mrArchive.SUBMIT_TIME)
                         day7Count++;
                 }
                 decimal rate2 = totalCount == 0 ? 0 : Math.Round((decimal)day2Count / totalCount, 2) * 100;

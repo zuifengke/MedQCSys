@@ -219,5 +219,73 @@ namespace EMRDBLib.DbAccess
             }
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
+        public short GetHolidays(ref List<HolidayKeyValue> lstHolidayKeyValue)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0},", SystemData.KeyValueDataTable.DATA_GROUP);
+            sbField.AppendFormat("{0},", SystemData.KeyValueDataTable.DATA_KEY);
+            sbField.AppendFormat("{0},", SystemData.KeyValueDataTable.DATA_VALUE);
+            sbField.AppendFormat("{0},", SystemData.KeyValueDataTable.VALUE1);
+            sbField.AppendFormat("{0}", SystemData.KeyValueDataTable.ID);
+            string szCondition = " 1=1";
+            szCondition = string.Format("{0} AND {1}='{2}'"
+                , szCondition
+                , SystemData.KeyValueDataTable.DATA_GROUP
+                , SystemData.DataGroup.holiday);
+            
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
+                   , sbField.ToString(), SystemData.DataTable.KEY_VALUE_DATA, szCondition);
+
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstHolidayKeyValue == null)
+                    lstHolidayKeyValue = new List<HolidayKeyValue>();
+                do
+                {
+                    HolidayKeyValue item = new HolidayKeyValue();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.KeyValueDataTable.DATA_GROUP:
+                                item.DATA_GROUP = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.KeyValueDataTable.DATA_KEY:
+                                item.DATA_KEY = dataReader.GetString(i);
+                                break;
+                            case SystemData.KeyValueDataTable.DATA_VALUE:
+                                item.DATA_VALUE =DateTime.Parse( dataReader.GetString(i));
+                                break;
+                            case SystemData.KeyValueDataTable.ID:
+                                item.ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.KeyValueDataTable.VALUE1:
+                                item.VALUE1 = dataReader.GetString(i);
+                                break;
+                            default: break;
+                        }
+                    }
+                    lstHolidayKeyValue.Add(item);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+    }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
     }
 }

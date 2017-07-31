@@ -626,15 +626,18 @@ namespace MedQCSys.DockForms
             if (docInfo == null)
             {
                 short shRet = this.GetSelectedNodeDocInfo(ref docInfo);
-                if (shRet !=SystemData.ReturnValue.OK)
+                if (shRet != SystemData.ReturnValue.OK)
+                {
                     medicalQcMsg.TOPIC = szTopic;
+                }
             }
-            else
+            if (docInfo != null)
             {
                 medicalQcMsg.CREATOR_ID = docInfo.CREATOR_ID;
                 medicalQcMsg.DEPT_NAME = docInfo.DEPT_NAME;
                 medicalQcMsg.DEPT_STAYED = docInfo.DEPT_CODE;
                 medicalQcMsg.DOCTOR_IN_CHARGE = docInfo.CREATOR_NAME;
+                medicalQcMsg.DOCTOR_IN_CHARGE_ID = docInfo.CREATOR_ID;
                 medicalQcMsg.TOPIC = docInfo.DOC_TITLE;
                 medicalQcMsg.TOPIC_ID = docInfo.DOC_SETID;
                 medicalQcMsg.DOC_ID = docInfo.DOC_ID;
@@ -874,7 +877,7 @@ namespace MedQCSys.DockForms
             }
             catch (Exception ex)
             {
-                MessageBoxEx.ShowError("添加质检问题失败！",ex.ToString());
+                MessageBoxEx.ShowError("添加质检问题失败！", ex.ToString());
                 return;
             }
         }

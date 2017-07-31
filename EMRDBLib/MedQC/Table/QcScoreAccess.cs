@@ -369,7 +369,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbSql = new StringBuilder();
-            sbSql.Append("select t1.PATIENT_ID,t1.DEPT_NAME,t1.VISIT_NO,t1.VISIT_ID,t1.PATIENT_NAME,t1.DEPT_CODE,t1.DISCHARGE_TIME,t2.hos_assess ");
+            sbSql.Append("select distinct t1.PATIENT_ID,t1.DEPT_NAME,t1.VISIT_NO,t1.VISIT_ID,t1.PATIENT_NAME,t1.DEPT_CODE,t1.DISCHARGE_TIME,t2.hos_assess ");
             sbSql.Append(" from pat_visit_v t1,qc_score t2 ");
             sbSql.Append(" where t1.PATIENT_ID=t2.patient_id(+) and t1.VISIT_ID = t2.visit_id(+)");
             sbSql.AppendFormat("and t1.DISCHARGE_TIME > {0} and t1.DISCHARGE_TIME < {1}"
