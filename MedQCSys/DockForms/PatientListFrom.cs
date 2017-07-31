@@ -601,7 +601,6 @@ namespace MedQCSys.DockForms
             short shRet = SystemData.ReturnValue.OK;
             List<EMRDBLib.PatVisitInfo> lstPatVisitLogs = null;
             string szDeptCode = null;
-            szDeptCode = SystemParam.Instance.UserInfo.DEPT_CODE;
 
             //¿ÆÊÒ¼ìË÷
             if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.Department)
@@ -719,7 +718,7 @@ namespace MedQCSys.DockForms
                     GlobalMethods.UI.SetCursor(this, Cursors.Default);
                     return;
                 }
-                shRet = PatVisitAccess.Instance.GetPatsListByPatient(szPatientID, true, null, szDeptCode, ref lstPatVisitLogs);
+                shRet = PatVisitAccess.Instance.GetPatsListByPatient(szPatientID, true, null, null, ref lstPatVisitLogs);
             }
             //»¼ÕßÐÕÃû¼ìË÷
             else if (this.patSearchPane1.SearchType == EMRDBLib.PatSearchType.PatientName)
