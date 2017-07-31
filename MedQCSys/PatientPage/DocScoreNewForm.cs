@@ -62,14 +62,7 @@ namespace MedQCSys.DockForms
             }
             dgvHummanScore.Columns[this.colItem.Index].DefaultCellStyle.WrapMode =
              DataGridViewTriState.True;
-            //dgvHummanScore.AutoHeightForAllColumns = true;
-            //设置自动调整高度  
-            //this.dgvHummanScore.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            //this.dgvSystemScore.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            //设置自动调整高度  
-            //this.dgvSystemScore.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvHummanScore.IsFreezeGroupHeader = true;
-            //注册行绑定事件 -- 可以去掉该行注释，使用自定义绑定行数据模式
             this.dgvHummanScore.OnBindDataDetail += new Controls.CollapseDataGridView.BindDataDetailHandler(dgvHummanScore_OnBindDataDetail);
         }
         protected override void OnPatientScoreChanged()
@@ -88,20 +81,20 @@ namespace MedQCSys.DockForms
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            this.LoadHummanQcMsgDict();
+            this.LoadSystemQcMsgDict();
         }
         public override void OnRefreshView()
         {
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
+            this.Update();
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-
-
             this.ShowStatusMessage("正在分析人工检测扣分情况...");
             this.LoadHummanScoreInfos();
+            this.ShowStatusMessage("正在分析系统检测扣分情况...");
             this.LoadSystemScoreInfos();
             this.ShowStatusMessage(null);
-            this.Update();
-
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
         /// <summary>
@@ -151,122 +144,6 @@ namespace MedQCSys.DockForms
             }
         }
         /// <summary>
-        /// 加载系统检查扣分信息
-        /// </summary>
-        private void LoadSystemScoreInfos()
-        {
-            this.dgvSystemScore.Rows.Clear();
-            List<QaEventTypeDict> lstQaEventTypeDict = null;
-            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
-            List<QcMsgDict> lstQcMsgDict = null;
-            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
-
-            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            List<QcCheckResult> lstQcCheckResult = null;
-            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.System, ref lstQcCheckResult);
-
-            if (shRet != SystemData.ReturnValue.OK
-                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
-            {
-                MessageBoxEx.Show("质控质检问题下载失败！");
-                return;
-            }
-
-            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
-            int nRowIndex = 0;
-            foreach (var item in firstQaEventTypeDict)
-            {
-                //添加一级分类
-                nRowIndex = this.dgvSystemScore.Rows.Add();
-                DataGridViewRow row = this.dgvSystemScore.Rows[nRowIndex];
-                row.Tag = item;
-                row.Cells[this.col_2_Item.Index].Value = item.QA_EVENT_TYPE;
-                row.ReadOnly = true;
-                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
-                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
-                if (secondQaEventTypeDict.Count > 0)
-                {
-                    foreach (var childItem in secondQaEventTypeDict)
-                    {
-                        //增加二级分类
-                        nRowIndex = this.dgvSystemScore.Rows.Add();
-                        DataGridViewRow childrow = this.dgvSystemScore.Rows[nRowIndex];
-                        childrow.Tag = childItem;
-                        childrow.Cells[this.col_2_Item.Index].Value = "  " + childItem.QA_EVENT_TYPE;
-                        childrow.ReadOnly = true;
-                        childrow.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
-                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
-                        if (secondMsgdict.Count > 0)
-                        {
-                            foreach (var itemMsgDict in secondMsgdict)
-                            {
-                                //添加二级分类下的质检问题项
-                                nRowIndex = this.dgvSystemScore.Rows.Add();
-                                DataGridViewRow row2 = this.dgvSystemScore.Rows[nRowIndex];
-                                row2.Tag = itemMsgDict;
-                                row2.ReadOnly = true;
-                                row2.Cells[this.col_2_Item.Index].Value = string.Format("    {0}、{1}", secondMsgdict.IndexOf(itemMsgDict, 0) + 1, itemMsgDict.MESSAGE);
-                                row2.Cells[this.col_2_Score.Index].Value = itemMsgDict.SCORE;
-                                if (lstQcCheckResult != null)
-                                {
-                                    QcCheckResult qcCheckResult = lstQcCheckResult.Where(m => m.MSG_DICT_CODE == itemMsgDict.QC_MSG_CODE && m.QC_RESULT == SystemData.QcResult.UnPass).FirstOrDefault();
-                                    if (qcCheckResult != null)
-                                    {
-                                        row2.Cells[this.col_2_ErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                                        row2.Cells[this.col_2_QC_EXPLAIN.Index].Value = qcCheckResult.QC_EXPLAIN;
-                                        row2.Cells[this.col_2_Score.Index].Value = qcCheckResult.SCORE;
-                                        row2.Cells[this.col_2_QC_EXPLAIN.Index].Tag = qcCheckResult;
-                                        row2.DefaultCellStyle.ForeColor = Color.Red;
-                                    }
-                                    else
-                                    {
-                                        this.dgvSystemScore.Rows.RemoveAt(nRowIndex);
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
-                if (firstMsgDict.Count > 0)
-                {
-                    foreach (var item3 in firstMsgDict)
-                    {
-                        //添加一级分类下的质检问题项
-                        nRowIndex = this.dgvSystemScore.Rows.Add();
-                        DataGridViewRow row2 = this.dgvSystemScore.Rows[nRowIndex];
-                        row2.Tag = item3;
-                        row2.Cells[this.col_2_Item.Index].Value = string.Format("  {0}、{1}", firstMsgDict.IndexOf(item3, 0) + 1, item3.MESSAGE);
-                        row2.Cells[this.col_2_Score.Index].Value = item3.SCORE;
-                        row2.ReadOnly = true;
-                        //row2.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
-                        if (lstQcCheckResult != null)
-                        {
-                            QcCheckResult qcCheckResult = lstQcCheckResult.Where(m => m.MSG_DICT_CODE == item3.QC_MSG_CODE && m.QC_RESULT == SystemData.QcResult.UnPass).FirstOrDefault();
-                            if (qcCheckResult != null)
-                            {
-                                row2.Cells[this.col_2_QC_EXPLAIN.Index].Value = qcCheckResult.QC_EXPLAIN;
-                                row2.Cells[this.col_2_ErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                                row2.Cells[this.col_2_Score.Index].Value = qcCheckResult.SCORE;
-                                row2.Cells[this.col_2_QC_EXPLAIN.Index].Tag = qcCheckResult;
-                                row2.DefaultCellStyle.ForeColor = Color.Red;
-                            }
-                            else
-                                this.dgvSystemScore.Rows.Remove(row2);
-                        }
-                    }
-                }
-            }
-            this.dgvSystemScore.Refresh();
-            //加载评分结果
-            this.CalSystemScore();
-            QCScore qcScore = new QCScore();
-            shRet = QcScoreAccess.Instance.GetQCScore(szPatientID, szVisitID, ref qcScore);
-            this.tpHummanScore.Tag = qcScore;
-        }
-        /// <summary>
         /// 保存病历内容扣分
         /// </summary>
         private void SaveHummanScore()
@@ -275,7 +152,7 @@ namespace MedQCSys.DockForms
                 return;
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
-            
+
             short shRet = SystemData.ReturnValue.OK;
             if (this.m_lstQcCheckResult == null)
                 this.m_lstQcCheckResult = new List<QcCheckResult>();
@@ -332,7 +209,7 @@ namespace MedQCSys.DockForms
                 return false;
             if (this.m_lstQcCheckResult == null)
                 this.m_lstQcCheckResult = new List<QcCheckResult>();
-            QcCheckResult qcCheckResult = this.m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == qcMsgDict.QC_MSG_CODE).FirstOrDefault(); 
+            QcCheckResult qcCheckResult = this.m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == qcMsgDict.QC_MSG_CODE).FirstOrDefault();
             if (row.Cells[this.colCheckBox.Index].Value == null)
                 return false;
             bool isCheck = bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString());
@@ -416,12 +293,40 @@ namespace MedQCSys.DockForms
                     return false;
                 }
             }
-            
+
             return true;
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
             this.SaveHummanScore();
+        }
+        private void btnSystemCheck_Click(object sender, EventArgs e)
+        {
+            if (SystemParam.Instance.PatVisitInfo == null)
+                return;
+            try
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+                WorkProcess.Instance.Initialize(this, 2, "系统重检开始。。。");
+                WorkProcess.Instance.Show(0);
+                CheckPointHelper.Instance.CheckPatient(SystemParam.Instance.PatVisitInfo);
+                WorkProcess.Instance.Show("正在加载结果。。。", 1);
+                LoadSystemScoreInfos();
+                WorkProcess.Instance.Show(3);
+                this.tpSystemScore.Focus();
+                WorkProcess.Instance.Close();
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("单患者运行所有规则出错", ex);
+                MessageBoxEx.ShowErrorFormat("单患者运行所有规则出错", ex.ToString(), null);
+            }
+        }
+        private void btnModifyNotice_Click(object sender, EventArgs e)
+        {
+            Dialogs.ModifyNoticeForm frm = new Dialogs.ModifyNoticeForm();
+            frm.ShowDialog();
         }
         protected override void OnPatientInfoChanging(CancelEventArgs e)
         {
@@ -475,6 +380,338 @@ namespace MedQCSys.DockForms
             {
                 MessageBoxEx.ShowError("发生错误", ex.ToString());
             }
+        }
+        private void dgvHummanScore_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                    return;
+
+                DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
+                bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
+                var qcMsgDict = row.Tag as QcMsgDict;
+                if (qcMsgDict == null
+                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                {
+                    this.PatientPageControl.LoadModule(qcMsgDict.QA_EVENT_TYPE);
+                    return;
+                }
+                row.Cells[this.colCheckBox.Index].ReadOnly = false;
+                row.Cells[this.colCheckBox.Index].Value = !flag;
+                flag = !flag;
+                if (flag)
+                {
+                    row.Cells[this.colErrorCount.Index].ReadOnly = false;
+                    row.Cells[this.colErrorCount.Index].Value = 1;
+                }
+                else
+                {
+                    row.Cells[this.colErrorCount.Index].Value = string.Empty;
+                }
+                this.NeedSave = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.ShowError("打开关联病历出错", ex.ToString());
+            }
+
+        }
+        private void dgvHummanScore_OnBindDataDetail(object item, int rowIndex, bool isMainItem)
+        {
+            DataGridViewRow row = this.dgvHummanScore.Rows[rowIndex];
+            QcMsgDict singleModel = item as QcMsgDict;
+            row.ReadOnly = true;
+            //Country
+            if (isMainItem)
+            {
+                row.Cells[this.colItem.Index].Value = singleModel.QA_EVENT_TYPE;
+                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
+
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(singleModel.MESSAGE))
+                {
+                    //二级分类
+                    row.Cells[this.colItem.Index].Value = "  " + singleModel.MESSAGE_TITLE;
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
+                }
+                else
+                {
+                    //评分项
+                    row.Cells[this.colItem.Index].Value = "    " + singleModel.OrderNo.ToString() + "、" + singleModel.MESSAGE;
+                    row.Cells[this.colPoint.Index].Value = singleModel.SCORE;
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255);
+
+                    //if (m_lstQcCheckResult != null)
+                    //{
+                    //    QcCheckResult qcCheckResult = m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == singleModel.QC_MSG_CODE).FirstOrDefault();
+                    //    if (qcCheckResult != null)
+                    //    {
+                    //        row.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
+                    //        row.Cells[this.colCheckBox.Index].Value = true;
+                    //        row.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
+                    //        row.Cells[this.colErrorCount.Index].ReadOnly = false;
+                    //        row.Cells[this.colRemark.Index].ReadOnly = false;
+                    //    }
+                    //}
+                }
+            }
+            //Name
+            //Gender
+        }
+        /// <summary>
+        /// 加载人工评分项目
+        /// </summary>
+        public void LoadHummanQcMsgDict()
+        {
+            this.dgvHummanScore.Rows.Clear();
+            List<QaEventTypeDict> lstQaEventTypeDict = null;
+            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
+            List<QcMsgDict> lstQcMsgDict = null;
+            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
+            lstQcMsgDict = lstQcMsgDict.Where(m => m.IS_VALID == 1).ToList();
+
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("质控质检问题下载失败！");
+                return;
+            }
+
+            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
+            GroupQcMsgDict groupQcMsgDict = new GroupQcMsgDict();
+            foreach (var item in firstQaEventTypeDict)
+            {
+                //添加一级分类
+                ListQcMsgDict listQcMsgDict = new ListQcMsgDict();
+                QcMsgDict firstQaEventType = new QcMsgDict();
+                firstQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
+                listQcMsgDict.Add(firstQaEventType);
+
+                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
+                if (firstMsgDict.Count > 0)
+                {
+                    foreach (var item3 in firstMsgDict)
+                    {
+                        item3.OrderNo = firstMsgDict.IndexOf(item3) + 1;
+                        //添加一级分类下的质检问题项
+                        listQcMsgDict.Add(item3);
+
+                    }
+                }
+
+                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
+                if (secondQaEventTypeDict.Count > 0)
+                {
+                    foreach (var childItem in secondQaEventTypeDict)
+                    {
+                        //增加二级分类
+                        QcMsgDict secondQaEventType = new QcMsgDict();
+                        secondQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
+                        secondQaEventType.MESSAGE_TITLE = childItem.QA_EVENT_TYPE;
+                        listQcMsgDict.Add(secondQaEventType);
+                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
+                        if (secondMsgdict.Count > 0)
+                        {
+                            foreach (var itemMsgDict in secondMsgdict)
+                            {
+                                itemMsgDict.OrderNo = secondMsgdict.IndexOf(itemMsgDict) + 1;
+                                //添加二级分类下的质检问题项
+                                listQcMsgDict.Add(itemMsgDict);
+                            }
+                        }
+                    }
+                }
+                if (listQcMsgDict.Count > 0)
+                    groupQcMsgDict.Add(listQcMsgDict);
+            }
+            this.dgvHummanScore.BindDataSource<GroupQcMsgDict, QcMsgDict>(groupQcMsgDict);
+            //默认展开第一组
+            this.dgvHummanScore.Expand(0);
+        }
+        /// <summary>
+        /// 加载评分结果，切换患者刷新只需要更新评分结果
+        /// </summary>
+        public void LoadHummanScoreInfos()
+        {
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            if (m_lstQcCheckResult == null)
+                m_lstQcCheckResult = new List<QcCheckResult>();
+            m_lstQcCheckResult.Clear();
+            short shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.Artificial, ref m_lstQcCheckResult);
+
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("质控质检问题下载失败！");
+                return;
+            }
+            foreach (DataGridViewRow row in this.dgvHummanScore.Rows)
+            {
+                if (row is CollapseDataGridViewRow)
+                {
+                    //第一级分类行
+                    CollapseDataGridViewRow FirstRow = (row as CollapseDataGridViewRow);
+                    foreach (var item in FirstRow.Rows)
+                    {
+
+                        var qcMsgDict = item.Tag as QcMsgDict;
+                        if (qcMsgDict == null || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
+                            continue;
+                        if (m_lstQcCheckResult != null)
+                        {
+                            QcCheckResult qcCheckResult = m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == qcMsgDict.QC_MSG_CODE).FirstOrDefault();
+                            if (qcCheckResult != null)
+                            {
+                                item.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
+                                item.Cells[this.colCheckBox.Index].Value = true;
+                                item.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
+                                item.Cells[this.colErrorCount.Index].ReadOnly = false;
+                                item.Cells[this.colRemark.Index].ReadOnly = false;
+                            }
+                            else
+                            {
+                                item.Cells[this.colRemark.Index].Value = null;
+                                item.Cells[this.colCheckBox.Index].Value = false;
+                                item.Cells[this.colErrorCount.Index].Value = null;
+                                item.Cells[this.colErrorCount.Index].ReadOnly = true;
+                                item.Cells[this.colRemark.Index].ReadOnly = true;
+
+                            }
+                        }
+                    }
+                }
+            }
+            //默认展开第一组
+            this.dgvHummanScore.Expand(0);
+            this.CalHummanScore();
+        }
+        /// <summary>
+        /// 加载系统评分项目
+        /// </summary>
+        public void LoadSystemQcMsgDict()
+        {
+            this.dgvSystemScore.Rows.Clear();
+            List<QaEventTypeDict> lstQaEventTypeDict = null;
+            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
+            List<QcMsgDict> lstQcMsgDict = null;
+            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
+
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("质控质检问题下载失败！");
+                return;
+            }
+            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
+            int nRowIndex = 0;
+            foreach (var item in firstQaEventTypeDict)
+            {
+                //添加一级分类
+                nRowIndex = this.dgvSystemScore.Rows.Add();
+                DataGridViewRow row = this.dgvSystemScore.Rows[nRowIndex];
+                row.Tag = item;
+                row.Cells[this.col_2_Item.Index].Value = item.QA_EVENT_TYPE;
+                row.ReadOnly = true;
+                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
+                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
+                if (secondQaEventTypeDict.Count > 0)
+                {
+                    foreach (var childItem in secondQaEventTypeDict)
+                    {
+                        //增加二级分类
+                        nRowIndex = this.dgvSystemScore.Rows.Add();
+                        DataGridViewRow childrow = this.dgvSystemScore.Rows[nRowIndex];
+                        childrow.Tag = childItem;
+                        childrow.Cells[this.col_2_Item.Index].Value = "  " + childItem.QA_EVENT_TYPE;
+                        childrow.ReadOnly = true;
+                        childrow.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
+                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
+                        if (secondMsgdict.Count > 0)
+                        {
+                            foreach (var itemMsgDict in secondMsgdict)
+                            {
+                                //添加二级分类下的质检问题项
+                                nRowIndex = this.dgvSystemScore.Rows.Add();
+                                DataGridViewRow row2 = this.dgvSystemScore.Rows[nRowIndex];
+                                row2.Tag = itemMsgDict;
+                                row2.ReadOnly = true;
+                                row2.Cells[this.col_2_Item.Index].Value = string.Format("    {0}、{1}", secondMsgdict.IndexOf(itemMsgDict, 0) + 1, itemMsgDict.MESSAGE);
+                                row2.Cells[this.col_2_Score.Index].Value = itemMsgDict.SCORE;
+                                
+                            }
+                        }
+                    }
+                }
+                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
+                if (firstMsgDict.Count > 0)
+                {
+                    foreach (var item3 in firstMsgDict)
+                    {
+                        //添加一级分类下的质检问题项
+                        nRowIndex = this.dgvSystemScore.Rows.Add();
+                        DataGridViewRow row2 = this.dgvSystemScore.Rows[nRowIndex];
+                        row2.Tag = item3;
+                        row2.Cells[this.col_2_Item.Index].Value = string.Format("  {0}、{1}", firstMsgDict.IndexOf(item3, 0) + 1, item3.MESSAGE);
+                        row2.Cells[this.col_2_Score.Index].Value = item3.SCORE;
+                        row2.ReadOnly = true;
+                    }
+                }
+            }
+          
+        }
+        /// <summary>
+        /// 加载系统检查扣分信息
+        /// </summary>
+        private void LoadSystemScoreInfos()
+        {
+
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            List<QcCheckResult> lstQcCheckResult = null;
+            short shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.System, ref lstQcCheckResult);
+
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("质控质检问题下载失败！");
+                return;
+            }
+            foreach (DataGridViewRow item in this.dgvSystemScore.Rows)
+            {
+                QcMsgDict qcMsgDict = item.Tag as QcMsgDict;
+                if (qcMsgDict == null)
+                    continue;
+                if (lstQcCheckResult == null)
+                {
+                    item.Visible = false;
+                    continue;
+                }
+                QcCheckResult qcCheckResult = lstQcCheckResult.Where(m => m.MSG_DICT_CODE == qcMsgDict.QC_MSG_CODE && m.QC_RESULT == SystemData.QcResult.UnPass).FirstOrDefault();
+                if (qcCheckResult != null)
+                {
+                    item.Cells[this.col_2_ErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
+                    item.Cells[this.col_2_QC_EXPLAIN.Index].Value = qcCheckResult.QC_EXPLAIN;
+                    item.Cells[this.col_2_Score.Index].Value = qcCheckResult.SCORE;
+                    item.Cells[this.col_2_QC_EXPLAIN.Index].Tag = qcCheckResult;
+                    item.DefaultCellStyle.ForeColor = Color.Red;
+                    item.Visible = true;
+                }
+                else
+                {
+                    item.Visible = false;
+                }
+            }
+            //加载评分结果
+            this.CalSystemScore();
+            QCScore qcScore = new QCScore();
+            shRet = QcScoreAccess.Instance.GetQCScore(szPatientID, szVisitID, ref qcScore);
+            this.tpHummanScore.Tag = qcScore;
         }
         private void CalHummanScore()
         {
@@ -538,188 +775,6 @@ namespace MedQCSys.DockForms
                 }
             }
             this.tpSystemScore.Text = string.Format("系统检测（{0}）", totalScore);
-        }
-        private void dgvHummanScore_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (e.RowIndex < 0 || e.ColumnIndex < 0)
-                    return;
-
-                DataGridViewRow row = this.dgvHummanScore.Rows[e.RowIndex];
-                bool flag = row.Cells[this.colCheckBox.Index].Value != null ? bool.Parse(row.Cells[this.colCheckBox.Index].Value.ToString()) : false;
-                var qcMsgDict = row.Tag as QcMsgDict;
-                if (qcMsgDict == null
-                    || string.IsNullOrEmpty(qcMsgDict.MESSAGE))
-                {
-                    this.PatientPageControl.LoadModule(qcMsgDict.QA_EVENT_TYPE);
-                    return;
-                }
-                row.Cells[this.colCheckBox.Index].ReadOnly = false;
-                row.Cells[this.colCheckBox.Index].Value = !flag;
-                flag = !flag;
-                if (flag)
-                {
-                    row.Cells[this.colErrorCount.Index].ReadOnly = false;
-                    row.Cells[this.colErrorCount.Index].Value = 1;
-                }
-                else
-                {
-                    row.Cells[this.colErrorCount.Index].Value = string.Empty;
-                }
-                this.NeedSave = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBoxEx.ShowError("打开关联病历出错", ex.ToString());
-            }
-
-        }
-        private void btnSystemCheck_Click(object sender, EventArgs e)
-        {
-            if (SystemParam.Instance.PatVisitInfo == null)
-                return;
-            try
-            {
-                GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-                WorkProcess.Instance.Initialize(this, 2, "系统重检开始。。。");
-                WorkProcess.Instance.Show(0);
-                CheckPointHelper.Instance.CheckPatient(SystemParam.Instance.PatVisitInfo);
-                WorkProcess.Instance.Show("正在加载结果。。。", 1);
-                LoadSystemScoreInfos();
-                WorkProcess.Instance.Show(3);
-                this.tpSystemScore.Focus();
-                WorkProcess.Instance.Close();
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-            }
-            catch (Exception ex)
-            {
-                LogManager.Instance.WriteLog("单患者运行所有规则出错", ex);
-                MessageBoxEx.ShowErrorFormat("单患者运行所有规则出错", ex.ToString(), null);
-            }
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Dialogs.ModifyNoticeForm frm = new Dialogs.ModifyNoticeForm();
-            frm.ShowDialog();
-        }
-        void dgvHummanScore_OnBindDataDetail(object item, int rowIndex, bool isMainItem)
-        {
-            DataGridViewRow row = this.dgvHummanScore.Rows[rowIndex];
-            QcMsgDict singleModel = item as QcMsgDict;
-            row.ReadOnly = true;
-            //Country
-            if (isMainItem)
-            {
-                row.Cells[this.colItem.Index].Value = singleModel.QA_EVENT_TYPE;
-                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 185, 185);
-
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(singleModel.MESSAGE))
-                {
-                    //二级分类
-                    row.Cells[this.colItem.Index].Value = "  " + singleModel.MESSAGE_TITLE;
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 235);
-                }
-                else
-                {
-                    //评分项
-                    row.Cells[this.colItem.Index].Value = "    " + singleModel.OrderNo.ToString() + "、" + singleModel.MESSAGE;
-                    row.Cells[this.colPoint.Index].Value = singleModel.SCORE;
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255);
-
-                    if (m_lstQcCheckResult != null)
-                    {
-                        QcCheckResult qcCheckResult = m_lstQcCheckResult.Where(m => m.MSG_DICT_CODE == singleModel.QC_MSG_CODE).FirstOrDefault();
-                        if (qcCheckResult != null)
-                        {
-                            row.Cells[this.colRemark.Index].Value = qcCheckResult.REMARKS;
-                            row.Cells[this.colCheckBox.Index].Value = true;
-                            row.Cells[this.colErrorCount.Index].Value = qcCheckResult.ERROR_COUNT;
-                            row.Cells[this.colErrorCount.Index].ReadOnly = false;
-                            row.Cells[this.colRemark.Index].ReadOnly = false;
-                        }
-                    }
-                }
-            }
-            //Name
-            //Gender
-        }
-        public void LoadHummanScoreInfos()
-        {
-            this.dgvHummanScore.Rows.Clear();
-            List<QaEventTypeDict> lstQaEventTypeDict = null;
-            short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
-            List<QcMsgDict> lstQcMsgDict = null;
-            shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
-            lstQcMsgDict = lstQcMsgDict.Where(m => m.IS_VALID == 1).ToList();
-            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            if (m_lstQcCheckResult == null)
-                m_lstQcCheckResult = new List<QcCheckResult>();
-            m_lstQcCheckResult.Clear();
-            shRet = QcCheckResultAccess.Instance.GetQcCheckResults(SystemParam.Instance.DefaultTime, SystemParam.Instance.DefaultTime, szPatientID, szVisitID, null, null, null, SystemData.StatType.Artificial, ref m_lstQcCheckResult);
-
-            if (shRet != SystemData.ReturnValue.OK
-                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
-            {
-                MessageBoxEx.Show("质控质检问题下载失败！");
-                return;
-            }
-
-            var firstQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == string.Empty).ToList();
-            GroupQcMsgDict groupQcMsgDict = new GroupQcMsgDict();
-            foreach (var item in firstQaEventTypeDict)
-            {
-                //添加一级分类
-                ListQcMsgDict listQcMsgDict = new ListQcMsgDict();
-                QcMsgDict firstQaEventType = new QcMsgDict();
-                firstQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
-                listQcMsgDict.Add(firstQaEventType);
-
-                var firstMsgDict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == string.Empty && m.QA_EVENT_TYPE == item.QA_EVENT_TYPE).ToList();
-                if (firstMsgDict.Count > 0)
-                {
-                    foreach (var item3 in firstMsgDict)
-                    {
-                        item3.OrderNo = firstMsgDict.IndexOf(item3) + 1;
-                        //添加一级分类下的质检问题项
-                        listQcMsgDict.Add(item3);
-
-                    }
-                }
-
-                var secondQaEventTypeDict = lstQaEventTypeDict.Where(m => m.PARENT_CODE == item.INPUT_CODE).ToList();
-                if (secondQaEventTypeDict.Count > 0)
-                {
-                    foreach (var childItem in secondQaEventTypeDict)
-                    {
-                        //增加二级分类
-                        QcMsgDict secondQaEventType = new QcMsgDict();
-                        secondQaEventType.QA_EVENT_TYPE = item.QA_EVENT_TYPE;
-                        secondQaEventType.MESSAGE_TITLE = childItem.QA_EVENT_TYPE;
-                        listQcMsgDict.Add(secondQaEventType);
-                        var secondMsgdict = lstQcMsgDict.Where(m => m.MESSAGE_TITLE == childItem.QA_EVENT_TYPE).ToList();
-                        if (secondMsgdict.Count > 0)
-                        {
-                            foreach (var itemMsgDict in secondMsgdict)
-                            {
-                                itemMsgDict.OrderNo = secondMsgdict.IndexOf(itemMsgDict) + 1;
-                                //添加二级分类下的质检问题项
-                                listQcMsgDict.Add(itemMsgDict);
-                            }
-                        }
-                    }
-                }
-                if (listQcMsgDict.Count > 0)
-                    groupQcMsgDict.Add(listQcMsgDict);
-            }
-            this.dgvHummanScore.BindDataSource<GroupQcMsgDict, QcMsgDict>(groupQcMsgDict);
-            //默认展开第一组
-            this.dgvHummanScore.Expand(0);
-            this.CalHummanScore();
         }
     }
 

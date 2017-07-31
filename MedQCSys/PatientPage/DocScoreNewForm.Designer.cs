@@ -43,7 +43,7 @@ namespace MedQCSys.DockForms
             this.txtLevel = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSystemCheck = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnModifyNotice = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpHummanScore = new System.Windows.Forms.TabPage();
             this.dgvHummanScore = new MedQCSys.Controls.CollapseDataGridView();
@@ -113,17 +113,17 @@ namespace MedQCSys.DockForms
             this.btnSystemCheck.UseVisualStyleBackColor = true;
             this.btnSystemCheck.Click += new System.EventHandler(this.btnSystemCheck_Click);
             // 
-            // button2
+            // btnModifyNotice
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.button2.Location = new System.Drawing.Point(311, 390);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 28);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "整改通知书";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnModifyNotice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnModifyNotice.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.btnModifyNotice.Location = new System.Drawing.Point(311, 390);
+            this.btnModifyNotice.Name = "btnModifyNotice";
+            this.btnModifyNotice.Size = new System.Drawing.Size(94, 28);
+            this.btnModifyNotice.TabIndex = 16;
+            this.btnModifyNotice.Text = "整改通知书";
+            this.btnModifyNotice.UseVisualStyleBackColor = true;
+            this.btnModifyNotice.Click += new System.EventHandler(this.btnModifyNotice_Click);
             // 
             // tabControl1
             // 
@@ -299,7 +299,6 @@ namespace MedQCSys.DockForms
             this.dgvSystemScore.RowHeadersVisible = false;
             this.dgvSystemScore.Size = new System.Drawing.Size(723, 355);
             this.dgvSystemScore.TabIndex = 8;
-           
             // 
             // col_2_Item
             // 
@@ -339,7 +338,7 @@ namespace MedQCSys.DockForms
             this.Controls.Add(this.txtLevel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnSystemCheck);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnModifyNotice);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -367,7 +366,7 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtLevel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnModifyNotice;
         private Heren.Common.Controls.TableView.DataTableView dgvSystemScore;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_2_Item;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_2_Score;
