@@ -15,7 +15,8 @@ using Heren.MedQC.Core.Services;
 using Quartz.Server;
 using MedDocSys.QCEngine.TimeCheck;
 using Heren.MedQC.Utilities;
-
+using EMRDBLib.DbAccess;
+using Heren.MedQC.ScriptEngine.Debugger;
 namespace MedQC.Test
 {
     public partial class MainForm : Form
@@ -63,11 +64,11 @@ namespace MedQC.Test
             BAJK08 bajk08 = null;
             BAJK08Access.Instance.GetBAJK08s("1", "1", ref bajk08);
             Random random = new Random();
-            bajk08.KEY0801 = random.Next(100000,999999);
+            bajk08.KEY0801 = random.Next(100000, 999999);
             bajk08.COL0805 = DateTime.Now;
             BAJK08Access.Instance.Insert(bajk08);
             bajk08.COL0806 = 9;
-            short shRet =BAJK08Access.Instance.Update(bajk08);
+            short shRet = BAJK08Access.Instance.Update(bajk08);
             shRet = BAJK08Access.Instance.Delete(bajk08.KEY0801.ToString());
         }
 
@@ -76,7 +77,7 @@ namespace MedQC.Test
             string szPatientID = "10030";
             string szVisitID = "1";
             RecUploadService.Instance.InitializeDict();
-            bool result= RecUploadService.Instance.Upload(szPatientID, szVisitID);
+            bool result = RecUploadService.Instance.Upload(szPatientID, szVisitID);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -86,7 +87,7 @@ namespace MedQC.Test
             patVisitInfo.VISIT_NO = "20170300005";
             patVisitInfo.VISIT_ID = "2";
             patVisitInfo.PATIENT_NAME = "孔明";
-            
+
             short shRet = TimeCheckHelper.Instance.GenerateTimeRecord(patVisitInfo, DateTime.Now);
         }
 
@@ -108,6 +109,21 @@ namespace MedQC.Test
             //Console.Write(string.Format("相似度为：{0}，消耗时间：{1}", similarityResult.Rate, similarityResult.ExeTime));
             DocumentCompare frm = new DocumentCompare();
             frm.ShowDialog();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            string szPatientID = this.textBox1.Text;
+            string szVisitID = this.textBox2.Text;
+            PatVisitInfo patVisitInfo = new PatVisitInfo();
+            short shRet = PatVisitAccess.Instance.GetPatVisitInfo(szPatientID, szVisitID, ref patVisitInfo);
+            QcCheckPoint qcCheckPoint = null;
+            string szQcCheckPointID = "P201608281312459709";
+            shRet = QcCheckPointAccess.Instance.GetQcCheckPoint(szQcCheckPointID, ref qcCheckPoint);
+            DebuggerForm frm = new DebuggerForm();
+            frm.PatVisitInfo = patVisitInfo;
+            frm.QcCheckPoint = qcCheckPoint;
+            frm.Show();
         }
     }
 }

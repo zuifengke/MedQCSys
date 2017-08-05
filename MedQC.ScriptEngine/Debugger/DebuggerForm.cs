@@ -15,6 +15,7 @@ using Heren.Common.DockSuite;
 using Heren.Common.Libraries;
 using Heren.Common.Controls;
 using Heren.Common.ScriptEngine.Script;
+using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
@@ -22,6 +23,9 @@ namespace Heren.MedQC.ScriptEngine.Debugger
     {
         private TempletListForm m_TempletListForm = null;
         private ErrorsListForm m_ErrorsListForm = null;
+        public QcCheckPoint QcCheckPoint { get; set; }
+        public PatVisitInfo PatVisitInfo { get; set; }
+        public QcCheckResult QcCheckResult { get; set; }
 
         private string m_workingPath = null;
         /// <summary>
@@ -187,10 +191,24 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         private void toolbtnTest_Click(object sender, EventArgs e)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            this.ShowScriptTestForm();
+            //this.ShowScriptTestForm();
+            this.TestScript();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
+        private void TestScript()
+        {
+            if (this.PatVisitInfo == null)
+            {
+                MessageBoxEx.ShowMessage("请先选择患者");
+                return;
+            }
+            if (this.QcCheckPoint == null)
+            {
+                MessageBoxEx.ShowMessage("缺陷规则未初始化");
+                return;
+            }
 
+        }
         private void toolbtnOK_Click(object sender, EventArgs e)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
