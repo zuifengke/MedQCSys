@@ -209,21 +209,27 @@ namespace EMRDBLib.DbAccess
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
                 operationMaster = new OperationMaster();
-                if (!dataReader.IsDBNull(0)) operationMaster.ACK_DIRECTION = int.Parse(dataReader.GetValue(0).ToString());
+                if (!dataReader.IsDBNull(0))
+                    operationMaster.ACK_DIRECTION = int.Parse(dataReader.GetValue(0).ToString());
                 if (!dataReader.IsDBNull(1)) operationMaster.ANAESTHESIA_METHOD = dataReader.GetString(1);
                 if (!dataReader.IsDBNull(2)) operationMaster.ANESTHESIA_DOCTOR = dataReader.GetString(2);
                 if (!dataReader.IsDBNull(3)) operationMaster.ANESTHESIA_DOCTOR_ID = dataReader.GetString(3);
                 if (!dataReader.IsDBNull(4)) operationMaster.APPLY_STATUS = dataReader.GetValue(4).ToString();
                 if (!dataReader.IsDBNull(5)) operationMaster.BLOOD_DOCTOR = dataReader.GetString(5);
                 if (!dataReader.IsDBNull(6)) operationMaster.BLOOD_DOCTOR_ID = dataReader.GetString(6);
-                if (!dataReader.IsDBNull(7)) operationMaster.BLOOD_LOSSED = int.Parse(dataReader.GetValue(7).ToString());
-                if (!dataReader.IsDBNull(8)) operationMaster.BLOOD_TRANSFERED = int.Parse(dataReader.GetValue(8).ToString());
+                if (!dataReader.IsDBNull(7))
+                    operationMaster.BLOOD_LOSSED = 
+                        int.Parse(dataReader.GetValue(7).ToString());
+                if (!dataReader.IsDBNull(8))
+                    operationMaster.BLOOD_TRANSFERED = int.Parse(dataReader.GetValue(8).ToString());
                 if (!dataReader.IsDBNull(9)) operationMaster.CANCEL_DATE_TIME = dataReader.GetDateTime(9);
                 if (!dataReader.IsDBNull(10)) operationMaster.CANCEL_DOCTOR = dataReader.GetString(10);
                 if (!dataReader.IsDBNull(11)) operationMaster.CANCEL_MEMO = dataReader.GetString(11);
-                if (!dataReader.IsDBNull(12)) operationMaster.CHARGE_INDICATOR = int.Parse
+                if (!dataReader.IsDBNull(12))
+                    operationMaster.CHARGE_INDICATOR = int.Parse
                         (dataReader.GetValue(12).ToString());
-                if (!dataReader.IsDBNull(13)) operationMaster.CLINIC_CATE = int.Parse(dataReader.GetValue(0).ToString());
+                if (!dataReader.IsDBNull(13))
+                    operationMaster.CLINIC_CATE = int.Parse(dataReader.GetValue(13).ToString());
                 if (!dataReader.IsDBNull(14)) operationMaster.DEPT_STAYED = dataReader.GetString(14);
                 if (!dataReader.IsDBNull(15)) operationMaster.DIAG_AFTER_OPERATION = dataReader.GetString(15);
                 if (!dataReader.IsDBNull(16)) operationMaster.DIAG_BEFORE_OPERATION = dataReader.GetString(16);
@@ -242,7 +248,8 @@ namespace EMRDBLib.DbAccess
                 if (!dataReader.IsDBNull(29)) operationMaster.FIRST_SUPPLY_NURSE_ID = dataReader.GetString(29);
                 if (!dataReader.IsDBNull(30)) operationMaster.FOUR_ASSISTANT = dataReader.GetString(30);
                 if (!dataReader.IsDBNull(31)) operationMaster.FOUR_ASSISTANT_ID = dataReader.GetString(31);
-                if (!dataReader.IsDBNull(32)) operationMaster.IN_FLUIDS_AMOUNT = int.Parse(dataReader.GetValue(32).ToString());
+                if (!dataReader.IsDBNull(32))
+                    operationMaster.IN_FLUIDS_AMOUNT = int.Parse(dataReader.GetValue(32).ToString());
                 if (!dataReader.IsDBNull(33)) operationMaster.ISOLATION_FLAG = dataReader.GetString(33);
                 if (!dataReader.IsDBNull(34)) operationMaster.NOTES_ON_OPERATION = dataReader.GetString(34);
                 if (!dataReader.IsDBNull(35)) operationMaster.NURSE_SHIFT_INDICATOR = int.Parse(dataReader.GetValue(35).ToString());

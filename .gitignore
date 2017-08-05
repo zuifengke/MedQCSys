@@ -259,3 +259,21 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/MedQC.Const/DataView.cs
+/MedQC.Const/DataTable.cs
+/MedQC.Const/DataProvider.cs
+/MedQC.Const/DataGroup.cs
+/MedQC.Const/DatabaseType.cs
+/MedQC.Const/ConfigKey.cs
+/MedQC.Const/BugClass.cs
+/MedQC.Const/DataView.cs
+/MedQC.Const/DataTable.cs
+/MedQC.Const/DataProvider.cs
+/MedQC.Const/DataGroup.cs
+/MedQC.Const/DatabaseType.cs
+/MedQC.Const/ConfigKey.cs
+/MedQC.Const/BugClass.cs
+/MedQC.Const/DataView/OperationNameView.cs
+/MedQC.Const/DataView/OperationMasterView.cs
+/EMRDBLib/MedQC/View/OperationNameAccess.cs
+/EMRDBLib/MedQC/View/OperationMasterAccess.cs

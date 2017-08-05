@@ -64,7 +64,6 @@ namespace MedQCSys.PatPage
         /// </summary>
         [Description("病人就诊等系统基本信息改变前触发")]
         public event PatientInfoChangingEventHandler PatientInfoChanging;
-
         internal virtual void OnPatientInfoChanging(PatientInfoChangingEventArgs e)
         {
             if (this.PatientInfoChanging == null)

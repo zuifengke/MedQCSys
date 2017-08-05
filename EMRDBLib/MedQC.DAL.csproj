@@ -73,6 +73,8 @@
     <Compile Include="BAJK\GyGydmAccess.cs" />
     <Compile Include="BAJK\BAJKCommonAccess.cs" />
     <Compile Include="HerenHis\InpBillDetailAccess.cs" />
+    <Compile Include="HerenHis\OperationMasterAccess.cs" />
+    <Compile Include="HerenHis\OperationNameAccess.cs" />
     <Compile Include="HerenHis\TransferAccess.cs" />
     <Compile Include="HerenHis\PatientAllergyAccess.cs" />
     <Compile Include="HerenHis\OperationAccess.cs" />
@@ -112,8 +114,6 @@
     <Compile Include="MedDoc\MedXMLAccess.cs" />
     <Compile Include="MedQC\View\OperationAccess.cs" />
     <Compile Include="MedQC\View\OperationDictAccess.cs" />
-    <Compile Include="HerenHis\OperationNameAccess.cs" />
-    <Compile Include="HerenHis\OperationMasterAccess.cs" />
     <Compile Include="MedQC\View\PatVisitAccess.cs" />
     <Compile Include="MedQC\Table\QcAdminDeptsAccess.cs" />
     <Compile Include="MedQC\View\MrArchiveAccess.cs" />

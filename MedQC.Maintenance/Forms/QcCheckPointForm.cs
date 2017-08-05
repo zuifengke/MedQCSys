@@ -670,6 +670,7 @@ namespace Heren.MedQC.Maintenance
                 if (string.IsNullOrEmpty(doctypeids))
                 {
                     MessageBoxEx.ShowMessage("请先选择相关文书");
+                    return;
                 }
                 string[] arrDocTypeIDs = doctypeids.Split(';');
                 frm.DocTypeInfo = new DocTypeInfo() { DocTypeID = arrDocTypeIDs[0] };
