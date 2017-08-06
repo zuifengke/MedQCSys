@@ -540,6 +540,8 @@ namespace EMRDBLib
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "ZYJHZYY_SysIcon.ico");
+                option.IsOpenOperation = false;
+                option.IsOpenComplexSearch = false;
                 option.IsShowPatientIndex = false;
             }
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)
