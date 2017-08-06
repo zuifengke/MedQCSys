@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.CodeDom.Compiler;
 using Heren.Common.Libraries;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public class ScriptCompiler
     {
@@ -56,7 +56,7 @@ namespace Heren.Common.ScriptEngine.Script
             string path = GlobalMethods.Misc.GetWorkingPath(this.GetType());
             try
             {
-                if (!System.IO.File.Exists(path + "\\Common.ScriptEngine.dll"))
+                if (!System.IO.File.Exists(path + "\\MedQC.ScriptEngine.dll"))
                     path = AppDomain.CurrentDomain.RelativeSearchPath;
             }
             catch { }
@@ -113,9 +113,9 @@ namespace Heren.Common.ScriptEngine.Script
             param.ReferencedAssemblies.Add("System.Windows.Forms.dll");
             param.ReferencedAssemblies.Add("Microsoft.VisualBasic.dll");
 
-            string scriptEnginePath = this.WorkingPath + "\\Common.ScriptEngine.dll";
+            string scriptEnginePath = this.WorkingPath + "\\MedQC.ScriptEngine.dll";
             if (!System.IO.File.Exists(scriptEnginePath))
-                scriptEnginePath = GlobalMethods.Misc.GetWorkingPath() + "\\Common.ScriptEngine.dll";
+                scriptEnginePath = GlobalMethods.Misc.GetWorkingPath() + "\\MedQC.ScriptEngine.dll";
             param.ReferencedAssemblies.Add(scriptEnginePath);
             return param;
         }
@@ -216,10 +216,10 @@ namespace Heren.Common.ScriptEngine.Script
             sbScript.AppendLine("Imports System.Drawing");
             sbScript.AppendLine("Imports System.Windows.Forms");
             sbScript.AppendLine("Imports Microsoft.VisualBasic");
-            sbScript.AppendLine("Imports Heren.Common.ScriptEngine.Script");
+            sbScript.AppendLine("Imports Heren.MedQC.ScriptEngine.Script");
             sbScript.AppendLine();
             sbScript.AppendLine("Public Class DefaultElementCalculator");
-            sbScript.AppendLine("    Inherits Heren.Common.ScriptEngine.Script.AbstractElementCalculator");
+            sbScript.AppendLine("    Inherits Heren.MedQC.ScriptEngine.Script.AbstractElementCalculator");
 
             //注意:如果上面几行AppendLine代码行数有变化,请及时更新下面变量
             this.m_nScriptHeaderLineCount = 13;

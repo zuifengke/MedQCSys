@@ -22,7 +22,7 @@ using MedQCSys.DockForms;
 using MedQCSys;
 using Heren.MedQC.Maintenance.Dialogs;
 using Heren.MedQC.ScriptEngine.Debugger;
-using Heren.Common.ScriptEngine.Script;
+using Heren.MedQC.ScriptEngine.Script;
 
 namespace Heren.MedQC.Maintenance
 {

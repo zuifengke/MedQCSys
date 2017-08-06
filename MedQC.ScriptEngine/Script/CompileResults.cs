@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public class CompileResults
     {

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using Heren.Common.Libraries;
 using Heren.Common.Controls;
 using Heren.Common.Controls.TableView;
-using Heren.Common.ScriptEngine.Script;
+using Heren.MedQC.ScriptEngine.Script;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {

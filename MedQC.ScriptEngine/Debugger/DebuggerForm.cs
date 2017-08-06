@@ -14,7 +14,7 @@ using System.ComponentModel;
 using Heren.Common.DockSuite;
 using Heren.Common.Libraries;
 using Heren.Common.Controls;
-using Heren.Common.ScriptEngine.Script;
+using Heren.MedQC.ScriptEngine.Script;
 using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
@@ -207,7 +207,28 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                 MessageBoxEx.ShowMessage("缺陷规则未初始化");
                 return;
             }
+            if (this.m_ErrorsListForm != null && !this.m_ErrorsListForm.IsDisposed)
+                this.m_ErrorsListForm.Close();
+            ScriptEditForm activeScriptForm = this.ActiveScriptForm;
+            if (activeScriptForm == null || activeScriptForm.IsDisposed)
+                return;
+            ScriptProperty scriptProperty = activeScriptForm.ScriptProperty;
+            if (scriptProperty == null)
+                scriptProperty = new ScriptProperty();
 
+            ScriptCompiler.Instance.WorkingPath = this.WorkingPath;
+            CompileResults results = ScriptCompiler.Instance.CompileScript(scriptProperty);
+            if (results.HasErrors)
+            {
+                this.ShowCompileErrorForm(results.Errors);
+                MessageBoxEx.Show("编译失败，无法启动测试程序！");
+                return;
+            }
+            foreach (IElementCalculator item in results.ElementCalculators)
+            {
+                item.Calculate("A");
+            }
+            
         }
         private void toolbtnOK_Click(object sender, EventArgs e)
         {

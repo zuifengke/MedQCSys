@@ -14,7 +14,7 @@ using Heren.Common.TextEditor;
 using Heren.Common.TextEditor.Actions;
 using Heren.Common.TextEditor.Document;
 using Heren.Common.Libraries;
-using Heren.Common.ScriptEngine.Script;
+using Heren.MedQC.ScriptEngine.Script;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {

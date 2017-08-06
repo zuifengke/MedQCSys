@@ -10,7 +10,7 @@ using System.Text;
 using System.Reflection;
 using Heren.Common.Libraries;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public class AssemblyHelper
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public enum ScriptLanguage
     {

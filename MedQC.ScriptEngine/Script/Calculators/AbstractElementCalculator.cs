@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using Heren.Common.Libraries;
 using Heren.Common.Libraries.Ftp;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public abstract class AbstractElementCalculator : IElementCalculator
     {

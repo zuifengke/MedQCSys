@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 
-namespace Heren.Common.ScriptEngine.Script
+namespace Heren.MedQC.ScriptEngine.Script
 {
     public interface IElementCalculator : IDisposable
     {

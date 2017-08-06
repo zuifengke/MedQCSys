@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using Heren.Common.DockSuite;
 using Heren.Common.Libraries;
-using Heren.Common.ScriptEngine.Script;
+using Heren.MedQC.ScriptEngine.Script;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
