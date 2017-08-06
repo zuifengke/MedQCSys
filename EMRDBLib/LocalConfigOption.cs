@@ -199,7 +199,7 @@ namespace EMRDBLib
             set { this.isShowHospitalTimeCheckStatic = value; }
         }
 
-        private bool bIsShowDocLock = true;
+        private bool bIsShowDocLock = false;
         /// <summary>
         /// 强制锁定，问题未修改，设置强制锁定后，必须修改问题才能新建文档。
         /// </summary>
@@ -249,6 +249,7 @@ namespace EMRDBLib
             get { return m_TimeCheckRuleConfig; }
             set { m_TimeCheckRuleConfig = value; }
         }
+        public bool IsOpenHospitalTimeCheck { get; set; }
 
         /// <summary>
         /// 打印和导出Excel按钮默认显示
@@ -519,7 +520,7 @@ namespace EMRDBLib
         private LocalConfigOption GetLocalConfigOption()
         {
             LocalConfigOption option = new LocalConfigOption();
-
+            option.IsOpenHospitalTimeCheck = true;
             //根据医院名称开启默认开关
             List<HdpParameter> lstHdpParameter = null;
             short shRet = DbAccess.HdpParameterAccess.Instance.GetHdpParameters(null, SystemData.ConfigKey.SYSTEM_OPTION, SystemData.ConfigKey.HOSPITAL_NAME, ref lstHdpParameter);
@@ -543,6 +544,7 @@ namespace EMRDBLib
                 option.IsOpenOperation = false;
                 option.IsOpenComplexSearch = false;
                 option.IsShowPatientIndex = false;
+                option.IsOpenHospitalTimeCheck = false;
             }
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)
             {
@@ -580,6 +582,7 @@ namespace EMRDBLib
             option.RecPrintLog = true;
             option.IsDrawingPatientIdentification = true;
             option.IsOpenComplexSearch = true;
+            option.IsShowDocLock=true;
 #endif
             return option;
         }

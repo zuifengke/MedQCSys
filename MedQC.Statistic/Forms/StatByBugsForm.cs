@@ -40,6 +40,11 @@ namespace Heren.MedQC.Statistic
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            if (!SystemParam.Instance.LocalConfigOption.IsOpenHospitalTimeCheck)
+            {
+                this.chkContentCheck.Visible = false;
+                this.chkTimeCheck.Visible = false;
+            }
             this.dtpStatTimeEnd.Value = DateTime.Now;
             this.dtpStatTimeBegin.Value = DateTime.Now.AddDays(-1);
         }
