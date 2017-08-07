@@ -101,7 +101,9 @@ namespace EMRDBLib.DbAccess
 
             //先获取用户信息
             string szField = SystemData.UserRightTable.USER_PWD;
-            string szCondition = string.Format("{0}={1}", SystemData.UserRightTable.USER_ID, base.ParaHolder(SystemData.UserRightTable.USER_ID));
+            string szCondition = string.Format("{0}={1} "
+                , SystemData.UserRightTable.USER_ID
+                , base.ParaHolder(SystemData.UserRightTable.USER_ID));
             DbParameter[] param = new DbParameter[] { new DbParameter(SystemData.UserRightTable.USER_ID, szUserID) };
             string szTable = SystemData.DataTable.USER_RIGHT;
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
@@ -131,10 +133,10 @@ namespace EMRDBLib.DbAccess
                 if (GlobalMethods.Misc.IsEmptyString(szUserPwd))
                     return SystemData.ReturnValue.OK;
                 else
-                    return SystemData.ReturnValue.PARAM_ERROR;
+                    return SystemData.ReturnValue.FAILED;
             }
-            return (GlobalMethods.Security.GetSummaryMD5(szUserPwd) == szPwdText) ?
-                SystemData.ReturnValue.OK : SystemData.ReturnValue.PARAM_ERROR;
+            return (GlobalMethods.Security.GetSummaryMD5(szUserPwd) == szPwdText.ToUpper()) ?
+                SystemData.ReturnValue.OK : SystemData.ReturnValue.FAILED;
         }
 
         /// <summary>

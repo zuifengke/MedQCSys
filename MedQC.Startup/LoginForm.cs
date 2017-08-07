@@ -208,7 +208,8 @@ namespace MedQCSys.Dialogs
                 this.Cursor = Cursors.Default;
                 return;
             }
-            if (shRet != SystemData.ReturnValue.OK)
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet!=SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("登录失败,系统无法验证用户信息!");
                 this.Cursor = Cursors.Default;
