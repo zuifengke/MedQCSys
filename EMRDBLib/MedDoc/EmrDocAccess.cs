@@ -1051,7 +1051,7 @@ namespace EMRDBLib.DbAccess
                 {
                     PatVisitInfo patVisitLog = new PatVisitInfo();
                     if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_NO = dataReader.GetValue(1).ToString();
                     if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
                     if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) patVisitLog.INP_NO = dataReader.GetString(4);
@@ -1098,7 +1098,7 @@ namespace EMRDBLib.DbAccess
                 StringBuilder sb = new StringBuilder();
                 foreach (PatVisitInfo item in lstPatVisitLogs)
                 {
-                    sb.AppendFormat("(PATIENT_ID='{0}' AND VISIT_ID='{1}') OR ", item.PATIENT_ID, item.VISIT_ID);
+                    sb.AppendFormat("(PATIENT_ID='{0}' AND VISIT_ID='{1}') OR ", item.PATIENT_ID, item.VISIT_NO);
                 }
                 int index = sb.ToString().LastIndexOf("OR");
                 return sb.ToString().Remove(index, 2);
@@ -1134,7 +1134,7 @@ namespace EMRDBLib.DbAccess
                 {
                     PatVisitInfo patVisitLog = new PatVisitInfo();
                     if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_NO = dataReader.GetValue(1).ToString();
                     lstPatVisitLogs.Add(patVisitLog);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

@@ -215,7 +215,7 @@ namespace EMRDBLib.DbAccess
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-
+            
             string szField = string.Format("*");
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID) && !string.IsNullOrEmpty(szVisitID))

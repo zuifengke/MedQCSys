@@ -689,6 +689,7 @@ namespace MedQCSys.DockForms
                     continue;
                 if (lstQcCheckResult == null)
                 {
+                    item.Cells[this.col_2_QC_EXPLAIN.Index].Tag = null;
                     item.Visible = false;
                     continue;
                 }
@@ -704,6 +705,7 @@ namespace MedQCSys.DockForms
                 }
                 else
                 {
+                    item.Cells[this.col_2_QC_EXPLAIN.Index].Tag = null;
                     item.Visible = false;
                 }
             }

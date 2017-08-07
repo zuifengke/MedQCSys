@@ -1089,7 +1089,7 @@ namespace MedQCSys.DockForms
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.patInfoList.SelectedCard.Invalidate();
-            short shRet = PatVisitAccess.Instance.GetPatVisitInfo(patVisitLog.PATIENT_ID, patVisitLog.VISIT_ID, ref patVisitLog);
+            short shRet = PatVisitAccess.Instance.GetPatVisit(patVisitLog.PATIENT_ID, patVisitLog.VISIT_NO, ref patVisitLog);
             SystemParam.Instance.PatVisitInfo = patVisitLog;
             this.MainForm.OnPatientInfoChanged(EventArgs.Empty);
 
