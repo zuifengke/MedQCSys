@@ -423,6 +423,15 @@ namespace EMRDBLib
             get { return this.m_IsDrawingPatientIdentification; }
             set { this.m_IsDrawingPatientIdentification = value; }
         }
+        private bool m_IsOpenHGYY = false;
+        /// <summary>
+        /// 杭钢医院需求开关
+        /// </summary>
+        public bool IsOpenHGYY
+        {
+            get { return this.m_IsOpenHGYY; }
+            set { this.m_IsOpenHGYY = value; }
+        }
         private bool m_IsOpenHomePage = false;
         /// <summary>
         /// 开启起始页，默认为false
@@ -544,6 +553,7 @@ namespace EMRDBLib
                 option.IsOpenOperation = false;
                 option.IsOpenComplexSearch = false;
                 option.IsShowPatientIndex = false;
+                option.IsOpenHGYY = true;
                 option.IsOpenHospitalTimeCheck = false;
             }
             else if (option.HOSPITAL_NAME.IndexOf("陆军") >= 0)

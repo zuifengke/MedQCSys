@@ -187,16 +187,7 @@ namespace MedQCSys.Dialogs
                 this.Cursor = Cursors.Default;
                 return;
             }
-            //QCUserRight userRight = userRightBase as QCUserRight;
-            //if (userRight == null || !userRight.MedQCSystem.Value)
-            //{
-            //    MessageBoxEx.Show("您没有权限登录本系统!");
-            //    this.txtUserID.Focus();
-            //    this.txtUserID.SelectAll();
-            //    this.Cursor = Cursors.Default;
-            //    return;
-            //}
-
+          
             //验证用户输入的密码
             ADMINISTRATOR_LOGIN:
             shRet = RightAccess.Instance.VerifyUser(szUserID, this.txtUserPwd.Text);
