@@ -52,6 +52,7 @@ namespace Heren.MedQC.Statistic
             {
                 DataGridViewTextBoxColumn column1 = new DataGridViewTextBoxColumn();
                 column1.Name = ds.Tables[0].Rows[i][0].ToString() + "(总)";
+                column1.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(总)";
                 column1.Width = column1.Name.Length*15;
                 column1.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column1.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
@@ -59,6 +60,7 @@ namespace Heren.MedQC.Statistic
                 this.dataGridView1.Columns.Add(column1);
                 DataGridViewTextBoxColumn column2 = new DataGridViewTextBoxColumn();
                 column2.Name = ds.Tables[0].Rows[i][0].ToString() + "(超时)";
+                column2.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(超时)";
                 column2.Width = column2.Name.Length * 15;
                 column2.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column2.Visible = false;
@@ -66,6 +68,7 @@ namespace Heren.MedQC.Statistic
                 this.dataGridView1.Columns.Add(column2);
                 DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
                 column3.Name = ds.Tables[0].Rows[i][0].ToString() + "(超时率)";
+                column3.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(超时率)";
                 column3.Width = column3.Name.Length * 15;
                 column3.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column3.Visible = false;
@@ -76,18 +79,21 @@ namespace Heren.MedQC.Statistic
             DataGridViewTextBoxColumn column4 = new DataGridViewTextBoxColumn();
 
             column4.Name = "病历总数";
+            column4.HeaderText = "病历总数";
             column4.Width = 200;
             column4.Visible = true;
             column4.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.dataGridView1.Columns.Add(column4);
             DataGridViewTextBoxColumn column5 = new DataGridViewTextBoxColumn();
             column5.Name = "病历超时总数";
+            column5.HeaderText = "病历超时总数";
             column5.Width = 200;
             column5.Visible = true;
             column5.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.dataGridView1.Columns.Add(column5);
             DataGridViewTextBoxColumn column6 = new DataGridViewTextBoxColumn();
             column6.Name = "病历超时率";
+            column6.HeaderText = "病历超时率";
             column6.Width = 200;
             column6.Visible = true;
             column6.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -560,7 +566,8 @@ namespace Heren.MedQC.Statistic
             System.Collections.Hashtable htNoExportColunms = new System.Collections.Hashtable();
             StatExpExcelHelper.Instance.HtNoExportColIndex = htNoExportColunms;
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            StatExpExcelHelper.Instance.ExportToExcel(this.dataGridView1, "病历时效统计清单");
+            this.dataGridView1.Update();
+            StatExpExcelHelper.Instance.ExportTo(this.dataGridView1, "病历时效统计清单");
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
         

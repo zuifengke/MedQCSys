@@ -60,7 +60,7 @@ namespace Heren.MedQC.Utilities
                 return;
             string szFilePath = saveDialog.FileName;
 
-            if (GlobalMethods.Excel.ExportExcelFile(dgv, false, szFilePath))
+            if (ExcelExporter.ExportExcelFile(dgv, false, szFilePath))
             {
                 if (!GlobalMethods.Win32.Execute(szFilePath, null))
                     MessageBoxEx.ShowMessage("已导出完成!但无法打开,您可能没有安装Excel软件!");
@@ -260,7 +260,7 @@ namespace Heren.MedQC.Utilities
             }
         }
 
-        private void ExportTo(DataGridView dgv, string szFileTitle)
+        public void ExportTo(DataGridView dgv, string szFileTitle)
         {
             if (dgv == null || dgv.Rows.Count == 0)
                 return;
@@ -306,10 +306,15 @@ namespace Heren.MedQC.Utilities
 
                 for (int i = 0; i < dgv.Columns.Count; i++)
                 {
+                    if (dgv.Columns[i].HeaderText.IndexOf("入院后第二天病程记录") > 0)
+                    {
+
+                    }
                     if (dgv.Columns[i].Visible != true || (!(dgv.Columns[i] is DataGridViewTextBoxColumn) && !(dgv.Columns[i] is DataGridViewLinkColumn)))
                         continue;
                     if (this.m_htNoExportColIndex != null && this.m_htNoExportColIndex.Contains(i))
                         continue;
+                    
                     Mylxls.Cells[2, curColumnIndex] = dgv.Columns[i].HeaderText;
                     Mylxls.get_Range(Mylxls.Cells[2, curColumnIndex], Mylxls.Cells[2, curColumnIndex]).Cells.Borders.LineStyle = 1;
                     Mylxls.get_Range(Mylxls.Cells[2, curColumnIndex], Mylxls.Cells[2, curColumnIndex]).ColumnWidth = dgv.Columns[i].Width / 8;
@@ -397,7 +402,9 @@ namespace Heren.MedQC.Utilities
                 Mylxls.Workbooks.Close();
                 Mylxls.Quit();
                 Mylxls = null;
-                MessageBoxEx.Show("导出Excel成功!", MessageBoxIcon.Information);
+                if (!GlobalMethods.Win32.Execute(szFilePath, null))
+                    MessageBoxEx.ShowMessage("已导出完成!但无法打开,您可能没有安装Excel软件!");
+                //MessageBoxEx.Show("导出Excel成功!", MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

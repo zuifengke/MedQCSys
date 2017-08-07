@@ -66,6 +66,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.RichEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Common.ZipLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.ZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="KP-ImageViewerV2">
       <HintPath>..\Include\KP-ImageViewerV2.dll</HintPath>
     </Reference>
@@ -101,12 +105,18 @@
     <Compile Include="Dialogs\ImageViewerDialog.Designer.cs">
       <DependentUpon>ImageViewerDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExcelExporter.cs" />
     <Compile Include="IDCardRead\CardInfo.cs" />
     <Compile Include="IDCardRead\IDCardRead.cs" />
     <Compile Include="IDCardRead\Public_class.cs" />
     <Compile Include="InitControlData.cs" />
     <Compile Include="NoSortHashTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StatExpExcelHelper.cs" />
     <Compile Include="DocLevel.cs" />
     <Compile Include="GridViewHelper.cs" />
@@ -135,9 +145,16 @@
     <EmbeddedResource Include="Dialogs\ImageViewerDialog.resx">
       <DependentUpon>ImageViewerDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Document\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exporttemplet.xlsx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
