@@ -237,7 +237,6 @@ namespace MedQCSys.PatPage
             {
                 OpenDocument(moduleName);
             }
-
         }
         public void GetActiveDoument(ref DockContentBase activeDocument)
         {
@@ -248,6 +247,32 @@ namespace MedQCSys.PatPage
                     activeDocument = item;
                 }
 
+            }
+        }
+        public DocumentListNewForm GetDocumentList()
+        {
+            DocumentListNewForm documentListForm = null;
+            foreach (DockContentBase item in this.dockPanel1.Contents)
+            {
+                if (item is DocumentListNewForm)
+                {
+                    documentListForm = item as DocumentListNewForm;
+                    return documentListForm;
+                }
+            }
+            return null;
+        }
+        
+        public void OpenDocument(MedDocInfo docInfo)
+        {
+            foreach (DockContent item in this.dockPanel1.Contents)
+            {
+                if (item is DocumentListNewForm)
+                {
+                    DocumentListNewForm frm = item as DocumentListNewForm;
+                    frm.Activate();
+                    frm.OpenDocument(docInfo);
+                }
             }
         }
         private void OpenDocument(string szDocTitle)

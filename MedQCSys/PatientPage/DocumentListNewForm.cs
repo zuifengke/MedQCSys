@@ -937,10 +937,10 @@ namespace MedQCSys.DockForms
                     if (doc.Document.DOC_SETID == docInfo.DOC_SETID)
                     {
                         doc.Activate();
-                        //if (doc.Document.DOC_ID != docInfo.DOC_ID)
-                        ///{
+                        if (doc.Document.DOC_ID != docInfo.DOC_ID)
+                        {
                             doc.GoSection(docInfo);
-                        //}
+                        }
                         return;
                     }
                 }
@@ -949,7 +949,7 @@ namespace MedQCSys.DockForms
             HerenDocForm docForm = new HerenDocForm(this.MainForm);
             docForm.Show(this.dockPanel1, true);
             docForm.OpenDocument(docInfo);
-            
+
         }
         public void ShowDockPanel()
         {

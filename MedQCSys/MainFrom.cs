@@ -251,7 +251,15 @@ namespace MedQCSys
                 LogManager.Instance.WriteLog("MainForm.OnAllDockWindowHidden", ex);
             }
         }
-
+        public void SwitchPatient(PatVisitInfo patVisit, MedDocInfo docInfo)
+        {
+            this.SwitchPatient(patVisit.PATIENT_ID, patVisit.VISIT_ID);
+            DocumentListNewForm frm = this.PatientPageForm.GetDocumentList();
+            if (frm != null)
+            {
+                frm.OpenDocument(docInfo);
+            }
+        }
         public void SwitchPatient(PatVisitInfo patVisit)
         {
             short shRet = PatVisitAccess.Instance.GetPatVisitInfo(patVisit.PATIENT_ID, patVisit.VISIT_ID, ref patVisit);

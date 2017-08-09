@@ -254,7 +254,7 @@ namespace Heren.MedQC.Search
 
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {
-                this.MainForm.SwitchPatient(patVisitInfo);
+                this.MainForm.SwitchPatient(patVisitInfo,docInfo);
                 return;
             }
             this.MainForm.OpenDocument(string.Empty, patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_ID);

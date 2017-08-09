@@ -80,12 +80,12 @@ namespace MedQCSys.Dialogs
             set { this.m_szDefaultDocTypeID = value; }
         }
 
-        private List< DocTypeInfo> m_lstSelectedDocTypes = null;
+        private List<DocTypeInfo> m_lstSelectedDocTypes = null;
         /// <summary>
         /// 获取或设置已经勾选的病历类型
         /// </summary>
         [Browsable(false)]
-        public List< DocTypeInfo> SelectedDocTypes
+        public List<DocTypeInfo> SelectedDocTypes
         {
             get { return this.m_lstSelectedDocTypes; }
         }
@@ -127,8 +127,8 @@ namespace MedQCSys.Dialogs
             this.m_htDocTypeNodes.Clear();
             this.Update();
 
-            List< DocTypeInfo> lstDocTypeInfos = null;
-            short result =EMRDBLib.DbAccess.DocTypeAccess.Instance.GetDocTypeInfos(ref lstDocTypeInfos);
+            List<DocTypeInfo> lstDocTypeInfos = null;
+            short result = EMRDBLib.DbAccess.DocTypeAccess.Instance.GetDocTypeInfos(ref lstDocTypeInfos);
             if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
                 return;
             Hashtable htHostDocType = new Hashtable();
@@ -137,7 +137,7 @@ namespace MedQCSys.Dialogs
             int index = 0;
             while (index < lstDocTypeInfos.Count)
             {
-                 DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
+                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
                 if (docTypeInfo == null || !docTypeInfo.IsHostType)
                 {
                     index++;
@@ -169,7 +169,7 @@ namespace MedQCSys.Dialogs
             //加载子文档类型
             for (index = 0; index < lstDocTypeInfos.Count; index++)
             {
-                 DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
+                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
                 if (docTypeInfo == null)
                     continue;
                 if (this.m_szApplyEnv != null && this.m_szDocRight != null)
@@ -250,15 +250,15 @@ namespace MedQCSys.Dialogs
         /// 获取当前TreeView树中已勾选的病历类型信息列表
         /// </summary>
         /// <returns>病历类型信息列表</returns>
-        private List< DocTypeInfo> GetSelectedDocTypeList()
+        private List<DocTypeInfo> GetSelectedDocTypeList()
         {
-            List< DocTypeInfo> lstDocTypeInfos = new List< DocTypeInfo>();
+            List<DocTypeInfo> lstDocTypeInfos = new List<DocTypeInfo>();
             if (!this.treeView1.CheckBoxes)
             {
                 TreeNode selectedNode = this.treeView1.SelectedNode;
                 if (selectedNode == null)
                     return lstDocTypeInfos;
-                 DocTypeInfo docTypeInfo = selectedNode.Tag as  DocTypeInfo;
+                DocTypeInfo docTypeInfo = selectedNode.Tag as DocTypeInfo;
                 if (docTypeInfo == null)
                     return lstDocTypeInfos;
                 lstDocTypeInfos.Add(docTypeInfo);
@@ -268,12 +268,12 @@ namespace MedQCSys.Dialogs
             {
                 TreeNode parentNode = this.treeView1.Nodes[parentIndex];
                 if (parentNode.Checked)
-                    lstDocTypeInfos.Add(parentNode.Tag as  DocTypeInfo);
+                    lstDocTypeInfos.Add(parentNode.Tag as DocTypeInfo);
                 for (int childIndex = 0; childIndex < parentNode.Nodes.Count; childIndex++)
                 {
                     TreeNode childNode = parentNode.Nodes[childIndex];
                     if (childNode.Checked)
-                        lstDocTypeInfos.Add(childNode.Tag as  DocTypeInfo);
+                        lstDocTypeInfos.Add(childNode.Tag as DocTypeInfo);
                 }
             }
             return lstDocTypeInfos;
@@ -326,6 +326,21 @@ namespace MedQCSys.Dialogs
             if (this.m_lstSelectedDocTypes != null && this.m_lstSelectedDocTypes.Count > 0)
                 this.DialogResult = DialogResult.OK;
             GlobalMethods.UI.SetCursor(this.btnOK, Cursors.Default);
+        }
+
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node == null)
+                return;
+            TreeNode node = e.Node;
+            if (node.Nodes.Count > 0)
+            {
+                foreach (TreeNode item in node.Nodes)
+                {
+                    item.Checked = e.Node.Checked;
+                }
+            }
+
         }
     }
 }
