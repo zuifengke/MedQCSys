@@ -303,8 +303,8 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
             string szSQL = string.Format("select distinct creator_id as USER_ID,creator_name as USER_NAME,DEPT_CODE,DEPT_NAME  from emr_doc_t t where t.patient_id ='{0}' and t.visit_id ='{1}'"
-                ,szPatientID
-                ,szVisitNO);
+                , szPatientID
+                , szVisitNO);
             IDataReader dataReader = null;
             try
             {
@@ -1088,7 +1088,167 @@ namespace EMRDBLib.DbAccess
                 base.MeddocAccess.CloseConnnection(false);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="szDocTypeID"></param>
+        /// <param name="dtBeginTime"></param>
+        /// <param name="dtEndTime"></param>
+        /// <param name="lstPatVisitLogs"></param>
+        /// <returns></returns>
+        public short GetEmrDocList(string szDocTypeIDList, DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<MedDocInfo> lstMedDocInfos)
+        {
+            if (base.MeddocAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            if (string.IsNullOrEmpty(szDocTypeIDList))
+                return SystemData.ReturnValue.PARAM_ERROR;
+            szDocTypeIDList = szDocTypeIDList.Replace(';', ',');
+            if (dtBeginTime.CompareTo(dtEndTime) > 0)
+                return SystemData.ReturnValue.RES_NO_FOUND;
 
+            string szField = string.Format("A.*");
+            string szCondition = string.Format("1=1 AND A.{0} >= {1} AND A.{0} <= {2} AND A.{3} = B.{3} AND B.{4} != {5}"
+                , SystemData.EmrDocTable.DOC_TIME
+                , base.MeddocAccess.GetSqlTimeFormat(dtBeginTime)
+                , base.MeddocAccess.GetSqlTimeFormat(dtEndTime)
+                , SystemData.EmrDocTable.DOC_ID
+                , SystemData.DocStatusTable.DOC_STATUS
+                , SystemData.DocStatus.CANCELED);
+            szCondition = string.Format("{0} AND A.{1} in ({2})"
+                , szCondition
+                , SystemData.EmrDocTable.DOC_TYPE
+                , szDocTypeIDList);
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND {1} = '{2}'"
+                    , SystemData.EmrDocTable.DEPT_CODE
+                    , szDeptCode);
+            string szTalbe = String.Format(" {0} A,{1} B"
+                , SystemData.DataTable.EMR_DOC
+                , SystemData.DataTable.DOC_STATUS);
+            string szOrderBy = string.Format("{0},{1},{2},{3}"
+                , SystemData.EmrDocTable.DEPT_CODE
+                , SystemData.EmrDocTable.CREATOR_NAME
+                , SystemData.EmrDocTable.PATIENT_NAME
+                , SystemData.EmrDocTable.VISIT_ID);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTalbe, szCondition
+                , SystemData.PatVisitView.DEPT_CODE);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MeddocAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstMedDocInfos == null)
+                    lstMedDocInfos = new List<MedDocInfo>();
+                lstMedDocInfos.Clear();
+                do
+                {
+                    MedDocInfo medDocInfo = new MedDocInfo();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.EmrDocTable.CONFID_CODE:
+                                medDocInfo.CONFID_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.CREATOR_ID:
+                                medDocInfo.CREATOR_ID= dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.CREATOR_NAME:
+                                medDocInfo.CREATOR_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DEPT_CODE:
+                                medDocInfo.DEPT_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DEPT_NAME:
+                                medDocInfo.DEPT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DOC_ID:
+                                medDocInfo.DOC_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DOC_SETID:
+                                medDocInfo.DOC_SETID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DOC_TIME:
+                                medDocInfo.DOC_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.EmrDocTable.DOC_TITLE:
+                                medDocInfo.DOC_TITLE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DOC_TYPE:
+                                medDocInfo.DOC_TYPE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.DOC_VERSION:
+                                medDocInfo.DOC_VERSION = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.EmrDocTable.EMR_TYPE:
+                                medDocInfo.EMR_TYPE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.MODIFIER_ID:
+                                medDocInfo.MODIFIER_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.MODIFIER_NAME:
+                                medDocInfo.MODIFIER_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.MODIFY_TIME:
+                                medDocInfo.MODIFY_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.EmrDocTable.ORDER_VALUE:
+                                medDocInfo.ORDER_VALUE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.EmrDocTable.PATIENT_ID:
+                                medDocInfo.PATIENT_ID =dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.PATIENT_NAME:
+                                medDocInfo.PATIENT_NAME = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.RECORD_TIME:
+                                medDocInfo.RECORD_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.EmrDocTable.SIGN_CODE:
+                                medDocInfo.SIGN_CODE = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.TEMPLET_ID:
+                                medDocInfo.TEMPLET_ID = dataReader.GetValue(i).ToString();
+                                break;
+
+                            case SystemData.EmrDocTable.VISIT_ID:
+                                medDocInfo.VISIT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.EmrDocTable.VISIT_TIME:
+                                medDocInfo.VISIT_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.EmrDocTable.VISIT_TYPE:
+                                medDocInfo.VISIT_TYPE = dataReader.GetValue(i).ToString();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    lstMedDocInfos.Add(medDocInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatListByDocTypeAndDocTime", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MeddocAccess.CloseConnnection(false);
+            }
+        }
         private string GetPidVidList(List<PatVisitInfo> lstPatVisitLogs)
         {
             if (lstPatVisitLogs == null || lstPatVisitLogs.Count == 0)
@@ -1274,7 +1434,7 @@ namespace EMRDBLib.DbAccess
                     , SystemData.EmrDocTable.DOC_TYPE
                     , szIgnoreDocTypeIDs);
             }
-            string szTable = string.Format("{0} A,{1} B", SystemData.DataTable.EMR_DOC, SystemData.DataTable.DOC_STATUS_T);
+            string szTable = string.Format("{0} A,{1} B", SystemData.DataTable.EMR_DOC, SystemData.DataTable.DOC_STATUS);
             IDataReader reader = null;
             string szSql = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
             try
@@ -1599,7 +1759,7 @@ namespace EMRDBLib.DbAccess
                                 model.MODIFIER_NAME = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.MODIFY_TIME:
-                                model.MODIFY_TIME = DateTime.Parse( dataReader.GetValue(i).ToString());
+                                model.MODIFY_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.EmrDocTable.ORDER_VALUE:
                                 model.ORDER_VALUE = int.Parse(dataReader.GetValue(i).ToString());
@@ -1611,7 +1771,7 @@ namespace EMRDBLib.DbAccess
                                 model.PATIENT_NAME = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.RECORD_TIME:
-                                model.RECORD_TIME =DateTime.Parse( dataReader.GetValue(i).ToString());
+                                model.RECORD_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.EmrDocTable.SIGN_CODE:
                                 model.SIGN_CODE = dataReader.GetValue(i).ToString();
@@ -1623,7 +1783,7 @@ namespace EMRDBLib.DbAccess
                                 model.VISIT_ID = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.VISIT_TIME:
-                                model.VISIT_TIME =DateTime.Parse( dataReader.GetValue(i).ToString());
+                                model.VISIT_TIME = DateTime.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.EmrDocTable.VISIT_TYPE:
                                 model.VISIT_TYPE = dataReader.GetValue(i).ToString();

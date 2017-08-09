@@ -113,6 +113,33 @@ namespace Heren.MedQC.Search
             return true;
         }
     }
+    public class ShowCommand1 : AbstractCommand
+    {
+        public ShowCommand1()
+        {
+            this.m_name = "病历查询";
+        }
+        public override bool Execute(object param, object data)
+        {
+            MainForm form = param as MainForm;
+            if (form == null)
+                return false;
+            foreach (DockContentBase item in form.DockPanel.Contents)
+            {
+                if (item is SearchByOutPatientForm)
+                {
+                    item.Activate();
+                    item.OnRefreshView();
+                    return true;
+                }
+            }
+            SearchEmrDocForm role = new SearchEmrDocForm(form);
+            role.Show(form.DockPanel, DockState.Document);
+            role.Activate();
+            return true;
+        }
+    }
+
     public class ShowDelayCommand : AbstractCommand
     {
         public ShowDelayCommand()

@@ -263,15 +263,8 @@ namespace MedQCSys.Document
             this.textEditor1.RevisionVisible = false;
             this.textEditor1.ReadOnly = true;
             this.AppendHistory(SystemParam.Instance.UserInfo);
-            if (this.m_ClickDocument == null)
-                return SystemData.ReturnValue.OK;
-            SectionInfo section = this.textEditor1.GetSection(this.m_ClickDocument.DOC_ID, MatchMode.ID);
-            if (this.textEditor1.GotoSection(section))
-            {
-                this.textEditor1.ScrollToView();
-                this.textEditor1.SelectCurrentLine();
-            }
-
+            this.GoSection(document);
+            
             return SystemData.ReturnValue.OK;
         }
 

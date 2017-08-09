@@ -631,13 +631,14 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
                 , SystemData.PatVisitView.VISIT_TIME, SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.INP_NO
                 , SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME, SystemData.PatVisitView.CHARGE_TYPE
                 , SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE, SystemData.PatVisitView.PATIENT_CONDITION
                 , SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS, SystemData.PatVisitView.DEPT_CODE
-                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.MR_STATUS);
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.MR_STATUS
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Empty;
             if (string.IsNullOrEmpty(szPatientName))
@@ -684,6 +685,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
                     if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
                     if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -1074,7 +1076,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20}", SystemData.PatVisitView.INP_NO
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}", SystemData.PatVisitView.INP_NO
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.BIRTH_TIME, SystemData.PatVisitView.CHARGE_TYPE
                 , SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.BED_CODE, SystemData.PatVisitView.DIAGNOSIS, SystemData.PatVisitView.SERVICE_AGENCY
@@ -1084,7 +1086,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.DEPT_CODE
                 , SystemData.PatVisitView.VISIT_NO
                 , SystemData.PatVisitView.INCHARGE_DOCTOR_ID
-                , SystemData.PatVisitView.ID_NO);
+                , SystemData.PatVisitView.ID_NO
+                , SystemData.PatVisitView.ALLERGY_DRUGS);
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}' AND {4}='IP'", SystemData.PatVisitView.PATIENT_ID, szPatientID
                 , SystemData.PatVisitView.VISIT_NO, szVisitNo, SystemData.PatVisitView.VISIT_TYPE);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataView.PAT_VISIT_V, szCondition);
@@ -1122,6 +1125,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(18)) PatVisitInfo.VISIT_NO = dataReader.GetString(18);
                     if (!dataReader.IsDBNull(19)) PatVisitInfo.INCHARGE_DOCTOR_ID = dataReader.GetString(19);
                     if (!dataReader.IsDBNull(20)) PatVisitInfo.ID_NO = dataReader.GetString(20);
+                    if (!dataReader.IsDBNull(21)) PatVisitInfo.ALLERGY_DRUGS = dataReader.GetString(21);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -1147,14 +1151,15 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
                 , SystemData.PatVisitView.VISIT_TIME, SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.INP_NO
                 , SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME, SystemData.PatVisitView.CHARGE_TYPE
                 , SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE, SystemData.PatVisitView.PATIENT_CONDITION
                 , SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS, SystemData.PatVisitView.DEPT_CODE
                 , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.MR_STATUS
-                , SystemData.PatVisitView.DEPT_DISCHARGE_FROM);
+                , SystemData.PatVisitView.DEPT_DISCHARGE_FROM
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Empty;
             szCondition = string.Format("{0}='{1}' and {2}='IP'"
@@ -1194,6 +1199,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
                     if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
                     if (!dataReader.IsDBNull(17)) PatVisitInfo.DischargeDeptCode = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) PatVisitInfo.VISIT_NO = dataReader.GetString(18);
 
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
@@ -1463,13 +1469,14 @@ namespace EMRDBLib.DbAccess
             if (string.IsNullOrEmpty(szPids))
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15}"
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
                 , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
                 , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
                 , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.MR_STATUS
-                , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME);
+                , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format(" ({0}) AND A.Discharge_time > {1} AND A.VISIT_TIME <={2}",
                                                  szPids, base.MedQCAccess.GetSqlTimeFormat(dtStartTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
@@ -1507,6 +1514,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
                     if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
                     if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.VISIT_NO = dataReader.GetValue(16).ToString();
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -1665,13 +1673,14 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15}"
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
                 , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
                 , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
                 , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.MR_STATUS
-                , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME);
+                , SystemData.PatVisitView.INP_NO, SystemData.PatVisitView.DISCHARGE_TIME
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format("1=1 AND A.{0}=B.{1} AND A.{2} = B.{3}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.MedicalQcMsgTable.PATIENT_ID
@@ -1716,6 +1725,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(13)) PatVisitInfo.MR_STATUS = dataReader.GetString(13);
                     if (!dataReader.IsDBNull(14)) PatVisitInfo.INP_NO = dataReader.GetString(14);
                     if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(15);
+                    if (!dataReader.IsDBNull(16)) PatVisitInfo.VISIT_NO = dataReader.GetString(16);
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

@@ -253,10 +253,6 @@ namespace EMRDBLib
             /// </summary>
             public const string QC_TIME_CHECK = "QC_TIME_CHECK";
             /// <summary>
-            /// 病历文档状态信息
-            /// </summary>
-            public const string DOC_STATUS_T = "DOC_STATUS_T";
-            /// <summary>
             /// 文档索引信息表
             /// </summary>
             public const string EMR_DOC = "EMR_DOC_T";

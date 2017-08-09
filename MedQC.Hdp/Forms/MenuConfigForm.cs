@@ -467,23 +467,59 @@ namespace Heren.MedQC.Hdp
         /// </summary>
         private void AddNewItem()
         {
-            int index = 0;
-            if (this.dataGridView1.SelectedRows.Count > 0)
-                index = this.dataGridView1.SelectedRows[0].Index + 1;
-            //创建数据
-            HdpUIConfig hdpUIConfig = new HdpUIConfig();
-            //创建行
-            //int index = this.dataGridView1.Rows.Add();
-            DataTableViewRow row = new DataTableViewRow();
-            this.dataGridView1.Rows.Insert(index, row);
-            //DataTableViewRow row = this.dataGridView1.Rows[index];
-            hdpUIConfig.UIConfigID = hdpUIConfig.MakeUIConfigID();
-            row.Tag = hdpUIConfig;
-            this.dataGridView1.SetRowState(row, RowState.New);
-            this.UpdateUIState();
+            try
+            {
+                //int index = 0;
+                //if (this.dataGridView1.SelectedRows.Count > 0)
+                //    index = this.dataGridView1.SelectedRows[0].Index + 1;
+                ////创建数据
+                //HdpUIConfig hdpUIConfig = new HdpUIConfig();
+                ////创建行
+                ////int index = this.dataGridView1.Rows.Add();
+                //DataTableViewRow row = new DataTableViewRow();
+                //this.dataGridView1.Rows.Insert(index, row);
+                ////DataTableViewRow row = this.dataGridView1.Rows[index];
+                //hdpUIConfig.UIConfigID = hdpUIConfig.MakeUIConfigID();
+                //row.Tag = hdpUIConfig;
+                //row.State = RowState.New;
+                ////this.dataGridView1.SetRowState(row, RowState.New);
+                //this.UpdateUIState();
 
-            this.dataGridView1.CurrentCell = row.Cells[this.colShowName.Index];
-            this.dataGridView1.BeginEdit(true);
+                ////this.dataGridView1.CurrentCell = row.Cells[this.colShowName.Index];
+                //this.dataGridView1.BeginEdit(true);
+
+                HdpUIConfig hdpUIConfig = null;
+                DataTableViewRow currRow = this.dataGridView1.CurrentRow;
+                if (currRow != null && currRow.Index >= 0)
+                    hdpUIConfig = currRow.Tag as HdpUIConfig;
+                if (hdpUIConfig == null)
+                    hdpUIConfig = new HdpUIConfig();
+                else
+                    hdpUIConfig = hdpUIConfig.Clone() as HdpUIConfig;
+                hdpUIConfig.UIConfigID = hdpUIConfig.MakeUIConfigID();
+                int nRowIndex = 0;
+                if (currRow != null)
+                {
+                    nRowIndex = currRow.Index + 1;
+                    DataTableViewRow dataTableViewRow = new DataTableViewRow();
+                    this.dataGridView1.Rows.Insert(nRowIndex, dataTableViewRow);
+                }
+                else
+                    nRowIndex = this.dataGridView1.Rows.Add();
+                DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
+                this.SetRowData(row, hdpUIConfig);
+
+                this.dataGridView1.Focus();
+                this.dataGridView1.SelectRow(row);
+                this.dataGridView1.SetRowState(row, RowState.New);
+                this.dataGridView1.CurrentCell = row.Cells[this.colShowName.Index];
+                this.dataGridView1.BeginEdit(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.ShowError("新增操作失败", ex.ToString());
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
         }
 
         /// <summary>

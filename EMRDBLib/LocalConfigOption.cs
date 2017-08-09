@@ -580,19 +580,22 @@ namespace EMRDBLib
                 option.IsOpenOperation = false;
             }
 #if DEBUG //调试时系统开发设置
-            option.IsOpenHomePage = true;
-            option.IsOpenFinalQC = true;
-            option.IsOpenOperation = true;
-            option.IsLinkHerenHis = true;
-            option.IsScoreRightShow = true;
-            option.IsNewScore = true;
-            option.IsShowPatientIndex = true;
-            option.IsShowVitalSignsGraph = true;
-            option.DefaultEditor = "2";
-            option.RecPrintLog = true;
-            option.IsDrawingPatientIdentification = true;
-            option.IsOpenComplexSearch = true;
-            option.IsShowDocLock=true;
+            if(!option.IsOpenHGYY)
+            {
+                option.IsOpenHomePage = true;
+                option.IsOpenFinalQC = true;
+                option.IsOpenOperation = true;
+                option.IsLinkHerenHis = true;
+                option.IsScoreRightShow = true;
+                option.IsNewScore = true;
+                option.IsShowPatientIndex = true;
+                option.IsShowVitalSignsGraph = true;
+                option.DefaultEditor = "2";
+                option.RecPrintLog = true;
+                option.IsDrawingPatientIdentification = true;
+                option.IsOpenComplexSearch = true;
+                option.IsShowDocLock = true;
+            }
 #endif
             return option;
         }
