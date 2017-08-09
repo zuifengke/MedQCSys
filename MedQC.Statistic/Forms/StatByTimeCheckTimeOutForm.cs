@@ -13,6 +13,7 @@ using System.Collections;
 using Heren.MedQC.Utilities;
 using MedQCSys;
 using EMRDBLib;
+using MedQCSys.Dialogs;
 
 namespace Heren.MedQC.Statistic
 {
@@ -53,7 +54,7 @@ namespace Heren.MedQC.Statistic
                 DataGridViewTextBoxColumn column1 = new DataGridViewTextBoxColumn();
                 column1.Name = ds.Tables[0].Rows[i][0].ToString() + "(总)";
                 column1.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(总)";
-                column1.Width = column1.Name.Length*15;
+                column1.Width = 100;
                 column1.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column1.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
                 column1.Visible = false;
@@ -61,7 +62,7 @@ namespace Heren.MedQC.Statistic
                 DataGridViewTextBoxColumn column2 = new DataGridViewTextBoxColumn();
                 column2.Name = ds.Tables[0].Rows[i][0].ToString() + "(超时)";
                 column2.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(超时)";
-                column2.Width = column2.Name.Length * 15;
+                column2.Width = 100;
                 column2.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column2.Visible = false;
                 column2.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
@@ -69,7 +70,7 @@ namespace Heren.MedQC.Statistic
                 DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
                 column3.Name = ds.Tables[0].Rows[i][0].ToString() + "(超时率)";
                 column3.HeaderText = ds.Tables[0].Rows[i][0].ToString() + "(超时率)";
-                column3.Width = column3.Name.Length * 15;
+                column3.Width = 100;
                 column3.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column3.Visible = false;
                 column3.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
@@ -80,21 +81,21 @@ namespace Heren.MedQC.Statistic
 
             column4.Name = "病历总数";
             column4.HeaderText = "病历总数";
-            column4.Width = 200;
+            column4.Width = 80;
             column4.Visible = true;
             column4.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.dataGridView1.Columns.Add(column4);
             DataGridViewTextBoxColumn column5 = new DataGridViewTextBoxColumn();
             column5.Name = "病历超时总数";
             column5.HeaderText = "病历超时总数";
-            column5.Width = 200;
+            column5.Width = 80;
             column5.Visible = true;
             column5.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.dataGridView1.Columns.Add(column5);
             DataGridViewTextBoxColumn column6 = new DataGridViewTextBoxColumn();
             column6.Name = "病历超时率";
             column6.HeaderText = "病历超时率";
-            column6.Width = 200;
+            column6.Width = 80;
             column6.Visible = true;
             column6.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.dataGridView1.Columns.Add(column6);
@@ -131,7 +132,7 @@ namespace Heren.MedQC.Statistic
             {
                 szDeptCode = (this.cboDeptName.SelectedItem as  DeptInfo).DEPT_CODE;
             }
-
+            string szDocTypeIDList = StringHelper.ConventDocTypeIDForQuery(this.txtDocType.Tag as string);
             this.ShowStatusMessage("正在统计时效记录...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             StringBuilder sb = new StringBuilder();
@@ -143,6 +144,10 @@ namespace Heren.MedQC.Statistic
                 , szTimeType);
             if (szDeptCode != string.Empty)
                 sb.AppendFormat("and dept_in_charge ='{0}'", szDeptCode);
+            if (!string.IsNullOrEmpty(szDocTypeIDList))
+            {
+                sb.AppendFormat(" and doctype_id in ({0})", szDocTypeIDList);
+            }
             sb.Append(" group by dept_stayed,doctype_name order by t.dept_stayed ) t");
             DataSet ds = null;
             short shRet = CommonAccess.Instance.ExecuteQuery(sb.ToString(), out ds);
@@ -221,7 +226,7 @@ namespace Heren.MedQC.Statistic
             {
                 szDeptCode = (this.cboDeptName.SelectedItem as  DeptInfo).DEPT_CODE;
             }
-
+            string szDocTypeIDList = StringHelper.ConventDocTypeIDForQuery(this.txtDocType.Tag as string);
             this.ShowStatusMessage("正在统计时效记录...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             StringBuilder sb = new StringBuilder();
@@ -233,6 +238,10 @@ namespace Heren.MedQC.Statistic
                 , szTimeType);
             if (szDeptCode != string.Empty)
                 sb.AppendFormat("and dept_in_charge ='{0}'", szDeptCode);
+            if (!string.IsNullOrEmpty(szDocTypeIDList))
+            {
+                sb.AppendFormat("and doctype_id in({0})", szDocTypeIDList);
+            }
             sb.Append(" and doctor_in_charge is not null ");
             sb.Append(" group by dept_stayed,doctype_name,t.doctor_in_charge order by t.dept_stayed,t.doctor_in_charge ) t");
             DataSet ds = null;
@@ -351,7 +360,7 @@ namespace Heren.MedQC.Statistic
             {
                 szDeptCode = (this.cboDeptName.SelectedItem as  DeptInfo).DEPT_CODE;
             }
-
+            string szDocTypeIDList = StringHelper.ConventDocTypeIDForQuery(this.txtDocType.Tag as string);
             this.ShowStatusMessage("正在统计时效记录...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             StringBuilder sb = new StringBuilder();
@@ -363,6 +372,10 @@ namespace Heren.MedQC.Statistic
                 , szTimeType);
             if (szDeptCode != string.Empty)
                 sb.AppendFormat("and dept_in_charge ='{0}'", szDeptCode);
+            if (!string.IsNullOrEmpty(szDocTypeIDList))
+            {
+                sb.AppendFormat("and doctype_id in({0})", szDocTypeIDList);
+            }
             sb.Append(" and doctor_in_charge is not null ");
             sb.Append(" group by dept_stayed,doctype_name,t.doctor_in_charge,patient_name,patient_id,visit_id order by t.dept_stayed,t.doctor_in_charge,patient_name,patient_id ) t");
             DataSet ds = null;
@@ -583,5 +596,46 @@ namespace Heren.MedQC.Statistic
             return false;
         }
 
+        private void txtDocType_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ShowDocTypeSelectForm();
+        }
+
+        /// <summary>
+        /// 显示文档类型设置对话框
+        /// </summary>
+        /// <param name="row">指定行</param>
+        private void ShowDocTypeSelectForm()
+        {
+            TempletSelectForm templetSelectForm = new TempletSelectForm();
+            templetSelectForm.DefaultDocTypeID = txtDocType.Tag as string;
+            templetSelectForm.MultiSelect = true;
+            templetSelectForm.Text = "选择病历类型";
+            templetSelectForm.Description = "请选择应书写的病历类型：";
+            if (templetSelectForm.ShowDialog() != DialogResult.OK)
+                return;
+            List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
+            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
+            {
+                return;
+            }
+
+            StringBuilder sbDocTypeIDList = new StringBuilder();
+            StringBuilder sbDocTypeNameList = new StringBuilder();
+            for (int index = 0; index < lstDocTypeInfos.Count; index++)
+            {
+                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
+                if (docTypeInfo == null)
+                    continue;
+                sbDocTypeIDList.Append(docTypeInfo.DocTypeID);
+                if (index < lstDocTypeInfos.Count - 1)
+                    sbDocTypeIDList.Append(";");
+                sbDocTypeNameList.Append(docTypeInfo.DocTypeName);
+                if (index < lstDocTypeInfos.Count - 1)
+                    sbDocTypeNameList.Append(";");
+            }
+            txtDocType.Text = sbDocTypeNameList.ToString();
+            txtDocType.Tag = sbDocTypeIDList.ToString();
+        }
     }
 }

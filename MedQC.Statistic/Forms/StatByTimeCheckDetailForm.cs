@@ -13,6 +13,7 @@ using Heren.MedQC.Utilities;
 using EMRDBLib;
 using MedQCSys.DockForms;
 using MedQCSys;
+using MedQCSys.Dialogs;
 
 namespace Heren.MedQC.Statistic
 {
@@ -36,7 +37,7 @@ namespace Heren.MedQC.Statistic
                 MessageBoxEx.Show("下载科室列表失败");
             }
             this.ShowStatusMessage(null);
-            string[] qcReuslt =  new string[]{ "正常","未书写超时","书写提前","书写超时","正常未书写"};
+            string[] qcReuslt = new string[] { "正常", "未书写超时", "书写提前", "书写超时", "正常未书写" };
             this.cboQcResult.Items.Clear();
             foreach (string item in qcReuslt)
             {
@@ -57,16 +58,18 @@ namespace Heren.MedQC.Statistic
             string szQcResult = string.Empty;
             if (this.cboDeptName.SelectedItem != null && !string.IsNullOrEmpty(this.cboDeptName.Text.Trim()))
             {
-                szDeptCode = (this.cboDeptName.SelectedItem as  DeptInfo).DEPT_CODE;
+                szDeptCode = (this.cboDeptName.SelectedItem as DeptInfo).DEPT_CODE;
             }
             if (this.cboQcResult.SelectedItem != null)
             {
                 szQcResult = EMRDBLib.SystemData.WrittenState.GetWrittenStateCode(this.cboQcResult.SelectedItem.ToString());
             }
+            string szDocTypeIDs = txtDocType.Tag as string;
+            string szDocTypeIDList = StringHelper.ConventDocTypeIDForQuery(szDocTypeIDs);
             this.ShowStatusMessage("正在查询时效质控记录...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             List<EMRDBLib.QcTimeRecord> lstQcTimeRecord = null;
-            short shRet = QcTimeRecordAccess.Instance.GetQcTimeRecords(dtBeginTime, dtEndTime, szTimeType, szQcResult, szDeptCode, ref lstQcTimeRecord);
+            short shRet = QcTimeRecordAccess.Instance.GetQcTimeRecords(dtBeginTime, dtEndTime, szTimeType, szQcResult, szDeptCode, szDocTypeIDList, ref lstQcTimeRecord);
             if (shRet == EMRDBLib.SystemData.ReturnValue.RES_NO_FOUND)
             {
                 this.dataGridView1.Rows.Clear();
@@ -83,10 +86,12 @@ namespace Heren.MedQC.Statistic
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
                 return;
             }
-
             this.LoadQcTimeRecord(lstQcTimeRecord);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
+
+        
+
         /// <summary>
         /// 装载时效记录信息
         /// </summary>
@@ -118,7 +123,7 @@ namespace Heren.MedQC.Statistic
                 row.Cells[this.colCheckDate.Index].Value = record.CheckDate.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colQcExplain.Index].Value = record.QcExplain;
                 row.Cells[this.colStatus.Index].Value = EMRDBLib.SystemData.WrittenState.GetCnWrittenState(record.QcResult);
-               
+
 
                 //记录时间和作者
                 if (record.QcResult == EMRDBLib.SystemData.WrittenState.Normal
@@ -237,6 +242,47 @@ namespace Heren.MedQC.Statistic
                 MessageBoxEx.Show("病历详细信息下载失败,无法打开病历！");
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void txtDocType_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ShowDocTypeSelectForm();
+        }
+        /// <summary>
+        /// 显示文档类型设置对话框
+        /// </summary>
+        /// <param name="row">指定行</param>
+        private void ShowDocTypeSelectForm()
+        {
+            TempletSelectForm templetSelectForm = new TempletSelectForm();
+            templetSelectForm.DefaultDocTypeID = txtDocType.Tag as string;
+            templetSelectForm.MultiSelect = true;
+            templetSelectForm.Text = "选择病历类型";
+            templetSelectForm.Description = "请选择应书写的病历类型：";
+            if (templetSelectForm.ShowDialog() != DialogResult.OK)
+                return;
+            List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
+            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
+            {
+                return;
+            }
+
+            StringBuilder sbDocTypeIDList = new StringBuilder();
+            StringBuilder sbDocTypeNameList = new StringBuilder();
+            for (int index = 0; index < lstDocTypeInfos.Count; index++)
+            {
+                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
+                if (docTypeInfo == null)
+                    continue;
+                sbDocTypeIDList.Append(docTypeInfo.DocTypeID);
+                if (index < lstDocTypeInfos.Count - 1)
+                    sbDocTypeIDList.Append(";");
+                sbDocTypeNameList.Append(docTypeInfo.DocTypeName);
+                if (index < lstDocTypeInfos.Count - 1)
+                    sbDocTypeNameList.Append(";");
+            }
+            txtDocType.Text = sbDocTypeNameList.ToString();
+            txtDocType.Tag = sbDocTypeIDList.ToString();
         }
 
     }

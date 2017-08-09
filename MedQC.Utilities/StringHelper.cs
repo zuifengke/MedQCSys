@@ -11,6 +11,26 @@ namespace Heren.MedQC.Utilities
     /// </summary>
     public class StringHelper
     {
+        public static string ConventDocTypeIDForQuery(string szDocTypeIDs)
+        {
+            string szDocTypeIDList = "";
+            if (!string.IsNullOrEmpty(szDocTypeIDs))
+            {
+                string[] arrDocTypeID = szDocTypeIDs.Split(';');
+                if (arrDocTypeID.Length > 0)
+                {
+                    foreach (string item in arrDocTypeID)
+                    {
+                        if (string.IsNullOrEmpty(szDocTypeIDList))
+                            szDocTypeIDList = "'" + item + "'";
+                        else
+                            szDocTypeIDList = string.Format("{0},'{1}'"
+                                , szDocTypeIDList, item);
+                    }
+                }
+            }
+            return szDocTypeIDList;
+        }
         /// <summary>
         /// 检查字符串包含字符数组中任意一个关键词
         /// </summary>

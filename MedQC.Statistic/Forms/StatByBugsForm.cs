@@ -537,7 +537,7 @@ namespace Heren.MedQC.Statistic
                     szDeptCode = deptInfo.DEPT_CODE;
                 List<EMRDBLib.QcTimeRecord> lstQcTimeRecord = null;
                 string szTimeType = "CHECK_DATE";
-                short shRet = QcTimeRecordAccess.Instance.GetQcTimeRecords(dtBeginTime, dtEndTime, szTimeType, "1,3", szDeptCode, ref lstQcTimeRecord);
+                short shRet = QcTimeRecordAccess.Instance.GetQcTimeRecords(dtBeginTime, dtEndTime, szTimeType, "1,3", szDeptCode,null, ref lstQcTimeRecord);
                 if (shRet != SystemData.ReturnValue.OK
                     || lstQcTimeRecord == null
                     || lstQcTimeRecord.Count <= 0)

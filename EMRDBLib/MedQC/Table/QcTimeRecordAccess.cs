@@ -1042,7 +1042,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcTimeRecords(DateTime dtBeginTime, DateTime dtEndTime, string szTimeType, string szQcResult
-            , string szDeptCode, ref List<QcTimeRecord> lstQcTimeRecords)
+            , string szDeptCode,string szDocTypeIDList, ref List<QcTimeRecord> lstQcTimeRecords)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1107,6 +1107,13 @@ namespace EMRDBLib.DbAccess
                     , SystemData.QcTimeRecordTable.DEPT_IN_CHARGE
                     , szDeptCode
                 );
+            }
+            if (!string.IsNullOrEmpty(szDocTypeIDList))
+            {
+                szCondition = string.Format("{0} AND {1} in ({2})"
+                    , szCondition
+                    , SystemData.QcTimeRecordTable.DOCTYPE_ID
+                    , szDocTypeIDList);
             }
             string szOrderBy = string.Format("{0},{1},{2}"
                 , SystemData.QcTimeRecordTable.DEPT_IN_CHARGE, SystemData.QcTimeRecordTable.PATIENT_ID
