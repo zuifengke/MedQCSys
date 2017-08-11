@@ -153,6 +153,7 @@ namespace Heren.MedQC.Maintenance
                 szMessageText = string.Format("保存中止,已保存{0}条记录!", count);
             else
                 szMessageText = string.Format("保存成功,已保存{0}条记录!", count);
+            TimeEventHandler.Instance.ClearTimeQCEvent();
             MessageBoxEx.Show(szMessageText, MessageBoxIcon.Information);
             return shRet == SystemData.ReturnValue.OK;
         }

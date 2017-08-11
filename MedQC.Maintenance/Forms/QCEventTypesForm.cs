@@ -321,7 +321,7 @@ namespace Heren.MedQC.Maintenance
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
-                    MessageBoxEx.Show("无法更新当前记录！");
+                    MessageBoxEx.Show("无法更新当前记录，输入码可能重复！");
                     return SystemData.ReturnValue.FAILED;
                 }
                 row.Tag = qcEventType;
@@ -333,7 +333,7 @@ namespace Heren.MedQC.Maintenance
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);
-                    MessageBoxEx.Show("无法保存当前记录！");
+                    MessageBoxEx.Show("无法保存当前记录，输入码可能重复！");
                     return SystemData.ReturnValue.FAILED;
                 }
                 row.Tag = qcEventType;

@@ -230,19 +230,19 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="szEventType">病案质控问题类别名称</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short Delete(string szEventType)
+        public short Delete(string szInputCode)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            if (GlobalMethods.Misc.IsEmptyString(szEventType))
+            if (GlobalMethods.Misc.IsEmptyString(szInputCode))
             {
-                LogManager.Instance.WriteLog("QcMsgDictAccess.Delete", new string[] { "szEventType" }
-                    , new object[] { szEventType }, "参数不能为空");
+                LogManager.Instance.WriteLog("QcMsgDictAccess.Delete", new string[] { "szInputCode" }
+                    , new object[] { szInputCode }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
 
-            string szCondition = string.Format("{0}='{1}'", SystemData.QaEventTypeDictTable.QA_EVENT_TYPE, szEventType);
+            string szCondition = string.Format("{0}='{1}'", SystemData.QaEventTypeDictTable.INPUT_CODE, szInputCode);
             string szSQL = string.Format(SystemData.SQL.DELETE, SystemData.DataTable.QA_EVENT_TYPE_DICT, szCondition);
 
             int nCount = 0;

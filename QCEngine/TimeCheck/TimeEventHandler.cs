@@ -81,7 +81,11 @@ namespace MedDocSys.QCEngine.TimeCheck
             if (this.m_dicEventResults != null)
                 this.m_dicEventResults.Clear();
         }
-
+        public void ClearTimeQCEvent()
+        {
+            if (this.m_dicTimeQCEvents != null)
+                this.m_dicTimeQCEvents.Clear();
+        }
         /// <summary>
         /// 获取指定ID号的时效质控事件信息
         /// </summary>
@@ -89,7 +93,7 @@ namespace MedDocSys.QCEngine.TimeCheck
         /// <returns>MDSDBLib.TimeQCEvent</returns>
         public TimeQCEvent GetTimeQCEvent(string szEventID)
         {
-            if (this.m_dicTimeQCEvents != null)
+            if (this.m_dicTimeQCEvents != null&&this.m_dicTimeQCEvents.Count>0)
             {
                 if (this.m_dicTimeQCEvents.ContainsKey(szEventID))
                     return this.m_dicTimeQCEvents[szEventID];

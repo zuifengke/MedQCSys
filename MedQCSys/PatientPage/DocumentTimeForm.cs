@@ -187,7 +187,11 @@ namespace MedQCSys.DockForms
                 else
                 {
                     if (resultInfo.WrittenState == WrittenState.Timeout || resultInfo.WrittenState == WrittenState.Unwrite)
+                    {
+
                         row.Cells[this.colLeave.Index].Value = "ÒÑ³¬Ê±";
+                        row.Cells[this.colLeave.Index].Style.ForeColor = Color.Red;
+                    }
                     else
                         row.Cells[this.colLeave.Index].Value = "0";
                 }
