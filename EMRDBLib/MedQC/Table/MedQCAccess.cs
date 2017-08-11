@@ -801,7 +801,7 @@ namespace EMRDBLib.DbAccess
         }
 
         /// <summary>
-        /// 批量获取病人分数
+        /// 批量获取病人手术
         /// </summary>
         /// <param name="lstPatVisitLogs"></param>
         /// <returns></returns>
@@ -821,7 +821,7 @@ namespace EMRDBLib.DbAccess
             }
             string szField = string.Format("{0},{1}", SystemData.OperationNameTable.PATIENT_ID, SystemData.OperationNameTable.VISIT_ID);
             string szCondition = string.Format("{0}", sb.ToString());
-            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataView.OPERATION_NAME_V, szCondition);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataView.OPERATION_V, szCondition);
 
             IDataReader dataReader = null;
             try

@@ -250,7 +250,7 @@ namespace EMRDBLib.DbAccess
                                 item.Operator = dataReader.GetString(i);
                                 break;
                             case SystemData.OperationView.PATIENT_ID:
-                                item.PatientID = dataReader.GetString(i);
+                                item.PatientID = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.OperationView.PATIENT_NAME:
                                 item.PatientName = dataReader.GetString(i);

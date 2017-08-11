@@ -612,6 +612,13 @@ namespace MedQCSys.DockForms
                 {
                     szSelectDeptCode = deptInfo.DEPT_CODE;
                 }
+                else {
+                    if (MessageBoxEx.ShowConfirm("您正在查询全院患者，时间可能较长，是否继续？") != DialogResult.OK)
+                    {
+                        this.ShowStatusMessage(null);
+                        return;
+                    }
+                }
                 TimeSpan timeSpan = this.patSearchPane1.AdmissionTimeEnd - this.patSearchPane1.AdmissionTimeBegin;
                 if (timeSpan.Days <= 30 || patSearchPane1.PatientType == EMRDBLib.PatientType.PatInHosptial)
                 {
