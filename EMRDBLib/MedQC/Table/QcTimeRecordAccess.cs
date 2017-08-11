@@ -11,7 +11,7 @@ using System.Text;
 
 namespace EMRDBLib.DbAccess
 {
-    
+
     public class QcTimeRecordAccess : DBAccessBase
     {
         private static QcTimeRecordAccess m_Instance = null;
@@ -41,7 +41,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}"
                 , SystemData.QcTimeRecordTable.BEGIN_DATE
                 , SystemData.QcTimeRecordTable.CHECK_DATE
                 , SystemData.QcTimeRecordTable.CHECKER_NAME
@@ -66,7 +66,9 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcTimeRecordTable.VISIT_ID
                 , SystemData.QcTimeRecordTable.EVENT_NAME
                 , SystemData.QcTimeRecordTable.EVENT_TIME
-                , SystemData.QcTimeRecordTable.DOC_TIME);
+                , SystemData.QcTimeRecordTable.DOC_TIME
+                , SystemData.QcTimeRecordTable.VISIT_NO
+                );
 
             string szCondition = String.Format("1=1");
 
@@ -114,6 +116,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(22)) record.EventName = dataReader.GetString(22);
                     if (!dataReader.IsDBNull(23)) record.EventTime = dataReader.GetDateTime(23);
                     if (!dataReader.IsDBNull(24)) record.DocTime = dataReader.GetDateTime(24);
+                    if (!dataReader.IsDBNull(25)) record.VISIT_NO = dataReader.GetValue(25).ToString();
                     lstQcTimeRecords.Add(record);
 
                 } while (dataReader.Read());
@@ -393,12 +396,13 @@ namespace EMRDBLib.DbAccess
                     , "base.QCAccess == null ");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12}"
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
                 , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
                 , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
-                , SystemData.PatVisitView.DEPT_CODE);
+                , SystemData.PatVisitView.DEPT_CODE
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format(" 1=1 ");
             string szTable = string.Format("{0} A", SystemData.DataView.INP_VISIT_V);
@@ -430,6 +434,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(10)) patVisitLog.INCHARGE_DOCTOR = dataReader.GetString(10);
                     if (!dataReader.IsDBNull(11)) patVisitLog.DIAGNOSIS = dataReader.GetString(11);
                     if (!dataReader.IsDBNull(12)) patVisitLog.DEPT_CODE = dataReader.GetString(12);
+                    if (!dataReader.IsDBNull(13)) patVisitLog.VISIT_NO = dataReader.GetValue(13).ToString();
                     lstPatVisitLogs.Add(patVisitLog);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -462,14 +467,15 @@ namespace EMRDBLib.DbAccess
             if (dtDischargeBeginTime == SystemParam.Instance.DefaultTime
                 || dtDischargeEndTime == SystemParam.Instance.DefaultTime)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16}"
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
                 , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
                 , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
                 , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
                 , SystemData.PatVisitView.NURSING_CLASS
-                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE);
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format(" 1=1 ");
             szCondition = string.Format("{0} AND {1} >= {2} AND {1} <= {3}"
@@ -511,6 +517,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(14)) patVisitLog.NURSING_CLASS = dataReader.GetString(14);
                     if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
                     if (!dataReader.IsDBNull(16)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(16);
+                    if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetValue(17).ToString();
                     lstPatVisitLogs.Add(patVisitLog);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -543,14 +550,15 @@ namespace EMRDBLib.DbAccess
             if (szPatientID == string.Empty
                 || szVisitID == string.Empty)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16}"
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8},A.{9},A.{10},A.{11},A.{12},A.{13},A.{14},A.{15},A.{16},A.{17}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.PatVisitView.VISIT_TIME
                 , SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME
                 , SystemData.PatVisitView.CHARGE_TYPE, SystemData.PatVisitView.DEPT_NAME, SystemData.PatVisitView.BED_CODE
                 , SystemData.PatVisitView.PATIENT_CONDITION, SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS
                 , SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.IDENTITY
                 , SystemData.PatVisitView.NURSING_CLASS
-                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE);
+                , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE
+                , SystemData.PatVisitView.VISIT_NO);
 
             string szCondition = string.Format(" 1=1 ");
             szCondition = string.Format("{0} AND {1} = '{2}' AND {3} = '{4}'"
@@ -590,6 +598,7 @@ namespace EMRDBLib.DbAccess
                 if (!dataReader.IsDBNull(14)) patVisitLog.NURSING_CLASS = dataReader.GetString(14);
                 if (!dataReader.IsDBNull(15)) patVisitLog.DISCHARGE_TIME = dataReader.GetDateTime(15);
                 if (!dataReader.IsDBNull(16)) patVisitLog.DISCHARGE_MODE = dataReader.GetString(16);
+                if (!dataReader.IsDBNull(17)) patVisitLog.VISIT_NO = dataReader.GetValue(17).ToString();
 
                 return SystemData.ReturnValue.OK;
             }
@@ -688,7 +697,7 @@ namespace EMRDBLib.DbAccess
         #endregion
 
         #region 统计到科室
-        
+
 
         public short SaveTimeRecordStatByDept(DateTime now)
         {
@@ -1042,12 +1051,12 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <returns>SystemData.ReturnValue</returns>
         public short GetQcTimeRecords(DateTime dtBeginTime, DateTime dtEndTime, string szTimeType, string szQcResult
-            , string szDeptCode,string szDocTypeIDList, ref List<QcTimeRecord> lstQcTimeRecords)
+            , string szDeptCode, string szDocTypeIDList, ref List<QcTimeRecord> lstQcTimeRecords)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}"
                 , SystemData.QcTimeRecordTable.BEGIN_DATE
                 , SystemData.QcTimeRecordTable.CHECK_DATE
                 , SystemData.QcTimeRecordTable.CHECKER_NAME
@@ -1072,7 +1081,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcTimeRecordTable.VISIT_ID
                 , SystemData.QcTimeRecordTable.EVENT_NAME
                 , SystemData.QcTimeRecordTable.EVENT_TIME
-                , SystemData.QcTimeRecordTable.DOC_TIME);
+                , SystemData.QcTimeRecordTable.DOC_TIME
+                , SystemData.QcTimeRecordTable.VISIT_NO);
 
             string szCondition = String.Format("1=1");
             if (!string.IsNullOrEmpty(szTimeType))
@@ -1162,6 +1172,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(22)) record.EventName = dataReader.GetString(22);
                     if (!dataReader.IsDBNull(23)) record.EventTime = dataReader.GetDateTime(23);
                     if (!dataReader.IsDBNull(24)) record.DocTime = dataReader.GetDateTime(24);
+                    if (!dataReader.IsDBNull(25)) record.VISIT_NO = dataReader.GetValue(25).ToString();
                     lstQcTimeRecords.Add(record);
 
                 } while (dataReader.Read());

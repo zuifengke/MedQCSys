@@ -552,6 +552,7 @@ namespace EMRDBLib
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "ZYJHZYY_SysIcon.ico");
                 option.IsOpenOperation = false;
                 option.IsOpenComplexSearch = false;
+                option.IsCheckPoint = false;
                 option.IsShowPatientIndex = false;
                 option.IsOpenHGYY = true;
                 option.IsOpenHospitalTimeCheck = false;
