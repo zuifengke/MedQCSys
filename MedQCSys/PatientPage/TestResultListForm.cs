@@ -322,10 +322,11 @@ namespace MedQCSys.DockForms
             this.ShowStatusMessage("正在下载检验记录数据，请稍候...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
 
+            this.ResultList.Rows.Clear();
             LabMaster labTestInfo = (LabMaster)this.LabTestInfoList.SelectedRows[0].Tag;
             if (labTestInfo != null)
                 this.LoadResultList(labTestInfo.TEST_ID);
-
+            
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }

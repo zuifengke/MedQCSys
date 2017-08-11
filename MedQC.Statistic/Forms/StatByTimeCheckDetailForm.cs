@@ -262,13 +262,17 @@ namespace Heren.MedQC.Statistic
             if (templetSelectForm.ShowDialog() != DialogResult.OK)
                 return;
             List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
-            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
-            {
-                return;
-            }
 
             StringBuilder sbDocTypeIDList = new StringBuilder();
             StringBuilder sbDocTypeNameList = new StringBuilder();
+            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
+            {
+
+                txtDocType.Text = sbDocTypeNameList.ToString();
+                txtDocType.Tag = sbDocTypeIDList.ToString();
+                return;
+            }
+
             for (int index = 0; index < lstDocTypeInfos.Count; index++)
             {
                 DocTypeInfo docTypeInfo = lstDocTypeInfos[index];

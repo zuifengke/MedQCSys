@@ -1120,10 +1120,19 @@ namespace EMRDBLib.DbAccess
             }
             if (!string.IsNullOrEmpty(szDocTypeIDList))
             {
-                szCondition = string.Format("{0} AND {1} in ({2})"
+                string szDocTypeIDListCondition = string.Empty;
+                foreach (var item in szDocTypeIDList.Split(','))
+                {
+                    if (string.IsNullOrEmpty(szDocTypeIDListCondition))
+                    {
+                        szDocTypeIDListCondition = string.Format("instr(DOCTYPE_ID,{0})>0", item);
+                    }
+                    else
+                        szDocTypeIDListCondition = string.Format("{0} or instr(DOCTYPE_ID,{1})>0", szDocTypeIDListCondition, item);
+                }
+                szCondition = string.Format("{0} AND ({1})"
                     , szCondition
-                    , SystemData.QcTimeRecordTable.DOCTYPE_ID
-                    , szDocTypeIDList);
+                    , szDocTypeIDListCondition);
             }
             string szOrderBy = string.Format("{0},{1},{2}"
                 , SystemData.QcTimeRecordTable.DEPT_IN_CHARGE, SystemData.QcTimeRecordTable.PATIENT_ID
