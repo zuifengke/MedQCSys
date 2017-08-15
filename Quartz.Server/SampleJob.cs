@@ -32,9 +32,10 @@ namespace Quartz.Server
                 logger.Info("单患者规则运行测试分析开始...");
                 //Thread.Sleep(TimeSpan.FromSeconds(1));
                 EMRDBLib.PatVisitInfo patVisitLog = new EMRDBLib.PatVisitInfo();
-                patVisitLog.PATIENT_ID = "P099634";
-                patVisitLog.VISIT_ID = "20150722000000000002";
-                CheckPointHelper.Instance.CheckPatient(patVisitLog);
+                patVisitLog.PATIENT_ID = "P101210";
+                patVisitLog.VISIT_NO = "20170300005";
+                patVisitLog.VISIT_ID = "2";
+                //CheckPointHelper.Instance.CheckPatient(patVisitLog);
                 logger.Info("单患者规则运行测试分析结束 run finished.");
             }
             catch (Exception ex)

@@ -199,7 +199,7 @@ namespace Heren.MedQC.Maintenance
         {
             foreach (DataTableViewRow item in this.dataGridView1.Rows)
             {
-                QcCheckPoint qcCheckPoint  =item.Tag as QcCheckPoint;
+                QcCheckPoint qcCheckPoint = item.Tag as QcCheckPoint;
                 qcCheckPoint.OrderValue = item.Index;
                 QcCheckPointAccess.Instance.Update(qcCheckPoint);
             }
@@ -227,13 +227,17 @@ namespace Heren.MedQC.Maintenance
                 row.Cells[this.colQCScore.Index].Value = qcCheckPoint.Score;
             row.Cells[this.colIsValid.Index].Value = qcCheckPoint.IsValid;
             row.Cells[this.colMsgDictMessage.Index].Value = qcCheckPoint.MsgDictMessage;
-            row.Cells[this.colScriptSource.Index].Value = qcCheckPoint.ScriptName;
+            row.Cells[this.colScriptName.Index].Value = qcCheckPoint.ScriptName;
             row.Cells[this.colHandlerCommand.Index].Value = qcCheckPoint.HandlerCommand;
             row.Cells[this.colEvent.Index].Value = qcCheckPoint.EventName;
             row.Cells[this.colEvent.Index].Tag = qcCheckPoint.EventID;
             row.Cells[this.colIsRepeat.Index].Value = qcCheckPoint.IsRepeat;
             row.Cells[this.colQaEventType.Index].Value = qcCheckPoint.QaEventType;
             row.Cells[this.col_ELEMENT_NAME.Index].Value = qcCheckPoint.ELEMENT_NAME;
+            row.Cells[this.colScriptName.Index].Value = qcCheckPoint.ScriptName;
+            row.Cells[this.colScriptName.Index].Tag = qcCheckPoint.ScriptID;
+
+
 
         }
 
@@ -332,11 +336,13 @@ namespace Heren.MedQC.Maintenance
                 qcCheckPoint.CheckType = cellValue.ToString();
             else
                 qcCheckPoint.CheckType = string.Empty;
-            QcCheckScript qcCheckScript = row.Cells[this.colScriptSource.Index].Tag as QcCheckScript;
-            if (qcCheckScript != null)
-                qcCheckPoint.ScriptID = qcCheckScript.ScriptID;
-            else
-                qcCheckPoint.ScriptID = string.Empty;
+            cellValue = row.Cells[this.colScriptName.Index].Value;
+            if (cellValue != null)
+            {
+                qcCheckPoint.ScriptID = row.Cells[this.colScriptName.Index].Tag as string;
+                qcCheckPoint.ScriptName = row.Cells[this.colScriptName.Index].Value.ToString();
+            }
+
             return true;
         }
 
@@ -661,8 +667,15 @@ namespace Heren.MedQC.Maintenance
                 this.ShowTimeLineEditForm(row.Cells[this.colWrittenPeriod.Index]);
             else if (e.ColumnIndex == this.colMsgDictMessage.Index || e.ColumnIndex == this.colQaEventType.Index)
                 this.ShowQuestionTypeForm(row);
-            else if (e.ColumnIndex == this.colScriptSource.Index)
+            else if (e.ColumnIndex == this.colScriptName.Index)
+            {
+                if (SystemParam.Instance.PatVisitInfo == null)
+                {
+                    MessageBoxEx.ShowMessage("为了完成脚本调试，请先保存规则配置以及选择测试患者");
+                    return;
+                }
                 this.ShowScriptEditForm(row);
+            }
             else if (e.ColumnIndex == this.col_ELEMENT_NAME.Index)
             {
                 SelectElementForm frm = new SelectElementForm();
@@ -692,24 +705,31 @@ namespace Heren.MedQC.Maintenance
 
         private void ShowScriptEditForm(DataTableViewRow row)
         {
-            QcCheckScript qcCheckScript = row.Cells[this.colScriptSource.Index].Tag as QcCheckScript;
+            string szScriptConfigID = row.Cells[this.colScriptName.Index].Tag as string;
+            ScriptConfig qcCheckScript = null;
+            if (!string.IsNullOrEmpty(szScriptConfigID))
+                ScriptConfigAccess.Instance.GetScriptConfig(szScriptConfigID, ref qcCheckScript);
             if (row == null || row.Index < 0 || this.dataGridView1.IsDeletedRow(row))
                 return;
 
             string szScriptID = string.Empty;
             string szScriptName = string.Empty;
             if (qcCheckScript != null)
-                szScriptID = qcCheckScript.ScriptID;
+                szScriptID = qcCheckScript.SCRIPT_ID;
             if (row.Cells[this.colScriptName.Index].Value != null)
                 szScriptName = row.Cells[this.colScriptName.Index].Value.ToString();
 
             string szScriptText = string.Empty;
-            if (row.Cells[this.colScriptSource.Index].Value != null)
-                szScriptText = row.Cells[this.colScriptSource.Index].Value.ToString();
-
-            byte[] byteScriptData = row.Cells[this.colScriptSource.Index].Tag as byte[];
+            if (!string.IsNullOrEmpty(szScriptID))
+            {
+                ScriptConfigAccess.Instance.GetScriptSource(szScriptID, ref szScriptText);
+            }
 
             DebuggerForm scriptEditForm = new DebuggerForm();
+            scriptEditForm.PatVisitInfo = SystemParam.Instance.PatVisitInfo;
+            scriptEditForm.QcCheckPoint = row.Tag as QcCheckPoint;
+            scriptEditForm.QcCheckResult = CheckPointHelper.Instance.InitQcCheckResult(scriptEditForm.QcCheckPoint, SystemParam.Instance.PatVisitInfo);
+            scriptEditForm.ScriptConfig = qcCheckScript;
             scriptEditForm.WorkingPath = GlobalMethods.Misc.GetWorkingPath();
             scriptEditForm.ScriptProperty = new ScriptProperty();
             scriptEditForm.ScriptProperty.ScriptName = szScriptName;
@@ -720,8 +740,12 @@ namespace Heren.MedQC.Maintenance
             scriptEditForm.ShowInTaskbar = false;
             if (scriptEditForm.ShowDialog() != DialogResult.OK)
                 return;
-            row.Cells[this.colScriptSource.Index].Tag = scriptEditForm.ScriptProperty.ScriptData;
-            row.Cells[this.colScriptSource.Index].Value = scriptEditForm.ScriptProperty.ScriptText;
+            if (scriptEditForm.ScriptConfig != null)
+            {
+                row.Cells[this.colScriptName.Index].Tag = scriptEditForm.ScriptConfig.SCRIPT_ID;
+                row.Cells[this.colScriptName.Index].Value = scriptEditForm.ScriptConfig.SCRIPT_NAME;
+                 
+            }
             if (this.dataGridView1.IsNormalRowUndeleted(row))
                 this.dataGridView1.SetRowState(row, RowState.Update);
 
@@ -800,6 +824,7 @@ namespace Heren.MedQC.Maintenance
                 MessageBoxEx.Show("请在患者列表中选择患者");
                 return;
             }
+            
             Heren.MedQC.CheckPoint.CheckPointHelper.Instance.InitPatientInfo(patVisitLog);
             CommandHandler.Instance.SendCommand(qcCheckPoint.HandlerCommand, qcCheckPoint, patVisitLog, out result);
             //这里可以编写你需要的任意关于按钮事件的操作~
@@ -855,7 +880,7 @@ namespace Heren.MedQC.Maintenance
                 }
             }
         }
-        
+
 
         private void btnExport_Click(object sender, EventArgs e)
         {

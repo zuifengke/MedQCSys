@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using EMRDBLib.DbAccess;
 using EMRDBLib;
 using System.Linq;
-
+using Heren.MedQC.ScriptEngine.Script;
 namespace Quartz.Server
 {
     /// <summary>
@@ -35,6 +35,7 @@ namespace Quartz.Server
             try
             {
                 logger.Info("全院运行病历缺陷分析开始...");
+                ScriptCache.Instance.Initialize();
                 if (!SystemParam.Instance.LocalConfigOption.IsCheckPoint)
                     return;
                 if (SystemContext.Instance.QueuePatVisit == null)

@@ -27,6 +27,8 @@ namespace EMRDBLib
             public const string EVENT_ID = "EVENT_ID";
             public const string IS_REPEAT = "IS_REPEAT";
             public const string ELEMENT_NAME = "ELEMENT_NAME";
+            public const string SCRIPT_ID = "SCRIPT_ID";
+            public const string SCRIPT_NAME = "SCRIPT_NAME";
             /// <summary>
             /// 检查类型：时效性 完整性 一致性 合理性
             /// </summary>

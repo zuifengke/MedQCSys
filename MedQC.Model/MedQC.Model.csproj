@@ -84,6 +84,8 @@
     <Compile Include="Holiday.cs" />
     <Compile Include="MedDoc\StructElement.cs" />
     <Compile Include="MedQC\HdpParameter.cs" />
+    <Compile Include="MedQC\ScriptData.cs" />
+    <Compile Include="MedQC\ScriptConfig.cs" />
     <Compile Include="MedQC\RecCodeCompasion.cs" />
     <Compile Include="MedQC\KeyValueData.cs" />
     <Compile Include="MedQC\MrArchive.cs" />

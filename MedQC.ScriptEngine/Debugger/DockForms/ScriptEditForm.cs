@@ -15,11 +15,13 @@ using Heren.Common.TextEditor.Actions;
 using Heren.Common.TextEditor.Document;
 using Heren.Common.Libraries;
 using Heren.MedQC.ScriptEngine.Script;
+using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
     internal partial class ScriptEditForm : DockContentBase
     {
+        public string FlagCode { get; set; }
         private ScriptProperty m_scriptProperty = null;
         /// <summary>
         /// 获取或设置当前打开的脚本源码
@@ -33,7 +35,10 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             }
             set { this.m_scriptProperty = value; }
         }
-
+        /// <summary>
+        /// 脚本配置
+        /// </summary>
+        public ScriptConfig ScriptConfig { get; set; }
         private bool m_bIsModified = false;
         /// <summary>
         /// 获取或设置文档是否已经发生变化
@@ -41,7 +46,20 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         public bool IsModified
         {
             get { return this.m_bIsModified; }
-            set { this.m_bIsModified = value; }
+            set { this.m_bIsModified = value;
+                this.RefreshFormText();
+            }
+        }
+
+        private string m_vbsFile = null;
+
+        /// <summary>
+        /// 获取当打开的是本地文件时,
+        /// 设计器窗口当前关联的本地文件路径
+        /// </summary>
+        public string VbsFile
+        {
+            get { return this.m_vbsFile; }
         }
 
         public ScriptEditForm(DebuggerForm mainForm)
@@ -71,6 +89,49 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         }
 
         /// <summary>
+        /// 保存当前窗口的数据修改
+        /// </summary>
+        /// <returns>bool</returns>
+        public override bool CommitModify()
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            if (!this.DebuggerForm.CompileWithOK())
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                return false;
+            }
+            bool success = ScriptHandler.Instance.SaveTemplet();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            return success;
+        }
+        /// <summary>
+        /// 刷新表单标题
+        /// </summary>
+        private void RefreshFormText()
+        {
+            string title = string.Empty;
+            string subhead = string.Empty;
+            if (this.ScriptConfig == null)
+            {
+                title = "新模板";
+            }
+            if (this.m_vbsFile != null)
+            {
+                title = GlobalMethods.IO.GetFileName(this.m_vbsFile, true);
+            }
+            if (this.ScriptConfig != null)
+            {
+                title = this.ScriptConfig.SCRIPT_NAME;
+                subhead = "更新时间:"
+                    + this.ScriptConfig.MODIFY_TIME.ToString("yyyy年M月d日 HH:mm");
+            }
+            if (!this.IsModified)
+                this.Text = title + "(脚本)";
+            else
+                this.Text = title + "(脚本) *";
+            this.TabSubhead = subhead;
+        }
+        /// <summary>
         /// 刷新窗口标题
         /// </summary>
         private void RefreshWindowTitle()
@@ -83,11 +144,11 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.TabSubhead = "编号："
                 + GlobalMethods.IO.GetFileName(this.m_scriptProperty.FilePath, false);
         }
-
+        
         private void TextEditor_DocumentChanged(object sender, DocumentEventArgs e)
         {
-            this.m_bIsModified = true;
-            this.RefreshWindowTitle();
+            this.IsModified = true;
+            //this.RefreshWindowTitle();
         }
 
         /// <summary>
@@ -111,14 +172,14 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             return this.m_bIsModified;
         }
 
-        /// <summary>
-        /// 提交当前已被修改的脚本
-        /// </summary>
-        /// <returns>bool</returns>
-        public override bool CommitModify()
-        {
-            return this.SaveScript();
-        }
+        ///// <summary>
+        ///// 提交当前已被修改的脚本
+        ///// </summary>
+        ///// <returns>bool</returns>
+        //public override bool CommitModify()
+        //{
+        //    return this.SaveScript();
+        //}
 
         /// <summary>
         /// 清空脚本代码文本
@@ -156,8 +217,8 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                     this.textEditorControl1.ActiveTextAreaControl.TextArea;
                 textArea.Document.TextContent = source;
                 textArea.Invalidate();
-                this.m_bIsModified = false;
-                this.RefreshWindowTitle();
+                this.IsModified = false;
+                //this.RefreshWindowTitle();
                 return true;
             }
             catch (Exception ex)
@@ -178,7 +239,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             if (this.m_scriptProperty == null)
                 this.m_scriptProperty = new ScriptProperty();
             this.m_scriptProperty.FilePath = szFullName;
-
+            this.m_vbsFile = szFullName;
             if (GlobalMethods.Misc.IsEmptyString(szFullName))
                 return true;
             string szSource = null;
@@ -219,8 +280,8 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             try
             {
                 this.textEditorControl1.SaveFile(szFileName);
-                this.m_bIsModified = false;
-                this.RefreshWindowTitle();
+                this.IsModified = false;
+                //this.RefreshWindowTitle();
                 return true;
             }
             catch (Exception ex)

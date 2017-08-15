@@ -60,7 +60,6 @@ namespace Heren.MedQC.Maintenance
             this.colQCScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHandlerCommand = new Heren.Common.Forms.XFindComboBoxColumn();
             this.colScriptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colScriptSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -170,8 +169,7 @@ namespace Heren.MedQC.Maintenance
             this.colIsValid,
             this.colQCScore,
             this.colHandlerCommand,
-            this.colScriptName,
-            this.colScriptSource});
+            this.colScriptName});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -333,11 +331,6 @@ namespace Heren.MedQC.Maintenance
             this.colScriptName.HeaderText = "脚本名称";
             this.colScriptName.Name = "colScriptName";
             // 
-            // colScriptSource
-            // 
-            this.colScriptSource.HeaderText = "脚本源码";
-            this.colScriptSource.Name = "colScriptSource";
-            // 
             // QcCheckPointForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -388,6 +381,5 @@ namespace Heren.MedQC.Maintenance
         private System.Windows.Forms.DataGridViewTextBoxColumn colQCScore;
         private Common.Forms.XFindComboBoxColumn colHandlerCommand;
         private System.Windows.Forms.DataGridViewTextBoxColumn colScriptName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colScriptSource;
     }
 }

@@ -38,7 +38,7 @@ namespace Heren.MedQC.CheckPoint
             patVisitLog.MedDocInfos = lstMedDocInfo;
         }
 
-        internal QcCheckResult InitQcCheckResult(QcCheckPoint qcCheckPoint, PatVisitInfo patVisitInfo)
+        public QcCheckResult InitQcCheckResult(QcCheckPoint qcCheckPoint, PatVisitInfo patVisitInfo)
         {
             QcCheckResult qcCheckResult = new QcCheckResult();
             qcCheckResult.PATIENT_ID = patVisitInfo.PATIENT_ID;

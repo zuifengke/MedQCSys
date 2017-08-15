@@ -117,6 +117,11 @@ namespace Heren.MedQC.ScriptEngine.Script
             if (!System.IO.File.Exists(scriptEnginePath))
                 scriptEnginePath = GlobalMethods.Misc.GetWorkingPath() + "\\MedQC.ScriptEngine.dll";
             param.ReferencedAssemblies.Add(scriptEnginePath);
+
+            scriptEnginePath = this.WorkingPath + "\\MedQC.Model.dll";
+            if (!System.IO.File.Exists(scriptEnginePath))
+                scriptEnginePath = GlobalMethods.Misc.GetWorkingPath() + "\\MedQC.Model.dll";
+            param.ReferencedAssemblies.Add(scriptEnginePath);
             return param;
         }
 
@@ -217,6 +222,8 @@ namespace Heren.MedQC.ScriptEngine.Script
             sbScript.AppendLine("Imports System.Windows.Forms");
             sbScript.AppendLine("Imports Microsoft.VisualBasic");
             sbScript.AppendLine("Imports Heren.MedQC.ScriptEngine.Script");
+            sbScript.AppendLine("Imports EMRDBLib");
+            sbScript.AppendLine("Imports System.Data");
             sbScript.AppendLine();
             sbScript.AppendLine("Public Class DefaultElementCalculator");
             sbScript.AppendLine("    Inherits Heren.MedQC.ScriptEngine.Script.AbstractElementCalculator");
@@ -247,6 +254,8 @@ namespace Heren.MedQC.ScriptEngine.Script
             sbScript.AppendLine("using System.Windows.Forms;");
             sbScript.AppendLine("using Microsoft.VisualBasic;");
             sbScript.AppendLine("using Heren.Common.ScriptEngine.Script;");
+            sbScript.AppendLine("using EMRDBLib;");
+            sbScript.AppendLine("using System.Data;");
             sbScript.AppendLine();
             sbScript.AppendLine("public class DefaultElementCalculator");
             sbScript.AppendLine("    : Heren.Common.ScriptEngine.Script.AbstractElementCalculator");

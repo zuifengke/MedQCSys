@@ -597,6 +597,7 @@ namespace EMRDBLib
                 option.IsOpenComplexSearch = true;
                 option.IsShowDocLock = true;
             }
+            option.IsCheckPoint = true;
 #endif
             return option;
         }

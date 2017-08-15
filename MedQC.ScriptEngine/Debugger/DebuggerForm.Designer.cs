@@ -29,7 +29,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         private void InitializeComponent()
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolbtnNew = new System.Windows.Forms.ToolStripButton();
+            this.toolbtnList = new System.Windows.Forms.ToolStripButton();
             this.toolbtnOpen = new System.Windows.Forms.ToolStripButton();
             this.toolbtnExamples = new System.Windows.Forms.ToolStripButton();
             this.toolbtnSaveAs = new System.Windows.Forms.ToolStripButton();
@@ -44,6 +44,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.dockPanel1 = new Heren.Common.DockSuite.DockPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslblSystemStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,8 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             // 
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolbtnNew,
+            this.toolStripButton1,
+            this.toolbtnList,
             this.toolbtnOpen,
             this.toolbtnExamples,
             this.toolbtnSaveAs,
@@ -70,15 +72,16 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolbtnNew
+            // toolbtnList
             // 
-            this.toolbtnNew.AutoSize = false;
-            this.toolbtnNew.Image = global::Heren.MedQC.ScriptEngine.Properties.Resources.NewDoc;
-            this.toolbtnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbtnNew.Name = "toolbtnNew";
-            this.toolbtnNew.Size = new System.Drawing.Size(54, 24);
-            this.toolbtnNew.Text = "新建";
-            this.toolbtnNew.Click += new System.EventHandler(this.toolbtnNew_Click);
+            this.toolbtnList.AutoSize = false;
+            this.toolbtnList.Image = global::Heren.MedQC.ScriptEngine.Properties.Resources.Example;
+            this.toolbtnList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbtnList.Name = "toolbtnList";
+            this.toolbtnList.Size = new System.Drawing.Size(54, 24);
+            this.toolbtnList.Text = "脚本";
+            this.toolbtnList.Visible = false;
+            this.toolbtnList.Click += new System.EventHandler(this.toolbtnList_Click);
             // 
             // toolbtnOpen
             // 
@@ -98,6 +101,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.toolbtnExamples.Name = "toolbtnExamples";
             this.toolbtnExamples.Size = new System.Drawing.Size(54, 24);
             this.toolbtnExamples.Text = "样例";
+            this.toolbtnExamples.Visible = false;
             this.toolbtnExamples.Click += new System.EventHandler(this.toolbtnExamples_Click);
             // 
             // toolbtnSaveAs
@@ -107,7 +111,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.toolbtnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolbtnSaveAs.Name = "toolbtnSaveAs";
             this.toolbtnSaveAs.Size = new System.Drawing.Size(64, 24);
-            this.toolbtnSaveAs.Text = "另存为";
+            this.toolbtnSaveAs.Text = "保存";
             this.toolbtnSaveAs.Click += new System.EventHandler(this.toolbtnSaveAs_Click);
             // 
             // toolStripSeparator1
@@ -185,10 +189,9 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             // 
             // dockPanel1
             // 
-            this.dockPanel1.ActiveAutoHideContent = null;
-            this.dockPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dockPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dockPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(234)))), ((int)(((byte)(234)))));
             this.dockPanel1.DockBackColor = System.Drawing.Color.Gray;
             this.dockPanel1.DocumentStyle = Heren.Common.DockSuite.DocumentStyle.DockingWindow;
@@ -216,7 +219,17 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.tsslblSystemStatus.Text = "就绪";
             this.tsslblSystemStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ScriptDebugerForm
+            // toolStripButton1
+            // 
+            this.toolStripButton1.AutoSize = false;
+            this.toolStripButton1.Image = global::Heren.MedQC.ScriptEngine.Properties.Resources.NewDoc;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(54, 24);
+            this.toolStripButton1.Text = "新建";
+            this.toolStripButton1.Visible = false;
+            // 
+            // DebuggerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -224,7 +237,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "ScriptDebugerForm";
+            this.Name = "DebuggerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "脚本调试器";
             this.toolStrip1.ResumeLayout(false);
@@ -239,7 +252,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolbtnNew;
+        private System.Windows.Forms.ToolStripButton toolbtnList;
         private System.Windows.Forms.ToolStripButton toolbtnExamples;
         private System.Windows.Forms.ToolStripButton toolbtnOpen;
         private System.Windows.Forms.ToolStripButton toolbtnSaveAs;
@@ -254,6 +267,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         private Heren.Common.DockSuite.DockPanel dockPanel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsslblSystemStatus;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

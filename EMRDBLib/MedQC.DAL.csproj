@@ -102,6 +102,8 @@
     <Compile Include="MedQC\HDP\HdpRoleAccess.cs" />
     <Compile Include="MedQC\Table\RecBrowseRequestAccess.cs" />
     <Compile Include="MedQC\Table\RecCodeCompasionAccess.cs" />
+    <Compile Include="MedQC\Table\ScriptDataAccess.cs" />
+    <Compile Include="MedQC\Table\ScriptConfigAccess.cs" />
     <Compile Include="MedQC\View\DeptAccess.cs" />
     <Compile Include="MedQC\View\ExamResultAccess.cs" />
     <Compile Include="MedQC\View\ExamMasterAccess.cs" />

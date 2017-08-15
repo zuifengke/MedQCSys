@@ -93,6 +93,10 @@ namespace EMRDBLib
         public struct DataTable
         {
             /// <summary>
+            /// 脚本可执行文件数据
+            /// </summary>
+            public const string SCRIPT_DATA = "SCRIPT_DATA_T";
+            /// <summary>
             /// 病历浏览申请    
             /// </summary>
             public const string REC_BROWSE_REQUEST = "REC_BROWSE_REQUEST";
@@ -272,6 +276,10 @@ namespace EMRDBLib
             /// 质控问题字典类
             /// </summary>
             public const string QC_MSG_DICT = "QC_MSG_DICT";
+            /// <summary>
+            /// 脚本配置表
+            /// </summary>
+            public const string SCRIPT_CONFIG = "SCRIPT_CONFIG_T";
         }
     }
 }

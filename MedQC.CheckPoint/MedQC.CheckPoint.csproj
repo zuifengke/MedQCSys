@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\common\脚本引擎处理Command.cs" />
     <Compile Include="Commands\common\时效检查Command.cs" />
     <Compile Include="Commands\common\元素空项检查Command.cs" />
     <Compile Include="Commands\入院记录\chubuzhenduanCommand.cs" />
@@ -133,8 +134,8 @@
     <Compile Include="Commands\病案首页\sunshangyuanyinCommand.cs" />
     <Compile Include="Commands\首次病程记录\zhenliaojihuaCommand.cs" />
     <Compile Include="Commands\首次病程记录\jianbiezhenduanCommand.cs" />
-    <Compile Include="Helpers\TimeCheckHelper.cs" />
     <Compile Include="Helpers\CheckPointHelper.cs" />
+    <Compile Include="Helpers\TimeCheckHelper.cs" />
     <Compile Include="Commands\DemoCommand.cs" />
     <Compile Include="Commands\医嘱单及辅助检查\ShuxueqianCommand.cs" />
     <Compile Include="Commands\入院记录\ruyuanjilushixiaoCommand.cs" />
@@ -167,6 +168,14 @@
     <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.ScriptEngine\MedQC.ScriptEngine.csproj">
+      <Project>{5af400fa-b5b2-45a6-b88f-32756715a1d0}</Project>
+      <Name>MedQC.ScriptEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Utilities\MedQC.Utilities.csproj">
+      <Project>{1c3e0f8c-8b38-4dfd-b789-ed3dd45c6a37}</Project>
+      <Name>MedQC.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\QCEngine\MedQC.QCEngine.csproj">
       <Project>{1d8fa739-12d7-4c09-9927-b28ccb31d9dc}</Project>

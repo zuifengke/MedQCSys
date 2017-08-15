@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.DockSuite.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Libraries, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Libraries.dll</HintPath>
@@ -98,6 +102,13 @@
     <Compile Include="Debugger\DockForms\ErrorsListForm.Designer.cs">
       <DependentUpon>ErrorsListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Debugger\DockForms\ScriptHandler.cs" />
+    <Compile Include="Debugger\DockForms\ScriptInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debugger\DockForms\ScriptInfoForm.designer.cs">
+      <DependentUpon>ScriptInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Debugger\DockForms\TempletListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +121,18 @@
     <Compile Include="Debugger\DockForms\ScriptEditForm.Designer.cs">
       <DependentUpon>ScriptEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Debugger\DockForms\ScriptTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debugger\DockForms\ScriptTreeForm.designer.cs">
+      <DependentUpon>ScriptTreeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Debugger\DockForms\ScriptSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debugger\DockForms\ScriptSelectForm.Designer.cs">
+      <DependentUpon>ScriptSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -117,9 +140,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Script\AssemblyHelper.cs" />
+    <Compile Include="Script\AutoCalcHandler.cs" />
     <Compile Include="Script\Calculators\AbstractElementCalculator.cs" />
     <Compile Include="Script\Calculators\IElementCalculator.cs" />
     <Compile Include="Script\CompileResults.cs" />
+    <Compile Include="Script\ScriptCache.cs" />
     <Compile Include="Script\ScriptCompiler.cs" />
     <Compile Include="Script\ScriptProperty.cs" />
   </ItemGroup>
@@ -144,12 +169,22 @@
       <DependentUpon>ErrorsListForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Debugger\DockForms\ScriptInfoForm.resx">
+      <DependentUpon>ScriptInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Debugger\DockForms\TempletListForm.resx">
       <DependentUpon>TempletListForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Debugger\DockForms\ScriptEditForm.resx">
       <DependentUpon>ScriptEditForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Debugger\DockForms\ScriptTreeForm.resx">
+      <DependentUpon>ScriptTreeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Debugger\DockForms\ScriptSelectForm.resx">
+      <DependentUpon>ScriptSelectForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -219,10 +254,35 @@
     <None Include="Resources\Uncomment.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EMRDBLib\MedQC.DAL.csproj">
+      <Project>{b84cc211-4f0b-4dbc-9ac9-991e55933745}</Project>
+      <Name>MedQC.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
+      <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
+      <Name>MedQC.Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
+      <Project>{1bfc8232-0b92-4928-96ed-c0cb701b9c0b}</Project>
+      <Name>MedQC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
       <Project>{B98DABD0-AB92-4876-8EB1-BA5032061CF6}</Project>
       <Name>MedQC.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MedQC.Utilities\MedQC.Utilities.csproj">
+      <Project>{1c3e0f8c-8b38-4dfd-b789-ed3dd45c6a37}</Project>
+      <Name>MedQC.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FormsIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

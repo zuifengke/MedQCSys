@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Heren.Common.Libraries;
 using Heren.Common.Libraries.Ftp;
+using System.Collections;
 
 namespace Heren.MedQC.ScriptEngine.Script
 {
@@ -121,11 +122,19 @@ namespace Heren.MedQC.ScriptEngine.Script
         /// 提供给子类重写的运算方法
         /// </summary>
         /// <param name="szElementName">元素名称</param>
-        public virtual void Calculate(string szElementName)
+        public virtual void Calculate(object patvisitinfo,object checkpoint,object checkresult)
         {
-
         }
 
+        /// <summary>
+        /// 提供给子类重写的运算方法
+        /// </summary>
+        /// <param name="param">参数名称</param>
+        /// <param name="data">参数数据</param>
+        public virtual bool Calculate(string param)
+        {
+            return false;
+        }
         /// <summary>
         /// 提供给子类重写的运算方法
         /// </summary>
@@ -148,7 +157,261 @@ namespace Heren.MedQC.ScriptEngine.Script
             this.CloseAllFtpServices();
         }
         #endregion
+        #region"简化脚本的方法"
+        /// <summary>
+        /// 调用外部应用程序
+        /// </summary>
+        /// <param name="appFile">程序文件路径</param>
+        /// <param name="args">调用参数</param>
+        /// <returns>执行结果</returns>
+        protected virtual bool InvokeApp(string appFile, string args)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(appFile, args);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Heren.Common.Libraries.LogManager.Instance.WriteLog(
+                    "ElementCalculator.InvokeApplication",
+                    new string[] { "appFile" }, new object[] { appFile },
+                    "无法启动外部应用程序", ex);
+                return false;
+            }
+        }
 
+        /// <summary>
+        /// 获取系统当前的运行路径
+        /// </summary>
+        /// <returns>运行路径</returns>
+        protected virtual string GetStartupPath()
+        {
+            return Heren.Common.Libraries.GlobalMethods.Misc.GetWorkingPath();
+        }
+
+        /// <summary>
+        /// 立即更新当前表单视图
+        /// </summary>
+        protected virtual void RedrawView()
+        {
+            Application.DoEvents();
+        }
+
+        /// <summary>
+        /// 在指定的数组中,获取指定索引处的项目数据
+        /// </summary>
+        /// <param name="array">数组</param>
+        /// <param name="index">索引</param>
+        /// <returns>项目数据</returns>
+        protected virtual object GetArrayItem(IList array, int index)
+        {
+            if (array == null || index < 0 || index >= array.Count)
+                return string.Empty;
+            object value = array[index];
+            if (value == DBNull.Value || GlobalMethods.Misc.IsEmptyString(value))
+                return string.Empty;
+            return value;
+        }
+
+        /// <summary>
+        /// 从指定的DataTable复制一份同样结构的对象.
+        /// 但不包含数据
+        /// </summary>
+        /// <param name="source">源DataTable</param>
+        /// <returns>DataTable</returns>
+        protected virtual DataTable CloneTable(DataTable source)
+        {
+            return GlobalMethods.Table.CloneTable(source);
+        }
+
+        /// <summary>
+        /// 将指定的DataGridView控件数据转换为DataTable对象返回
+        /// </summary>
+        /// <param name="gridView">DataGridView控件</param>
+        /// <param name="start">起始行</param>
+        /// <param name="end">结束行</param>
+        /// <param name="columnNameMode">
+        ///  列名生成模式：
+        ///  0 -         使用列的标题作为列名;
+        ///  1 -         使用列的Tag数据作为列表;
+        ///  2或其他值 - 使用列的名字作为列名;
+        /// </param>
+        /// <returns>DataTable</returns>
+        protected virtual DataTable GetDataTable(DataGridView gridView
+            , int start, int end, short columnNameMode)
+        {
+            return GlobalMethods.Table.GetDataTable(gridView, start, end, columnNameMode);
+        }
+
+        /// <summary>
+        /// 将指定的DataGridView控件数据转换为DataTable对象返回
+        /// </summary>
+        /// <param name="gridView">DataGridView控件</param>
+        /// <param name="start">起始行</param>
+        /// <param name="end">结束行</param>
+        /// <param name="skipHidden">是否跳过隐藏的行和列</param>
+        /// <param name="columnNameMode">
+        ///  列名生成模式：
+        ///  0 -         使用列的标题作为列名;
+        ///  1 -         使用列的Tag数据作为列表;
+        ///  2或其他值 - 使用列的名字作为列名;
+        /// </param>
+        /// <returns>DataTable</returns>
+        public static DataTable GetDataTable(DataGridView gridView
+            , int start, int end, bool skipHidden, short columnNameMode)
+        {
+            return GlobalMethods.Table.GetDataTable(gridView, start, end, skipHidden, columnNameMode);
+        }
+
+        /// <summary>
+        /// 将指定的DataGridView控件数据转换为DataTable对象返回
+        /// </summary>
+        /// <param name="gridView">DataGridView控件</param>
+        /// <param name="onlySelected">是否仅输出选中行</param>
+        /// <param name="columnNameMode">
+        ///  列名生成模式：
+        ///  0 -         使用列的标题作为列名;
+        ///  1 -         使用列的Tag数据作为列表;
+        ///  2或其他值 - 使用列的名字作为列名;
+        /// </param>
+        /// <returns>DataTable</returns>
+        protected virtual DataTable GetDataTable(DataGridView gridView
+            , bool onlySelected, short columnNameMode)
+        {
+            return GlobalMethods.Table.GetDataTable(gridView, onlySelected, columnNameMode);
+        }
+
+        /// <summary>
+        /// 将指定的DataGridView控件数据转换为DataTable对象返回
+        /// </summary>
+        /// <param name="gridView">DataGridView控件</param>
+        /// <param name="onlySelected">是否仅输出选中行</param>
+        /// <param name="skipHidden">是否跳过隐藏的行和列</param>
+        /// <param name="columnNameMode">
+        ///  列名生成模式：
+        ///  0 -         使用列的标题作为列名;
+        ///  1 -         使用列的Tag数据作为列表;
+        ///  2或其他值 - 使用列的名字作为列名;
+        /// </param>
+        /// <returns>DataTable</returns>
+        public static DataTable GetDataTable(DataGridView gridView
+            , bool onlySelected, bool skipHidden, short columnNameMode)
+        {
+            return GlobalMethods.Table.GetDataTable(gridView, onlySelected, skipHidden, columnNameMode);
+        }
+
+        /// <summary>
+        /// 在指定的数据集中,获取指定行和列索引的数据
+        /// </summary>
+        /// <param name="data">数据集</param>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列索引</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataSet data, int row, int column)
+        {
+            return GlobalMethods.Table.GetFieldValue(data, row, column);
+        }
+
+        /// <summary>
+        /// 在指定的数据集中,获取指定行和列名称的数据
+        /// </summary>
+        /// <param name="data">数据集</param>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列名称</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataSet data, int row, string column)
+        {
+            return GlobalMethods.Table.GetFieldValue(data, row, column);
+        }
+
+        /// <summary>
+        /// 在指定的数据行和列索引的数据
+        /// </summary>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列索引</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataRow row, int column)
+        {
+            return GlobalMethods.Table.GetFieldValue(row, column);
+        }
+
+        /// <summary>
+        /// 在指定的数据行和列名称的数据
+        /// </summary>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列名称</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataRow row, string column)
+        {
+            return GlobalMethods.Table.GetFieldValue(row, column);
+        }
+
+        /// <summary>
+        /// 在指定的数据集中,获取指定行和列索引的数据
+        /// </summary>
+        /// <param name="table">数据集</param>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列索引</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataTable table, int row, int column)
+        {
+            return GlobalMethods.Table.GetFieldValue(table, row, column);
+        }
+
+        /// <summary>
+        /// 在指定的数据集中,获取指定行和列名称的数据
+        /// </summary>
+        /// <param name="table">数据集</param>
+        /// <param name="row">行索引</param>
+        /// <param name="column">列名称</param>
+        /// <returns>单元格数据</returns>
+        protected virtual object GetFieldValue(DataTable table, int row, string column)
+        {
+            return GlobalMethods.Table.GetFieldValue(table, row, column);
+        }
+
+        /// <summary>
+        /// 把DataTable的数据转为为CSV文件输出
+        /// </summary>
+        /// <param name="table">需要转换的Table数据</param>
+        /// <returns>是否转换成功</returns>
+        protected virtual bool ExportCsvFile(DataTable table)
+        {
+            return this.ExportCsvFile(table, string.Empty);
+        }
+
+        /// <summary>
+        /// 把DataTable的数据转为为CSV文件输出
+        /// </summary>
+        /// <param name="table">需要转换的Table数据</param>
+        /// <param name="szFileName">初始默认文件名</param>
+        /// <returns>是否转换成功</returns>
+        protected virtual bool ExportCsvFile(DataTable table, string szFileName)
+        {
+            if (string.IsNullOrEmpty(szFileName))
+            {
+                szFileName = string.Empty;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = szFileName;
+            saveFileDialog.Filter = "CSV文件(*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+                return false;
+            return GlobalMethods.Table.ExportCsvFile(table, saveFileDialog.FileName);
+        }
+
+        /// <summary>
+        /// 从出生时间得到年龄显示文本
+        /// </summary>
+        /// <param name="dtBirthTime">出生时间</param>
+        /// <param name="dtNowTime">现在时间</param>
+        /// <returns>年龄显示文本</returns>
+        protected virtual string GetAgeText(DateTime dtBirthTime, DateTime dtNowTime)
+        {
+            return Heren.Common.Libraries.GlobalMethods.SysTime.GetAgeText(dtBirthTime, dtNowTime);
+        }
+        #endregion
         #region"消息框函数"
         /// <summary>
         /// 弹出一条错误对话消息框
@@ -564,29 +827,7 @@ namespace Heren.MedQC.ScriptEngine.Script
             }
             catch { return value; }
         }
-
-        /// <summary>
-        /// 调用外部应用程序
-        /// </summary>
-        /// <param name="appFile">程序文件路径</param>
-        /// <param name="args">调用参数</param>
-        /// <returns>执行结果</returns>
-        protected virtual bool InvokeApp(string appFile, string args)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(appFile, args);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Heren.Common.Libraries.LogManager.Instance.WriteLog(
-                    "ElementCalculator.InvokeApplication",
-                    new string[] { "appFile" }, new object[] { appFile },
-                    "无法启动外部应用程序", ex);
-                return false;
-            }
-        }
+        
 
         /// <summary>
         /// 获取编辑器系统当前运行路径

@@ -193,6 +193,10 @@
       <Project>{b84cc211-4f0b-4dbc-9ac9-991e55933745}</Project>
       <Name>MedQC.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MedQC.CheckPoint\MedQC.CheckPoint.csproj">
+      <Project>{e50fdb80-74ef-48d7-9529-71a13ec814c8}</Project>
+      <Name>MedQC.CheckPoint</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
       <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
       <Name>MedQC.Const</Name>

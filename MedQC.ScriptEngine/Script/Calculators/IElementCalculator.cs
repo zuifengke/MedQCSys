@@ -51,18 +51,25 @@ namespace Heren.MedQC.ScriptEngine.Script
         /// <summary>
         /// 获取或设置定位到指定元素位置的回调委托
         /// </summary>
-        LocateToElementCallback LocateToElementCallback { get;set;}
+        LocateToElementCallback LocateToElementCallback { get; set; }
         /// <summary>
         /// 提供给子类重写的运算方法
         /// </summary>
         /// <param name="szElementName">元素名称</param>
-        void Calculate(string szElementName);
+        void Calculate(object patVisitInfo, object checkPoint, object checkresult);
         /// <summary>
         /// 提供给子类重写的运算方法
         /// </summary>
         /// <param name="param">参数名称</param>
         /// <param name="data">参数数据</param>
         bool Calculate(string param, object data);
+        /// <summary>
+        /// 提供给子类重写的运算方法
+        /// </summary>
+        /// <param name="param">参数名称</param>
+        /// <param name="data">参数数据</param>
+        bool Calculate(string param);
+
     }
 
     /// <summary>

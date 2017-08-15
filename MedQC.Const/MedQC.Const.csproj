@@ -67,6 +67,8 @@
     <Compile Include="BAJK\BAJK11Table.cs" />
     <Compile Include="BAJK\BAJK09Table.cs" />
     <Compile Include="BAJK\GyGydmTable.cs" />
+    <Compile Include="DataTable\ScriptDataTable.cs" />
+    <Compile Include="DataTable\ScriptConfigTable.cs" />
     <Compile Include="DataTable\RecBrowseRequestTable.cs" />
     <Compile Include="DataView\ChargeTypeDicView.cs" />
     <Compile Include="DataView\IDentityDicView.cs" />

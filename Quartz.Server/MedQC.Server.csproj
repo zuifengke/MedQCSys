@@ -240,6 +240,10 @@
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MedQC.ScriptEngine\MedQC.ScriptEngine.csproj">
+      <Project>{5af400fa-b5b2-45a6-b88f-32756715a1d0}</Project>
+      <Name>MedQC.ScriptEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QCEngine\MedQC.QCEngine.csproj">
       <Project>{1d8fa739-12d7-4c09-9927-b28ccb31d9dc}</Project>
       <Name>MedQC.QCEngine</Name>

@@ -17,6 +17,8 @@ using MedDocSys.QCEngine.TimeCheck;
 using Heren.MedQC.Utilities;
 using EMRDBLib.DbAccess;
 using Heren.MedQC.ScriptEngine.Debugger;
+using Heren.MedQC.CheckPoint;
+
 namespace MedQC.Test
 {
     public partial class MainForm : Form
@@ -88,7 +90,7 @@ namespace MedQC.Test
             patVisitInfo.VISIT_ID = "2";
             patVisitInfo.PATIENT_NAME = "孔明";
 
-            short shRet = TimeCheckHelper.Instance.GenerateTimeRecord(patVisitInfo, DateTime.Now);
+            short shRet = MedDocSys.QCEngine.TimeCheck.TimeCheckHelper.Instance.GenerateTimeRecord(patVisitInfo, DateTime.Now);
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -123,6 +125,8 @@ namespace MedQC.Test
             DebuggerForm frm = new DebuggerForm();
             frm.PatVisitInfo = patVisitInfo;
             frm.QcCheckPoint = qcCheckPoint;
+            QcCheckResult qcCheckResult = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitInfo);
+            frm.QcCheckResult = qcCheckResult;
             frm.Show();
         }
     }

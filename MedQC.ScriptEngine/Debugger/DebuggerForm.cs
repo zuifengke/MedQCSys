@@ -16,6 +16,7 @@ using Heren.Common.Libraries;
 using Heren.Common.Controls;
 using Heren.MedQC.ScriptEngine.Script;
 using EMRDBLib;
+using Heren.MedQC.ScriptEngine.DockForms;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
@@ -28,6 +29,15 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         public QcCheckResult QcCheckResult { get; set; }
 
         private string m_workingPath = null;
+
+        /// <summary>
+        /// 获取所有文档窗口的列表
+        /// </summary>
+        [Description("获取所有文档窗口的列表")]
+        internal IDockContent[] Documents
+        {
+            get { return this.dockPanel1.DocumentsToArray(); }
+        }
         /// <summary>
         /// 获取或设置调试器工作路径
         /// </summary>
@@ -42,7 +52,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             }
             set { this.m_workingPath = value; }
         }
-
+        public ScriptConfig ScriptConfig { get; set; }
         private ScriptProperty m_scriptProperty = null;
         /// <summary>
         /// 获取或设置当前打开的脚本
@@ -88,30 +98,43 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             this.RestoreWindowState();
             this.Icon = Heren.MedQC.ScriptEngine.Properties.Resources.SysIcon;
         }
-
+        private ScriptTreeForm m_ScriptTreeForm;
+        /// <summary>
+        /// 显示脚本管理窗口
+        /// </summary>
+        internal void ShowScriptTreeForm()
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            if (this.m_ScriptTreeForm == null || this.m_ScriptTreeForm.IsDisposed)
+                this.m_ScriptTreeForm = new ScriptTreeForm(this);
+            this.m_ScriptTreeForm.Show(this.dockPanel1);
+            this.m_ScriptTreeForm.OnRefreshView();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
             this.Update();
-            this.ShowScriptSamplesForm();
+            //this.ShowScriptSamplesForm();
 
             //设置为自动保存窗口状态
             this.SaveWindowState = true;
-
+            ScriptHandler.Instance.InitTempletHandler(this);
             //为空，则表示启动本程序EXE
-            if (this.m_scriptProperty == null)
+            if (this.ScriptConfig == null)
             {
-                this.toolbtnNew.Visible = true;
-                this.toolbtnOK.Visible = false;
+                this.toolbtnList.Visible = true;
+                this.toolbtnOK.Visible = true;
             }
             //否则，表示改程序被别的程序调用，直接打开参数中的代码
             else
             {
-                this.toolbtnNew.Visible = false;
-                this.OpenScript(this.m_scriptProperty);
+                this.toolbtnList.Visible = false;
+                ScriptHandler.Instance.OpenScriptConfig(this.ScriptConfig);
                 if (this.ActiveScriptForm != null)
                     this.ActiveScriptForm.CloseButtonVisible = false;
             }
+            this.ShowScriptTreeForm();
             this.ShowStatusMessage("就绪!");
         }
 
@@ -166,7 +189,14 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         private void toolbtnSaveAs_Click(object sender, EventArgs e)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            this.SaveScript();
+            //this.SaveScript();
+            if (!this.CompileWithOK())
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                return;
+            }
+
+            ScriptHandler.Instance.SaveTemplet();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -224,20 +254,19 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                 MessageBoxEx.Show("编译失败，无法启动测试程序！");
                 return;
             }
+            AutoCalcHandler.Instance.Start();
             foreach (IElementCalculator item in results.ElementCalculators)
             {
-                item.Calculate("A");
+                //item.Calculate("A");
+                AutoCalcHandler.Instance.CalcularTest(item,this.PatVisitInfo, this.QcCheckPoint, this.QcCheckResult);
             }
-            
+
         }
         private void toolbtnOK_Click(object sender, EventArgs e)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            if (!this.CompileWithOK())
-            {
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                return;
-            }
+            if (this.ActiveScriptForm.IsModified)
+                this.ActiveScriptForm.CommitModify();
             this.DialogResult = DialogResult.OK;
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -409,7 +438,19 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             scriptProperty.ScriptName = GlobalMethods.IO.GetFileName(szFullName, true);
             this.OpenScript(scriptProperty);
         }
-
+        /// <summary>
+        /// 打开脚本编辑器窗口
+        /// </summary>
+        /// <param name="scriptEditForm">脚本编辑器窗口</param>
+        internal void OpenScriptEditForm(ScriptEditForm scriptEditForm)
+        {
+            if (scriptEditForm == null || scriptEditForm.IsDisposed)
+                return;
+            this.dockPanel1.Update();
+            IDockContent content = scriptEditForm as IDockContent;
+            if (content != null)
+                content.DockHandler.Show(this.dockPanel1);
+        }
         /// <summary>
         /// 打开指定脚本配置信息的脚本
         /// </summary>
@@ -437,6 +478,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                 MessageBoxEx.Show("文件打开失败！", MessageBoxIcon.Error);
         }
 
+
         /// <summary>
         /// 另存脚本到本地
         /// </summary>
@@ -451,11 +493,13 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         /// 单击确定按钮，生成二进制DLL
         /// </summary>
         /// <returns>是否编译成功</returns>
-        private bool CompileWithOK()
+        public bool CompileWithOK()
         {
             if (this.m_scriptProperty == null)
                 this.m_scriptProperty = new ScriptProperty();
-            ScriptEditForm activeScriptForm = this.GetScriptEditForm(this.m_scriptProperty.FilePath);
+
+            //ScriptEditForm activeScriptForm = this.GetScriptEditForm(this.m_scriptProperty.FilePath);
+            ScriptEditForm activeScriptForm = this.ActiveScriptForm;
             if (activeScriptForm == null)
                 return false;
             activeScriptForm.Activate();
@@ -464,9 +508,15 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                 MessageBoxEx.Show("编译失败，请查看错误列表！");
                 return false;
             }
-            activeScriptForm.IsModified = false;
+            //activeScriptForm.IsModified = false;
             this.m_scriptProperty = activeScriptForm.ScriptProperty;
+            this.ScriptConfig = activeScriptForm.ScriptConfig;
             return true;
+        }
+
+        private void toolbtnList_Click(object sender, EventArgs e)
+        {
+            this.ShowScriptTreeForm();
         }
     }
 }
