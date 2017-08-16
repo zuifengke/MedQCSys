@@ -54,6 +54,9 @@ namespace Heren.MedQC.Statistic
                 szTimeType = "Check_Date";
             else if (rbtEndTime.Checked)
                 szTimeType = "END_DATE";
+            else if (rbtnDischargeTime.Checked)
+                szTimeType = "DISCHARGE_TIME";
+
             string szDeptCode = string.Empty;
             string szQcResult = string.Empty;
             if (this.cboDeptName.SelectedItem != null && !string.IsNullOrEmpty(this.cboDeptName.Text.Trim()))
@@ -123,7 +126,8 @@ namespace Heren.MedQC.Statistic
                 row.Cells[this.colCheckDate.Index].Value = record.CheckDate.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colQcExplain.Index].Value = record.QcExplain;
                 row.Cells[this.colStatus.Index].Value = EMRDBLib.SystemData.WrittenState.GetCnWrittenState(record.QcResult);
-
+                if (record.DischargeTime != record.DefaultTime)
+                    row.Cells[this.col_DISCHARGE_TIME.Index].Value = record.DischargeTime.ToString("yyyy-MM-dd HH:mm");
 
                 //记录时间和作者
                 if (record.QcResult == EMRDBLib.SystemData.WrittenState.Normal
@@ -237,7 +241,20 @@ namespace Heren.MedQC.Statistic
             MedDocInfo docInfo = null;
             short shRet = EmrDocAccess.Instance.GetDocInfo(checkResultInfo.DocID, ref docInfo);
             if (shRet == EMRDBLib.SystemData.ReturnValue.OK)
-                this.MainForm.OpenDocument(docInfo);
+            {
+                PatVisitInfo patVisitInfo = null;
+                shRet = PatVisitAccess.Instance.GetPatVisit(docInfo.PATIENT_ID, docInfo.VISIT_ID, ref patVisitInfo);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    MessageBoxEx.Show("患者信息查找失败,无法打开病历！");
+                    this.ShowStatusMessage(null);
+                    GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                    return;
+                }
+               this.MainForm.SwitchPatient(patVisitInfo, docInfo);
+                    //this.MainForm.OpenDocument(info.TOPIC_ID, info.PATIENT_ID, info.VISIT_ID);
+            }
+                //this.MainForm.OpenDocument(docInfo);
             else
                 MessageBoxEx.Show("病历详细信息下载失败,无法打开病历！");
             this.ShowStatusMessage(null);

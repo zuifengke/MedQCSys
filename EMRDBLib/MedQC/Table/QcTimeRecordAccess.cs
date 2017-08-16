@@ -147,7 +147,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("GetQcTimeRecords", new string[] { "szPateintID", "szVisitID" }, new object[] { szPatientID, szVisitID }, "查询个人本次入院的时效质控记录参数错误");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26}"
                 , SystemData.QcTimeRecordTable.BEGIN_DATE
                 , SystemData.QcTimeRecordTable.CHECK_DATE
                 , SystemData.QcTimeRecordTable.CHECKER_NAME
@@ -173,7 +173,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcTimeRecordTable.EVENT_NAME
                 , SystemData.QcTimeRecordTable.EVENT_TIME
                 , SystemData.QcTimeRecordTable.MESSAGE_NOTIFY
-                , SystemData.QcTimeRecordTable.DOC_TIME);
+                , SystemData.QcTimeRecordTable.DOC_TIME
+                , SystemData.QcTimeRecordTable.DISCHARGE_TIME);
 
             string szCondition = String.Format("1=1 AND {0} ='{1}' AND {2} ='{3}'"
                 , SystemData.QcTimeRecordTable.PATIENT_ID, szPatientID
@@ -224,6 +225,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(23)) record.EventTime = dataReader.GetDateTime(23);
                     if (!dataReader.IsDBNull(24)) record.MessageNotify = dataReader.GetValue(24).ToString() == "1" ? true : false;
                     if (!dataReader.IsDBNull(25)) record.DocTime = dataReader.GetDateTime(25);
+                    if (!dataReader.IsDBNull(26)) record.DischargeTime = dataReader.GetDateTime(26);
                     lstQcTimeRecords.Add(record);
 
                 } while (dataReader.Read());
@@ -1056,7 +1058,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26}"
                 , SystemData.QcTimeRecordTable.BEGIN_DATE
                 , SystemData.QcTimeRecordTable.CHECK_DATE
                 , SystemData.QcTimeRecordTable.CHECKER_NAME
@@ -1082,7 +1084,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.QcTimeRecordTable.EVENT_NAME
                 , SystemData.QcTimeRecordTable.EVENT_TIME
                 , SystemData.QcTimeRecordTable.DOC_TIME
-                , SystemData.QcTimeRecordTable.VISIT_NO);
+                , SystemData.QcTimeRecordTable.VISIT_NO
+                , SystemData.QcTimeRecordTable.DISCHARGE_TIME);
 
             string szCondition = String.Format("1=1");
             if (!string.IsNullOrEmpty(szTimeType))
@@ -1182,6 +1185,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(23)) record.EventTime = dataReader.GetDateTime(23);
                     if (!dataReader.IsDBNull(24)) record.DocTime = dataReader.GetDateTime(24);
                     if (!dataReader.IsDBNull(25)) record.VISIT_NO = dataReader.GetValue(25).ToString();
+                    if (!dataReader.IsDBNull(26)) record.DischargeTime = dataReader.GetDateTime(26);
                     lstQcTimeRecords.Add(record);
 
                 } while (dataReader.Read());

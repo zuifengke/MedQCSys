@@ -487,9 +487,17 @@ namespace Heren.MedQC.Statistic
             {
                 UpdateQCContentRecord(info.TOPIC_ID);
             }
-            if (!string.IsNullOrEmpty(info.TOPIC_ID))
+            if (!string.IsNullOrEmpty(info.DOC_ID))
             {
-                this.MainForm.OpenDocument(info.TOPIC_ID, info.PATIENT_ID, info.VISIT_ID);
+                MedDocInfo docInfo = null;
+                shRet = EmrDocAccess.Instance.GetDocInfo(info.DOC_ID, ref docInfo);
+
+                this.MainForm.SwitchPatient(patVisitLog, docInfo);
+                //this.MainForm.OpenDocument(info.TOPIC_ID, info.PATIENT_ID, info.VISIT_ID);
+            }
+            else
+            {
+                this.MainForm.SwitchPatient(patVisitLog);
             }
         }
         //更新内容质检问题质检人和质检时间

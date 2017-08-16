@@ -40,7 +40,7 @@ namespace MedQCSys.PatPage
             this.patientPageControl1.MainForm = parent;
             this.MaximizeBox = true;
             this.ShowHint = DockState.Document;
-            this.DockAreas = DockAreas.Document|DockAreas.Float;
+            this.DockAreas = DockAreas.Document;
         }
         /// <summary>
         /// 切换当前窗口中显示的病人及就诊信息

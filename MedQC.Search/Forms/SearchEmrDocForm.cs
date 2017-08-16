@@ -250,7 +250,11 @@ namespace Heren.MedQC.Search
             PatVisitInfo patVisitInfo = null;
             short shRet = PatVisitAccess.Instance.GetPatVisit(docInfo.PATIENT_ID, docInfo.VISIT_ID, ref patVisitInfo);
             if (patVisitInfo == null)
+            {
+                MessageBoxEx.ShowMessage("患者信息获取失败,无法打开病历");
                 return;
+
+            }
 
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {

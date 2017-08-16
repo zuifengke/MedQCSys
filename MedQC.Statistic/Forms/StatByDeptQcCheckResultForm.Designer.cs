@@ -44,6 +44,10 @@
             this.col_1_MsgDictMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_1_ErrorCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboQcMrStatus = new Heren.Common.Controls.DictInput.FindComboBox();
+            this.cboStatType = new Heren.Common.Controls.DictInput.FindComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,10 +67,6 @@
             this.col_2_PatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_2_VisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
-            this.cboQcMrStatus = new Heren.Common.Controls.DictInput.FindComboBox();
-            this.cboStatType = new Heren.Common.Controls.DictInput.FindComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -104,7 +104,7 @@
             dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle31;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 41);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 69);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -119,7 +119,7 @@
             this.dataGridView1.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1198, 207);
+            this.dataGridView1.Size = new System.Drawing.Size(1020, 179);
             this.dataGridView1.TabIndex = 30;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -178,15 +178,60 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1198, 41);
+            this.groupBox1.Size = new System.Drawing.Size(1020, 69);
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
+            // 
+            // cboQcMrStatus
+            // 
+            this.cboQcMrStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboQcMrStatus.Items.AddRange(new object[] {
+            "运行病历",
+            "终末病历",
+            "归档病历"});
+            this.cboQcMrStatus.Location = new System.Drawing.Point(251, 15);
+            this.cboQcMrStatus.Name = "cboQcMrStatus";
+            this.cboQcMrStatus.Size = new System.Drawing.Size(93, 22);
+            this.cboQcMrStatus.TabIndex = 35;
+            this.cboQcMrStatus.Text = "运行病历";
+            // 
+            // cboStatType
+            // 
+            this.cboStatType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboStatType.Items.AddRange(new object[] {
+            "系统检测",
+            "人工检测"});
+            this.cboStatType.Location = new System.Drawing.Point(78, 14);
+            this.cboStatType.Name = "cboStatType";
+            this.cboStatType.Size = new System.Drawing.Size(93, 22);
+            this.cboStatType.TabIndex = 36;
+            this.cboStatType.Text = "系统检测";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(178, 17);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 14);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "病案状态：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(8, 17);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 14);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "统计类型：";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::Heren.MedQC.Statistic.Properties.Resources.question2;
-            this.pictureBox1.Location = new System.Drawing.Point(1169, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(990, 39);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(23, 20);
             this.pictureBox1.TabIndex = 32;
@@ -196,7 +241,7 @@
             // dtpEndTime
             // 
             this.dtpEndTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpEndTime.Location = new System.Drawing.Point(584, 15);
+            this.dtpEndTime.Location = new System.Drawing.Point(239, 42);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.Size = new System.Drawing.Size(122, 23);
             this.dtpEndTime.TabIndex = 2;
@@ -205,7 +250,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(354, 18);
+            this.label1.Location = new System.Drawing.Point(9, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 14);
             this.label1.TabIndex = 1;
@@ -216,7 +261,7 @@
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExport.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExport.Location = new System.Drawing.Point(1068, 11);
+            this.btnExport.Location = new System.Drawing.Point(889, 35);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(94, 26);
             this.btnExport.TabIndex = 31;
@@ -226,7 +271,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(561, 20);
+            this.label3.Location = new System.Drawing.Point(216, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(17, 12);
             this.label3.TabIndex = 1;
@@ -235,7 +280,7 @@
             // dtpBeginTime
             // 
             this.dtpBeginTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpBeginTime.Location = new System.Drawing.Point(433, 15);
+            this.dtpBeginTime.Location = new System.Drawing.Point(88, 42);
             this.dtpBeginTime.Name = "dtpBeginTime";
             this.dtpBeginTime.Size = new System.Drawing.Size(122, 23);
             this.dtpBeginTime.TabIndex = 2;
@@ -243,7 +288,7 @@
             // cboDeptName
             // 
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboDeptName.Location = new System.Drawing.Point(753, 16);
+            this.cboDeptName.Location = new System.Drawing.Point(392, 14);
             this.cboDeptName.Name = "cboDeptName";
             this.cboDeptName.Size = new System.Drawing.Size(133, 22);
             this.cboDeptName.TabIndex = 20;
@@ -253,7 +298,7 @@
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(987, 11);
+            this.btnSearch.Location = new System.Drawing.Point(808, 35);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 26);
             this.btnSearch.TabIndex = 29;
@@ -265,7 +310,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(712, 19);
+            this.label2.Location = new System.Drawing.Point(351, 18);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 14);
             this.label2.TabIndex = 1;
@@ -277,7 +322,7 @@
             this.arrowSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.arrowSplitter1.Location = new System.Drawing.Point(0, 248);
             this.arrowSplitter1.Name = "arrowSplitter1";
-            this.arrowSplitter1.Size = new System.Drawing.Size(1198, 10);
+            this.arrowSplitter1.Size = new System.Drawing.Size(1020, 10);
             this.arrowSplitter1.TabIndex = 37;
             this.arrowSplitter1.TabStop = false;
             // 
@@ -288,7 +333,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 258);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1198, 261);
+            this.panel1.Size = new System.Drawing.Size(1020, 261);
             this.panel1.TabIndex = 38;
             // 
             // dataGridView2
@@ -339,7 +384,7 @@
             this.dataGridView2.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.dataGridView2.RowTemplate.Height = 27;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(1192, 236);
+            this.dataGridView2.Size = new System.Drawing.Size(1014, 236);
             this.dataGridView2.TabIndex = 31;
             this.dataGridView2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             // 
@@ -398,62 +443,17 @@
             this.label4.TabIndex = 32;
             this.label4.Text = "病历明细";
             // 
-            // cboQcMrStatus
-            // 
-            this.cboQcMrStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboQcMrStatus.Items.AddRange(new object[] {
-            "运行病历",
-            "终末病历",
-            "归档病历"});
-            this.cboQcMrStatus.Location = new System.Drawing.Point(251, 15);
-            this.cboQcMrStatus.Name = "cboQcMrStatus";
-            this.cboQcMrStatus.Size = new System.Drawing.Size(93, 22);
-            this.cboQcMrStatus.TabIndex = 35;
-            this.cboQcMrStatus.Text = "运行病历";
-            // 
-            // cboStatType
-            // 
-            this.cboStatType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboStatType.Items.AddRange(new object[] {
-            "系统检测",
-            "人工检测"});
-            this.cboStatType.Location = new System.Drawing.Point(78, 14);
-            this.cboStatType.Name = "cboStatType";
-            this.cboStatType.Size = new System.Drawing.Size(93, 22);
-            this.cboStatType.TabIndex = 36;
-            this.cboStatType.Text = "系统检测";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(178, 17);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 14);
-            this.label8.TabIndex = 33;
-            this.label8.Text = "病案状态：";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(8, 17);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 14);
-            this.label7.TabIndex = 34;
-            this.label7.Text = "统计类型：";
-            // 
-            // StatByYunxingQcCheckResultDetailForm
+            // StatByDeptQcCheckResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1198, 519);
+            this.ClientSize = new System.Drawing.Size(1020, 519);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.arrowSplitter1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "StatByYunxingQcCheckResultDetailForm";
+            this.Name = "StatByDeptQcCheckResultForm";
             this.Text = "病历缺陷科室统计";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);

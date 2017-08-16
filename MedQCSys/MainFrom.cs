@@ -257,6 +257,7 @@ namespace MedQCSys
             DocumentListNewForm frm = this.PatientPageForm.GetDocumentList();
             if (frm != null)
             {
+                frm.Activate();
                 frm.OpenDocument(docInfo);
             }
         }

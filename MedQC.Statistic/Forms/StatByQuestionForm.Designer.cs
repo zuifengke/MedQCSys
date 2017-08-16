@@ -81,13 +81,13 @@
             this.colMsgStatus,
             this.colDateConfirmed});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 43);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 60);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1188, 485);
+            this.dataGridView1.Size = new System.Drawing.Size(1020, 468);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -200,25 +200,23 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1188, 43);
+            this.panel1.Size = new System.Drawing.Size(1020, 60);
             this.panel1.TabIndex = 19;
             // 
             // cboDeptName
             // 
             this.cboDeptName.CandidateWidth = 200;
-            this.cboDeptName.DroppedDown = false;
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.cboDeptName.Location = new System.Drawing.Point(44, 10);
+            this.cboDeptName.Location = new System.Drawing.Point(72, 10);
             this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.SelectedItem = null;
-            this.cboDeptName.Size = new System.Drawing.Size(129, 23);
+            this.cboDeptName.Size = new System.Drawing.Size(121, 23);
             this.cboDeptName.TabIndex = 17;
             this.cboDeptName.SelectedIndexChanged += new System.EventHandler(this.cboDeptName_SelectedIndexChanged);
             // 
             // btnExportExcel
             // 
             this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(1015, 7);
+            this.btnExportExcel.Location = new System.Drawing.Point(854, 29);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 16;
@@ -240,7 +238,7 @@
             // 
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(1098, 7);
+            this.btnPrint.Location = new System.Drawing.Point(937, 29);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(80, 28);
             this.btnPrint.TabIndex = 6;
@@ -252,7 +250,7 @@
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(932, 7);
+            this.btnQuery.Location = new System.Drawing.Point(771, 29);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(80, 28);
             this.btnQuery.TabIndex = 4;
@@ -263,11 +261,9 @@
             // cboDoctor
             // 
             this.cboDoctor.CandidateWidth = 200;
-            this.cboDoctor.DroppedDown = false;
             this.cboDoctor.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.cboDoctor.Location = new System.Drawing.Point(774, 10);
+            this.cboDoctor.Location = new System.Drawing.Point(267, 34);
             this.cboDoctor.Name = "cboDoctor";
-            this.cboDoctor.SelectedItem = null;
             this.cboDoctor.Size = new System.Drawing.Size(123, 23);
             this.cboDoctor.TabIndex = 10;
             // 
@@ -275,7 +271,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(519, 16);
+            this.label1.Location = new System.Drawing.Point(5, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 14);
             this.label1.TabIndex = 1;
@@ -285,7 +281,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(709, 16);
+            this.label2.Location = new System.Drawing.Point(202, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 14);
             this.label2.TabIndex = 3;
@@ -294,11 +290,9 @@
             // cboEventType
             // 
             this.cboEventType.CandidateWidth = 200;
-            this.cboEventType.DroppedDown = false;
             this.cboEventType.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.cboEventType.Location = new System.Drawing.Point(586, 10);
+            this.cboEventType.Location = new System.Drawing.Point(72, 34);
             this.cboEventType.Name = "cboEventType";
-            this.cboEventType.SelectedItem = null;
             this.cboEventType.Size = new System.Drawing.Size(120, 23);
             this.cboEventType.TabIndex = 0;
             // 
@@ -306,7 +300,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label5.Location = new System.Drawing.Point(369, 15);
+            this.label5.Location = new System.Drawing.Point(391, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(21, 14);
             this.label5.TabIndex = 11;
@@ -316,7 +310,7 @@
             // 
             this.dtpStatTimeEnd.Font = new System.Drawing.Font("宋体", 10.5F);
             this.dtpStatTimeEnd.ImeMode = System.Windows.Forms.ImeMode.Alpha;
-            this.dtpStatTimeEnd.Location = new System.Drawing.Point(391, 10);
+            this.dtpStatTimeEnd.Location = new System.Drawing.Point(413, 10);
             this.dtpStatTimeEnd.Name = "dtpStatTimeEnd";
             this.dtpStatTimeEnd.Size = new System.Drawing.Size(123, 23);
             this.dtpStatTimeEnd.TabIndex = 3;
@@ -325,7 +319,7 @@
             // 
             this.dtpStatTimeBegin.Font = new System.Drawing.Font("宋体", 10.5F);
             this.dtpStatTimeBegin.ImeMode = System.Windows.Forms.ImeMode.Alpha;
-            this.dtpStatTimeBegin.Location = new System.Drawing.Point(246, 10);
+            this.dtpStatTimeBegin.Location = new System.Drawing.Point(268, 10);
             this.dtpStatTimeBegin.Name = "dtpStatTimeBegin";
             this.dtpStatTimeBegin.Size = new System.Drawing.Size(120, 23);
             this.dtpStatTimeBegin.TabIndex = 2;
@@ -334,7 +328,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label4.Location = new System.Drawing.Point(177, 15);
+            this.label4.Location = new System.Drawing.Point(199, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 8;
@@ -343,7 +337,7 @@
             // StatByQuestionForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1188, 528);
+            this.ClientSize = new System.Drawing.Size(1020, 528);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

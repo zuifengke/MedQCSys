@@ -100,7 +100,7 @@ namespace Heren.MedQC.Search
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(886, 334);
+            this.dataGridView1.Size = new System.Drawing.Size(781, 334);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -210,18 +210,16 @@ namespace Heren.MedQC.Search
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(886, 35);
+            this.panel1.Size = new System.Drawing.Size(781, 35);
             this.panel1.TabIndex = 10;
             // 
             // cboDeptName
             // 
             this.cboDeptName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cboDeptName.CandidateWidth = 200;
-            this.cboDeptName.DroppedDown = false;
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboDeptName.Location = new System.Drawing.Point(75, 6);
             this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.SelectedItem = null;
             this.cboDeptName.Size = new System.Drawing.Size(129, 23);
             this.cboDeptName.TabIndex = 2;
             // 
@@ -240,7 +238,7 @@ namespace Heren.MedQC.Search
             // 
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(818, 4);
+            this.btnPrint.Location = new System.Drawing.Point(713, 4);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(65, 28);
             this.btnPrint.TabIndex = 9;
@@ -262,7 +260,7 @@ namespace Heren.MedQC.Search
             // btnExportExcel
             // 
             this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(731, 4);
+            this.btnExportExcel.Location = new System.Drawing.Point(626, 4);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 8;
@@ -285,7 +283,7 @@ namespace Heren.MedQC.Search
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(659, 4);
+            this.btnQuery.Location = new System.Drawing.Point(554, 4);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(65, 28);
             this.btnQuery.TabIndex = 7;
@@ -311,14 +309,15 @@ namespace Heren.MedQC.Search
             this.dtpStatTimeEnd.Size = new System.Drawing.Size(121, 23);
             this.dtpStatTimeEnd.TabIndex = 6;
             // 
-            // StatByOutPatientForm
+            // SearchByOutPatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 369);
+            this.ClientSize = new System.Drawing.Size(781, 369);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
-            this.Name = "StatByOutPatientForm";
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Name = "SearchByOutPatientForm";
             this.Text = "出院患者查询";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);

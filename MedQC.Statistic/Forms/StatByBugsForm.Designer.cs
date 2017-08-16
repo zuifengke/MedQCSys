@@ -86,13 +86,13 @@ namespace Heren.MedQC.Statistic
             this.colPARENT_DOCTOR,
             this.colConfirmDate});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 45);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 70);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1145, 452);
+            this.dataGridView1.Size = new System.Drawing.Size(1020, 427);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -241,13 +241,13 @@ namespace Heren.MedQC.Statistic
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1145, 45);
+            this.panel1.Size = new System.Drawing.Size(1020, 70);
             this.panel1.TabIndex = 30;
             // 
             // chkContentCheck
             // 
             this.chkContentCheck.AutoSize = true;
-            this.chkContentCheck.Location = new System.Drawing.Point(759, 16);
+            this.chkContentCheck.Location = new System.Drawing.Point(265, 46);
             this.chkContentCheck.Name = "chkContentCheck";
             this.chkContentCheck.Size = new System.Drawing.Size(82, 18);
             this.chkContentCheck.TabIndex = 29;
@@ -257,7 +257,7 @@ namespace Heren.MedQC.Statistic
             // chkTimeCheck
             // 
             this.chkTimeCheck.AutoSize = true;
-            this.chkTimeCheck.Location = new System.Drawing.Point(674, 16);
+            this.chkTimeCheck.Location = new System.Drawing.Point(180, 46);
             this.chkTimeCheck.Name = "chkTimeCheck";
             this.chkTimeCheck.Size = new System.Drawing.Size(82, 18);
             this.chkTimeCheck.TabIndex = 29;
@@ -276,27 +276,23 @@ namespace Heren.MedQC.Statistic
             // cboMsgStatus
             // 
             this.cboMsgStatus.CandidateWidth = 200;
-            this.cboMsgStatus.DroppedDown = false;
             this.cboMsgStatus.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboMsgStatus.Items.AddRange(new object[] {
             "",
             "未接收",
             "已修改",
             "合格"});
-            this.cboMsgStatus.Location = new System.Drawing.Point(586, 12);
+            this.cboMsgStatus.Location = new System.Drawing.Point(71, 41);
             this.cboMsgStatus.Name = "cboMsgStatus";
-            this.cboMsgStatus.SelectedItem = null;
-            this.cboMsgStatus.Size = new System.Drawing.Size(78, 23);
+            this.cboMsgStatus.Size = new System.Drawing.Size(99, 23);
             this.cboMsgStatus.TabIndex = 26;
             // 
             // cboDeptName
             // 
             this.cboDeptName.CandidateWidth = 200;
-            this.cboDeptName.DroppedDown = false;
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboDeptName.Location = new System.Drawing.Point(41, 12);
             this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.SelectedItem = null;
             this.cboDeptName.Size = new System.Drawing.Size(129, 23);
             this.cboDeptName.TabIndex = 26;
             // 
@@ -304,7 +300,7 @@ namespace Heren.MedQC.Statistic
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label4.Location = new System.Drawing.Point(517, 16);
+            this.label4.Location = new System.Drawing.Point(2, 45);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 1;
@@ -334,7 +330,7 @@ namespace Heren.MedQC.Statistic
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(920, 10);
+            this.btnQuery.Location = new System.Drawing.Point(796, 35);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(65, 28);
             this.btnQuery.TabIndex = 2;
@@ -355,7 +351,7 @@ namespace Heren.MedQC.Statistic
             // btnExportExcel
             // 
             this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(991, 10);
+            this.btnExportExcel.Location = new System.Drawing.Point(867, 35);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 6;
@@ -374,9 +370,9 @@ namespace Heren.MedQC.Statistic
             // 
             // btnPrint
             // 
-            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(1076, 10);
+            this.btnPrint.Location = new System.Drawing.Point(951, 35);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(65, 28);
             this.btnPrint.TabIndex = 4;
@@ -387,7 +383,7 @@ namespace Heren.MedQC.Statistic
             // StatByBugsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1145, 497);
+            this.ClientSize = new System.Drawing.Size(1020, 497);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 10.5F);

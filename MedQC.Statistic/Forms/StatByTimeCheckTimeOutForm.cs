@@ -124,8 +124,10 @@ namespace Heren.MedQC.Statistic
             string szTimeType = string.Empty;
             if (rbtCheckTime.Checked)
                 szTimeType = "Check_date";
-            else
+            else if(rbtEndTime.Checked)
                 szTimeType = "end_date";
+            else if (rbtnDischargeTime.Checked)
+                szTimeType = "discharge_time";
             string szDeptCode = string.Empty;
             string szQcResult = string.Empty;
             if (this.cboDeptName.SelectedItem != null && !string.IsNullOrEmpty(this.cboDeptName.Text.Trim()))
@@ -218,8 +220,10 @@ namespace Heren.MedQC.Statistic
             string szTimeType = string.Empty;
             if (rbtCheckTime.Checked)
                 szTimeType = "Check_date";
-            else
+            else if (rbtEndTime.Checked)
                 szTimeType = "end_date";
+            else if (rbtnDischargeTime.Checked)
+                szTimeType = "discharge_time";
             string szDeptCode = string.Empty;
             string szQcResult = string.Empty;
             if (this.cboDeptName.SelectedItem != null && !string.IsNullOrEmpty(this.cboDeptName.Text.Trim()))
@@ -354,8 +358,10 @@ namespace Heren.MedQC.Statistic
             string szTimeType = string.Empty;
             if (rbtCheckTime.Checked)
                 szTimeType = "Check_date";
-            else
+            else if (rbtEndTime.Checked)
                 szTimeType = "end_date";
+            else if (rbtnDischargeTime.Checked)
+                szTimeType = "discharge_time";
             if (this.cboDeptName.SelectedItem != null && !string.IsNullOrEmpty(this.cboDeptName.Text.Trim()))
             {
                 szDeptCode = (this.cboDeptName.SelectedItem as  DeptInfo).DEPT_CODE;

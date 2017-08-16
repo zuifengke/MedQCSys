@@ -35,23 +35,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDoctorInCharge = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDocTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRecordTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDocTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCreateName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBeginTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLeave = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTimeout = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQcExplain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDocType = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,6 +50,25 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.rbtnDischargeTime = new System.Windows.Forms.RadioButton();
+            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_DISCHARGE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoctorInCharge = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDocTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRecordTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDocTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCreateName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBeginTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLeave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTimeout = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQcExplain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -90,6 +92,7 @@
             this.colDeptName,
             this.colPatientName,
             this.colPatientID,
+            this.col_DISCHARGE_TIME,
             this.colVisitID,
             this.colDoctorInCharge,
             this.colDocTitle,
@@ -113,7 +116,7 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 68);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 71);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -127,9 +130,186 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1137, 422);
+            this.dataGridView1.Size = new System.Drawing.Size(926, 419);
             this.dataGridView1.TabIndex = 28;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtDocType);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.rbtnDischargeTime);
+            this.groupBox1.Controls.Add(this.rbtCheckTime);
+            this.groupBox1.Controls.Add(this.rbtEndTime);
+            this.groupBox1.Controls.Add(this.dtpEndTime);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.btnExport);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cboQcResult);
+            this.groupBox1.Controls.Add(this.dtpBeginTime);
+            this.groupBox1.Controls.Add(this.cboDeptName);
+            this.groupBox1.Controls.Add(this.btnSearch);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(926, 71);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            // 
+            // txtDocType
+            // 
+            this.txtDocType.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.txtDocType.Location = new System.Drawing.Point(506, 12);
+            this.txtDocType.Name = "txtDocType";
+            this.txtDocType.ReadOnly = true;
+            this.txtDocType.Size = new System.Drawing.Size(180, 21);
+            this.txtDocType.TabIndex = 34;
+            this.txtDocType.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDocType_MouseDoubleClick);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label4.Location = new System.Drawing.Point(433, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 14);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "病历名称";
+            // 
+            // rbtCheckTime
+            // 
+            this.rbtCheckTime.AutoSize = true;
+            this.rbtCheckTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rbtCheckTime.Location = new System.Drawing.Point(40, 44);
+            this.rbtCheckTime.Name = "rbtCheckTime";
+            this.rbtCheckTime.Size = new System.Drawing.Size(81, 18);
+            this.rbtCheckTime.TabIndex = 32;
+            this.rbtCheckTime.Text = "检查时间";
+            this.rbtCheckTime.UseVisualStyleBackColor = true;
+            // 
+            // rbtEndTime
+            // 
+            this.rbtEndTime.AutoSize = true;
+            this.rbtEndTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rbtEndTime.Location = new System.Drawing.Point(124, 44);
+            this.rbtEndTime.Name = "rbtEndTime";
+            this.rbtEndTime.Size = new System.Drawing.Size(81, 18);
+            this.rbtEndTime.TabIndex = 32;
+            this.rbtEndTime.Text = "截止时间";
+            this.rbtEndTime.UseVisualStyleBackColor = true;
+            // 
+            // dtpEndTime
+            // 
+            this.dtpEndTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpEndTime.Location = new System.Drawing.Point(464, 42);
+            this.dtpEndTime.Name = "dtpEndTime";
+            this.dtpEndTime.Size = new System.Drawing.Size(122, 23);
+            this.dtpEndTime.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(11, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 14);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "按：";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExport.Location = new System.Drawing.Point(826, 39);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(94, 26);
+            this.btnExport.TabIndex = 31;
+            this.btnExport.Text = "导出Excel";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(441, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(17, 12);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "至";
+            // 
+            // cboQcResult
+            // 
+            this.cboQcResult.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboQcResult.FormattingEnabled = true;
+            this.cboQcResult.Location = new System.Drawing.Point(277, 11);
+            this.cboQcResult.Name = "cboQcResult";
+            this.cboQcResult.Size = new System.Drawing.Size(146, 22);
+            this.cboQcResult.TabIndex = 21;
+            // 
+            // dtpBeginTime
+            // 
+            this.dtpBeginTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpBeginTime.Location = new System.Drawing.Point(313, 42);
+            this.dtpBeginTime.Name = "dtpBeginTime";
+            this.dtpBeginTime.Size = new System.Drawing.Size(122, 23);
+            this.dtpBeginTime.TabIndex = 2;
+            // 
+            // cboDeptName
+            // 
+            this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboDeptName.Location = new System.Drawing.Point(59, 14);
+            this.cboDeptName.Name = "cboDeptName";
+            this.cboDeptName.Size = new System.Drawing.Size(146, 22);
+            this.cboDeptName.TabIndex = 20;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearch.Location = new System.Drawing.Point(745, 39);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 26);
+            this.btnSearch.TabIndex = 29;
+            this.btnSearch.Text = "查询";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(10, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 14);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "科室";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(207, 17);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 14);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "质控结果";
+            // 
+            // rbtnDischargeTime
+            // 
+            this.rbtnDischargeTime.AutoSize = true;
+            this.rbtnDischargeTime.Checked = true;
+            this.rbtnDischargeTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rbtnDischargeTime.Location = new System.Drawing.Point(211, 44);
+            this.rbtnDischargeTime.Name = "rbtnDischargeTime";
+            this.rbtnDischargeTime.Size = new System.Drawing.Size(81, 18);
+            this.rbtnDischargeTime.TabIndex = 32;
+            this.rbtnDischargeTime.TabStop = true;
+            this.rbtnDischargeTime.Text = "出院时间";
+            this.rbtnDischargeTime.UseVisualStyleBackColor = true;
             // 
             // colDeptName
             // 
@@ -152,6 +332,13 @@
             this.colPatientID.Name = "colPatientID";
             this.colPatientID.ReadOnly = true;
             this.colPatientID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // col_DISCHARGE_TIME
+            // 
+            this.col_DISCHARGE_TIME.HeaderText = "出院时间";
+            this.col_DISCHARGE_TIME.Name = "col_DISCHARGE_TIME";
+            this.col_DISCHARGE_TIME.ReadOnly = true;
+            this.col_DISCHARGE_TIME.Width = 120;
             // 
             // colVisitID
             // 
@@ -267,175 +454,11 @@
             this.colQcExplain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colQcExplain.Width = 400;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.txtDocType);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.rbtCheckTime);
-            this.groupBox1.Controls.Add(this.rbtEndTime);
-            this.groupBox1.Controls.Add(this.dtpEndTime);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.btnExport);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cboQcResult);
-            this.groupBox1.Controls.Add(this.dtpBeginTime);
-            this.groupBox1.Controls.Add(this.cboDeptName);
-            this.groupBox1.Controls.Add(this.btnSearch);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1137, 68);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            // 
-            // txtDocType
-            // 
-            this.txtDocType.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.txtDocType.Location = new System.Drawing.Point(99, 41);
-            this.txtDocType.Name = "txtDocType";
-            this.txtDocType.ReadOnly = true;
-            this.txtDocType.Size = new System.Drawing.Size(403, 21);
-            this.txtDocType.TabIndex = 34;
-            this.txtDocType.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDocType_MouseDoubleClick);
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label4.Location = new System.Drawing.Point(29, 45);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 14);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "病历名称";
-            // 
-            // rbtCheckTime
-            // 
-            this.rbtCheckTime.AutoSize = true;
-            this.rbtCheckTime.Checked = true;
-            this.rbtCheckTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rbtCheckTime.Location = new System.Drawing.Point(55, 15);
-            this.rbtCheckTime.Name = "rbtCheckTime";
-            this.rbtCheckTime.Size = new System.Drawing.Size(81, 18);
-            this.rbtCheckTime.TabIndex = 32;
-            this.rbtCheckTime.TabStop = true;
-            this.rbtCheckTime.Text = "检查时间";
-            this.rbtCheckTime.UseVisualStyleBackColor = true;
-            // 
-            // rbtEndTime
-            // 
-            this.rbtEndTime.AutoSize = true;
-            this.rbtEndTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rbtEndTime.Location = new System.Drawing.Point(139, 15);
-            this.rbtEndTime.Name = "rbtEndTime";
-            this.rbtEndTime.Size = new System.Drawing.Size(81, 18);
-            this.rbtEndTime.TabIndex = 32;
-            this.rbtEndTime.Text = "截止时间";
-            this.rbtEndTime.UseVisualStyleBackColor = true;
-            // 
-            // dtpEndTime
-            // 
-            this.dtpEndTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpEndTime.Location = new System.Drawing.Point(380, 13);
-            this.dtpEndTime.Name = "dtpEndTime";
-            this.dtpEndTime.Size = new System.Drawing.Size(122, 23);
-            this.dtpEndTime.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(26, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 14);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "按：";
-            // 
-            // btnExport
-            // 
-            this.btnExport.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExport.Location = new System.Drawing.Point(825, 39);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(94, 26);
-            this.btnExport.TabIndex = 31;
-            this.btnExport.Text = "导出Excel";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(357, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(17, 12);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "至";
-            // 
-            // cboQcResult
-            // 
-            this.cboQcResult.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboQcResult.FormattingEnabled = true;
-            this.cboQcResult.Location = new System.Drawing.Point(580, 41);
-            this.cboQcResult.Name = "cboQcResult";
-            this.cboQcResult.Size = new System.Drawing.Size(146, 22);
-            this.cboQcResult.TabIndex = 21;
-            // 
-            // dtpBeginTime
-            // 
-            this.dtpBeginTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpBeginTime.Location = new System.Drawing.Point(229, 13);
-            this.dtpBeginTime.Name = "dtpBeginTime";
-            this.dtpBeginTime.Size = new System.Drawing.Size(122, 23);
-            this.dtpBeginTime.TabIndex = 2;
-            // 
-            // cboDeptName
-            // 
-            this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboDeptName.Location = new System.Drawing.Point(580, 13);
-            this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.Size = new System.Drawing.Size(146, 22);
-            this.cboDeptName.TabIndex = 20;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(744, 39);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 26);
-            this.btnSearch.TabIndex = 29;
-            this.btnSearch.Text = "查询";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(508, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 14);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "科室";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(508, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 14);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "质控结果";
-            // 
             // StatByTimeCheckDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1137, 490);
+            this.ClientSize = new System.Drawing.Size(926, 490);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -464,9 +487,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton rbtEndTime;
         private System.Windows.Forms.RadioButton rbtCheckTime;
+        private System.Windows.Forms.TextBox txtDocType;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton rbtnDischargeTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_DISCHARGE_TIME;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVisitID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDoctorInCharge;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDocTitle;
@@ -481,7 +508,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPoint;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCheckDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQcExplain;
-        private System.Windows.Forms.TextBox txtDocType;
-        private System.Windows.Forms.Label label4;
     }
 }

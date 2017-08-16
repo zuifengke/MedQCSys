@@ -350,7 +350,19 @@ namespace MedQCSys.DockForms
             MedDocInfo docInfo = null;
             short shRet = EmrDocAccess.Instance.GetDocInfo(checkResultInfo.DocID, ref docInfo);
             if (shRet == SystemData.ReturnValue.OK)
-                this.MainForm.OpenDocument(docInfo);
+            {
+                PatVisitInfo patVisitInfo = null;
+                shRet = PatVisitAccess.Instance.GetPatVisit(docInfo.PATIENT_ID, docInfo.VISIT_ID, ref patVisitInfo);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    MessageBoxEx.Show("患者信息查找失败,无法打开病历！");
+                    this.ShowStatusMessage(null);
+                    GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                    return;
+                }
+                this.MainForm.SwitchPatient(patVisitInfo, docInfo);
+            }
+                //this.MainForm.OpenDocument(docInfo);
             else
                 MessageBoxEx.Show("病历详细信息下载失败,无法打开病历！");
 
