@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedQC.ScreenSnap", "MedQC.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedQC.ScriptEngine", "MedQC.ScriptEngine\MedQC.ScriptEngine.csproj", "{5AF400FA-B5B2-45A6-B88F-32756715A1D0}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MedQC.Setup", "MedQC.Setup\MedQC.Setup.vdproj", "{740C635F-E3A5-4852-A2A0-FB64B3E28738}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -377,6 +379,12 @@ Global
 		{5AF400FA-B5B2-45A6-B88F-32756715A1D0}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5AF400FA-B5B2-45A6-B88F-32756715A1D0}.Release|x86.ActiveCfg = Release|x86
 		{5AF400FA-B5B2-45A6-B88F-32756715A1D0}.Release|x86.Build.0 = Release|x86
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Debug|Any CPU.ActiveCfg = Debug
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Debug|x86.ActiveCfg = Debug
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Release|Any CPU.ActiveCfg = Release
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Release|Mixed Platforms.ActiveCfg = Release
+		{740C635F-E3A5-4852-A2A0-FB64B3E28738}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
