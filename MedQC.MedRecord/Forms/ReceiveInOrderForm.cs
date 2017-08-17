@@ -97,22 +97,34 @@ namespace Heren.MedQC.MedRecord
             string szDocID = this.txtDocID.Text.Trim();
             MedDocInfo docInfo = null;
             short shRet = EmrDocAccess.Instance.GetDocInfo(szDocID, ref docInfo);
-            if (docInfo == null)
-                return;
-            this.txt_DEPT_NAME.Text = docInfo.DEPT_NAME;
-            this.txt_PATIENT_ID.Text = docInfo.PATIENT_ID;
-            this.txt_PATIENT_NAME.Text = docInfo.PATIENT_NAME;
-            string szPatientID = docInfo.PATIENT_ID;
-            string szVisitNo = docInfo.VISIT_ID;//文书VisitID存了 VisitNo
             PatVisitInfo patVisit = null;
-            shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisit);
+            if (docInfo == null)
+            {
+                string szPatientID = this.txtDocID.Text.Trim();
+                List<PatVisitInfo> lstPatVisitInfo = null;
+                PatVisitAccess.Instance.GetPatVisitInfos(szPatientID, ref lstPatVisitInfo);
+                if (lstPatVisitInfo == null)
+                    return;
+                patVisit = lstPatVisitInfo.LastOrDefault();
+            }
+            else
+            {
+                string szPatientID = docInfo.PATIENT_ID;
+                string szVisitNo = docInfo.VISIT_ID;//文书VisitID存了 VisitNo
+                shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisit);
+            }
+            if (patVisit == null)
+                return;
+            this.txt_DEPT_NAME.Text = patVisit.DEPT_NAME;
+            this.txt_PATIENT_ID.Text = patVisit.PATIENT_ID;
+            this.txt_PATIENT_NAME.Text = patVisit.PATIENT_NAME;
             this.txt_DISCHARGE_TIME.Text = patVisit.DISCHARGE_TIME.ToShortDateString();
             List<MedDocInfo> lstMedDocInfos = null;
-            shRet = EmrDocAccess.Instance.GetDocList(szPatientID, szVisitNo, ref lstMedDocInfos);
+            shRet = EmrDocAccess.Instance.GetDocList(patVisit.PATIENT_ID, patVisit.VISIT_NO, ref lstMedDocInfos);
             if (lstMedDocInfos == null)
                 return;
             List<RecPaper> lstRecPapers = new List<RecPaper>();
-            shRet = RecPaperAccess.Instance.GetRecPapers(szPatientID, szVisitNo, ref lstRecPapers);
+            shRet = RecPaperAccess.Instance.GetRecPapers(patVisit.PATIENT_ID, patVisit.VISIT_NO, ref lstRecPapers);
             string[] arrSignKeyName = DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.SignKeyName].Split('|');
             int rowIndex = 0;
             this.dataGridView1.Rows.Clear();

@@ -75,28 +75,39 @@ namespace Heren.MedQC.MedRecord
             string szDocID = this.txtDocID.Text.Trim();
             MedDocInfo docInfo = null;
             short shRet = EmrDocAccess.Instance.GetDocInfo(szDocID, ref docInfo);
-            if (docInfo == null)
-                return;
-            string szPatientID = docInfo.PATIENT_ID;
-            string szVisitNo = docInfo.VISIT_ID;//文书VisitID存了 VisitNo
             PatVisitInfo patVisit = null;
-            shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisit);
+            if (docInfo == null)
+            {
+                string szPatientID = this.txtDocID.Text.Trim();
+                List<PatVisitInfo> lstPatVisitInfo = null;
+                PatVisitAccess.Instance.GetPatVisitInfos(szPatientID, ref lstPatVisitInfo);
+                if (lstPatVisitInfo == null)
+                    return;
+                patVisit = lstPatVisitInfo.LastOrDefault();
+            }
+            else
+            {
+                string szPatientID = docInfo.PATIENT_ID;
+                string szVisitNo = docInfo.VISIT_ID;//文书VisitID存了 VisitNo
+                shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisit);
+            }
+            if (patVisit == null)
+                return;
             if (m_lstPatVisit == null)
                 m_lstPatVisit = new List<PatVisitInfo>();
-            if (m_lstPatVisit.Exists(m => m.PATIENT_ID == szPatientID && m.VISIT_NO == szVisitNo))
+            if (m_lstPatVisit.Exists(m => m.PATIENT_ID == patVisit.PATIENT_ID && m.VISIT_NO == patVisit.VISIT_NO))
                 return;
             List<MedDocInfo> lstMedDocInfos = null;
-            shRet = EmrDocAccess.Instance.GetDocList(szPatientID, szVisitNo, ref lstMedDocInfos);
+            shRet = EmrDocAccess.Instance.GetDocList(patVisit.PATIENT_ID, patVisit.VISIT_NO, ref lstMedDocInfos);
             if (lstMedDocInfos == null)
                 return;
             List<RecPaper> lstRecPapers = new List<RecPaper>();
-            shRet = RecPaperAccess.Instance.GetRecPapers(szPatientID, szVisitNo, ref lstRecPapers);
+            shRet = RecPaperAccess.Instance.GetRecPapers(patVisit.PATIENT_ID, patVisit.VISIT_NO, ref lstRecPapers);
             string[] arrSignKeyName = DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.SignKeyName].Split('|');
             var result = lstMedDocInfos.Where(m => StringHelper.ArrayContains(m.DOC_TITLE, arrSignKeyName)).ToList();
             if (result != null && result.Count > 0)
             {
                 VirtualNode node = new VirtualNode();
-
                 string szNodeText = string.Format("应{0}张 患者号:{1} 姓名:{2} ", result.Count, patVisit.PATIENT_ID, patVisit.PATIENT_NAME);
                 if (patVisit.DISCHARGE_TIME != patVisit.DefaultTime)
                 {

@@ -44,14 +44,14 @@
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
             this.txt_DISCHARGE_TIME = new MetroFramework.Controls.MetroTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnReceive = new MetroFramework.Controls.MetroButton();
-            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
-            this.txtDocID = new System.Windows.Forms.TextBox();
             this.colCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colRecordTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDocTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_IMAGE_FRONTAGE = new System.Windows.Forms.DataGridViewImageColumn();
             this.col_IMAGE_OPPOSITE = new System.Windows.Forms.DataGridViewImageColumn();
+            this.btnReceive = new MetroFramework.Controls.MetroButton();
+            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
+            this.txtDocID = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,11 +83,11 @@
             this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel2.Location = new System.Drawing.Point(12, 77);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(93, 19);
+            this.metroLabel2.Size = new System.Drawing.Size(140, 19);
             this.metroLabel2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroLabel2.StyleManager = null;
             this.metroLabel2.TabIndex = 0;
-            this.metroLabel2.Text = "病历条码号：";
+            this.metroLabel2.Text = "病历条码号/病案号：";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLabel2.UseStyleColors = false;
             // 
@@ -99,7 +99,7 @@
             this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel3.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel3.Location = new System.Drawing.Point(295, 77);
+            this.metroLabel3.Location = new System.Drawing.Point(341, 77);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(107, 19);
             this.metroLabel3.Style = MetroFramework.MetroColorStyle.Blue;
@@ -216,7 +216,7 @@
             this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel8.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel8.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel8.Location = new System.Drawing.Point(447, 143);
+            this.metroLabel8.Location = new System.Drawing.Point(459, 143);
             this.metroLabel8.Name = "metroLabel8";
             this.metroLabel8.Size = new System.Drawing.Size(51, 19);
             this.metroLabel8.Style = MetroFramework.MetroColorStyle.Blue;
@@ -232,7 +232,7 @@
             this.txt_PATIENT_NAME.CustomForeColor = false;
             this.txt_PATIENT_NAME.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.txt_PATIENT_NAME.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.txt_PATIENT_NAME.Location = new System.Drawing.Point(495, 142);
+            this.txt_PATIENT_NAME.Location = new System.Drawing.Point(515, 142);
             this.txt_PATIENT_NAME.Multiline = false;
             this.txt_PATIENT_NAME.Name = "txt_PATIENT_NAME";
             this.txt_PATIENT_NAME.SelectedText = "";
@@ -267,7 +267,7 @@
             this.txt_DEPT_NAME.CustomForeColor = false;
             this.txt_DEPT_NAME.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.txt_DEPT_NAME.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.txt_DEPT_NAME.Location = new System.Drawing.Point(341, 141);
+            this.txt_DEPT_NAME.Location = new System.Drawing.Point(352, 141);
             this.txt_DEPT_NAME.Multiline = false;
             this.txt_DEPT_NAME.Name = "txt_DEPT_NAME";
             this.txt_DEPT_NAME.SelectedText = "";
@@ -286,7 +286,7 @@
             this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel10.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel10.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel10.Location = new System.Drawing.Point(614, 144);
+            this.metroLabel10.Location = new System.Drawing.Point(626, 144);
             this.metroLabel10.Name = "metroLabel10";
             this.metroLabel10.Size = new System.Drawing.Size(79, 19);
             this.metroLabel10.Style = MetroFramework.MetroColorStyle.Blue;
@@ -302,7 +302,7 @@
             this.txt_DISCHARGE_TIME.CustomForeColor = false;
             this.txt_DISCHARGE_TIME.FontSize = MetroFramework.MetroTextBoxSize.Small;
             this.txt_DISCHARGE_TIME.FontWeight = MetroFramework.MetroTextBoxWeight.Regular;
-            this.txt_DISCHARGE_TIME.Location = new System.Drawing.Point(689, 136);
+            this.txt_DISCHARGE_TIME.Location = new System.Drawing.Point(718, 141);
             this.txt_DISCHARGE_TIME.Multiline = false;
             this.txt_DISCHARGE_TIME.Name = "txt_DISCHARGE_TIME";
             this.txt_DISCHARGE_TIME.SelectedText = "";
@@ -334,45 +334,6 @@
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseClick);
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
-            // 
-            // btnReceive
-            // 
-            this.btnReceive.Highlight = false;
-            this.btnReceive.Location = new System.Drawing.Point(12, 381);
-            this.btnReceive.Name = "btnReceive";
-            this.btnReceive.Size = new System.Drawing.Size(122, 26);
-            this.btnReceive.Style = MetroFramework.MetroColorStyle.Blue;
-            this.btnReceive.StyleManager = null;
-            this.btnReceive.TabIndex = 5;
-            this.btnReceive.Text = "确认接收";
-            this.btnReceive.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
-            // 
-            // metroLabel11
-            // 
-            this.metroLabel11.AutoSize = true;
-            this.metroLabel11.CustomBackground = false;
-            this.metroLabel11.CustomForeColor = false;
-            this.metroLabel11.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.metroLabel11.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel11.Location = new System.Drawing.Point(339, 6);
-            this.metroLabel11.Name = "metroLabel11";
-            this.metroLabel11.Size = new System.Drawing.Size(172, 25);
-            this.metroLabel11.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroLabel11.StyleManager = null;
-            this.metroLabel11.TabIndex = 6;
-            this.metroLabel11.Text = "纸质病历逐份接收";
-            this.metroLabel11.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroLabel11.UseStyleColors = false;
-            // 
-            // txtDocID
-            // 
-            this.txtDocID.Location = new System.Drawing.Point(105, 76);
-            this.txtDocID.Name = "txtDocID";
-            this.txtDocID.Size = new System.Drawing.Size(191, 21);
-            this.txtDocID.TabIndex = 7;
-            this.txtDocID.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
             // 
             // colCheckBox
             // 
@@ -417,19 +378,58 @@
             this.col_IMAGE_OPPOSITE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.col_IMAGE_OPPOSITE.Width = 60;
             // 
+            // btnReceive
+            // 
+            this.btnReceive.Highlight = false;
+            this.btnReceive.Location = new System.Drawing.Point(12, 381);
+            this.btnReceive.Name = "btnReceive";
+            this.btnReceive.Size = new System.Drawing.Size(122, 26);
+            this.btnReceive.Style = MetroFramework.MetroColorStyle.Blue;
+            this.btnReceive.StyleManager = null;
+            this.btnReceive.TabIndex = 5;
+            this.btnReceive.Text = "确认接收";
+            this.btnReceive.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
+            // 
+            // metroLabel11
+            // 
+            this.metroLabel11.AutoSize = true;
+            this.metroLabel11.CustomBackground = false;
+            this.metroLabel11.CustomForeColor = false;
+            this.metroLabel11.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel11.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
+            this.metroLabel11.Location = new System.Drawing.Point(339, 6);
+            this.metroLabel11.Name = "metroLabel11";
+            this.metroLabel11.Size = new System.Drawing.Size(172, 25);
+            this.metroLabel11.Style = MetroFramework.MetroColorStyle.Blue;
+            this.metroLabel11.StyleManager = null;
+            this.metroLabel11.TabIndex = 6;
+            this.metroLabel11.Text = "纸质病历逐份接收";
+            this.metroLabel11.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroLabel11.UseStyleColors = false;
+            // 
+            // txtDocID
+            // 
+            this.txtDocID.Location = new System.Drawing.Point(151, 76);
+            this.txtDocID.Name = "txtDocID";
+            this.txtDocID.Size = new System.Drawing.Size(191, 21);
+            this.txtDocID.TabIndex = 7;
+            this.txtDocID.TextChanged += new System.EventHandler(this.metroTextBox1_TextChanged);
+            // 
             // ReceiveInOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(829, 513);
+            this.ClientSize = new System.Drawing.Size(910, 513);
+            this.Controls.Add(this.txt_DEPT_NAME);
+            this.Controls.Add(this.txt_PATIENT_NAME);
             this.Controls.Add(this.txtDocID);
             this.Controls.Add(this.metroLabel11);
             this.Controls.Add(this.btnReceive);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.txt_DEPT_NAME);
             this.Controls.Add(this.txt_DISCHARGE_TIME);
-            this.Controls.Add(this.txt_PATIENT_NAME);
             this.Controls.Add(this.txt_PATIENT_ID);
             this.Controls.Add(this.lbl_PaperCount);
             this.Controls.Add(this.metroLabel10);

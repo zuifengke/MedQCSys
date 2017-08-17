@@ -78,11 +78,11 @@
             this.metroLabel2.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel2.Location = new System.Drawing.Point(12, 67);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(93, 19);
+            this.metroLabel2.Size = new System.Drawing.Size(140, 19);
             this.metroLabel2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroLabel2.StyleManager = null;
             this.metroLabel2.TabIndex = 0;
-            this.metroLabel2.Text = "病历条码号：";
+            this.metroLabel2.Text = "病历条码号/病案号：";
             this.metroLabel2.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroLabel2.UseStyleColors = false;
             // 
@@ -94,7 +94,7 @@
             this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Medium;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Light;
             this.metroLabel3.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
-            this.metroLabel3.Location = new System.Drawing.Point(302, 67);
+            this.metroLabel3.Location = new System.Drawing.Point(350, 67);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(107, 19);
             this.metroLabel3.Style = MetroFramework.MetroColorStyle.Blue;
@@ -155,7 +155,7 @@
             // 
             // txtDocID
             // 
-            this.txtDocID.Location = new System.Drawing.Point(105, 66);
+            this.txtDocID.Location = new System.Drawing.Point(153, 66);
             this.txtDocID.Name = "txtDocID";
             this.txtDocID.Size = new System.Drawing.Size(191, 21);
             this.txtDocID.TabIndex = 7;

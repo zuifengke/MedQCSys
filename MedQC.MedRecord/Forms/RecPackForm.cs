@@ -219,16 +219,24 @@ namespace Heren.MedQC.MedRecord
             string szDocID = this.txtDocID.Text;
             MedDocInfo docInfo = null;
             short shRet = EmrDocAccess.Instance.GetDocInfo(szDocID, ref docInfo);
+            PatVisitInfo patVisitInfo = null;
             if (docInfo == null)
             {
-                return;
+                string szPatientID = this.txtDocID.Text.Trim();
+                List<PatVisitInfo> lstPatVisitInfo = null;
+                PatVisitAccess.Instance.GetPatVisitInfos(szPatientID, ref lstPatVisitInfo);
+                if (lstPatVisitInfo == null)
+                    return;
+                patVisitInfo = lstPatVisitInfo.LastOrDefault();
             }
-            //显示文本框信息
-            string szPatientID = docInfo.PATIENT_ID;
-            string szVisitNo = docInfo.VISIT_ID;
-            string szPatientName = docInfo.PATIENT_NAME;
-            PatVisitInfo patVisitInfo = null;
-            shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisitInfo);
+            else
+            {
+                string szPatientID = docInfo.PATIENT_ID;
+                string szVisitNo = docInfo.VISIT_ID;//文书VisitID存了 VisitNo
+                shRet = PatVisitAccess.Instance.GetPatVisit(szPatientID, szVisitNo, ref patVisitInfo);
+            }
+            if (patVisitInfo == null)
+                return;
             if (patVisitInfo != null && patVisitInfo.DISCHARGE_TIME != patVisitInfo.DefaultTime)
                 this.txt_DISCHARGE_TIME.Text = patVisitInfo.DISCHARGE_TIME.ToShortDateString();
             this.txt_PATIENT_ID.Text = docInfo.PATIENT_ID;
@@ -236,11 +244,11 @@ namespace Heren.MedQC.MedRecord
             this.txt_DEPT_NAME.Text = docInfo.DEPT_NAME;
             //显示纸质病历列表
             List<MedDocInfo> lstMedDocInfos = null;
-            shRet = EmrDocAccess.Instance.GetDocList(szPatientID, szVisitNo, ref lstMedDocInfos);
+            shRet = EmrDocAccess.Instance.GetDocList(patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_NO, ref lstMedDocInfos);
             if (lstMedDocInfos == null)
                 return;
             List<RecPaper> lstRecPapers = new List<RecPaper>();
-            shRet = RecPaperAccess.Instance.GetRecPapers(szPatientID, szVisitNo, ref lstRecPapers);
+            shRet = RecPaperAccess.Instance.GetRecPapers(patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_NO, ref lstRecPapers);
             string[] arrSignKeyName = DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.SignKeyName].Split('|');
             int rowIndex = 0;
             this.dataGridView1.Rows.Clear();
@@ -288,7 +296,7 @@ namespace Heren.MedQC.MedRecord
             }
             //查询是否已存在打包信息
             RecPack recPack = null;
-            shRet = RecPackAccess.Instance.GetRecPack(szPatientID, szVisitNo, ref recPack);
+            shRet = RecPackAccess.Instance.GetRecPack(patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_NO, ref recPack);
             if (recPack == null)
             {
                 if (this.txt_PACK_NO.Text == string.Empty)
@@ -306,8 +314,8 @@ namespace Heren.MedQC.MedRecord
                 recPack.PACK_NO = this.txt_PACK_NO.Text;
                 recPack.PACK_TIME = SysTimeHelper.Instance.Now;
                 recPack.PAPER_NUMBER = paperNumber;
-                recPack.PATIENT_ID = szPatientID;
-                recPack.PATIENT_NAME = szPatientName;
+                recPack.PATIENT_ID = patVisitInfo.PATIENT_ID;
+                recPack.PATIENT_NAME = patVisitInfo.PATIENT_NAME;
                 recPack.VISIT_ID = patVisitInfo.VISIT_ID;
                 recPack.VISIT_NO = patVisitInfo.VISIT_NO;
                 shRet = RecPackAccess.Instance.Insert(recPack);
