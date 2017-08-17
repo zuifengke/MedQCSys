@@ -55,6 +55,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Oracle.DataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
@@ -72,6 +76,15 @@
     <Compile Include="BAJK\BAJK08Access.cs" />
     <Compile Include="BAJK\GyGydmAccess.cs" />
     <Compile Include="BAJK\BAJKCommonAccess.cs" />
+    <Compile Include="DbAccess\DataAccess.cs" />
+    <Compile Include="DbAccess\DatabaseType.cs" />
+    <Compile Include="DbAccess\DataProvider.cs" />
+    <Compile Include="DbAccess\DataReaderHandler.cs" />
+    <Compile Include="DbAccess\DbParameter.cs" />
+    <Compile Include="DbAccess\OperateContext.cs" />
+    <Compile Include="DbAccess\ProviderFactory.cs" />
+    <Compile Include="DbAccess\SafeDataReader.cs" />
+    <Compile Include="DbAccess\SqlInfo.cs" />
     <Compile Include="HerenHis\InpBillDetailAccess.cs" />
     <Compile Include="HerenHis\OperationMasterAccess.cs" />
     <Compile Include="HerenHis\OperationNameAccess.cs" />

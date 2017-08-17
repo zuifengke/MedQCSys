@@ -47,6 +47,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button14 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // xButton1
@@ -227,6 +228,16 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "入院次:";
             // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(521, 52);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(140, 23);
+            this.button14.TabIndex = 3;
+            this.button14.Text = "oracle免安装客户端";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -246,6 +257,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
+            this.Controls.Add(this.button14);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -279,5 +291,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button14;
     }
 }

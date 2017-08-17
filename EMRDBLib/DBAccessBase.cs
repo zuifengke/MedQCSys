@@ -5,7 +5,7 @@
 // Copyright:supconhealth
 // ***********************************************************
 using System;
-using Heren.Common.Libraries.DbAccess;
+using EMRDBLib.DbAccess;
 using Heren.Common.Libraries.Ftp;
 using Heren.Common.Libraries;
 
@@ -245,6 +245,10 @@ namespace EMRDBLib.DbAccess
             {
                 return DataProvider.ODPNET;
             }
+            else if (szDbDriverType == SystemData.DataProvider.ODPNET_Managed)
+            {
+                return DataProvider.ODPNET_Managed;
+            }
             else if (szDbDriverType == SystemData.DataProvider.ORACLE)
             {
                 return DataProvider.OracleClient;
@@ -319,7 +323,10 @@ namespace EMRDBLib.DbAccess
         {
             switch (this.MeddocAccess.DataProvider)
             {
+                case DataProvider.ODPNET_Managed:
+                    return ":" + szParaName;
                 case DataProvider.ODPNET:
+                    return ":" + szParaName;
                 case DataProvider.Odbc:
                 case DataProvider.OleDb:
                     return "?";

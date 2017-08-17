@@ -18,6 +18,7 @@ using Heren.MedQC.Utilities;
 using EMRDBLib.DbAccess;
 using Heren.MedQC.ScriptEngine.Debugger;
 using Heren.MedQC.CheckPoint;
+using Oracle.ManagedDataAccess.Client;
 
 namespace MedQC.Test
 {
@@ -128,6 +129,28 @@ namespace MedQC.Test
             QcCheckResult qcCheckResult = CheckPointHelper.Instance.InitQcCheckResult(qcCheckPoint, patVisitInfo);
             frm.QcCheckResult = qcCheckResult;
             frm.Show();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            OracleConnection con = new OracleConnection();
+            con.ConnectionString = "user id=meddoc;password=meddoc;data source=192.168.152.128/meddoczh";
+            con.Open();
+
+            OracleCommand cmd = new OracleCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "select * from pat_visit_v";
+            cmd.Connection = con;
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            con.Close();
+            da.Dispose();
+            cmd.Dispose();
+            con.Dispose();
         }
     }
 }

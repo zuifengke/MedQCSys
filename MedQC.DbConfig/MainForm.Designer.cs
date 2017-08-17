@@ -172,7 +172,8 @@ namespace Heren.MedQC.DbConfig
             "provider=sqloledb.1;server=.;database=meddoc;user id=sa;password=;",
             "data source=meddoc;user id=meddoc;password=meddoc;",
             "server=.;database=meddoc;user id=sa;password=;",
-            "dsn=meddoc;uid=meddoc;pwd=meddoc;"});
+            "dsn=meddoc;uid=meddoc;pwd=meddoc;",
+            "user id=medqc;password=medqc;data source=192.168.152.128/meddoczh"});
             this.cboQcConnString.Location = new System.Drawing.Point(146, 148);
             this.cboQcConnString.Name = "cboQcConnString";
             this.cboQcConnString.Size = new System.Drawing.Size(486, 20);
@@ -199,7 +200,8 @@ namespace Heren.MedQC.DbConfig
             "System.Data.SqlClient",
             "System.Data.OleDb",
             "System.Data.Odbc",
-            "Oracle.DataAccess.Client"});
+            "Oracle.DataAccess.Client",
+            "Oracle.ManagedDataAccess.Client"});
             this.cboQcProvider.Location = new System.Drawing.Point(146, 107);
             this.cboQcProvider.Name = "cboQcProvider";
             this.cboQcProvider.Size = new System.Drawing.Size(486, 20);
@@ -279,7 +281,8 @@ namespace Heren.MedQC.DbConfig
             "provider=sqloledb.1;server=.;database=meddoc;user id=sa;password=;",
             "data source=meddoc;user id=meddoc;password=meddoc;",
             "server=.;database=meddoc;user id=sa;password=;",
-            "dsn=meddoc;uid=meddoc;pwd=meddoc;"});
+            "dsn=meddoc;uid=meddoc;pwd=meddoc;",
+            "user id=meddoc;password=meddoc;data source=192.168.152.128/meddoczh"});
             this.cboMdsConnString.Location = new System.Drawing.Point(146, 146);
             this.cboMdsConnString.Name = "cboMdsConnString";
             this.cboMdsConnString.Size = new System.Drawing.Size(486, 20);
@@ -306,7 +309,8 @@ namespace Heren.MedQC.DbConfig
             "System.Data.SqlClient",
             "System.Data.OleDb",
             "System.Data.Odbc",
-            "Oracle.DataAccess.Client"});
+            "Oracle.DataAccess.Client",
+            "Oracle.ManagedDataAccess.Client"});
             this.cboMdsDbProvider.Location = new System.Drawing.Point(146, 105);
             this.cboMdsDbProvider.Name = "cboMdsDbProvider";
             this.cboMdsDbProvider.Size = new System.Drawing.Size(486, 20);

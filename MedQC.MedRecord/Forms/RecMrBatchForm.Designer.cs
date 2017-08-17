@@ -96,7 +96,7 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataTableView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataTableView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataTableView1.Location = new System.Drawing.Point(0, 33);
+            this.dataTableView1.Location = new System.Drawing.Point(0, 55);
             this.dataTableView1.Name = "dataTableView1";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
@@ -107,7 +107,7 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1354, 476);
+            this.dataTableView1.Size = new System.Drawing.Size(736, 454);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseClick);
@@ -208,7 +208,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1354, 33);
+            this.panel1.Size = new System.Drawing.Size(736, 55);
             this.panel1.TabIndex = 0;
             // 
             // txt_BATCH_NO
@@ -220,8 +220,9 @@
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(972, 3);
+            this.btnSearch.Location = new System.Drawing.Point(659, 28);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(72, 24);
             this.btnSearch.TabIndex = 8;
@@ -233,7 +234,7 @@
             // 
             this.dtTimeEnd.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtTimeEnd.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtTimeEnd.Location = new System.Drawing.Point(469, 6);
+            this.dtTimeEnd.Location = new System.Drawing.Point(223, 31);
             this.dtTimeEnd.Name = "dtTimeEnd";
             this.dtTimeEnd.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
             this.dtTimeEnd.ShowHour = false;
@@ -246,7 +247,7 @@
             // 
             this.dtTimeBegin.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtTimeBegin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtTimeBegin.Location = new System.Drawing.Point(341, 6);
+            this.dtTimeBegin.Location = new System.Drawing.Point(95, 31);
             this.dtTimeBegin.Name = "dtTimeBegin";
             this.dtTimeBegin.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
             this.dtTimeBegin.ShowHour = false;
@@ -267,7 +268,7 @@
             // xLabel7
             // 
             this.xLabel7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel7.Location = new System.Drawing.Point(258, 9);
+            this.xLabel7.Location = new System.Drawing.Point(12, 34);
             this.xLabel7.Name = "xLabel7";
             this.xLabel7.Size = new System.Drawing.Size(77, 14);
             this.xLabel7.TabIndex = 4;
@@ -281,7 +282,7 @@
             "未发送",
             "已发送",
             "已接收"});
-            this.findComboBox1.Location = new System.Drawing.Point(879, 6);
+            this.findComboBox1.Location = new System.Drawing.Point(556, 8);
             this.findComboBox1.Name = "findComboBox1";
             this.findComboBox1.Size = new System.Drawing.Size(81, 21);
             this.findComboBox1.TabIndex = 3;
@@ -290,7 +291,7 @@
             // xLabel5
             // 
             this.xLabel5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel5.Location = new System.Drawing.Point(799, 9);
+            this.xLabel5.Location = new System.Drawing.Point(476, 11);
             this.xLabel5.Name = "xLabel5";
             this.xLabel5.Size = new System.Drawing.Size(77, 14);
             this.xLabel5.TabIndex = 2;
@@ -299,7 +300,7 @@
             // cboDeptName
             // 
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboDeptName.Location = new System.Drawing.Point(640, 6);
+            this.cboDeptName.Location = new System.Drawing.Point(317, 8);
             this.cboDeptName.Name = "cboDeptName";
             this.cboDeptName.Size = new System.Drawing.Size(150, 21);
             this.cboDeptName.TabIndex = 3;
@@ -307,7 +308,7 @@
             // xLabel6
             // 
             this.xLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel6.Location = new System.Drawing.Point(451, 10);
+            this.xLabel6.Location = new System.Drawing.Point(205, 35);
             this.xLabel6.Name = "xLabel6";
             this.xLabel6.Size = new System.Drawing.Size(14, 14);
             this.xLabel6.TabIndex = 2;
@@ -316,7 +317,7 @@
             // xLabel1
             // 
             this.xLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel1.Location = new System.Drawing.Point(585, 9);
+            this.xLabel1.Location = new System.Drawing.Point(262, 11);
             this.xLabel1.Name = "xLabel1";
             this.xLabel1.Size = new System.Drawing.Size(49, 14);
             this.xLabel1.TabIndex = 2;
@@ -327,7 +328,7 @@
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 509);
+            this.ClientSize = new System.Drawing.Size(736, 509);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

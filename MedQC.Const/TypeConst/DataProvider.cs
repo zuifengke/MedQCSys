@@ -31,6 +31,10 @@ namespace EMRDBLib
             /// Oracle提供的ODPNET驱动类型
             /// </summary>
             public const string ODPNET = "Oracle.DataAccess.Client";
+            /// <summary>
+            /// Oracle提供的ODPNET驱动类型
+            /// </summary>
+            public const string ODPNET_Managed = "Oracle.ManagedDataAccess.Client";
         }
     }
 }
