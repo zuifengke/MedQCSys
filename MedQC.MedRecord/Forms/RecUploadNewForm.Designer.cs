@@ -89,51 +89,57 @@ namespace Heren.MedQC.MedRecord
             // 
             this.txt_DEPT_NAME.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("txt_DEPT_NAME.BindingEvents")))};
-            this.txt_DEPT_NAME.Location = new System.Drawing.Point(514, 5);
+            this.txt_DEPT_NAME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_DEPT_NAME.Location = new System.Drawing.Point(62, 27);
             this.txt_DEPT_NAME.Name = "txt_DEPT_NAME";
             this.txt_DEPT_NAME.ReadOnly = true;
-            this.txt_DEPT_NAME.Size = new System.Drawing.Size(145, 21);
+            this.txt_DEPT_NAME.Size = new System.Drawing.Size(145, 23);
             this.txt_DEPT_NAME.TabIndex = 48;
             this.txt_DEPT_NAME.Text = "全院<可双击修改>";
             this.txt_DEPT_NAME.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.XTextBox1_MouseDoubleClick);
             // 
             // XLabel3
             // 
-            this.XLabel3.Location = new System.Drawing.Point(471, 8);
+            this.XLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.XLabel3.Location = new System.Drawing.Point(12, 30);
             this.XLabel3.Name = "XLabel3";
-            this.XLabel3.Size = new System.Drawing.Size(41, 12);
+            this.XLabel3.Size = new System.Drawing.Size(49, 14);
             this.XLabel3.TabIndex = 47;
             this.XLabel3.Text = "病区：";
             // 
             // cboTimeType
             // 
+            this.cboTimeType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboTimeType.FormattingEnabled = true;
             this.cboTimeType.Items.AddRange(new object[] {
             "出院日期",
             "入院日期"});
             this.cboTimeType.Location = new System.Drawing.Point(138, 3);
             this.cboTimeType.Name = "cboTimeType";
-            this.cboTimeType.Size = new System.Drawing.Size(70, 20);
+            this.cboTimeType.Size = new System.Drawing.Size(83, 22);
             this.cboTimeType.TabIndex = 0;
             this.cboTimeType.Text = "出院日期";
             // 
             // cboStatus
             // 
+            this.cboStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboStatus.FormattingEnabled = true;
             this.cboStatus.Items.AddRange(new object[] {
             "未上传",
             "已上传"});
             this.cboStatus.Location = new System.Drawing.Point(62, 3);
             this.cboStatus.Name = "cboStatus";
-            this.cboStatus.Size = new System.Drawing.Size(70, 20);
+            this.cboStatus.Size = new System.Drawing.Size(70, 22);
             this.cboStatus.TabIndex = 0;
             this.cboStatus.Text = "未上传";
             // 
             // btnUpload
             // 
+            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnUpload.BindingEvents")))};
-            this.btnUpload.Location = new System.Drawing.Point(899, 3);
+            this.btnUpload.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnUpload.Location = new System.Drawing.Point(901, 22);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 23);
             this.btnUpload.TabIndex = 4;
@@ -143,9 +149,11 @@ namespace Heren.MedQC.MedRecord
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnSearch.BindingEvents")))};
-            this.btnSearch.Location = new System.Drawing.Point(818, 3);
+            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSearch.Location = new System.Drawing.Point(820, 22);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 4;
@@ -155,31 +163,34 @@ namespace Heren.MedQC.MedRecord
             // 
             // XLabel1
             // 
+            this.XLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.XLabel1.Location = new System.Drawing.Point(12, 7);
             this.XLabel1.Name = "XLabel1";
-            this.XLabel1.Size = new System.Drawing.Size(41, 12);
+            this.XLabel1.Size = new System.Drawing.Size(49, 14);
             this.XLabel1.TabIndex = 1;
             this.XLabel1.Text = "状态：";
             // 
             // txt_PATIENT_ID
             // 
-            this.txt_PATIENT_ID.Location = new System.Drawing.Point(731, 4);
+            this.txt_PATIENT_ID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_PATIENT_ID.Location = new System.Drawing.Point(290, 25);
             this.txt_PATIENT_ID.Name = "txt_PATIENT_ID";
-            this.txt_PATIENT_ID.Size = new System.Drawing.Size(77, 21);
+            this.txt_PATIENT_ID.Size = new System.Drawing.Size(77, 23);
             this.txt_PATIENT_ID.TabIndex = 3;
             // 
             // lbl_msg
             // 
-            this.lbl_msg.Location = new System.Drawing.Point(15, 31);
+            this.lbl_msg.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_msg.Location = new System.Drawing.Point(375, 30);
             this.lbl_msg.Name = "lbl_msg";
-            this.lbl_msg.Size = new System.Drawing.Size(89, 12);
+            this.lbl_msg.Size = new System.Drawing.Size(105, 14);
             this.lbl_msg.TabIndex = 1;
             this.lbl_msg.Text = "共{}份患者病历";
             // 
             // dtpTimeEnd
             // 
             this.dtpTimeEnd.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtpTimeEnd.Location = new System.Drawing.Point(354, 3);
+            this.dtpTimeEnd.Location = new System.Drawing.Point(367, 5);
             this.dtpTimeEnd.Name = "dtpTimeEnd";
             this.dtpTimeEnd.NullableValue = null;
             this.dtpTimeEnd.ShowHour = false;
@@ -191,7 +202,7 @@ namespace Heren.MedQC.MedRecord
             // dtpTimeBegin
             // 
             this.dtpTimeBegin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtpTimeBegin.Location = new System.Drawing.Point(213, 3);
+            this.dtpTimeBegin.Location = new System.Drawing.Point(226, 5);
             this.dtpTimeBegin.Name = "dtpTimeBegin";
             this.dtpTimeBegin.NullableValue = null;
             this.dtpTimeBegin.ShowHour = false;
@@ -202,15 +213,16 @@ namespace Heren.MedQC.MedRecord
             // 
             // XLabel4
             // 
-            this.XLabel4.Location = new System.Drawing.Point(664, 9);
+            this.XLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.XLabel4.Location = new System.Drawing.Point(212, 31);
             this.XLabel4.Name = "XLabel4";
-            this.XLabel4.Size = new System.Drawing.Size(65, 12);
+            this.XLabel4.Size = new System.Drawing.Size(77, 14);
             this.XLabel4.TabIndex = 1;
             this.XLabel4.Text = "患者ID号：";
             // 
             // XLabel2
             // 
-            this.XLabel2.Location = new System.Drawing.Point(331, 7);
+            this.XLabel2.Location = new System.Drawing.Point(344, 9);
             this.XLabel2.Name = "XLabel2";
             this.XLabel2.Size = new System.Drawing.Size(17, 12);
             this.XLabel2.TabIndex = 1;
@@ -225,7 +237,7 @@ namespace Heren.MedQC.MedRecord
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("XDataGrid1.BindingEvents1")))};
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -247,7 +259,7 @@ namespace Heren.MedQC.MedRecord
             this.col_上传});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -259,7 +271,7 @@ namespace Heren.MedQC.MedRecord
             this.XDataGrid1.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 10.5F);
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;

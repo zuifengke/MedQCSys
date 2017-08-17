@@ -546,6 +546,7 @@ namespace EMRDBLib
                 option.IsShowPatientIndex = true;
                 option.IsOpenOperation = true;
                 option.IsLinkHerenHis = true;
+                option.IsNewScore = true;
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {
