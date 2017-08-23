@@ -42,7 +42,7 @@ namespace Heren.MedQC.Statistic
         private void ChboxSimple_CheckedChanged(object sender, EventArgs e)
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            LoadDocScoreInfos();
+            //LoadDocScoreInfos();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -69,7 +69,8 @@ namespace Heren.MedQC.Statistic
             InitalizeCombobox();
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在下载病历评分信息，请稍候...");
-            this.LoadDocScoreInfos();
+            //this.LoadDocScoreInfos();
+            this.dataGridView1.Rows.Clear();
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -117,8 +118,15 @@ namespace Heren.MedQC.Statistic
             List<EMRDBLib.PatVisitInfo> lstPatVisitLogList = SystemParam.Instance.PatVisitLogList;
             bool bNeedChange = false;
             int iRowCount = 0;
+            WorkProcess.Instance.Initialize(this, lstPatVisitLogList.Count, "正在加载评分一览表，请稍后");
             for (int index = 0; index < lstPatVisitLogList.Count; index++)
             {
+                WorkProcess.Instance.Show(string.Format("已经加载{0}/{1}",index,lstPatVisitLogList.Count),index);
+                if (WorkProcess.Instance.Canceled)
+                {
+                    WorkProcess.Instance.Close();
+                    break;
+                }
                 Color backColor = Color.FromArgb(235, 235, 235);
                 if (iRowCount % 2 == 0)
                     backColor = Color.White;
@@ -129,6 +137,7 @@ namespace Heren.MedQC.Statistic
                     iRowCount++;
             }
             //精简版取消显示以下列
+            WorkProcess.Instance.Close();
             this.colDocName.Visible = chboxSimple.Checked;
             this.colQuestionList.Visible = chboxSimple.Checked;
             this.colDocChecker.Visible = chboxSimple.Checked;

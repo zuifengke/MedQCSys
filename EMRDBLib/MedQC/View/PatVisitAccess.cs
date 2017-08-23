@@ -397,7 +397,6 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(14)) PatVisitInfo.DISCHARGE_TIME = dataReader.GetDateTime(14);
                     if (!dataReader.IsDBNull(15)) PatVisitInfo.DISCHARGE_MODE = dataReader.GetString(15);
                     if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
-                    lstPatVisitInfos.Add(PatVisitInfo);
                     if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
