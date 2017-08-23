@@ -42,7 +42,9 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = SystemData.ScriptDataTable.SCRIPT_DATA;
+            string szField =string.Format("{0},{1}"
+                , SystemData.ScriptDataTable.SCRIPT_DATA
+                , SystemData.ScriptDataTable.SCRIPT_ID) ;
             string szCondition = string.Format("{0}='{1}'", SystemData.ScriptDataTable.SCRIPT_ID, szScriptID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC
                 , szField, SystemData.DataTable.SCRIPT_DATA, szCondition, SystemData.ScriptDataTable.SCRIPT_ID);

@@ -195,6 +195,8 @@ namespace EMRDBLib.DbAccess
                     return (short)Oracle.ManagedDataAccess.Client.OracleDbType.TimeStamp;
                 else if (dbType == DbType.Int32)
                     return (short)Oracle.ManagedDataAccess.Client.OracleDbType.Int32;
+                else if (dbType == DbType.AnsiString)
+                    return (short)Oracle.ManagedDataAccess.Client.OracleDbType.Long;
                 else if (dbType == DbType.Single)
                     return (short)Oracle.ManagedDataAccess.Client.OracleDbType.Single;
             }

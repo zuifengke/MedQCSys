@@ -1096,7 +1096,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtEndTime"></param>
         /// <param name="lstPatVisitLogs"></param>
         /// <returns></returns>
-        public short GetEmrDocList(string szDocTypeIDList, DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<MedDocInfo> lstMedDocInfos)
+        public short GetEmrDocList(string szTimeType, string szDocTypeIDList, DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<MedDocInfo> lstMedDocInfos)
         {
             if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1106,14 +1106,18 @@ namespace EMRDBLib.DbAccess
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szField = string.Format("A.*");
-            string szCondition = string.Format("1=1 AND A.{0} >= {1} AND A.{0} <= {2} AND A.{3} = B.{3} AND B.{4} != {5}"
-                , SystemData.EmrDocTable.DOC_TIME
+            string szField = string.Format("A.*,C.{0}",SystemData.PatVisitView.DISCHARGE_TIME);
+            string szCondition = string.Format("1=1 AND {0} >= {1} AND {0} <= {2} AND A.{3} = B.{3} AND B.{4} != {5} "
+                , szTimeType
                 , base.MeddocAccess.GetSqlTimeFormat(dtBeginTime)
                 , base.MeddocAccess.GetSqlTimeFormat(dtEndTime)
                 , SystemData.EmrDocTable.DOC_ID
                 , SystemData.DocStatusTable.DOC_STATUS
                 , SystemData.DocStatus.CANCELED);
+            szCondition = string.Format("{0} AND A.{1}=C.{1} AND A.{2}=C.{2}"
+                ,szCondition
+                , SystemData.EmrDocTable.PATIENT_ID
+                , SystemData.EmrDocTable.VISIT_ID);
             szCondition = string.Format("{0} AND A.{1} in ({2})"
                 , szCondition
                 , SystemData.EmrDocTable.DOC_TYPE
@@ -1122,16 +1126,17 @@ namespace EMRDBLib.DbAccess
                 szCondition = string.Format("{0} AND {1} = '{2}'"
                     , SystemData.EmrDocTable.DEPT_CODE
                     , szDeptCode);
-            string szTalbe = String.Format(" {0} A,{1} B"
+            string szTalbe = String.Format(" {0} A,{1} B,{2} C"
                 , SystemData.DataTable.EMR_DOC
-                , SystemData.DataTable.DOC_STATUS);
+                , SystemData.DataTable.DOC_STATUS
+                , SystemData.DataView.PAT_VISIT_V);
             string szOrderBy = string.Format("{0},{1},{2},{3}"
                 , SystemData.EmrDocTable.DEPT_CODE
                 , SystemData.EmrDocTable.CREATOR_NAME
                 , SystemData.EmrDocTable.PATIENT_NAME
                 , SystemData.EmrDocTable.VISIT_ID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTalbe, szCondition
-                , SystemData.PatVisitView.DEPT_CODE);
+                ,"A."+SystemData.EmrDocTable.DEPT_CODE);
             IDataReader dataReader = null;
             try
             {
@@ -1221,6 +1226,9 @@ namespace EMRDBLib.DbAccess
                                 break;
                             case SystemData.EmrDocTable.VISIT_TIME:
                                 medDocInfo.VISIT_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.PatVisitView.DISCHARGE_TIME:
+                                medDocInfo.DischargeTime = dataReader.GetDateTime(i);
                                 break;
                             case SystemData.EmrDocTable.VISIT_TYPE:
                                 medDocInfo.VISIT_TYPE = dataReader.GetValue(i).ToString();

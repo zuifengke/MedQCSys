@@ -28,6 +28,14 @@ namespace EMRDBLib
             get { return DateTime.Parse("0001-1-1"); }
             set { }
         }
+        /// <summary>
+        /// 获取缺省时间
+        /// </summary>
+        public DateTime DefaultTime3
+        {
+            get { return DateTime.Parse("2029-1-1"); }
+            set { }
+        }
         public object Clone()
         {
             object instance = Activator.CreateInstance(this.GetType());

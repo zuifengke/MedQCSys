@@ -19,6 +19,7 @@ using EMRDBLib.DbAccess;
 using Heren.MedQC.ScriptEngine.Debugger;
 using Heren.MedQC.CheckPoint;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace MedQC.Test
 {
@@ -134,21 +135,32 @@ namespace MedQC.Test
         private void button14_Click(object sender, EventArgs e)
         {
             OracleConnection con = new OracleConnection();
-            con.ConnectionString = "user id=meddoc;password=meddoc;data source=192.168.152.128/meddoczh";
+            con.ConnectionString = "user id=medqc;password=medqc;data source=192.168.152.128/meddoczh";
             con.Open();
 
             OracleCommand cmd = new OracleCommand();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "select * from pat_visit_v";
+            cmd.CommandText = "select SCRIPT_DATA,script_id from SCRIPT_DATA_T where script_id='201708141526353047'";
             cmd.Connection = con;
+            OracleDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            do
+            {
+                
+                byte[] source ;
+                if (!reader.IsDBNull(0))
+                    source = (byte[])reader.GetValue(0);
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            DataSet ds = new DataSet();
-            da.Fill(ds);
+            } while (reader.Read());
+            
+                
+            //OracleDataAdapter da = new OracleDataAdapter();
+            //da.SelectCommand = cmd;
+            //DataSet ds = new DataSet();
+            //da.Fill(ds);
 
             con.Close();
-            da.Dispose();
+            reader.Dispose();
             cmd.Dispose();
             con.Dispose();
         }

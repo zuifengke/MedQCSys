@@ -230,11 +230,14 @@ namespace EMRDBLib.DbAccess
         }
         public short GetScriptSource(string szScriptID, ref string szScriptSource)
         {
-            if (base.MeddocAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.ScriptConfigTable.SCRIPT_ID, szScriptID);
-            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, SystemData.ScriptConfigTable.SCRIPT_SOURCE, SystemData.DataTable.SCRIPT_CONFIG, szCondition);
+            string szField = string.Format("{0},{1}"
+                ,SystemData.ScriptConfigTable.SCRIPT_SOURCE
+                ,SystemData.ScriptConfigTable.SCRIPT_ID);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataTable.SCRIPT_CONFIG, szCondition);
 
             IDataReader dataReader = null;
             try
@@ -254,7 +257,7 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.MeddocAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
 

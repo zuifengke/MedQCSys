@@ -153,7 +153,8 @@ namespace MedQCSys.DockForms
                     row.Cells[this.colOrderClass.Index].Value = orderInfo.OrderClass;
                     row.Cells[this.colOrderDoctor.Index].Value = orderInfo.Doctor;
                     row.Cells[this.colNurse.Index].Value = orderInfo.Nurse;
-                    if (orderInfo.StopTime != orderInfo.DefaultTime)
+                    if (orderInfo.StopTime != orderInfo.DefaultTime
+                        && orderInfo.StopTime!=orderInfo.DefaultTime3)
                     {
                         row.Cells[this.colStopTime.Index].Value = orderInfo.StopTime.ToString("yyyy-MM-dd HH:mm");
                     }

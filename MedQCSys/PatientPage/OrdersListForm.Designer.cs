@@ -241,6 +241,7 @@ namespace MedQCSys.DockForms
             this.colStopDoctor.HeaderText = "ֹͣҽʦ";
             this.colStopDoctor.Name = "colStopDoctor";
             this.colStopDoctor.ReadOnly = true;
+            this.colStopDoctor.Visible = false;
             this.colStopDoctor.Width = 90;
             // 
             // colStopTime

@@ -547,6 +547,7 @@ namespace EMRDBLib
                 option.IsOpenOperation = true;
                 option.IsLinkHerenHis = true;
                 option.IsNewScore = true;
+                option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "SRM.ico");
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
             {

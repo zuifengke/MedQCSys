@@ -214,7 +214,10 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             string szCondition = string.Format("{0}='{1}'", SystemData.ReportTypeTable.REPORT_TYPE_ID, szTempletID);
-            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, SystemData.ReportTypeTable.REPORT_DATA, SystemData.DataTable.REPORT_TYPE, szCondition);
+            string szField = string.Format("{0},{1}"
+                , SystemData.ReportTypeTable.REPORT_DATA
+                , SystemData.ReportTypeTable.REPORT_TYPE_ID);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, SystemData.DataTable.REPORT_TYPE, szCondition);
 
             IDataReader dataReader = null;
             try

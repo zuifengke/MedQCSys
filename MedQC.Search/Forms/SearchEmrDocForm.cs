@@ -77,6 +77,8 @@ namespace Heren.MedQC.Search
             row.Cells[this.col_DOC_TITLE.Index].Value = docInfo.DOC_TITLE;
             row.Cells[this.col_RECORD_TIME.Index].Value = docInfo.RECORD_TIME.ToString("yyyy-MM-dd HH:mm");
             row.Cells[this.col_CREATOR_NAME.Index].Value = docInfo.CREATOR_NAME;
+            if(docInfo.DischargeTime != docInfo.DefaultTime)
+                row.Cells[this.colDischargeTime.Index].Value = docInfo.DischargeTime.ToString("yyyy-MM-dd HH:mm");
             row.Tag = docInfo;
         }
 
@@ -164,11 +166,18 @@ namespace Heren.MedQC.Search
             }
             DateTime dtBeginTime = dtpStatTimeBegin.Value;
             DateTime dtEndTime = dtpStatTimeEnd.Value;
+            string szTimeType = string.Empty;
+            if (rbtnDischargeTime.Checked)
+            {
+                szTimeType = "DISCHARGE_TIME";
+            }
+            else
+                szTimeType = "RECORD_TIME";
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在查询数据，请稍候...");
             this.dataGridView1.Rows.Clear();
             List<MedDocInfo> lstMedDocInfos = null;
-            short shRet = EmrDocAccess.Instance.GetEmrDocList(szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
+            short shRet = EmrDocAccess.Instance.GetEmrDocList(szTimeType,szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {

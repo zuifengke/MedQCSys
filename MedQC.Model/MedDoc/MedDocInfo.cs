@@ -84,6 +84,7 @@ namespace EMRDBLib
             this.m_szFileName = string.Empty;
             this.m_szFilePath = string.Empty;
             this.m_dtRecordTime = this.DefaultTime;
+            this.DischargeTime = this.DefaultTime;
             this.m_szStatusDesc = string.Empty;
         }
 
@@ -343,5 +344,10 @@ namespace EMRDBLib
             set { this.m_szTemplet_ID = value; }
         }
 
+        /// <summary>
+        /// 获取或设置出院时间
+        /// </summary>
+        public DateTime DischargeTime { get; set; }
+        
     }
 }

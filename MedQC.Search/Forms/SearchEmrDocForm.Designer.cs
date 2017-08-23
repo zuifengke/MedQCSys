@@ -30,14 +30,6 @@ namespace Heren.MedQC.Search
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_CREATOR_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisitTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_DOC_TITLE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_DOC_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_RECORD_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtDocType = new System.Windows.Forms.TextBox();
             this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
@@ -45,10 +37,20 @@ namespace Heren.MedQC.Search
             this.label1 = new System.Windows.Forms.Label();
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnQuery = new System.Windows.Forms.Button();
             this.dtpStatTimeBegin = new System.Windows.Forms.DateTimePicker();
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.rbtnRecordTime = new System.Windows.Forms.RadioButton();
+            this.rbtnDischargeTime = new System.Windows.Forms.RadioButton();
+            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_CREATOR_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisitTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDischargeTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_DOC_TITLE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_DOC_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_RECORD_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +78,7 @@ namespace Heren.MedQC.Search
             this.colPatientName,
             this.colPatientID,
             this.colVisitTime,
+            this.colDischargeTime,
             this.col_DOC_TITLE,
             this.col_DOC_TIME,
             this.col_RECORD_TIME});
@@ -89,62 +92,16 @@ namespace Heren.MedQC.Search
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
-            // colDeptName
-            // 
-            this.colDeptName.HeaderText = "科室";
-            this.colDeptName.Name = "colDeptName";
-            this.colDeptName.Width = 140;
-            // 
-            // col_CREATOR_NAME
-            // 
-            this.col_CREATOR_NAME.HeaderText = "创建人";
-            this.col_CREATOR_NAME.Name = "col_CREATOR_NAME";
-            this.col_CREATOR_NAME.Width = 90;
-            // 
-            // colPatientName
-            // 
-            this.colPatientName.HeaderText = "患者姓名";
-            this.colPatientName.Name = "colPatientName";
-            this.colPatientName.Width = 90;
-            // 
-            // colPatientID
-            // 
-            this.colPatientID.HeaderText = "患者ID号";
-            this.colPatientID.Name = "colPatientID";
-            // 
-            // colVisitTime
-            // 
-            this.colVisitTime.HeaderText = "入院时间";
-            this.colVisitTime.Name = "colVisitTime";
-            this.colVisitTime.Width = 120;
-            // 
-            // col_DOC_TITLE
-            // 
-            this.col_DOC_TITLE.HeaderText = "病历标题";
-            this.col_DOC_TITLE.Name = "col_DOC_TITLE";
-            this.col_DOC_TITLE.Width = 200;
-            // 
-            // col_DOC_TIME
-            // 
-            this.col_DOC_TIME.HeaderText = "创建时间";
-            this.col_DOC_TIME.Name = "col_DOC_TIME";
-            this.col_DOC_TIME.Width = 120;
-            // 
-            // col_RECORD_TIME
-            // 
-            this.col_RECORD_TIME.HeaderText = "记录时间";
-            this.col_RECORD_TIME.Name = "col_RECORD_TIME";
-            this.col_RECORD_TIME.Width = 120;
-            // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbtnDischargeTime);
+            this.panel1.Controls.Add(this.rbtnRecordTime);
             this.panel1.Controls.Add(this.txtDocType);
             this.panel1.Controls.Add(this.cboDeptName);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnExportExcel);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Controls.Add(this.dtpStatTimeBegin);
             this.panel1.Controls.Add(this.dtpStatTimeEnd);
@@ -177,7 +134,7 @@ namespace Heren.MedQC.Search
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label3.Location = new System.Drawing.Point(230, 33);
+            this.label3.Location = new System.Drawing.Point(349, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(21, 14);
             this.label3.TabIndex = 5;
@@ -214,16 +171,6 @@ namespace Heren.MedQC.Search
             this.label4.TabIndex = 3;
             this.label4.Text = "病历名称";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label2.Location = new System.Drawing.Point(9, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 14);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "病历书写时间";
-            // 
             // btnQuery
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -239,7 +186,7 @@ namespace Heren.MedQC.Search
             // dtpStatTimeBegin
             // 
             this.dtpStatTimeBegin.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.dtpStatTimeBegin.Location = new System.Drawing.Point(108, 29);
+            this.dtpStatTimeBegin.Location = new System.Drawing.Point(227, 29);
             this.dtpStatTimeBegin.Name = "dtpStatTimeBegin";
             this.dtpStatTimeBegin.Size = new System.Drawing.Size(121, 23);
             this.dtpStatTimeBegin.TabIndex = 4;
@@ -247,10 +194,87 @@ namespace Heren.MedQC.Search
             // dtpStatTimeEnd
             // 
             this.dtpStatTimeEnd.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.dtpStatTimeEnd.Location = new System.Drawing.Point(255, 29);
+            this.dtpStatTimeEnd.Location = new System.Drawing.Point(374, 29);
             this.dtpStatTimeEnd.Name = "dtpStatTimeEnd";
             this.dtpStatTimeEnd.Size = new System.Drawing.Size(121, 23);
             this.dtpStatTimeEnd.TabIndex = 6;
+            // 
+            // rbtnRecordTime
+            // 
+            this.rbtnRecordTime.AutoSize = true;
+            this.rbtnRecordTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rbtnRecordTime.Location = new System.Drawing.Point(12, 33);
+            this.rbtnRecordTime.Name = "rbtnRecordTime";
+            this.rbtnRecordTime.Size = new System.Drawing.Size(109, 18);
+            this.rbtnRecordTime.TabIndex = 11;
+            this.rbtnRecordTime.Text = "病历记录时间";
+            this.rbtnRecordTime.UseVisualStyleBackColor = true;
+            // 
+            // rbtnDischargeTime
+            // 
+            this.rbtnDischargeTime.AutoSize = true;
+            this.rbtnDischargeTime.Checked = true;
+            this.rbtnDischargeTime.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rbtnDischargeTime.Location = new System.Drawing.Point(139, 33);
+            this.rbtnDischargeTime.Name = "rbtnDischargeTime";
+            this.rbtnDischargeTime.Size = new System.Drawing.Size(81, 18);
+            this.rbtnDischargeTime.TabIndex = 11;
+            this.rbtnDischargeTime.TabStop = true;
+            this.rbtnDischargeTime.Text = "出院时间";
+            this.rbtnDischargeTime.UseVisualStyleBackColor = true;
+            // 
+            // colDeptName
+            // 
+            this.colDeptName.HeaderText = "科室";
+            this.colDeptName.Name = "colDeptName";
+            this.colDeptName.Width = 140;
+            // 
+            // col_CREATOR_NAME
+            // 
+            this.col_CREATOR_NAME.HeaderText = "创建人";
+            this.col_CREATOR_NAME.Name = "col_CREATOR_NAME";
+            this.col_CREATOR_NAME.Width = 90;
+            // 
+            // colPatientName
+            // 
+            this.colPatientName.HeaderText = "患者姓名";
+            this.colPatientName.Name = "colPatientName";
+            this.colPatientName.Width = 90;
+            // 
+            // colPatientID
+            // 
+            this.colPatientID.HeaderText = "患者ID号";
+            this.colPatientID.Name = "colPatientID";
+            // 
+            // colVisitTime
+            // 
+            this.colVisitTime.HeaderText = "入院时间";
+            this.colVisitTime.Name = "colVisitTime";
+            this.colVisitTime.Width = 120;
+            // 
+            // colDischargeTime
+            // 
+            this.colDischargeTime.HeaderText = "出院时间";
+            this.colDischargeTime.Name = "colDischargeTime";
+            this.colDischargeTime.Width = 120;
+            // 
+            // col_DOC_TITLE
+            // 
+            this.col_DOC_TITLE.HeaderText = "病历标题";
+            this.col_DOC_TITLE.Name = "col_DOC_TITLE";
+            this.col_DOC_TITLE.Width = 200;
+            // 
+            // col_DOC_TIME
+            // 
+            this.col_DOC_TIME.HeaderText = "创建时间";
+            this.col_DOC_TIME.Name = "col_DOC_TIME";
+            this.col_DOC_TIME.Width = 120;
+            // 
+            // col_RECORD_TIME
+            // 
+            this.col_RECORD_TIME.HeaderText = "记录时间";
+            this.col_RECORD_TIME.Name = "col_RECORD_TIME";
+            this.col_RECORD_TIME.Width = 120;
             // 
             // SearchEmrDocForm
             // 
@@ -274,7 +298,6 @@ namespace Heren.MedQC.Search
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private Heren.Common.Controls.DictInput.FindComboBox cboDeptName;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpStatTimeBegin;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpStatTimeEnd;
@@ -283,11 +306,14 @@ namespace Heren.MedQC.Search
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDocType;
+        private System.Windows.Forms.RadioButton rbtnRecordTime;
+        private System.Windows.Forms.RadioButton rbtnDischargeTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_CREATOR_NAME;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVisitTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDischargeTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_DOC_TITLE;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_DOC_TIME;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_RECORD_TIME;
