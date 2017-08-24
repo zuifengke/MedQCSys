@@ -511,7 +511,7 @@ namespace MedQCSys.Document
                     qcQuestionInfo.QA_EVENT_TYPE = "其他严重质量问题";
                     qcQuestionInfo.POINT_TYPE = 1;
                     qcQuestionInfo.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
-                    qcQuestionInfo.ISSUED_DATE_TIME = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                    qcQuestionInfo.ISSUED_DATE_TIME = SysTimeHelper.Instance.Now;
                     qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
                     qcQuestionInfo.POINT_TYPE = 0;
                     qcQuestionInfo.POINT = 0;

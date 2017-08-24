@@ -865,7 +865,7 @@ namespace MedQCSys.DockForms
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在下载并打开病历，请稍候...");
 
-            DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+            DateTime dtCheckTime = SysTimeHelper.Instance.Now;
             MedDocInfo docInfo = e.Node.Data as MedDocInfo;
             //如果是和仁编辑器，暂不支持合并打开
             if ((SystemParam.Instance.LocalConfigOption.DefaultEditor == "2")
@@ -948,7 +948,7 @@ namespace MedQCSys.DockForms
                 return;
 
             MedDocList lstDocInfos = new MedDocList();
-            DateTime dtCheckTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+            DateTime dtCheckTime = SysTimeHelper.Instance.Now;
             for (int index = 0; index < parentNode.Nodes.Count; index++)
             {
                 if (!parentNode.Nodes[index].Data.Equals(COMBIN_NODE_TAG))

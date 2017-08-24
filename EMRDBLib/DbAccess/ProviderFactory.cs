@@ -190,7 +190,7 @@ namespace EMRDBLib.DbAccess
                 if (dbType == DbType.String)
                     return (short)Oracle.ManagedDataAccess.Client.OracleDbType.Varchar2;
                 else if (dbType == DbType.Binary)
-                    return (short)Oracle.ManagedDataAccess.Client.OracleDbType.Blob;
+                    return (short)Oracle.ManagedDataAccess.Client.OracleDbType.LongRaw;
                 else if (dbType == DbType.DateTime)
                     return (short)Oracle.ManagedDataAccess.Client.OracleDbType.TimeStamp;
                 else if (dbType == DbType.Int32)

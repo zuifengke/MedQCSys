@@ -118,7 +118,7 @@ namespace MedQCSys.DockForms
             this.RefreshReportView(this.GetSelectedWeek());
             if (!this.splitContainer1.Panel2Collapsed)
             {
-                DateTime dtNow = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                DateTime dtNow = SysTimeHelper.Instance.Now;
                 dtNow = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, dtNow.Hour, dtNow.Minute, 0);
                 //this.formControl1.UpdateFormData("体征时间", dtNow);
             }
@@ -179,11 +179,11 @@ namespace MedQCSys.DockForms
         private DateTime GetBeginWeekDate()
         {
             if (SystemParam.Instance.PatVisitInfo == null)
-                return MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                return SysTimeHelper.Instance.Now;
             DateTime dtWeekDate = SystemParam.Instance.PatVisitInfo.VISIT_TIME;
             if (dtWeekDate != SystemParam.Instance.PatVisitInfo.DefaultTime)
                 return dtWeekDate;
-            return MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+            return SysTimeHelper.Instance.Now;
         }
 
         /// <summary>
@@ -194,11 +194,11 @@ namespace MedQCSys.DockForms
         private DateTime GetEndWeekDate(bool bStopToCurrentTime)
         {
             if (SystemParam.Instance.PatVisitInfo == null)
-                return MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                return SysTimeHelper.Instance.Now;
             DateTime dtWeekDate = SystemParam.Instance.PatVisitInfo.DISCHARGE_TIME;
             if (dtWeekDate != SystemParam.Instance.PatVisitInfo.DefaultTime)
                 return dtWeekDate;
-            return bStopToCurrentTime ? MedDocSys.DataLayer.SysTimeHelper.Instance.Now : DateTime.MaxValue;
+            return bStopToCurrentTime ? SysTimeHelper.Instance.Now : DateTime.MaxValue;
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace MedQCSys.DockForms
             if (dtWeekDate != null && dtWeekDate.HasValue)
                 dtEndTime = dtWeekDate.Value;
             else
-                dtEndTime = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                dtEndTime =SysTimeHelper.Instance.Now;
             long days = GlobalMethods.SysTime.DateDiff(DateInterval.Day, dtVisitTime.Date, dtEndTime.Date);
             long weeks = (days / 7) + 1;
             return weeks;
@@ -541,7 +541,7 @@ namespace MedQCSys.DockForms
 
             if (name == "当前时间")
             {
-                value = MedDocSys.DataLayer.SysTimeHelper.Instance.Now;
+                value = SysTimeHelper.Instance.Now;
                 return true;
             }
             return false;

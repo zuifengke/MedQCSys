@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using Heren.Common.Controls;
 using Heren.Common.Libraries;
-using MedDocSys.DataLayer;
+using EMRDBLib;
 
 namespace MedQCSys.StatusBars
 {
@@ -88,7 +88,7 @@ namespace MedQCSys.StatusBars
         {
             if (EMRDBLib.SystemParam.Instance.UserInfo == null)
                 return;
-            this.statuslblTime.Text = SysTimeHelper.Instance.Now.ToString("yyyy年M月d日 HH:mm:ss dddd");
+            this.statuslblTime.Text =SysTimeHelper.Instance.Now.ToString("yyyy年M月d日 HH:mm:ss dddd");
         }
     }
 }
