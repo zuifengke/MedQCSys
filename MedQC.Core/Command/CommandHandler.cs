@@ -3,6 +3,7 @@ using EMRDBLib;
 using Heren.Common.Libraries;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -148,6 +149,19 @@ namespace Heren.MedQC.Core
                 foreach (var item in types)
                 {
                     this.RegisterCommand(item);
+                }
+
+                if (File.Exists(@"MedQC.PDF.dll"))
+                {
+
+                    assembly = Assembly.LoadFrom(@"MedQC.PDF.dll");
+                    if (assembly == null)
+                        return;
+                    types = assembly.GetExportedTypes();
+                    foreach (var item in types)
+                    {
+                        this.RegisterCommand(item);
+                    }
                 }
                 this.m_bIsRead = true;
             }
