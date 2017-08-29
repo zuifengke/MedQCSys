@@ -83,6 +83,7 @@ namespace MedQCSys.DockForms
             base.OnShown(e);
             this.LoadHummanQcMsgDict();
             this.LoadSystemQcMsgDict();
+            this.OnRefreshView();
         }
         public override void OnRefreshView()
         {
@@ -586,7 +587,7 @@ namespace MedQCSys.DockForms
                 }
             }
             //默认展开第一组
-            this.dgvHummanScore.Expand(0);
+            //this.dgvHummanScore.Expand(0);
             this.CalHummanScore();
         }
         /// <summary>

@@ -42,6 +42,13 @@ namespace Heren.MedQC.Statistic
             this.dtpStatTimeEnd.Value = DateTime.Now;
             this.dtpStatTimeBegin.Value = DateTime.Now.AddDays(-1);
             this.cboDate.SelectedIndex = 0;
+            if (SystemParam.Instance.LocalConfigOption.IsOpenChart)
+            {
+                this.chart1.Visible = true;
+                this.arrowSplitter1.Visible = true;
+                this.dataGridView1.Dock = DockStyle.Fill;
+                this.Update();
+            }
         }
 
         public override void OnRefreshView()

@@ -385,6 +385,8 @@ namespace MedQCSys.Controls
         /// <param name="nRowIndex">行号</param>
         public void Expand(int nRowIndex)
         {
+            //if (this.Rows.Count <= 0)
+            //    return;
             DataGridViewRow row = this.Rows[nRowIndex];
             if (row is CollapseDataGridViewRow)
             {

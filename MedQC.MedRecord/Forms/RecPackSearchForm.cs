@@ -126,13 +126,19 @@ namespace Heren.MedQC.MedRecord
             List<RecPack> lstRecPacks = null;
             short shRet = RecPackAccess.Instance.GetRecPacks(szCaseNo, szPackNo, szPatientID, ref lstRecPacks);
             if (lstRecPacks == null || lstRecPacks.Count <= 0)
+            {
+                MessageBoxEx.ShowMessage("未查询到结果");
                 return;
+            }
+                
+            lstRecPacks = lstRecPacks.OrderByDescending(m => m.PACK_TIME).ToList();
             int paperCount = 0;
             int rowIndex = 0;
             foreach (var item in lstRecPacks)
             {
                 rowIndex = this.dataGridView1.Rows.Add();
                 DataGridViewRow row = this.dataGridView1.Rows[rowIndex];
+                row.Cells[this.colOrderNo.Index].Value = rowIndex + 1;
                 row.Cells[this.col_CASE_NO.Index].Value = item.CASE_NO;
                 if (item.DISCHARGE_TIME != item.DefaultTime)
                     row.Cells[this.col_DISCHARGE_TIME.Index].Value = item.DISCHARGE_TIME.ToString("yyyy-MM-dd HH:mm");

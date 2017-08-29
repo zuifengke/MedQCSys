@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnSearch = new MetroFramework.Controls.MetroButton();
@@ -39,6 +40,7 @@
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.txt_PACK_NO = new System.Windows.Forms.TextBox();
             this.lbl_Result = new System.Windows.Forms.Label();
+            this.colOrderNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_CASE_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PACK_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PATIENT_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,8 +78,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colOrderNo,
             this.col_CASE_NO,
             this.col_PACK_NO,
             this.col_PATIENT_ID,
@@ -152,7 +163,7 @@
             this.metroLabel4.LabelMode = MetroFramework.Controls.MetroLabelMode.Default;
             this.metroLabel4.Location = new System.Drawing.Point(20, 13);
             this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(66, 25);
+            this.metroLabel4.Size = new System.Drawing.Size(51, 19);
             this.metroLabel4.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroLabel4.StyleManager = null;
             this.metroLabel4.TabIndex = 0;
@@ -199,6 +210,13 @@
             this.lbl_Result.Name = "lbl_Result";
             this.lbl_Result.Size = new System.Drawing.Size(0, 12);
             this.lbl_Result.TabIndex = 9;
+            // 
+            // colOrderNo
+            // 
+            this.colOrderNo.HeaderText = "序号";
+            this.colOrderNo.Name = "colOrderNo";
+            this.colOrderNo.ReadOnly = true;
+            this.colOrderNo.Width = 60;
             // 
             // col_CASE_NO
             // 
@@ -275,7 +293,7 @@
             this.Controls.Add(this.metroLabel2);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "RecPackSearchForm";
-            this.Text = "病历打包";
+            this.Text = "病历打包查询";
             this.Activated += new System.EventHandler(this.RecPackForm_Activated);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -295,6 +313,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private System.Windows.Forms.TextBox txt_PACK_NO;
         private System.Windows.Forms.Label lbl_Result;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_CASE_NO;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_PACK_NO;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_PATIENT_ID;

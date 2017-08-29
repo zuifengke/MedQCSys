@@ -29,6 +29,16 @@ namespace Heren.MedQC.Statistic
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colScoreANum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +59,13 @@ namespace Heren.MedQC.Statistic
             this.btnPrint = new System.Windows.Forms.Button();
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
+            this.arrowSplitter1 = new Heren.Common.Controls.ArrowSplitter();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -61,6 +76,14 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDeptName,
@@ -70,14 +93,14 @@ namespace Heren.MedQC.Statistic
             this.colScoreARate,
             this.colScoreBRate,
             this.colScoreCRate});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 44);
             this.dataGridView1.Name = "dataGridView1";
@@ -85,7 +108,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(997, 443);
+            this.dataGridView1.Size = new System.Drawing.Size(997, 203);
             this.dataGridView1.TabIndex = 50;
             // 
             // colDeptName
@@ -98,8 +121,9 @@ namespace Heren.MedQC.Statistic
             // 
             // colScoreANum
             // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreANum.DefaultCellStyle = dataGridViewCellStyle2;
             this.colScoreANum.FillWeight = 120F;
-            this.colScoreANum.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreANum.HeaderText = "甲级病历份数";
             this.colScoreANum.Name = "colScoreANum";
             this.colScoreANum.ReadOnly = true;
@@ -107,45 +131,50 @@ namespace Heren.MedQC.Statistic
             // 
             // colScoreBNum
             // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreBNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.colScoreBNum.FillWeight = 120F;
             this.colScoreBNum.HeaderText = "乙级病历份数";
-            this.colScoreBNum.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreBNum.Name = "colScoreBNum";
             this.colScoreBNum.ReadOnly = true;
             this.colScoreBNum.Width = 120;
             // 
             // colScoreCNum
             // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreCNum.DefaultCellStyle = dataGridViewCellStyle4;
             this.colScoreCNum.FillWeight = 120F;
             this.colScoreCNum.HeaderText = "丙级病历份数";
-            this.colScoreCNum.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreCNum.Name = "colScoreCNum";
             this.colScoreCNum.ReadOnly = true;
             this.colScoreCNum.Width = 120;
             // 
             // colScoreARate
             // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreARate.DefaultCellStyle = dataGridViewCellStyle5;
             this.colScoreARate.FillWeight = 120F;
             this.colScoreARate.HeaderText = "甲级病案率";
-            this.colScoreARate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreARate.Name = "colScoreARate";
             this.colScoreARate.ReadOnly = true;
             this.colScoreARate.Width = 120;
             // 
             // colScoreBRate
             // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreBRate.DefaultCellStyle = dataGridViewCellStyle6;
             this.colScoreBRate.FillWeight = 120F;
             this.colScoreBRate.HeaderText = "乙级病案率";
-            this.colScoreBRate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreBRate.Name = "colScoreBRate";
             this.colScoreBRate.ReadOnly = true;
             this.colScoreBRate.Width = 120;
             // 
             // colScoreCRate
             // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colScoreCRate.DefaultCellStyle = dataGridViewCellStyle7;
             this.colScoreCRate.FillWeight = 120F;
             this.colScoreCRate.HeaderText = "丙级病案率";
-            this.colScoreCRate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.colScoreCRate.Name = "colScoreCRate";
             this.colScoreCRate.ReadOnly = true;
             this.colScoreCRate.Width = 120;
@@ -215,11 +244,9 @@ namespace Heren.MedQC.Statistic
             // cboUserList
             // 
             this.cboUserList.CandidateWidth = 200;
-            this.cboUserList.DroppedDown = false;
             this.cboUserList.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboUserList.Location = new System.Drawing.Point(214, 11);
             this.cboUserList.Name = "cboUserList";
-            this.cboUserList.SelectedItem = null;
             this.cboUserList.Size = new System.Drawing.Size(107, 23);
             this.cboUserList.TabIndex = 59;
             // 
@@ -279,13 +306,48 @@ namespace Heren.MedQC.Statistic
             // cboDeptName
             // 
             this.cboDeptName.CandidateWidth = 200;
-            this.cboDeptName.DroppedDown = false;
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboDeptName.Location = new System.Drawing.Point(48, 11);
             this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.SelectedItem = null;
             this.cboDeptName.Size = new System.Drawing.Size(105, 23);
             this.cboDeptName.TabIndex = 52;
+            // 
+            // arrowSplitter1
+            // 
+            this.arrowSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.arrowSplitter1.Location = new System.Drawing.Point(0, 247);
+            this.arrowSplitter1.Name = "arrowSplitter1";
+            this.arrowSplitter1.Size = new System.Drawing.Size(997, 12);
+            this.arrowSplitter1.TabIndex = 63;
+            this.arrowSplitter1.TabStop = false;
+            this.arrowSplitter1.Visible = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.chart1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 259);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(997, 228);
+            this.panel2.TabIndex = 64;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(997, 228);
+            this.chart1.TabIndex = 4;
+            this.chart1.Text = "时效监控";
+            this.chart1.Visible = false;
             // 
             // StatByDocScoreCompreForm
             // 
@@ -293,12 +355,17 @@ namespace Heren.MedQC.Statistic
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 487);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.arrowSplitter1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "StatByDocScoreCompreForm";
             this.Text = "病案质量统计";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -325,5 +392,8 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private Common.Controls.ArrowSplitter arrowSplitter1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

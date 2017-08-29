@@ -501,9 +501,13 @@ namespace EMRDBLib
                 this.m_IsOpenComplexSearch = value;
             }
         }
+        /// <summary>
+        /// 开启图表功能
+        /// </summary>
+        public bool IsOpenChart { get; set; }
         public LocalConfigOption()
         {
-
+            this.IsOpenChart = false;
             this.IsOpenHomePage = false;
         }
     }
@@ -598,6 +602,7 @@ namespace EMRDBLib
                 option.IsDrawingPatientIdentification = true;
                 option.IsOpenComplexSearch = true;
                 option.IsShowDocLock = true;
+                option.IsOpenChart = false;
             }
             option.IsCheckPoint = true;
 #endif
