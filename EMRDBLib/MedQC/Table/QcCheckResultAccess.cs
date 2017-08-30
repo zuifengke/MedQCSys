@@ -215,7 +215,7 @@ namespace EMRDBLib.DbAccess
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            
+
             string szField = string.Format("*");
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szPatientID) && !string.IsNullOrEmpty(szVisitID))
@@ -607,7 +607,7 @@ namespace EMRDBLib.DbAccess
             {
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            
+
             return this.Insert(qcCheckResult);
         }
         /// <summary>
@@ -706,6 +706,7 @@ namespace EMRDBLib.DbAccess
             }
             return SystemData.ReturnValue.OK;
         }
+
         /// <summary>
         /// 更新一条自动核查规则配置信息
         /// </summary>
@@ -780,6 +781,90 @@ namespace EMRDBLib.DbAccess
         }
 
         /// <summary>
+        /// 更新一条整改通知单
+        /// </summary>
+        /// <param name="timeQCRule">自动核查规则配置信息</param>
+        /// <returns>SystemData.ReturnValue</returns>
+        public short Update(MedicalQcMsg medicalQcMsg)
+        {
+            if (medicalQcMsg == null)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "" }
+                   , new object[] { medicalQcMsg }, "参数不能为空");
+                return SystemData.ReturnValue.PARAM_ERROR;
+            }
+            QcCheckResult qcCheckResult = medicalQcMsg.ToQcCheckResult();
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.BUG_CLASS, qcCheckResult.BUG_CLASS);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.CHECKER_ID, qcCheckResult.CHECKER_ID);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.CHECKER_NAME, qcCheckResult.CHECKER_NAME);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.CHECK_DATE,base.MedQCAccess.GetSqlTimeFormat(qcCheckResult.CHECK_DATE));
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.CREATE_ID, qcCheckResult.CREATE_ID);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.CREATE_NAME,qcCheckResult.CREATE_NAME);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.DEPT_CODE,qcCheckResult.DEPT_CODE);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.DEPT_IN_CHARGE, qcCheckResult.DEPT_IN_CHARGE);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.DOC_SETID, qcCheckResult.DOC_SETID);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.DOC_TITLE, qcCheckResult.DOC_TITLE);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.ERROR_COUNT, qcCheckResult.ERROR_COUNT);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.INCHARGE_DOCTOR_ID, qcCheckResult.INCHARGE_DOCTOR_ID);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.ISVETO, qcCheckResult.ISVETO?1:0);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.MR_STATUS, qcCheckResult.MR_STATUS);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.MSG_DICT_CODE, qcCheckResult.MSG_DICT_CODE);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.MSG_DICT_MESSAGE, qcCheckResult.MSG_DICT_MESSAGE);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.PATIENT_ID, qcCheckResult.PATIENT_ID);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.PATIENT_NAME, qcCheckResult.PATIENT_NAME);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.QA_EVENT_TYPE, qcCheckResult.QA_EVENT_TYPE);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.QC_RESULT, qcCheckResult.QC_RESULT);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.SOCRE, qcCheckResult.SCORE);
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.QcCheckResultTable.STAT_TYPE, qcCheckResult.STAT_TYPE);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.QcCheckResultTable.VISIT_ID, qcCheckResult.VISIT_ID);
+            sbField.AppendFormat("{0}='{1}'"
+                , SystemData.QcCheckResultTable.VISIT_NO, qcCheckResult.VISIT_NO);
+            string szCondition = string.Format("{0}='{1}'", SystemData.QcCheckResultTable.MSG_ID, qcCheckResult.MSG_ID);
+            string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.QC_CHECK_RESULT, sbField.ToString(), szCondition);
+            int nCount = 0;
+            try
+            {
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            if (nCount <= 0)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            return SystemData.ReturnValue.OK;
+        }
+        /// <summary>
         /// 删除一条自动核查结果信息
         /// </summary>
         /// <param name="szRuleID">自动核查结果ID</param>
@@ -797,6 +882,44 @@ namespace EMRDBLib.DbAccess
             }
 
             string szCondition = string.Format("{0}='{1}'", SystemData.QcCheckResultTable.CHECK_RESULT_ID, nCheckResultID);
+            string szSQL = string.Format(SystemData.SQL.DELETE, SystemData.DataTable.QC_CHECK_RESULT, szCondition);
+
+            int nCount = 0;
+            try
+            {
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            if (nCount <= 0)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            return SystemData.ReturnValue.OK;
+        }
+
+        /// <summary>
+        /// 删除一条自动核查结果信息
+        /// </summary>
+        /// <param name="szRuleID">自动核查结果ID</param>
+        /// <returns>SystemData.ReturnValue</returns>
+        public short DeleteByMsgID(string szMsgID)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+
+            if (GlobalMethods.Misc.IsEmptyString(szMsgID))
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szCheckResultID" }
+                    , new object[] { szMsgID }, "参数不能为空");
+                return SystemData.ReturnValue.PARAM_ERROR;
+            }
+
+            string szCondition = string.Format("{0}='{1}'", SystemData.QcCheckResultTable.MSG_ID, szMsgID);
             string szSQL = string.Format(SystemData.SQL.DELETE, SystemData.DataTable.QC_CHECK_RESULT, szCondition);
 
             int nCount = 0;

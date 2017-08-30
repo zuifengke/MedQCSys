@@ -14,7 +14,7 @@ using System.Drawing.Drawing2D;
 using Heren.MedQC.Utilities;
 using System.Linq;
 using MedQCSys;
-
+using Heren.MedQC.Statistic.Dialogs;
 namespace Heren.MedQC.Statistic
 {
     public partial class StatByClassifyQcCheckResultForm : MedQCSys.DockForms.DockContentBase
@@ -111,16 +111,25 @@ namespace Heren.MedQC.Statistic
         }
         private void ClassifyQcCheckResult()
         {
+            string szMsgCodeList= this.txtMsgDict.Tag as string;
             //加载字典
-            List<QcMsgDict> lstMsgTemplet = null;
-            short shRet= QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstMsgTemplet);
-            if (lstMsgTemplet == null)
+            List<QcMsgDict> lstQcMsgDict = null;
+            short shRet= QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
+
+            if (lstQcMsgDict == null)
             {
                 MessageBoxEx.ShowMessage("数据加载失败");
                 return;
             }
+            if (!string.IsNullOrEmpty(szMsgCodeList))
+                lstQcMsgDict = lstQcMsgDict.Where(m => szMsgCodeList.Contains(m.QC_MSG_CODE)).ToList();
+            if (lstQcMsgDict.Count <= 0)
+            {
+                MessageBoxEx.ShowMessage("评分项目加载失败");
+                return;
+            }
             //加载缺陷结果项
-            WorkProcess.Instance.Initialize(this, lstMsgTemplet.Count, "正在进行缺陷分类统计...");
+            WorkProcess.Instance.Initialize(this, lstQcMsgDict.Count, "正在进行缺陷分类统计...");
             DateTime dtBeginTime = DateTime.Parse(this.dtpBeginTime.Value.ToShortDateString());
             DateTime dtEndTime = DateTime.Parse(this.dtpEndTime.Value.AddDays(1).ToShortDateString());
             string szOrderBy = string.Format("{0},{1},{2},{3},{4}"
@@ -157,14 +166,14 @@ namespace Heren.MedQC.Statistic
             int nDoctorTotalCount = 0;
             int nDocCount = 0;
             int nDocTotalCount = 0;
-            foreach (var item in lstMsgTemplet)
+            foreach (var item in lstQcMsgDict)
             {
                 if (WorkProcess.Instance.Canceled)
                 {
                     WorkProcess.Instance.Close();
                     return;
                 }
-                WorkProcess.Instance.Show(lstMsgTemplet.IndexOf(item), true);
+                WorkProcess.Instance.Show(lstQcMsgDict.IndexOf(item), true);
                 List<QcCheckResult> lstQcCheckResult = this.ListQcCheckResult.Where(m => m.MSG_DICT_CODE == item.QC_MSG_CODE).ToList();
                 nErrorCount= lstQcCheckResult.Sum(m=>m.ERROR_COUNT);
                 nDeptCount = lstQcCheckResult.Where(m=>m.QC_RESULT==0).Select(m => m.DEPT_CODE).Distinct().Count();
@@ -192,7 +201,7 @@ namespace Heren.MedQC.Statistic
             }
 
             //显示到列表中
-            WorkProcess.Instance.Show(string.Format("加载到列表中，请稍候..."), lstMsgTemplet.Count-1);
+            WorkProcess.Instance.Show(string.Format("加载到列表中，请稍候..."), lstQcMsgDict.Count-1);
 
             if (lstYunxingCheckResult != null && lstYunxingCheckResult.Count > 0)
             {
@@ -712,6 +721,49 @@ namespace Heren.MedQC.Statistic
             if (e.RowIndex < 0)
                 return;
             this.arrowSplitter1.IsExpand = true;
+        }
+
+        /// <summary>
+        /// 显示文档类型设置对话框
+        /// </summary>
+        /// <param name="row">指定行</param>
+        private void ShowMsgDictSelectForm()
+        {
+            MsgDictSelectForm msgDictSelectForm = new MsgDictSelectForm();
+            msgDictSelectForm.DefaultMsgCode = txtMsgDict.Tag as string;
+            msgDictSelectForm.MultiSelect = true;
+            msgDictSelectForm.Description = "请选择缺陷内容：";
+            if (msgDictSelectForm.ShowDialog() != DialogResult.OK)
+                return;
+            List<QcMsgDict> lstQcMsgDicts = msgDictSelectForm.SelectedQcMsgDicts;
+            if (lstQcMsgDicts == null || lstQcMsgDicts.Count <= 0)
+            {
+                this.txtMsgDict.Text = "<双击选择>";
+                this.txtMsgDict.Tag = null;
+                return;
+            }
+
+            StringBuilder sbMsgCodeList = new StringBuilder();
+            StringBuilder sbMessageList = new StringBuilder();
+            for (int index = 0; index < lstQcMsgDicts.Count; index++)
+            {
+                QcMsgDict qcMsgDict = lstQcMsgDicts[index];
+                if (qcMsgDict == null)
+                    continue;
+                sbMsgCodeList.Append(qcMsgDict.QC_MSG_CODE);
+                if (index < lstQcMsgDicts.Count - 1)
+                    sbMsgCodeList.Append(";");
+                sbMessageList.Append(qcMsgDict.MESSAGE);
+                if (index < lstQcMsgDicts.Count - 1)
+                    sbMessageList.Append(";");
+            }
+            txtMsgDict.Text = sbMessageList.ToString();
+            txtMsgDict.Tag = sbMsgCodeList.ToString();
+        }
+
+        private void txtMsgDict_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.ShowMsgDictSelectForm();
         }
     }
 }

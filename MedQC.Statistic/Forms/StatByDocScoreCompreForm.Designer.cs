@@ -108,7 +108,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(997, 203);
+            this.dataGridView1.Size = new System.Drawing.Size(1045, 350);
             this.dataGridView1.TabIndex = 50;
             // 
             // colDeptName
@@ -195,7 +195,7 @@ namespace Heren.MedQC.Statistic
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(997, 44);
+            this.panel1.Size = new System.Drawing.Size(1045, 44);
             this.panel1.TabIndex = 62;
             // 
             // label3
@@ -222,7 +222,7 @@ namespace Heren.MedQC.Statistic
             // 
             this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(744, 8);
+            this.btnQuery.Location = new System.Drawing.Point(792, 8);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(80, 28);
             this.btnQuery.TabIndex = 49;
@@ -233,7 +233,7 @@ namespace Heren.MedQC.Statistic
             // btnExportExcel
             // 
             this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(830, 8);
+            this.btnExportExcel.Location = new System.Drawing.Point(878, 8);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 51;
@@ -286,7 +286,7 @@ namespace Heren.MedQC.Statistic
             // 
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(914, 8);
+            this.btnPrint.Location = new System.Drawing.Point(962, 8);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(80, 28);
             this.btnPrint.TabIndex = 57;
@@ -315,45 +315,44 @@ namespace Heren.MedQC.Statistic
             // arrowSplitter1
             // 
             this.arrowSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.arrowSplitter1.Location = new System.Drawing.Point(0, 247);
+            this.arrowSplitter1.IsExpand = false;
+            this.arrowSplitter1.Location = new System.Drawing.Point(0, 394);
             this.arrowSplitter1.Name = "arrowSplitter1";
-            this.arrowSplitter1.Size = new System.Drawing.Size(997, 12);
+            this.arrowSplitter1.Size = new System.Drawing.Size(1045, 10);
             this.arrowSplitter1.TabIndex = 63;
             this.arrowSplitter1.TabStop = false;
-            this.arrowSplitter1.Visible = false;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.chart1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 259);
+            this.panel2.Location = new System.Drawing.Point(0, 404);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(997, 228);
+            this.panel2.Size = new System.Drawing.Size(1045, 0);
             this.panel2.TabIndex = 64;
             // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Bottom;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Location = new System.Drawing.Point(0, -120);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(997, 228);
+            this.chart1.Size = new System.Drawing.Size(1045, 120);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "时效监控";
-            this.chart1.Visible = false;
             // 
             // StatByDocScoreCompreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 487);
+            this.ClientSize = new System.Drawing.Size(1045, 404);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.arrowSplitter1);
             this.Controls.Add(this.panel1);

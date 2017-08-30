@@ -47,7 +47,7 @@ namespace Heren.MedQC.Statistic
                 this.chart1.Visible = true;
                 this.arrowSplitter1.Visible = true;
                 this.dataGridView1.Dock = DockStyle.Fill;
-                this.Update();
+                this.arrowSplitter1.IsExpand = true;
             }
         }
 

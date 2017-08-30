@@ -132,6 +132,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="Dialogs\MsgDictSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MsgDictSelectForm.designer.cs">
+      <DependentUpon>MsgDictSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\StatByBugsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,9 @@
       <DependentUpon>StatByWorkloadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\MsgDictSelectForm.resx">
+      <DependentUpon>MsgDictSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\StatByBugsForm.resx">
       <DependentUpon>StatByBugsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -367,9 +376,7 @@
   <ItemGroup>
     <None Include="Resources\save.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialogs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\question2.png" />
   </ItemGroup>

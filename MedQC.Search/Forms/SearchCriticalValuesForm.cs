@@ -26,9 +26,9 @@ using MedQCSys.Dialogs;
 
 namespace Heren.MedQC.Search
 {
-    public partial class SearchEmrDocForm : DockContentBase
+    public partial class SearchCriticalValuesForm : DockContentBase
     {
-        public SearchEmrDocForm(MainForm mainForm)
+        public SearchCriticalValuesForm(MainForm mainForm)
             : base(mainForm)
         {
             InitializeComponent();
@@ -293,8 +293,6 @@ namespace Heren.MedQC.Search
             List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
             if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
             {
-                this.txtDocType.Text = "<Ë«»÷Ñ¡Ôñ>";
-                this.txtDocType.Tag = null;
                 return;
             }
 

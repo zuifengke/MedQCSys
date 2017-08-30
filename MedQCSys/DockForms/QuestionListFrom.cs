@@ -392,7 +392,9 @@ namespace MedQCSys.DockForms
             if (row.State == RowState.Delete)
             {
                 if (!this.dataGridView1.IsNewRow(row))
+                {
                     shRet = MedicalQcMsgAccess.Instance.Delete(medicalQcMsg.MSG_ID);
+                }
                 if (shRet != SystemData.ReturnValue.OK)
                 {
                     this.dataGridView1.SelectRow(row);

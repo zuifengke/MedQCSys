@@ -74,6 +74,8 @@ namespace Designers
             }
             //修改注册表默认打开
             RegisterFileType();
+            this.ShowReportTreeForm();
+            this.ShowTempletTreeForm();
         }
 
         private void RegisterFileType()
@@ -385,6 +387,11 @@ namespace Designers
         }
         private TempletTreeForm m_TempletTreeForm;
         private void 表单管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTempletTreeForm();
+        }
+
+        private void ShowTempletTreeForm()
         {
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_TempletTreeForm == null || this.m_TempletTreeForm.IsDisposed)

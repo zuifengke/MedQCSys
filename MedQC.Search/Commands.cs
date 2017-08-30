@@ -166,4 +166,31 @@ namespace Heren.MedQC.Search
             return true;
         }
     }
+
+    public class ShowCriticalValuesCommand : AbstractCommand
+    {
+        public ShowCriticalValuesCommand()
+        {
+            this.m_name = "危急值患者查询";
+        }
+        public override bool Execute(object param, object data)
+        {
+            MainForm main = param as MainForm;
+            if (main == null)
+                return false;
+            foreach (DockContentBase item in main.DockPanel.Contents)
+            {
+                if (item is SearchCriticalValuesForm)
+                {
+                    item.Activate();
+                    item.OnRefreshView();
+                    return true;
+                }
+            }
+            SearchCriticalValuesForm form = new SearchCriticalValuesForm(main);
+            form.Show(main.DockPanel, DockState.Document);
+            form.Activate();
+            return true;
+        }
+    }
 }

@@ -1059,6 +1059,10 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
                 return SystemData.ReturnValue.EXCEPTION;
             }
+            //同步保存人工质控结果数据
+            QcCheckResult qcCheckResult = model.ToQcCheckResult();
+            qcCheckResult.CHECK_RESULT_ID = qcCheckResult.MakeID();
+            short shRet= QcCheckResultAccess.Instance.Insert(qcCheckResult);
             return SystemData.ReturnValue.OK;
         }
 
@@ -1122,6 +1126,8 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
                 return SystemData.ReturnValue.EXCEPTION;
             }
+            //同步人工质控结果
+            short shRet= QcCheckResultAccess.Instance.Update(model);
             return SystemData.ReturnValue.OK;
         }
 
@@ -1194,6 +1200,8 @@ namespace EMRDBLib.DbAccess
                 LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
                 return SystemData.ReturnValue.EXCEPTION;
             }
+
+            short shRet= QcCheckResultAccess.Instance.DeleteByMsgID(szMsgID);
             return SystemData.ReturnValue.OK;
         }
 

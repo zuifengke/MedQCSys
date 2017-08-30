@@ -66,7 +66,8 @@ namespace EMRDBLib.DbAccess
             };
             string szTable = SystemData.DataTable.USER_RIGHT;
             string szField = string.Format("{0}={1}", SystemData.UserRightTable.USER_PWD, base.ParaHolder(SystemData.UserRightTable.USER_PWD));
-            string szCondition = string.Format("{0}={1}", SystemData.UserRightTable.USER_ID, base.ParaHolder(SystemData.UserRightTable.USER_ID));
+            string szCondition = string.Format("{0}={1} AND {2}='MEDQC'", SystemData.UserRightTable.USER_ID, base.ParaHolder(SystemData.UserRightTable.USER_ID)
+                , SystemData.UserRightTable.RIGHT_TYPE);
             string szSQL = string.Format(SystemData.SQL.UPDATE, szTable, szField, szCondition);
 
             int nCount = 0;
@@ -101,9 +102,11 @@ namespace EMRDBLib.DbAccess
 
             //先获取用户信息
             string szField = SystemData.UserRightTable.USER_PWD;
-            string szCondition = string.Format("{0}={1} "
+            string szCondition = string.Format("{0}={1} AND {2}='{3}'"
                 , SystemData.UserRightTable.USER_ID
-                , base.ParaHolder(SystemData.UserRightTable.USER_ID));
+                , base.ParaHolder(SystemData.UserRightTable.USER_ID)
+                , SystemData.UserRightTable.RIGHT_TYPE
+                , "MEDQC");
             DbParameter[] param = new DbParameter[] { new DbParameter(SystemData.UserRightTable.USER_ID, szUserID) };
             string szTable = SystemData.DataTable.USER_RIGHT;
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);

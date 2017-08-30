@@ -173,5 +173,39 @@ namespace EMRDBLib
             string szRand = rand.Next(0, 9999).ToString().PadLeft(4, '0');
             return string.Format("{0}{1}", DateTime.Now.ToString("yyyyMMddHHmmss"), szRand);
         }
+        public QcCheckResult ToQcCheckResult()
+        {
+            QcCheckResult qcCheckResult = new QcCheckResult();
+            qcCheckResult.BUG_CLASS = 1;
+            qcCheckResult.CHECKER_ID = this.ISSUED_ID;
+            qcCheckResult.CHECKER_NAME = this.ISSUED_BY;
+            qcCheckResult.CHECK_DATE = this.ISSUED_DATE_TIME;
+            qcCheckResult.CREATE_ID = this.CREATOR_ID;
+            qcCheckResult.CREATE_NAME = this.DOCTOR_IN_CHARGE;
+            qcCheckResult.DEPT_CODE = this.DEPT_STAYED;
+            qcCheckResult.DEPT_IN_CHARGE = this.DEPT_NAME;
+            qcCheckResult.DOCTYPE_ID = string.Empty;
+            qcCheckResult.DOC_SETID = this.TOPIC_ID;
+            qcCheckResult.DOC_TIME = this.DefaultTime;
+            qcCheckResult.DOC_TITLE = this.TOPIC;
+            qcCheckResult.ERROR_COUNT = 1;
+            qcCheckResult.INCHARGE_DOCTOR = this.DOCTOR_IN_CHARGE;
+            qcCheckResult.INCHARGE_DOCTOR_ID = this.DOCTOR_IN_CHARGE_ID;
+            qcCheckResult.ISVETO = false;
+            qcCheckResult.MODIFY_TIME = this.DefaultTime;
+            qcCheckResult.MR_STATUS = "O";
+            qcCheckResult.MSG_DICT_CODE = this.QC_MSG_CODE;
+            qcCheckResult.MSG_DICT_MESSAGE = this.MESSAGE;
+            qcCheckResult.MSG_ID = this.MSG_ID;
+            qcCheckResult.PATIENT_ID = this.PATIENT_ID;
+            qcCheckResult.PATIENT_NAME = this.PATIENT_NAME;
+            qcCheckResult.QA_EVENT_TYPE = this.QA_EVENT_TYPE;
+            qcCheckResult.QC_RESULT = 0;
+            qcCheckResult.SCORE = this.POINT;
+            qcCheckResult.STAT_TYPE = 1;
+            qcCheckResult.VISIT_ID = this.VISIT_ID;
+            qcCheckResult.VISIT_NO = this.VISIT_NO;
+            return qcCheckResult;
+        }
     }
 }

@@ -78,9 +78,9 @@ namespace EMRDBLib.DbAccess
         /// <summary>
         /// 病历质控系统,获取病案质量问题分类信息字典列表
         /// </summary>
-        /// <param name="lstQCEventTypes">病案质量问题分类信息字典列表</param>
+        /// <param name="QaEventTypeDict">病案质量问题分类信息字典列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetQCEventTypeList(ref List<QaEventTypeDict> lstQCEventTypes)
+        public short GetQCEventTypeList(ref List<QaEventTypeDict> QaEventTypeDict)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -99,8 +99,8 @@ namespace EMRDBLib.DbAccess
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
-                if (lstQCEventTypes == null)
-                    lstQCEventTypes = new List<QaEventTypeDict>();
+                if (QaEventTypeDict == null)
+                    QaEventTypeDict = new List<QaEventTypeDict>();
                 do
                 {
                     QaEventTypeDict qcEventType = new QaEventTypeDict();
@@ -109,7 +109,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(2)) qcEventType.INPUT_CODE = dataReader.GetString(2);
                     if (!dataReader.IsDBNull(3)) qcEventType.PARENT_CODE = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) qcEventType.MAX_SCORE = Convert.ToDouble(dataReader.GetValue(4));
-                    lstQCEventTypes.Add(qcEventType);
+                    QaEventTypeDict.Add(qcEventType);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
