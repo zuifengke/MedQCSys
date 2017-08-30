@@ -62,6 +62,10 @@
     <Reference Include="Common.Libraries">
       <HintPath>..\Include\Common.Libraries.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Report, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Include\Common.Report.dll</HintPath>
+    </Reference>
     <Reference Include="Common.RichEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.RichEditor.dll</HintPath>
@@ -117,6 +121,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ReportPrintHelper.cs" />
     <Compile Include="StatExpExcelHelper.cs" />
     <Compile Include="DocLevel.cs" />
     <Compile Include="GridViewHelper.cs" />
@@ -132,6 +137,10 @@
     <ProjectReference Include="..\MedQC.Const\MedQC.Const.csproj">
       <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
       <Name>MedQC.Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
+      <Project>{1BFC8232-0B92-4928-96ED-C0CB701B9C0B}</Project>
+      <Name>MedQC.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>

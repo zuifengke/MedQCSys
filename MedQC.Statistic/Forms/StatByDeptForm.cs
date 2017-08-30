@@ -253,16 +253,21 @@ namespace Heren.MedQC.Statistic
                 return;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            byte[] byteReportData = this.GetReportFileData(null);
-            if (byteReportData != null)
-            {
-                System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
-                ReportExplorerForm explorerForm = this.GetReportExplorerForm();
-                explorerForm.ReportFileData = byteReportData;
-                explorerForm.ReportParamData.Add("是否续打", false);
-                explorerForm.ReportParamData.Add("打印数据", table);
-                explorerForm.ShowDialog();
-            }
+            //byte[] byteReportData = this.GetReportFileData(null);
+            //if (byteReportData != null)
+            //{
+            //    System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
+            //    ReportExplorerForm explorerForm = this.GetReportExplorerForm();
+            //    explorerForm.ReportFileData = byteReportData;
+            //    explorerForm.ReportParamData.Add("是否续打", false);
+            //    explorerForm.ReportParamData.Add("打印数据", table);
+            //    explorerForm.ShowDialog();
+            //}
+            System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
+            ReportPrintHelper.Instance.DeptName = this.cboDeptName.Text;
+            ReportPrintHelper.Instance.StatTimeBegin = this.dtpStatTimeBegin.Value;
+            ReportPrintHelper.Instance.StatTimeEnd = this.dtpStatTimeEnd.Value;
+            ReportPrintHelper.Instance.ShowPrintView(table, this.Text);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
