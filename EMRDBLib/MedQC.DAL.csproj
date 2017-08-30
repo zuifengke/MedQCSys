@@ -101,7 +101,7 @@
     <Compile Include="MedDoc\MedQCEntryAccess.cs" />
     <Compile Include="MedDoc\MedQCRuleAccess.cs" />
     <Compile Include="MedDoc\TempletAccess.cs" />
-    <Compile Include="MedDoc\RightAccess.cs" />
+    <Compile Include="MedQC\Table\RightAccess.cs" />
     <Compile Include="MedQC\CommonAccess.cs" />
     <Compile Include="MedDoc\ConfigAccess.cs" />
     <Compile Include="DBAccessBase.cs" />
@@ -155,7 +155,7 @@
     <Compile Include="MedQC\Table\SpecialAccess.cs" />
     <Compile Include="MedDoc\TimeQCRuleAccess.cs" />
     <Compile Include="MedDoc\TimeQCEventAccess.cs" />
-    <Compile Include="MedDoc\UserAccess.cs" />
+    <Compile Include="MedQC\View\UserAccess.cs" />
     <Compile Include="MedDoc\EMRDBAccess.cs" />
     <Compile Include="NurDoc\NurDocCommonAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
