@@ -21,6 +21,9 @@ using Heren.MedQC.CheckPoint;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System.IO;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Heren.Common.Libraries;
 
 namespace MedQC.Test
 {
@@ -147,14 +150,14 @@ namespace MedQC.Test
             reader.Read();
             do
             {
-                
-                byte[] source ;
+
+                byte[] source;
                 if (!reader.IsDBNull(0))
                     source = (byte[])reader.GetValue(0);
 
             } while (reader.Read());
-            
-                
+
+
             //OracleDataAdapter da = new OracleDataAdapter();
             //da.SelectCommand = cmd;
             //DataSet ds = new DataSet();
@@ -172,7 +175,7 @@ namespace MedQC.Test
             {
                 ShareFolderRead.Download(@"\\129.88.47.11\ris\report\PDF\FSK\2017-08-30\9337401.pdf", @"D:\download\9337401.pdf", "129.88.47.11", "ris", "maroland");
                 bool status = false;
-               
+
                 //连接共享文件夹
                 status = ShareFolderRead.connectState(@"\\DESKTOP-L0DIMB0\share", "zuifengke111@outlook.com", "yehui198971");
                 if (status)
@@ -212,7 +215,7 @@ namespace MedQC.Test
                 {
                     //ListBox1.Items.Add("未能连接！");
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -220,5 +223,57 @@ namespace MedQC.Test
 
             }
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string[] pdflist = new string[2];
+            pdflist[0] = "D:\\download\\9337401.pdf";
+            pdflist[1] = "D:\\download\\9337402.pdf";
+            mergePDFFiles(pdflist, "d:\\download\\newpdf1.pdf");
+
+        }
+        /// <summary> 合併PDF檔(集合) </summary>
+        /// <param name="fileList">欲合併PDF檔之集合(一筆以上)</param>
+
+        /// <param name="outMergeFile">合併後的檔名</param>
+
+        private void mergePDFFiles(string[] fileList, string outMergeFile)
+
+        {
+
+            PdfReader reader;
+            Document document = new Document();
+
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outMergeFile, FileMode.Create));
+            document.Open();
+            try
+            {
+                PdfContentByte cb = writer.DirectContent;
+
+                PdfImportedPage newPage;
+
+                for (int i = 0; i < fileList.Length; i++)
+
+                {
+                    reader = new PdfReader(fileList[i]);
+                    int iPageNum = reader.NumberOfPages;
+
+                    for (int j = 1; j <= iPageNum; j++)
+
+                    {
+                        document.NewPage();
+                        newPage = writer.GetImportedPage(reader, j);
+                        cb.AddTemplate(newPage, 0, 0);
+                    }
+                }
+                document.Close();
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+                document.Close();
+            }
+        }
+
     }
 }

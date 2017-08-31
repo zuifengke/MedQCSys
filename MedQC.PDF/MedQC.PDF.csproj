@@ -71,6 +71,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Common.Libraries.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Debug\MetroFramework.dll</HintPath>

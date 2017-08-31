@@ -49,6 +49,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // xButton1
@@ -249,6 +250,16 @@
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(521, 109);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(140, 23);
+            this.button16.TabIndex = 3;
+            this.button16.Text = "pdf合并";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -268,6 +279,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button3);
@@ -305,5 +317,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
     }
 }
