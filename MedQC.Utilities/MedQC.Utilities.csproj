@@ -122,6 +122,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ReportPrintHelper.cs" />
+    <Compile Include="ShareFolderRead.cs" />
     <Compile Include="StatExpExcelHelper.cs" />
     <Compile Include="DocLevel.cs" />
     <Compile Include="GridViewHelper.cs" />
