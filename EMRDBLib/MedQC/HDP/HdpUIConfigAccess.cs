@@ -174,7 +174,32 @@ namespace EMRDBLib.DbAccess
             }
             return nCount > 0 ? SystemData.ReturnValue.OK : SystemData.ReturnValue.EXCEPTION;
         }
-
+        public short ModifySortIndex(HdpUIConfig model)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0}='{1}'"
+                , SystemData.HdpUIConfigTable.SORT_INDEX, model.SortIndex);
+            string szCondition = string.Format("{0}='{1}'", SystemData.HdpUIConfigTable.UI_CONFIG_ID, model.UIConfigID);
+            string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.HDP_UICONFIG_T, sbField.ToString(), szCondition);
+            int nCount = 0;
+            try
+            {
+                nCount = base.MedQCAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            if (nCount <= 0)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            return SystemData.ReturnValue.OK;
+        }
         /// <summary>
         /// 管理平台,修改一条产品信息
         /// </summary>

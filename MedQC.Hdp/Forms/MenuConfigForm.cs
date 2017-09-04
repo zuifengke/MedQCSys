@@ -278,7 +278,13 @@ namespace Heren.MedQC.Hdp
             }
             else
                 szMessageText = string.Format("保存成功,已保存{0}条记录！", count);
-
+            shRet = SystemData.ReturnValue.OK;
+            foreach (DataGridViewRow item in this.dataGridView1.Rows)
+            {
+                HdpUIConfig hdpUIConfig = item.Tag as HdpUIConfig;
+                hdpUIConfig.SortIndex = item.Index ;
+                shRet= HdpUIConfigAccess.Instance.ModifySortIndex(hdpUIConfig);
+            }
             return shRet == SystemData.ReturnValue.OK;
         }
 
