@@ -29,17 +29,22 @@ namespace MedQCSys.DockForms
         private void InitializeComponent()
         {
             this.ExamList = new System.Windows.Forms.DataGridView();
-            this.txtReportDetial = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnExportExcel = new System.Windows.Forms.Button();
+            this.colCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colFilePath = new System.Windows.Forms.DataGridViewImageColumn();
             this.colRequestTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colExamClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResultStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRequestDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colReportTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colReportDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtReportDetial = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.chkAll = new System.Windows.Forms.CheckBox();
+            this.btnExportExcel = new System.Windows.Forms.Button();
+            this.btnPrintPacs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ExamList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -54,6 +59,8 @@ namespace MedQCSys.DockForms
             this.ExamList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ExamList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ExamList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCheckBox,
+            this.colFilePath,
             this.colRequestTime,
             this.colExamClass,
             this.colResultStatus,
@@ -70,63 +77,27 @@ namespace MedQCSys.DockForms
             this.ExamList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ExamList.Size = new System.Drawing.Size(568, 447);
             this.ExamList.TabIndex = 2;
+            this.ExamList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExamList_CellMouseClick);
             this.ExamList.SelectionChanged += new System.EventHandler(this.ExamList_SelectionChanged);
             // 
-            // txtReportDetial
+            // colCheckBox
             // 
-            this.txtReportDetial.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtReportDetial.BackColor = System.Drawing.Color.White;
-            this.txtReportDetial.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtReportDetial.Location = new System.Drawing.Point(2, 23);
-            this.txtReportDetial.Name = "txtReportDetial";
-            this.txtReportDetial.ReadOnly = true;
-            this.txtReportDetial.Size = new System.Drawing.Size(321, 420);
-            this.txtReportDetial.TabIndex = 3;
-            this.txtReportDetial.Text = "";
+            this.colCheckBox.HeaderText = ".";
+            this.colCheckBox.Name = "colCheckBox";
+            this.colCheckBox.ReadOnly = true;
+            this.colCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colCheckBox.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colCheckBox.Width = 20;
             // 
-            // label1
+            // colFilePath
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label1.Location = new System.Drawing.Point(3, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 14);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "检查详细信息";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(5, 5);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.ExamList);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Panel2.Controls.Add(this.txtReportDetial);
-            this.splitContainer1.Size = new System.Drawing.Size(899, 447);
-            this.splitContainer1.SplitterDistance = 568;
-            this.splitContainer1.SplitterWidth = 5;
-            this.splitContainer1.TabIndex = 8;
-            // 
-            // btnExportExcel
-            // 
-            this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(823, 455);
-            this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
-            this.btnExportExcel.TabIndex = 9;
-            this.btnExportExcel.Text = "Excel导出";
-            this.btnExportExcel.UseVisualStyleBackColor = true;
-            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
+            this.colFilePath.HeaderText = "PDF";
+            this.colFilePath.Image = global::MedQCSys.Properties.Resources.empty;
+            this.colFilePath.Name = "colFilePath";
+            this.colFilePath.ReadOnly = true;
+            this.colFilePath.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colFilePath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colFilePath.Width = 40;
             // 
             // colRequestTime
             // 
@@ -172,10 +143,89 @@ namespace MedQCSys.DockForms
             this.colReportDoctor.Visible = false;
             this.colReportDoctor.Width = 80;
             // 
+            // txtReportDetial
+            // 
+            this.txtReportDetial.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtReportDetial.BackColor = System.Drawing.Color.White;
+            this.txtReportDetial.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtReportDetial.Location = new System.Drawing.Point(2, 23);
+            this.txtReportDetial.Name = "txtReportDetial";
+            this.txtReportDetial.ReadOnly = true;
+            this.txtReportDetial.Size = new System.Drawing.Size(320, 420);
+            this.txtReportDetial.TabIndex = 3;
+            this.txtReportDetial.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 14);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "检查详细信息";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(5, 5);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.chkAll);
+            this.splitContainer1.Panel1.Controls.Add(this.ExamList);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtReportDetial);
+            this.splitContainer1.Size = new System.Drawing.Size(899, 447);
+            this.splitContainer1.SplitterDistance = 568;
+            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.TabIndex = 8;
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(4, 4);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 3;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExportExcel.Location = new System.Drawing.Point(823, 455);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
+            this.btnExportExcel.TabIndex = 9;
+            this.btnExportExcel.Text = "Excel导出";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
+            // 
+            // btnPrintPacs
+            // 
+            this.btnPrintPacs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPrintPacs.Location = new System.Drawing.Point(9, 458);
+            this.btnPrintPacs.Name = "btnPrintPacs";
+            this.btnPrintPacs.Size = new System.Drawing.Size(135, 24);
+            this.btnPrintPacs.TabIndex = 10;
+            this.btnPrintPacs.Text = "PACS报告连续打印";
+            this.btnPrintPacs.UseVisualStyleBackColor = true;
+            this.btnPrintPacs.Click += new System.EventHandler(this.btnPrintPacs_Click);
+            // 
             // ExamResultListForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(909, 488);
+            this.Controls.Add(this.btnPrintPacs);
             this.Controls.Add(this.btnExportExcel);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -184,8 +234,10 @@ namespace MedQCSys.DockForms
             this.Text = "检查记录";
             ((System.ComponentModel.ISupportInitialize)(this.ExamList)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -198,6 +250,10 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnExportExcel;
+        private System.Windows.Forms.Button btnPrintPacs;
+        private System.Windows.Forms.CheckBox chkAll;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheckBox;
+        private System.Windows.Forms.DataGridViewImageColumn colFilePath;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRequestTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colExamClass;
         private System.Windows.Forms.DataGridViewTextBoxColumn colResultStatus;

@@ -150,19 +150,14 @@ namespace MedQC.Test
             reader.Read();
             do
             {
-
                 byte[] source;
                 if (!reader.IsDBNull(0))
                     source = (byte[])reader.GetValue(0);
-
             } while (reader.Read());
-
-
             //OracleDataAdapter da = new OracleDataAdapter();
             //da.SelectCommand = cmd;
             //DataSet ds = new DataSet();
             //da.Fill(ds);
-
             con.Close();
             reader.Dispose();
             cmd.Dispose();
@@ -188,7 +183,6 @@ namespace MedQC.Test
                     string filename = theFolder.ToString() + fielpath;
                     //执行方法
                     ShareFolderRead.Transport(filename + @"\11.txt", @"D:\download\", "11.txt");
-
                 }
                 else
                 {
@@ -230,7 +224,6 @@ namespace MedQC.Test
             pdflist[0] = "D:\\download\\9337401.pdf";
             pdflist[1] = "D:\\download\\9337402.pdf";
             mergePDFFiles(pdflist, "d:\\download\\newpdf1.pdf");
-
         }
         /// <summary> 合併PDF檔(集合) </summary>
         /// <param name="fileList">欲合併PDF檔之集合(一筆以上)</param>
@@ -240,18 +233,14 @@ namespace MedQC.Test
         private void mergePDFFiles(string[] fileList, string outMergeFile)
 
         {
-
             PdfReader reader;
             Document document = new Document();
-
             PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(outMergeFile, FileMode.Create));
             document.Open();
             try
             {
                 PdfContentByte cb = writer.DirectContent;
-
                 PdfImportedPage newPage;
-
                 for (int i = 0; i < fileList.Length; i++)
 
                 {

@@ -42,11 +42,12 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}"
                 , SystemData.ExamResultView.EXAM_ID, SystemData.ExamResultView.PARAMETERS
                 , SystemData.ExamResultView.DESCRIPTION, SystemData.ExamResultView.IMPRESSION
                 , SystemData.ExamResultView.RECOMMENDATION, SystemData.ExamResultView.IS_ABNORMAL
-                , SystemData.ExamResultView.DEVICE, SystemData.ExamResultView.USE_IMAGE);
+                , SystemData.ExamResultView.DEVICE, SystemData.ExamResultView.USE_IMAGE
+                , SystemData.ExamResultView.FILE_PATH);
             string szTable = SystemData.DataView.EXAM_RESULT;
             string szCondition = string.Format("{0}='{1}'", SystemData.ExamResultView.EXAM_ID, szExamID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
@@ -69,6 +70,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(5)) examResultInfo.IS_ABNORMAL = dataReader.GetString(5);
                     if (!dataReader.IsDBNull(6)) examResultInfo.DEVICE = dataReader.GetString(6);
                     if (!dataReader.IsDBNull(7)) examResultInfo.USE_IMAGE = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) examResultInfo.FILE_PATH = dataReader.GetString(8);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
             }
@@ -79,5 +81,6 @@ namespace EMRDBLib.DbAccess
             }
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
+        
     }
 }

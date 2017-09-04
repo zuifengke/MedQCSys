@@ -80,7 +80,10 @@ namespace Heren.MedQC.PDF.Forms
                 _coordinatesToolStripLabel.Text = point.Location.X + "," + point.Location.Y;
             }
         }
-
+        /// <summary>
+        /// 文件地址
+        /// </summary>
+        public string FilePath { get; set; }
         void Renderer_ZoomChanged(object sender, EventArgs e)
         {
             _zoom.Text = pdfViewer1.Renderer.Zoom.ToString();
@@ -130,15 +133,17 @@ namespace Heren.MedQC.PDF.Forms
                 form.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
                 form.RestoreDirectory = true;
                 form.Title = "Open PDF File";
-
-                if (form.ShowDialog(this) != DialogResult.OK)
+                if(string.IsNullOrEmpty(this.FilePath))
                 {
-                    //Dispose();
-                    return;
+                    if (form.ShowDialog(this) != DialogResult.OK)
+                    {
+                        //Dispose();
+                        return;
+                    }
+                    this.FilePath = form.FileName;
                 }
-
                 pdfViewer1.Document?.Dispose();
-                pdfViewer1.Document = OpenDocument(form.FileName);
+                pdfViewer1.Document = OpenDocument(this.FilePath);
                 renderToBitmapsToolStripMenuItem.Enabled = true;
             }
         }

@@ -1,4 +1,6 @@
-﻿using Heren.Common.Libraries;
+﻿using EMRDBLib;
+using Heren.Common.Libraries;
+using Heren.MedQC.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +30,28 @@ namespace Heren.MedQC.Utilities
                     //ListBox1.Items.Add("未能连接！");
                 }
                 return true;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+                return false;
+            }
+        }
+        public static bool Download(string srcFilePath, string dstFilePath)
+        {
+            try
+            {
+                string ip = DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.PACS_SHARE_FOLDER_IP];
+                string userName= DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.PACS_SHARE_FOLDER_USER];
+                string password = DataCache.Instance.DicHdpParameter[SystemData.ConfigKey.PACS_SHARE_FOLDER_PWD];
+                if (string.IsNullOrEmpty(ip)
+                    || string.IsNullOrEmpty(userName)
+                    || string.IsNullOrEmpty(password))
+                {
+                    LogManager.Instance.WriteLog("pdf共享目录访问地址未配置", new string[] { "ip", "username", "password" }, new object[] { ip, userName, password }, "");
+                    return false;
+                }
+                return Download(srcFilePath, dstFilePath, ip, userName, password);
             }
             catch (Exception ex)
             {

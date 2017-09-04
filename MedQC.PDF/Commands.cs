@@ -46,4 +46,46 @@ namespace Heren.MedQC.PDF
             return true;
         }
     }
+    public class ShowHomePageCommand2 : AbstractCommand
+    {
+        public ShowHomePageCommand2()
+        {
+            this.m_name = "报告查看";
+        }
+        public override bool Execute(object param, object data)
+        {
+            try
+            {
+
+                MainForm form = param as MainForm;
+                if (form == null)
+                    return false;
+                string filePath = data as string;
+                if (string.IsNullOrEmpty(filePath))
+                    return true;
+
+                foreach (DockContent item in form.DockPanel.Contents)
+                {
+                    if (item is PdfViewForm)
+                    {
+
+                        if ((item as PdfViewForm).FilePath == filePath)
+                        {
+                            item.Activate();
+                            return true;
+                        }  
+                    }
+                }
+                PdfViewForm frm = new PdfViewForm(form);
+                frm.FilePath = filePath;
+                frm.Show(form.DockPanel, DockState.Document);
+                frm.Activate();
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
+            return true;
+        }
+    }
 }

@@ -42,6 +42,7 @@ namespace Heren.MedQC.Utilities
 
                 ReportExplorerForm reportExplorerForm = new ReportExplorerForm();
                 reportExplorerForm.WindowState = FormWindowState.Maximized;
+
                 reportExplorerForm.QueryContext +=
                     new QueryContextEventHandler(this.ReportExplorerForm_QueryContext);
                 reportExplorerForm.NotifyNextReport +=

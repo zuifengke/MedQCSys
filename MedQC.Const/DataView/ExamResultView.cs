@@ -43,6 +43,10 @@ namespace EMRDBLib
             /// 报告中图象编号
             /// </summary>
             public const string USE_IMAGE = "USE_IMAGE";
+            /// <summary>
+            /// PDF文件地址
+            /// </summary>
+            public const string FILE_PATH = "FILE_PATH";
         }
     }
 }

@@ -282,6 +282,18 @@ namespace EMRDBLib
             /// 提醒系统登录对话框缺省登录用户
             /// </summary>
             public const string MEDTASK_DEFAULT_USERID = "MedTask.DefaultUserID";
+            /// <summary>
+            /// PACS报告共享地址IP
+            /// </summary>
+            public const string PACS_SHARE_FOLDER_IP = "PACS_SHARE_FOLDER_IP";
+            /// <summary>
+            /// PACS报告共享地址用户
+            /// </summary>
+            public const string PACS_SHARE_FOLDER_USER = "PACS_SHARE_FOLDER_USER";
+            /// <summary>
+            /// PACS报告共享地址密码
+            /// </summary>
+            public const string PACS_SHARE_FOLDER_PWD = "PACS_SHARE_FOLDER_PWD";
             #region SystemOption
             /// <summary>
             /// 病历编辑器系统产品授权代码

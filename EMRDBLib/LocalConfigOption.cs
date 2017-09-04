@@ -505,6 +505,11 @@ namespace EMRDBLib
         /// 开启图表功能
         /// </summary>
         public bool IsOpenChart { get; set; }
+        /// <summary>
+        /// 是否开启PACS报告连续打印
+        /// </summary>
+        public bool IsOpenPrintPacs { get; set; }
+
         public LocalConfigOption()
         {
             this.IsOpenChart = false;
@@ -551,6 +556,7 @@ namespace EMRDBLib
                 option.IsOpenOperation = true;
                 option.IsLinkHerenHis = true;
                 option.IsNewScore = true;
+                option.IsOpenPrintPacs = true;
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "SRM.ico");
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
@@ -603,6 +609,7 @@ namespace EMRDBLib
                 option.IsOpenComplexSearch = true;
                 option.IsShowDocLock = true;
                 option.IsOpenChart = false;
+                option.IsOpenPrintPacs = true;
             }
             option.IsCheckPoint = true;
 #endif

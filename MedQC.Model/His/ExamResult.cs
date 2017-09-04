@@ -38,6 +38,10 @@ namespace EMRDBLib
         /// 报告中图象编号
         /// </summary>
         public string USE_IMAGE { get; set; }
+        /// <summary>
+        /// PDF文件地址
+        /// </summary>
+        public string FILE_PATH { get; set; }
         public ExamResult()
         {
 

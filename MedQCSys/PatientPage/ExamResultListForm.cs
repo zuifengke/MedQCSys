@@ -18,6 +18,9 @@ using Heren.Common.Controls;
 using EMRDBLib;
 using EMRDBLib.DbAccess;
 using Heren.MedQC.Utilities;
+using Heren.MedQC.Core;
+using System.IO;
+using System.Linq;
 
 namespace MedQCSys.DockForms
 {
@@ -34,8 +37,8 @@ namespace MedQCSys.DockForms
             this.ExamList.Font = new Font("宋体", 10.5f);
             this.txtReportDetial.Font = new Font("宋体", 10.5f);
         }
-        public ExamResultListForm(MainForm parent,PatPage.PatientPageControl patientPageControl)
-            : base(parent,patientPageControl)
+        public ExamResultListForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
+            : base(parent, patientPageControl)
         {
             this.InitializeComponent();
             this.HideOnClose = true;
@@ -50,6 +53,12 @@ namespace MedQCSys.DockForms
             base.OnShown(e);
             if (!SystemParam.Instance.LocalConfigOption.PrintAndExcel)
                 this.btnExportExcel.Visible = false;
+            if (!SystemParam.Instance.LocalConfigOption.IsOpenPrintPacs)
+            {
+                this.btnPrintPacs.Visible = false;
+                this.colCheckBox.Visible = false;
+                this.colFilePath.Visible = false;
+            }
         }
         public override void OnRefreshView()
         {
@@ -113,7 +122,7 @@ namespace MedQCSys.DockForms
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
 
-                string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             List<ExamMaster> lstExamInfo = null;
             if (GlobalMethods.Misc.IsEmptyString(szPatientID) || GlobalMethods.Misc.IsEmptyString(szVisitID))
@@ -121,8 +130,8 @@ namespace MedQCSys.DockForms
                 return;
             }
 
-            short shRet =ExamMasterAccess.Instance.GetInpExamList(szPatientID, szVisitID, ref lstExamInfo);
-            if (shRet != SystemData.ReturnValue.OK 
+            short shRet = ExamMasterAccess.Instance.GetInpExamList(szPatientID, szVisitID, ref lstExamInfo);
+            if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND
                 && shRet != SystemData.ReturnValue.CANCEL)
             {
@@ -139,9 +148,21 @@ namespace MedQCSys.DockForms
                 ExamMaster examInfo = lstExamInfo[index];
                 if (examInfo == null)
                     continue;
+
                 int nRowIndex = this.ExamList.Rows.Add();
                 DataGridViewRow row = this.ExamList.Rows[nRowIndex];
                 row.Tag = examInfo;
+                if (examInfo.RESULT_STATUS == "确认报告"
+                    && SystemParam.Instance.LocalConfigOption.IsOpenPrintPacs)
+                {
+                    ExamResult examResultInfo = null;
+                    shRet = ExamResultAccess.Instance.GetExamResultInfo(examInfo.EXAM_ID, ref examResultInfo);
+                    if (!string.IsNullOrEmpty(examResultInfo.FILE_PATH))
+                    {
+                        row.Cells[this.colFilePath.Index].Value = Properties.Resources.pdf;
+                        row.Cells[this.colFilePath.Index].Tag = examResultInfo;
+                    }
+                }
                 row.Cells[this.colExamClass.Index].Value = examInfo.SUBJECT;
                 if (examInfo.REQUEST_TIME != examInfo.DefaultTime)
                     row.Cells[this.colRequestTime.Index].Value = examInfo.REQUEST_TIME.ToString("yyyy-MM-dd");
@@ -166,8 +187,8 @@ namespace MedQCSys.DockForms
             if (szExamNo == string.Empty)
                 return;
             ExamResult examReportInfo = null;
-            short shRet =ExamResultAccess.Instance.GetExamResultInfo(szExamNo, ref examReportInfo);
-            if (shRet != SystemData.ReturnValue.OK 
+            short shRet = ExamResultAccess.Instance.GetExamResultInfo(szExamNo, ref examReportInfo);
+            if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND
                 && shRet != SystemData.ReturnValue.CANCEL)
             {
@@ -197,7 +218,7 @@ namespace MedQCSys.DockForms
             this.txtReportDetial.SelectionColor = Color.Blue;
 
             nLength = this.txtReportDetial.TextLength;
-            this.txtReportDetial.AppendText( "\n" + "[检查所见]");
+            this.txtReportDetial.AppendText("\n" + "[检查所见]");
             this.txtReportDetial.SelectionStart = nLength;
             this.txtReportDetial.SelectionLength = this.txtReportDetial.TextLength - nLength;
             this.txtReportDetial.SelectionColor = Color.Black;
@@ -211,7 +232,7 @@ namespace MedQCSys.DockForms
             this.txtReportDetial.SelectionColor = Color.Blue;
 
             nLength = this.txtReportDetial.TextLength;
-            this.txtReportDetial.AppendText( "\n" + "[印象]");
+            this.txtReportDetial.AppendText("\n" + "[印象]");
             this.txtReportDetial.SelectionStart = nLength;
             this.txtReportDetial.SelectionLength = this.txtReportDetial.TextLength - nLength;
             this.txtReportDetial.SelectionFont = boldFont;
@@ -225,7 +246,7 @@ namespace MedQCSys.DockForms
             this.txtReportDetial.SelectionColor = Color.Blue;
 
             nLength = this.txtReportDetial.TextLength;
-            this.txtReportDetial.AppendText( "\n" + "[建议]");
+            this.txtReportDetial.AppendText("\n" + "[建议]");
             this.txtReportDetial.SelectionStart = nLength;
             this.txtReportDetial.SelectionLength = this.txtReportDetial.TextLength - nLength;
             this.txtReportDetial.SelectionFont = boldFont;
@@ -314,6 +335,126 @@ namespace MedQCSys.DockForms
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             StatExpExcelHelper.Instance.ExportToExcel(this.ExamList, "检查记录清单");
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.ExamList.Rows.Count <= 0)
+            {
+                return;
+            }
+            foreach (DataGridViewRow item in this.ExamList.Rows)
+            {
+                item.Cells[this.colCheckBox.Index].Value = chkAll.Checked;
+            }
+        }
+
+        private void ExamList_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            if (e.ColumnIndex == this.colFilePath.Index)
+            {
+                ExamResult examResult = this.ExamList.Rows[e.RowIndex].Cells[this.colFilePath.Index].Tag as ExamResult;
+                if (examResult == null)
+                    return;
+                if (string.IsNullOrEmpty(examResult.FILE_PATH))
+                {
+                    return;
+                }
+                string dstFilePath = string.Format("{0}\\{1}\\{2}\\{3}\\{4}.pdf"
+                    , SystemParam.Instance.WorkPath
+                    , "temp"
+                    , SystemParam.Instance.PatVisitInfo.PATIENT_ID
+                    , SystemParam.Instance.PatVisitInfo.VISIT_ID
+                    , examResult.EXAM_ID);
+                if (!File.Exists(dstFilePath))
+                {
+                    bool result = ShareFolderRead.Download(examResult.FILE_PATH, dstFilePath);
+                    if (!result)
+                    {
+                        MessageBoxEx.ShowError("报告下载失败");
+                        return;
+                    }
+                }
+                CommandHandler.Instance.SendCommand("报告查看", this.MainForm, dstFilePath);
+            }
+        }
+
+        private void btnPrintPacs_Click(object sender, EventArgs e)
+        {
+            if (this.ExamList.Rows.Count <= 0)
+            {
+                MessageBoxEx.ShowMessage("没有要打印的报告");
+                return;
+            }
+            List<string> lstFileList = new List<string>();
+            List<string> lstExamID = new List<string>();
+            string szMergeFileName = string.Empty;
+            WorkProcess.Instance.Initialize(this, this.ExamList.Rows.Count, "正在下载检查报告....");
+            foreach (DataGridViewRow item in this.ExamList.Rows)
+            {
+                if (WorkProcess.Instance.Canceled)
+                {
+                    WorkProcess.Instance.Close();
+                    return;
+                }
+                WorkProcess.Instance.Show(item.Index+1);
+                if (item.Cells[this.colResultStatus.Index].Value.ToString() != "确认报告")
+                    continue;
+                if (item.Cells[this.colCheckBox.Index].Value != null
+                    && item.Cells[this.colCheckBox.Index].Value.ToString().ToLower() == "true"
+                    )
+                {
+
+                    ExamResult examResult = item.Cells[this.colFilePath.Index].Tag as ExamResult;
+                    if (examResult != null
+                        && !string.IsNullOrEmpty(examResult.FILE_PATH))
+                    {
+                        //下载文件
+                        string dstFilePath = string.Format("{0}\\{1}\\{2}\\{3}\\{4}.pdf"
+                   , SystemParam.Instance.WorkPath
+                   , "temp"
+                   , SystemParam.Instance.PatVisitInfo.PATIENT_ID
+                   , SystemParam.Instance.PatVisitInfo.VISIT_ID
+                   , examResult.EXAM_ID);
+                        if (!File.Exists(dstFilePath))
+                        {
+                            bool result = ShareFolderRead.Download(examResult.FILE_PATH, dstFilePath);
+                            if (!result)
+                            {
+                                MessageBoxEx.ShowError("报告下载失败");
+                                WorkProcess.Instance.Close();
+                                return;
+                            }
+                        }
+                        lstFileList.Add(examResult.FILE_PATH);
+                        lstExamID.Add(examResult.EXAM_ID);
+                    }
+                }
+            }
+            WorkProcess.Instance.Close();
+            if (lstFileList.Count <= 0)
+            {
+                MessageBoxEx.ShowMessage("没有要打印的报告");
+                
+                return;
+            }
+            szMergeFileName = string.Format("{0}\\temp\\{1}\\{2}\\{3}.pdf"
+                , SystemParam.Instance.WorkPath
+                , SystemParam.Instance.PatVisitInfo.PATIENT_ID
+                , SystemParam.Instance.PatVisitInfo.VISIT_ID
+                , string.Join("_", lstExamID.ToArray()));
+            if (!File.Exists(szMergeFileName))
+            {
+                bool result = PdfHelper.MergePDFFiles(lstFileList.ToArray(), szMergeFileName);
+                if (!result)
+                {
+                    MessageBoxEx.ShowError("报告合并打印失败");
+                    return;
+                }
+            }
+            CommandHandler.Instance.SendCommand("报告查看", this.MainForm, szMergeFileName);
         }
     }
 }
