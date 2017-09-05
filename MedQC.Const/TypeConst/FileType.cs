@@ -40,6 +40,10 @@ namespace EMRDBLib
             /// 护理文书打印报表模版
             /// </summary>
             public const string REPORT = "Report";
+            /// <summary>
+            /// 规则计算脚本
+            /// </summary>
+            public const string SCRIPT = "SCRIPT";
         }
     }
 }

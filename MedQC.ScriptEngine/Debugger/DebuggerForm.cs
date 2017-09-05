@@ -17,6 +17,7 @@ using Heren.Common.Controls;
 using Heren.MedQC.ScriptEngine.Script;
 using EMRDBLib;
 using Heren.MedQC.ScriptEngine.DockForms;
+using Heren.MedQC.ScriptEngine.FindReplace;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
@@ -261,6 +262,45 @@ namespace Heren.MedQC.ScriptEngine.Debugger
                 AutoCalcHandler.Instance.CalcularTest(item,this.PatVisitInfo, this.QcCheckPoint, this.QcCheckResult);
             }
 
+        }
+
+        private FindReplaceForm m_FindReplaceForm = null;
+        /// <summary>
+        /// 显示脚本文本查找替换窗口
+        /// </summary>
+        internal void ShowFindReplaceForm()
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            if (this.m_FindReplaceForm == null || this.m_FindReplaceForm.IsDisposed)
+                this.m_FindReplaceForm = new FindReplaceForm(this);
+            this.m_FindReplaceForm.Show(this.dockPanel1);
+            if (this.ActiveScriptForm != null)
+                this.m_FindReplaceForm.DefaultFindText = this.ActiveScriptForm.GetSelectedText();
+            this.m_FindReplaceForm.OnRefreshView();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+        private FindResultForm m_FindResultForm = null;
+        /// <summary>
+        /// 显示脚本文本查找结果窗口
+        /// </summary>
+        /// <param name="scriptEditForm">脚本编辑器窗口</param>
+        /// <param name="szFindText">查找文本</param>
+        /// <param name="results">查找结果集</param>
+        /// <param name="bshowFileName">设置是否显示文件名列</param>
+        internal void ShowFindResultForm(ScriptEditForm scriptEditForm
+            , string szFindText, List<FindResult> results, bool bshowFileName)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            if (this.m_FindResultForm == null || this.m_FindResultForm.IsDisposed)
+                this.m_FindResultForm = new FindResultForm(this);
+            this.m_FindResultForm.ScriptEditForm = scriptEditForm;
+            this.m_FindResultForm.FindText = szFindText;
+            this.m_FindResultForm.Results = results;
+
+            this.m_FindResultForm.Show(this.dockPanel1);
+            this.m_FindResultForm.ShowFileName = bshowFileName;
+            this.m_FindResultForm.OnRefreshView();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
         private void toolbtnOK_Click(object sender, EventArgs e)
         {

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Heren.Common.Libraries;
 using Heren.Common.Libraries.Ftp;
 using System.Collections;
+using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Script
 {
@@ -909,11 +910,11 @@ namespace Heren.MedQC.ScriptEngine.Script
         /// <param name="szElementName">元素名称</param>
         /// <param name="szElementValue">返回的元素值</param>
         /// <returns>执行结果</returns>
-        protected virtual bool GetElementValue(string szElementName, out string szElementValue)
+        protected virtual bool GetElementValue(QcCheckPoint qcCheckPoint,PatVisitInfo patVisitInfo, string szElementName, out string szElementValue)
         {
             szElementValue = string.Empty;
             if (this.m_getElementValueCallback != null)
-                return this.m_getElementValueCallback.Invoke(szElementName, out szElementValue);
+                return this.m_getElementValueCallback.Invoke(qcCheckPoint,patVisitInfo, szElementName, out szElementValue);
             return false;
         }
 

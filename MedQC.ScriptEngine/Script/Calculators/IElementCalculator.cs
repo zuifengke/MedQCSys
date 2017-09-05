@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Script
 {
@@ -90,7 +91,7 @@ namespace Heren.MedQC.ScriptEngine.Script
     /// <param name="szName">元素名称</param>
     /// <param name="szValue">返回的元素值</param>
     /// <returns>执行结果</returns>
-    public delegate bool GetElementValueCallback(string szElementName, out string szElementValue);
+    public delegate bool GetElementValueCallback(QcCheckPoint qcCheckPoint,PatVisitInfo patVisitInfo, string szElementName, out string szElementValue);
     /// <summary>
     /// 设置指定元素的值的回调委托
     /// </summary>

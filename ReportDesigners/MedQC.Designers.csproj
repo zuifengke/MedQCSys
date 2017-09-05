@@ -552,6 +552,72 @@
   <ItemGroup>
     <None Include="Resources\OpenDoc1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Comment1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Example.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Export1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FolderClose1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NewDoc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenDoc2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveDoc1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScriptError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScriptFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Uncomment1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Warn1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Find1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Redo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

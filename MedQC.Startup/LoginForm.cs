@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using Heren.Common.Controls;
 using Heren.Common.Libraries;
-
+using System.Linq;
 using EMRDBLib.DbAccess;
 using EMRDBLib;
 using Heren.MedQC.Core;
@@ -241,6 +241,7 @@ namespace MedQCSys.Dialogs
             }
             DataCache.Instance.QcAdminDepts = null;
             DataCache.Instance.DicHdpParameter = null;
+            DataCache.Instance.RoleName = string.Join(",",lstHdpRoleUser.Select(m => m.RoleName).ToArray());
             RightHandler.Instance.LstHdpRoleGrant = lstHdpAllRoleGrant;
 
             this.DialogResult = DialogResult.OK;

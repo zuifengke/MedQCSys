@@ -726,7 +726,9 @@ namespace Heren.MedQC.Maintenance
             }
 
             DebuggerForm scriptEditForm = new DebuggerForm();
+            CheckPointHelper.Instance.InitPatientInfo(SystemParam.Instance.PatVisitInfo);
             scriptEditForm.PatVisitInfo = SystemParam.Instance.PatVisitInfo;
+            
             scriptEditForm.QcCheckPoint = row.Tag as QcCheckPoint;
             scriptEditForm.QcCheckResult = CheckPointHelper.Instance.InitQcCheckResult(scriptEditForm.QcCheckPoint, SystemParam.Instance.PatVisitInfo);
             scriptEditForm.ScriptConfig = qcCheckScript;

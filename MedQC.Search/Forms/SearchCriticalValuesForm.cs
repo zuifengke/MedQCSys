@@ -24,7 +24,7 @@ using MedQCSys.DockForms;
 using MedQCSys;
 using MedQCSys.Dialogs;
 
-namespace Heren.MedQC.Search
+namespace Heren.MedQC.Search.Forms
 {
     public partial class SearchCriticalValuesForm : DockContentBase
     {

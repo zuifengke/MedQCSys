@@ -18,6 +18,7 @@ using Heren.Common.Report.Loader;
 using Designers.FindReplace;
 using EMRDBLib;
 using Designers;
+using EMRDBLib.DbAccess;
 
 namespace Designers.Report
 {
@@ -434,74 +435,74 @@ namespace Designers.Report
         /// <param name="bMatchCase">是否匹配大小写</param>
         public void FindTextInAllTemplet(string szFindText, bool bMatchCase)
         {
-            //if (!bMatchCase)
-            //    szFindText = szFindText.ToLower();
-            //List<ReportTypeData> lstReportTypeData = new List<ReportTypeData>();
-            //TempletService.Instance.GetReportTemplet(ref lstReportTypeData);
-            //if (lstReportTypeData.Count <= 0)
-            //    return;
+            if (!bMatchCase)
+                szFindText = szFindText.ToLower();
+            List<ReportType> lstReportTypeData = new List<ReportType>();
+            ReportTypeAccess.Instance.GetReportTypes(ref lstReportTypeData);
+            if (lstReportTypeData.Count <= 0)
+                return;
 
-            //List<FindResult> Result = new List<FindResult>();
-            //int indextext = 0;//索引号
-            //int indexLine = 0;//行号
-            //int i = 0;//正在比对的字符序号
-            //int indexCol = 0;
-            //char chFindText = new char();
-            //string sztextFormat = string.Empty;
-            //char[] arrFindText = szFindText.Trim().ToCharArray();
-            //ReportFileParser parser = new ReportFileParser();
-            //for (int index = 0; index < lstReportTypeData.Count; index++)
-            //{
-            //    if (lstReportTypeData[index].IsFolder)
-            //        continue;
-            //    if (lstReportTypeData[index].ByteTempletData == null)
-            //        continue;
+            List<FindResult> Result = new List<FindResult>();
+            int indextext = 0;//索引号
+            int indexLine = 0;//行号
+            int i = 0;//正在比对的字符序号
+            int indexCol = 0;
+            char chFindText = new char();
+            string sztextFormat = string.Empty;
+            char[] arrFindText = szFindText.Trim().ToCharArray();
+            ReportFileParser parser = new ReportFileParser();
+            for (int index = 0; index < lstReportTypeData.Count; index++)
+            {
+                if (lstReportTypeData[index].IsFolder)
+                    continue;
+                if (lstReportTypeData[index].REPORT_DATA == null)
+                    continue;
 
-            //    parser = new ReportFileParser();
-            //    string szScripData = parser.GetScriptData(lstReportTypeData[index].ByteTempletData);
-            //    string[] arrScripText = szScripData.Split(new Char[] { '\n' }, StringSplitOptions.None);
+                parser = new ReportFileParser();
+                string szScripData = parser.GetScriptData(lstReportTypeData[index].REPORT_DATA);
+                string[] arrScripText = szScripData.Split(new Char[] { '\n' }, StringSplitOptions.None);
 
-            //    indexLine = 0; //行号清零
-            //    indextext = 0; //索引号清零
-            //    foreach (string sztext in arrScripText)
-            //    {
-            //        if (string.IsNullOrEmpty(sztext))
-            //            continue;
-            //        if (!bMatchCase)
-            //            sztextFormat = sztext.ToLower();
-            //        else
-            //            sztextFormat = sztext;
-            //        char[] arrCtext = sztextFormat.ToCharArray();
-            //        i = 0;//正在比对的字符序号
-            //        for (indexCol = 0; indexCol < arrCtext.Length; indexCol++)
-            //        {
-            //            chFindText = arrCtext[indexCol];
-            //            indextext++;
-            //            if (i != 0 && chFindText != arrFindText[i])
-            //            { indexCol -= i - 1; indextext -= i - 1; i = 0; continue; }
-            //            if (chFindText != arrFindText[i])
-            //            { i = 0; continue; }
-            //            if (i == arrFindText.Length - 1)
-            //            {
-            //                Result.Add(new FindResult(indextext - szFindText.Trim().Length
-            //                    , szFindText.Trim().Length
-            //                    , indexLine
-            //                    , sztext
-            //                    , lstReportTypeData[index].ReportTypeID
-            //                    , lstReportTypeData[index].ReportTypeName
-            //                    , ServerData.FileType.REPORT));
-            //                i = 0;
-            //                continue;
-            //            }
-            //            i++;
-            //        }
-            //        indextext++;//修正分行去掉'\n'产生的偏移量
-            //        indexLine++;
-            //    }
-            //}
+                indexLine = 0; //行号清零
+                indextext = 0; //索引号清零
+                foreach (string sztext in arrScripText)
+                {
+                    if (string.IsNullOrEmpty(sztext))
+                        continue;
+                    if (!bMatchCase)
+                        sztextFormat = sztext.ToLower();
+                    else
+                        sztextFormat = sztext;
+                    char[] arrCtext = sztextFormat.ToCharArray();
+                    i = 0;//正在比对的字符序号
+                    for (indexCol = 0; indexCol < arrCtext.Length; indexCol++)
+                    {
+                        chFindText = arrCtext[indexCol];
+                        indextext++;
+                        if (i != 0 && chFindText != arrFindText[i])
+                        { indexCol -= i - 1; indextext -= i - 1; i = 0; continue; }
+                        if (chFindText != arrFindText[i])
+                        { i = 0; continue; }
+                        if (i == arrFindText.Length - 1)
+                        {
+                            Result.Add(new FindResult(indextext - szFindText.Trim().Length
+                                , szFindText.Trim().Length
+                                , indexLine
+                                , sztext
+                                , lstReportTypeData[index].ReportTypeID
+                                , lstReportTypeData[index].ReportTypeName
+                                , SystemData.FileType.REPORT));
+                            i = 0;
+                            continue;
+                        }
+                        i++;
+                    }
+                    indextext++;//修正分行去掉'\n'产生的偏移量
+                    indexLine++;
+                }
+            }
 
-            //if (this.MainForm != null && !this.MainForm.IsDisposed)
-            //    this.MainForm.ShowFindResultForm(this, szFindText, Result, true);
+            if (this.MainForm != null && !this.MainForm.IsDisposed)
+                this.MainForm.ShowFindResultForm(this, szFindText, Result, true);
         }
 
         /// <summary>

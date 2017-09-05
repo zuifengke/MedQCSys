@@ -71,6 +71,10 @@ namespace EMRDBLib
             /// "SELECT {0} FROM {1} WHERE {2} GROUP BY {3}"
             /// </summary>
             public const string SELECT_FROM_WHERE_GROUP = "SELECT {0} FROM {1} WHERE {2} GROUP BY {3}";
+            /// <summary>
+            /// "SELECT {0} FROM {1} WHERE {2} GROUP BY {3} ORDER BY {4} ASC"
+            /// </summary>
+            public const string SELECT_FROM_WHERE_GROUP_ORDER_ASC = "SELECT {0} FROM {1} WHERE {2} GROUP BY {3} ORDER BY {4} ASC";
         }
     }
 }

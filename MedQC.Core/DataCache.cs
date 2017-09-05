@@ -28,6 +28,7 @@ namespace Heren.MedQC.Core
                 return m_Instance;
             }
         }
+        public string RoleName { get; set; }
         private Dictionary<string, string> m_dicHdpParameter = null;
         public Dictionary<string, string> DicHdpParameter
         {

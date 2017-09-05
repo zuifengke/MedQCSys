@@ -6,7 +6,7 @@ using Heren.MedQC.Core;
 using MedQCSys;
 using Heren.Common.DockSuite;
 using MedQCSys.DockForms;
-
+using Heren.MedQC.Search.Forms;
 namespace Heren.MedQC.Search
 {
     public class ShowDeathCommand : AbstractCommand

@@ -36,6 +36,94 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="lstQcCheckResults"></param>
         /// <returns>SystemData.ReturnValue</returns>
+        public short GetReportTypes(ref List<ReportType> lstReportTypes)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.APPLY_ENV);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.IS_FOLDER);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.IS_VALID);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.MODIFY_TIME);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.PARENT_ID);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.REPORT_TYPE_ID);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.REPORT_TYPE_NAME);
+            sbField.AppendFormat("{0},", SystemData.ReportTypeTable.REPORT_DATA);
+            sbField.AppendFormat("{0}", SystemData.ReportTypeTable.REPORT_TYPE_NO);
+            string szCondition = string.Format("1=1");
+            
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
+                    , sbField.ToString(), SystemData.DataTable.REPORT_TYPE, szCondition);
+
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstReportTypes == null)
+                    lstReportTypes = new List<ReportType>();
+                do
+                {
+                    ReportType reportType = new ReportType();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.ReportTypeTable.APPLY_ENV:
+                                reportType.ApplyEnv = dataReader.GetString(i).ToString();
+                                break;
+                            case SystemData.ReportTypeTable.IS_FOLDER:
+                                reportType.IsFolder = dataReader.GetValue(i).ToString() == "1";
+                                break;
+                            case SystemData.ReportTypeTable.IS_VALID:
+                                reportType.IsValid = dataReader.GetValue(i).ToString() == "1";
+                                break;
+                            case SystemData.ReportTypeTable.MODIFY_TIME:
+                                reportType.ModifyTime = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.ReportTypeTable.PARENT_ID:
+                                reportType.ParentID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.ReportTypeTable.REPORT_TYPE_ID:
+                                reportType.ReportTypeID = dataReader.GetString(i);
+                                break;
+                            case SystemData.ReportTypeTable.REPORT_TYPE_NAME:
+                                reportType.ReportTypeName = dataReader.GetString(i);
+                                break;
+                            case SystemData.ReportTypeTable.REPORT_TYPE_NO:
+                                reportType.ReportTypeNo = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.ReportTypeTable.REPORT_DATA:
+                                //byte[] byteReportData = null;
+                                //GlobalMethods.IO.GetBytes(dataReader, dataReader., ref byteReportData);
+                                reportType.REPORT_DATA = (byte[])dataReader.GetValue(i);
+                                break;
+                            default: break;
+                        }
+                    }
+                    lstReportTypes.Add(reportType);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+    }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
+        /// <summary>
+        /// 获取所有自动核查结果信息列表
+        /// </summary>
+        /// <param name="lstQcCheckResults"></param>
+        /// <returns>SystemData.ReturnValue</returns>
         public short GetReportTypes(string szApplyEnv, ref List<ReportType> lstReportTypes)
         {
             if (base.MedQCAccess == null)

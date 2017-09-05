@@ -16,6 +16,7 @@ using Heren.MedQC.ScriptEngine.Script;
 using Heren.MedQC.Core;
 using EMRDBLib;
 using EMRDBLib.DbAccess;
+using System.Xml;
 
 namespace Heren.MedQC.ScriptEngine
 {
@@ -30,8 +31,10 @@ namespace Heren.MedQC.ScriptEngine
         private GetSystemContextCallback m_getSystemContextCallback = null;
 
         private static AutoCalcHandler m_Instance = null;
-        public static AutoCalcHandler Instance {
-            get {
+        public static AutoCalcHandler Instance
+        {
+            get
+            {
                 if (m_Instance == null)
                     m_Instance = new AutoCalcHandler();
                 return m_Instance;
@@ -49,20 +52,64 @@ namespace Heren.MedQC.ScriptEngine
         }
 
         #region"元素计算脚本引擎回调"
-        private bool GetElementValue(string elementName, out string elementValue)
+        private bool GetElementValue(QcCheckPoint qcCheckPoint, PatVisitInfo patVisitInfo, string elementName, out string elementValue)
         {
             elementValue = null;
-
-            //if (activeDocument == null || activeDocument.IsDisposed)
-            //    return false;
-            //if (activeDocument.DocumentEditor == null || activeDocument.DocumentEditor.IsDisposed)
-            //    return false;
-
-            //elementValue = this.m_activeDocumentForm.DocumentEditor.GetElementText(elementName);
-            //return elementValue != null;
+            if (qcCheckPoint == null || patVisitInfo == null)
+                return false;
+            if (patVisitInfo.MedDocInfos == null)
+                return false;
+            //查询患者指定文书类型ID号
+            List<MedDocInfo> documentlist = this.GetDocumentList(qcCheckPoint.DocTypeID, patVisitInfo.MedDocInfos);
+            if (documentlist == null || documentlist.Count == 0)
+            {
+                return false;
+            }
+            //获取文书xml内容
+            string szXMLFile = null;
+            short shRet = MedXMLAccess.Instance.GetDocXml(documentlist[0], ref szXMLFile);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(szXMLFile);
+            XmlNode docNode = null;
+            if (documentlist[0].DOC_ID != documentlist[0].DOC_SETID)
+            {
+                docNode = doc.SelectSingleNode(string.Format("//Section[@ID='{0}']", documentlist[0].DOC_ID));
+            }
+            XmlNode node = null;
+            if (docNode != null)
+            {
+                node = docNode.SelectSingleNode(string.Format("//Field[@Name='{0}']", qcCheckPoint.ELEMENT_NAME));
+            }
+            else
+            {
+                node = doc.SelectSingleNode(string.Format("//Field[@Name='{0}']", elementName));
+            }
+            if (node == null)//存在一项为空则直接返回不继续判断
+            {
+                return false;
+            }
+            elementValue = node.InnerText;
             return true;
         }
-
+        /// <summary>
+        /// 获取已书写的指定病历类型的病历列表
+        /// </summary>
+        /// <param name="szDocTypeIDList">指定病历类型列表</param>
+        /// <param name="lstMedDocInfo">患者所有病历文书</param>
+        /// <returns>已书写的指定病历类型的病历列表</returns>
+        public List<MedDocInfo> GetDocumentList(string szDocTypeIDList, List<MedDocInfo> lstMedDocInfo)
+        {
+            List<MedDocInfo> lstWrittenDocInfos =
+                new List<MedDocInfo>();
+            string[] arrDocTypeIDs = szDocTypeIDList.Split(';');
+            foreach (var item in arrDocTypeIDs)
+            {
+                var result = lstMedDocInfo.FindAll(m => m.DOC_TYPE == item);
+                if (result != null)
+                    lstWrittenDocInfos.AddRange(result);
+            }
+            return lstWrittenDocInfos;
+        }
         private bool SetElementValue(string szElementName, string szElementValue)
         {
             //if (this.m_medDocCtrl == null)
@@ -231,7 +278,7 @@ namespace Heren.MedQC.ScriptEngine
         {
             if (htElements == null || htElements.Count <= 0)
                 return false;
-           
+
 
             //StructElement element = this.m_activeDocumentForm.DocumentEditor.GetCurrentElement();
             //if (element == null)
@@ -416,7 +463,7 @@ namespace Heren.MedQC.ScriptEngine
             //    , SystemConsts.ElementName.IN_HOSPITAL_DAYS2, lInpDays);
             //this.m_activeDocumentForm.DocumentEditor.SetElementText(nameValueExpression, false);
         }
-        public bool CalcularTest(IElementCalculator instance,PatVisitInfo patVisitInfo,QcCheckPoint qcCheckPoint,QcCheckResult checkResult)
+        public bool CalcularTest(IElementCalculator instance, PatVisitInfo patVisitInfo, QcCheckPoint qcCheckPoint, QcCheckResult checkResult)
         {
             if (instance == null)
                 return false;
@@ -436,7 +483,7 @@ namespace Heren.MedQC.ScriptEngine
                 instance.GetSystemContextCallback = this.m_getSystemContextCallback;
             try
             {
-                instance.Calculate(patVisitInfo, qcCheckPoint,checkResult);
+                instance.Calculate(patVisitInfo, qcCheckPoint, checkResult);
                 //if (!instance.Calculate(szElementName))
                 //    return false;
             }
@@ -454,7 +501,7 @@ namespace Heren.MedQC.ScriptEngine
         /// <param name="szDocTypeID">病历类型ID</param>
         /// <param name="szElementName">元素别名</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public bool ExecuteElementCalculator(string szScriptID,PatVisitInfo patVisitInfo,QcCheckPoint checkPoint, QcCheckResult qcCheckResult)
+        public bool ExecuteElementCalculator(string szScriptID, PatVisitInfo patVisitInfo, QcCheckPoint checkPoint, QcCheckResult qcCheckResult)
         {
             List<IElementCalculator> calculatorInstances = null;
             short result = ScriptCache.Instance.GetScriptInstances(szScriptID, ref calculatorInstances);
@@ -483,7 +530,7 @@ namespace Heren.MedQC.ScriptEngine
                     instance.GetSystemContextCallback = this.m_getSystemContextCallback;
                 try
                 {
-                    instance.Calculate(patVisitInfo,checkPoint, qcCheckResult);
+                    instance.Calculate(patVisitInfo, checkPoint, qcCheckResult);
                     //if (!instance.Calculate(szElementName))
                     //    return false;
                 }

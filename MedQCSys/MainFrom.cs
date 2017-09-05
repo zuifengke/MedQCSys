@@ -23,6 +23,7 @@ using EMRDBLib;
 using MedQCSys.PatPage;
 using Heren.MedQC.Core;
 using System.Drawing;
+using System.Linq;
 
 namespace MedQCSys
 {
@@ -475,10 +476,11 @@ namespace MedQCSys
                 szPatientName = "未选择";
             else
                 szPatientName = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
+            string szRole = DataCache.Instance.RoleName;
             if (DataCache.Instance.HdpProduct != null)
-                this.Text = string.Format("{0} - 当前用户：{1}，当前患者：{2}", DataCache.Instance.HdpProduct.CN_NAME, szUserName, szPatientName);
+                this.Text = string.Format("{0} - 当前用户：{1}({3})，当前患者：{2}", DataCache.Instance.HdpProduct.CN_NAME, szUserName, szPatientName,szRole);
             else
-                this.Text = string.Format("{0} - 当前用户：{1}，当前患者：{2}", Application.ProductName, szUserName, szPatientName);
+                this.Text = string.Format("{0} - 当前用户：{1}({3})，当前患者：{2}", Application.ProductName, szUserName, szPatientName, szRole);
         }
 
         /// <summary>

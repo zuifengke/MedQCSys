@@ -1,4 +1,4 @@
-namespace Heren.MedQC.Search
+namespace Heren.MedQC.Search.Forms
 {
     partial class SearchCriticalValuesForm
     {
@@ -196,7 +196,6 @@ namespace Heren.MedQC.Search
             this.txtDocType.ReadOnly = true;
             this.txtDocType.Size = new System.Drawing.Size(309, 21);
             this.txtDocType.TabIndex = 10;
-            this.txtDocType.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtDocType_MouseDoubleClick);
             // 
             // cboDeptName
             // 

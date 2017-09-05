@@ -326,14 +326,14 @@ namespace Heren.MedQC.MedRecord
             this.col_入院时间.HeaderText = "入院时间";
             this.col_入院时间.Name = "col_入院时间";
             this.col_入院时间.ReadOnly = true;
-            this.col_入院时间.Width = 140;
+            this.col_入院时间.Width = 150;
             // 
             // col_出院时间
             // 
             this.col_出院时间.HeaderText = "出院时间";
             this.col_出院时间.Name = "col_出院时间";
             this.col_出院时间.ReadOnly = true;
-            this.col_出院时间.Width = 140;
+            this.col_出院时间.Width = 150;
             // 
             // col_诊断
             // 

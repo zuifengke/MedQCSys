@@ -359,8 +359,15 @@ namespace Heren.MedQC.Maintenance
                 qcEventInfo = new QaEventTypeDict();
             else
                 qcEventInfo = qcEventInfo.Clone() as QaEventTypeDict;
-
-            int nRowIndex = this.dataGridView1.Rows.Add();
+            int nRowIndex = 0;
+            if (currRow != null)
+            {
+                nRowIndex = currRow.Index + 1;
+                DataTableViewRow dataTableViewRow = new DataTableViewRow();
+                this.dataGridView1.Rows.Insert(nRowIndex, dataTableViewRow);
+            }
+            else
+                nRowIndex = this.dataGridView1.Rows.Add();
             DataTableViewRow row = this.dataGridView1.Rows[nRowIndex];
             this.SetRowData(row, qcEventInfo);
             this.dataGridView1.Focus();

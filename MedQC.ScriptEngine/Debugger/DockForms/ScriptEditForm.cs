@@ -16,6 +16,8 @@ using Heren.Common.TextEditor.Document;
 using Heren.Common.Libraries;
 using Heren.MedQC.ScriptEngine.Script;
 using EMRDBLib;
+using Heren.MedQC.ScriptEngine.FindReplace;
+using EMRDBLib.DbAccess;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
@@ -61,10 +63,11 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         {
             get { return this.m_vbsFile; }
         }
-
+        public DebuggerForm MainForm { get; set; }
         public ScriptEditForm(DebuggerForm mainForm)
             : base(mainForm)
         {
+            this.MainForm = mainForm;
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
             this.m_scriptProperty = new ScriptProperty();
@@ -378,6 +381,188 @@ namespace Heren.MedQC.ScriptEngine.Debugger
             {
                 LogManager.Instance.WriteLog("ScriptEditForm.LocateTo", ex);
             }
+        }
+
+        /// <summary>
+        /// 获取当前选中的文本
+        /// </summary>
+        /// <returns>选中的文本</returns>
+        public string GetSelectedText()
+        {
+            return this.textEditorControl1.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+        }
+
+        /// <summary>
+        /// 查找与指定的文本匹配的所有文本
+        /// </summary>
+        /// <param name="szFindText">文本</param>
+        /// <param name="bMatchCase">是否匹配大小写</param>
+        /// <returns>DataLayer.SystemData.ReturnValue</returns>
+        public void FindText(string szFindText, bool bMatchCase)
+        {
+            List<FindResult> results = FindHandler.Instance.FindAll(this.textEditorControl1, szFindText, bMatchCase);
+            if (this.MainForm != null && !this.MainForm.IsDisposed)
+                this.MainForm.ShowFindResultForm(this, szFindText, results, false);
+        }
+
+        /// <summary>
+        /// 在所有报表中查找指定的文本
+        /// </summary>
+        /// <param name="szFindText">文本</param>
+        /// <param name="bMatchCase">是否匹配大小写</param>
+        public void FindTextInAllTemplet(string szFindText, bool bMatchCase)
+        {
+            if (!bMatchCase)
+                szFindText = szFindText.ToLower();
+            List<ScriptConfig> lstScriptConfig = new List<ScriptConfig>();
+            ScriptConfigAccess.Instance.GetScriptConfigs(ref lstScriptConfig);
+            if (lstScriptConfig.Count <= 0)
+                return;
+
+            List<FindResult> Result = new List<FindResult>();
+            int indextext = 0;//索引号
+            int indexLine = 0;//行号
+            int i = 0;//正在比对的字符序号
+            int indexCol = 0;
+            char chFindText = new char();
+            string sztextFormat = string.Empty;
+            char[] arrFindText = szFindText.Trim().ToCharArray();
+            for (int index = 0; index < lstScriptConfig.Count; index++)
+            {
+                if (lstScriptConfig[index].IS_FOLDER==1)
+                    continue;
+                string szSource = string.Empty;
+                ScriptConfigAccess.Instance.GetScriptSource(lstScriptConfig[index].SCRIPT_ID, ref szSource);
+                if (string.IsNullOrEmpty(szSource))
+                    continue;
+                //string szScripData = parser.GetScriptData(lstScriptConfig[index].REPORT_DATA);
+                string[] arrScripText = szSource.Split(new Char[] { '\n' }, StringSplitOptions.None);
+
+                indexLine = 0; //行号清零
+                indextext = 0; //索引号清零
+                foreach (string sztext in arrScripText)
+                {
+                    if (string.IsNullOrEmpty(sztext))
+                        continue;
+                    if (!bMatchCase)
+                        sztextFormat = sztext.ToLower();
+                    else
+                        sztextFormat = sztext;
+                    char[] arrCtext = sztextFormat.ToCharArray();
+                    i = 0;//正在比对的字符序号
+                    for (indexCol = 0; indexCol < arrCtext.Length; indexCol++)
+                    {
+                        chFindText = arrCtext[indexCol];
+                        indextext++;
+                        if (i != 0 && chFindText != arrFindText[i])
+                        { indexCol -= i - 1; indextext -= i - 1; i = 0; continue; }
+                        if (chFindText != arrFindText[i])
+                        { i = 0; continue; }
+                        if (i == arrFindText.Length - 1)
+                        {
+                            Result.Add(new FindResult(indextext - szFindText.Trim().Length
+                                , szFindText.Trim().Length
+                                , indexLine
+                                , sztext
+                                , lstScriptConfig[index].SCRIPT_ID
+                                , lstScriptConfig[index].SCRIPT_NAME
+                                , SystemData.FileType.SCRIPT));
+                            i = 0;
+                            continue;
+                        }
+                        i++;
+                    }
+                    indextext++;//修正分行去掉'\n'产生的偏移量
+                    indexLine++;
+                }
+            }
+
+            if (this.MainForm != null && !this.MainForm.IsDisposed)
+                this.MainForm.ShowFindResultForm(this, szFindText, Result, true);
+        }
+
+        /// <summary>
+        /// 查找并替换指定的文本
+        /// </summary>
+        /// <param name="szFindText">查找文本</param>
+        /// <param name="szReplaceText">替换文本</param>
+        /// <param name="bMatchCase">是否匹配大小写</param>
+        /// <param name="bReplaceAll">是否替换所有</param>
+        /// <returns>DataLayer.SystemData.ReturnValue</returns>
+        public void ReplaceText(string szFindText, string szReplaceText, bool bMatchCase, bool bReplaceAll)
+        {
+            if (bReplaceAll)
+                FindHandler.Instance.ReplaceAll(this.textEditorControl1, szFindText, szReplaceText, bMatchCase);
+            else
+                FindHandler.Instance.ReplaceNext(this.textEditorControl1, szFindText, szReplaceText, bMatchCase);
+        }
+        
+        /// <summary>
+        /// 将当前脚本编辑器窗口光标定位到指定的文本
+        /// </summary>
+        /// <param name="offset">索引位置</param>
+        /// <param name="length">长度</param>
+        public void LocateToText(int offset, int length)
+        {
+            this.Activate();
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.SelectionManager.ClearSelection();
+            if (offset < 0 || length < 0
+                || offset >= this.textEditorControl1.Document.TextLength
+                || offset + length >= this.textEditorControl1.Document.TextLength)
+                return;
+            Point startPos = this.textEditorControl1.Document.OffsetToPosition(offset);
+            Point endPos = this.textEditorControl1.Document.OffsetToPosition(offset + length);
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.SelectionManager.SetSelection(startPos, endPos);
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.Caret.Position = this.textEditorControl1.Document.OffsetToPosition(offset);
+        }
+        
+        private void toolmnuFind_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.MainForm.ShowFindReplaceForm();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void toolmnuFindSelected_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.FindText(this.GetSelectedText(), false);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void mnuUndo_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.textEditorControl1.Undo();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void mnuRedo_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.textEditorControl1.Redo();
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void mnuCut_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.ClipboardHandler.Cut(null, null);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void mnuCopy_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.ClipboardHandler.Copy(null, null);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
+
+        private void mnuPaste_Click(object sender, EventArgs e)
+        {
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.textEditorControl1.ActiveTextAreaControl.TextArea.ClipboardHandler.Paste(null, null);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
     }
 }

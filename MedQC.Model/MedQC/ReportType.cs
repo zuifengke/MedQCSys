@@ -98,7 +98,7 @@ namespace EMRDBLib
             get { return this.m_dtModifyTime; }
             set { this.m_dtModifyTime = value; }
         }
-
+        public byte[] REPORT_DATA { get; set; }
         public ReportType()
         {
             this.m_dtModifyTime = base.DefaultTime;

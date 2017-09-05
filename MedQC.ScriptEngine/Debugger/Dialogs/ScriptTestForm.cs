@@ -15,6 +15,7 @@ using Heren.Common.Libraries;
 using Heren.Common.Controls;
 using Heren.Common.Controls.TableView;
 using Heren.MedQC.ScriptEngine.Script;
+using EMRDBLib;
 
 namespace Heren.MedQC.ScriptEngine.Debugger
 {
@@ -180,7 +181,7 @@ namespace Heren.MedQC.ScriptEngine.Debugger
         }
 
         #region"元素计算接口实现"
-        private bool GetElementValue(string szElementName, out string szElementValue)
+        private bool GetElementValue(QcCheckPoint qcCheckPoint,PatVisitInfo patVisitInfo, string szElementName, out string szElementValue)
         {
             szElementValue = string.Empty;
             if (this.dataGridView1.Rows.Count <= 0)

@@ -108,6 +108,92 @@ namespace EMRDBLib.DbAccess
             }
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
+        /// <summary>
+        /// 医嘱检索，获取有相关医嘱的在院患者列表
+        /// </summary>
+        /// <param name="szOrderText"></param>
+        /// <param name="szDeptCode"></param>
+        /// <param name="lstPatVisitLog"></param>
+        /// <returns></returns>
+        public short GetPatientListByOrderText(string szOrderText, string szDeptCode, ref List<PatVisitInfo> lstPatVisitLogs)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
 
+            if (string.IsNullOrEmpty(szOrderText) || string.IsNullOrEmpty(szOrderText))
+                return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8}"
+                , SystemData.PatVisitView.PATIENT_ID
+                , SystemData.PatVisitView.VISIT_ID
+                , SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME
+                , SystemData.PatVisitView.DEPT_CODE
+                , SystemData.PatVisitView.DEPT_NAME
+                , SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.INP_NO
+                , SystemData.PatVisitView.PATIENT_SEX);
+
+            string szCondition = string.Format(" 1=1  AND B.{0} like '%{1}%'"
+                , SystemData.OrdersView.ORDER_TEXT, szOrderText);
+            szCondition = string.Format("{0} AND A.{1}=B.{2} AND A.{3}=B.{4}", szCondition, SystemData.PatVisitView.PATIENT_ID
+               , SystemData.AdtLogTable.PATIENT_ID, SystemData.PatVisitView.VISIT_ID, SystemData.AdtLogTable.VISIT_ID);
+            if (!string.IsNullOrEmpty(szDeptCode))
+                szCondition = string.Format("{0} AND A.{1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            string szGroupBy = string.Format("A.{0},A.{1},A.{2},A.{3},A.{4},A.{5},A.{6},A.{7},A.{8}"
+                , SystemData.PatVisitView.PATIENT_ID
+                , SystemData.PatVisitView.VISIT_ID
+                , SystemData.PatVisitView.VISIT_TIME
+                , SystemData.PatVisitView.PATIENT_NAME
+                , SystemData.PatVisitView.DEPT_CODE
+                , SystemData.PatVisitView.DEPT_NAME
+                , SystemData.PatVisitView.BED_CODE
+                , SystemData.PatVisitView.INP_NO
+                , SystemData.PatVisitView.PATIENT_SEX);
+            string szOrderBy = string.Format("A.{0}", SystemData.PatVisitView.DEPT_CODE);
+
+            string szTable = string.Format("{0} A,{1} B", SystemData.DataView.INP_VISIT_V, SystemData.DataView.ORDERS);
+            string szSQL = string.Format(SystemData.SQL.SELECT_FROM_WHERE_GROUP_ORDER_ASC, szField, szTable, szCondition, szGroupBy, szOrderBy);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitLogs == null)
+                    lstPatVisitLogs = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo patVisitLog = new PatVisitInfo();
+                    if (!dataReader.IsDBNull(0)) patVisitLog.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) patVisitLog.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) patVisitLog.VISIT_TIME = dataReader.GetDateTime(2);
+                    if (!dataReader.IsDBNull(3)) patVisitLog.PATIENT_NAME = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) patVisitLog.DEPT_CODE = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) patVisitLog.DEPT_NAME = dataReader.GetString(5);
+                    if (!dataReader.IsDBNull(6)) patVisitLog.BED_CODE = dataReader.GetValue(6).ToString();
+                    if (!dataReader.IsDBNull(7)) patVisitLog.INP_NO = dataReader.GetString(7);
+                    if (!dataReader.IsDBNull(8)) patVisitLog.PATIENT_SEX = dataReader.GetString(8);
+                    lstPatVisitLogs.Add(patVisitLog);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("PatientAccess.GetPatientListByOrderText", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally
+            {
+                if (dataReader != null)
+                {
+                    dataReader.Close();
+                    dataReader.Dispose();
+                    dataReader = null;
+                }
+                base.MedQCAccess.CloseConnnection(false);
+            }
+        }
     }
 }
