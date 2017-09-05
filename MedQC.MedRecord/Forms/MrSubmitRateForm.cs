@@ -198,5 +198,19 @@ namespace Heren.MedQC.MedRecord
         {
 
         }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            if (this.dataTableView1.Rows.Count <= 0)
+            {
+                MessageBoxEx.Show("当前没有可导出的内容！", MessageBoxIcon.Information);
+                return;
+            }
+            System.Collections.Hashtable htNoExportColunms = new System.Collections.Hashtable();
+            StatExpExcelHelper.Instance.HtNoExportColIndex = htNoExportColunms;
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            StatExpExcelHelper.Instance.ExportToExcel(this.dataTableView1, "病案提交率统计");
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+        }
     }
 }

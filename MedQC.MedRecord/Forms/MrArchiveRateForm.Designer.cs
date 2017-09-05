@@ -46,6 +46,7 @@
             this.btnSearch = new Heren.Common.Forms.XButton();
             this.cboTimeType = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -201,6 +202,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnExportExcel);
             this.panel1.Controls.Add(this.cboTimeType);
             this.panel1.Controls.Add(this.btnSearch);
             this.panel1.Controls.Add(this.dtTimeEnd);
@@ -211,6 +213,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1362, 35);
             this.panel1.TabIndex = 0;
+            // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Location = new System.Drawing.Point(426, 5);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(78, 23);
+            this.btnExportExcel.TabIndex = 17;
+            this.btnExportExcel.Text = "Excel导出";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
             // MrArchiveRateForm
             // 
@@ -244,5 +256,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_3DayArchiveRate;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_7DayArchiveCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_7DayArchiveRate;
+        private System.Windows.Forms.Button btnExportExcel;
     }
 }

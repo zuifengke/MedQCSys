@@ -14,6 +14,7 @@ using Heren.Common.Libraries;
 
 using EMRDBLib;
 using EMRDBLib.DbAccess;
+using Heren.Common.Controls.TableView;
 
 namespace Heren.MedQC.Utilities
 {
@@ -59,16 +60,15 @@ namespace Heren.MedQC.Utilities
             if (saveDialog.ShowDialog() != DialogResult.OK)
                 return;
             string szFilePath = saveDialog.FileName;
-
-            if (ExcelExporter.ExportExcelFile(dgv, false, szFilePath))
+            bool result = false;
+            if (dgv is DataTableView)
             {
-                if (!GlobalMethods.Win32.Execute(szFilePath, null))
-                    MessageBoxEx.ShowMessage("已导出完成!但无法打开,您可能没有安装Excel软件!");
+                result = ExcelExporter.ExportExcelFile((dgv as DataTableView), false, szFilePath);
             }
             else
-            {
-                MessageBoxEx.ShowMessage("导出失败!");
-            }
+                result = ExcelExporter.ExportExcelFile(dgv, false, szFilePath);
+            if (!GlobalMethods.Win32.Execute(szFilePath, null))
+                MessageBoxEx.ShowMessage("已导出完成!但无法打开,您可能没有安装Excel软件!");
             //this.ExportTo(dgv, szFileTitle);
         }
 
@@ -125,7 +125,7 @@ namespace Heren.MedQC.Utilities
                         continue;
 
                     List<LabResult> lstResultInfo = null;
-                    short shRet =LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
+                    short shRet = LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
 
                     if (shRet != SystemData.ReturnValue.OK
                         && shRet != SystemData.ReturnValue.RES_NO_FOUND)
@@ -314,7 +314,7 @@ namespace Heren.MedQC.Utilities
                         continue;
                     if (this.m_htNoExportColIndex != null && this.m_htNoExportColIndex.Contains(i))
                         continue;
-                    
+
                     Mylxls.Cells[2, curColumnIndex] = dgv.Columns[i].HeaderText;
                     Mylxls.get_Range(Mylxls.Cells[2, curColumnIndex], Mylxls.Cells[2, curColumnIndex]).Cells.Borders.LineStyle = 1;
                     Mylxls.get_Range(Mylxls.Cells[2, curColumnIndex], Mylxls.Cells[2, curColumnIndex]).ColumnWidth = dgv.Columns[i].Width / 8;
