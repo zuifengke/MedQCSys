@@ -400,5 +400,6 @@ namespace EMRDBLib.HerenHis
         /// 出院方式
         /// </summary>
         public string DISCHARGE_DISPOSITION { get; set; }
+        public string INVALID_PATIENT { get; set; }
     }
 }

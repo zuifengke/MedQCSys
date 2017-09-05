@@ -33,6 +33,7 @@ namespace EMRDBLib.DbAccess.HerenHis
                 return InpVisitAccess.m_Instance;
             }
         }
+
         public short GetInpVisit(string szPatientID, string szVisitID, ref InpVisit inpVisit)
         {
             if (base.HerenHisAccess == null)
@@ -226,6 +227,43 @@ namespace EMRDBLib.DbAccess.HerenHis
             }
             finally { base.HerenHisAccess.CloseConnnection(false); }
         }
-
+        /// <summary>
+        /// 更新患者是否为病案统计时的无效病人
+        /// </summary>
+        /// <param name="inpVisit"></param>
+        /// <returns></returns>
+        public short UpdateInValid(InpVisit inpVisit)
+        {
+            if (inpVisit == null)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "" }
+                    , new object[] { inpVisit }, "参数不能为空");
+                return SystemData.ReturnValue.PARAM_ERROR;
+            }
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0}={1},"
+                , SystemData.InpVisitTable.INVALID_PATIENT, inpVisit.INVALID_PATIENT);
+          
+            string szCondition = string.Format("{0}='{1}'", SystemData.InpVisitTable.VISIT_NO, inpVisit.VISIT_NO);
+            string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable_HerenHis.INP_VISIT, sbField.ToString(), szCondition);
+            int nCount = 0;
+            try
+            {
+                nCount = base.HerenHisAccess.ExecuteNonQuery(szSQL, CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            if (nCount <= 0)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, "SQL语句执行后返回0!");
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            return SystemData.ReturnValue.OK;
+        }
     }
 }

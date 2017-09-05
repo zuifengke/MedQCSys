@@ -23,6 +23,7 @@ namespace Heren.MedQC.Utilities
                 return m_Instance;
             }
         }
+        public string UserName { get; set; }
         public string DeptName { get; set; }
         public DateTime StatTimeBegin { get; set; }
         public DateTime StatTimeEnd { get; set; }
@@ -96,6 +97,10 @@ namespace Heren.MedQC.Utilities
             {
                 value = this.StatTimeEnd;
                 return true;
+            }
+            if (name == "检查者")
+            {
+                value = this.UserName;
             }
             return false;
         }

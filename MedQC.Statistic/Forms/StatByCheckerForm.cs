@@ -241,16 +241,11 @@ namespace Heren.MedQC.Statistic
             }
 
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            byte[] byteReportData = this.GetReportFileData(null);
-            if (byteReportData != null)
-            {
-                System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
-                ReportExplorerForm explorerForm = this.GetReportExplorerForm();
-                explorerForm.ReportFileData = byteReportData;
-                explorerForm.ReportParamData.Add("是否续打", false);
-                explorerForm.ReportParamData.Add("打印数据", table);
-                explorerForm.ShowDialog();
-            }
+            System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
+            ReportPrintHelper.Instance.UserName = this.cboUserList.Text;
+            ReportPrintHelper.Instance.StatTimeBegin = this.dtpStatTimeBegin.Value;
+            ReportPrintHelper.Instance.StatTimeEnd = this.dtpStatTimeEnd.Value;
+            ReportPrintHelper.Instance.ShowPrintView(table, this.Text);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -289,6 +284,11 @@ namespace Heren.MedQC.Statistic
             if (info == null)
                 return;
             this.MainForm.OpenDocument(info.TOPIC_ID, info.PATIENT_ID, info.VISIT_ID);
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

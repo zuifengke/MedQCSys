@@ -529,5 +529,34 @@ namespace Heren.MedQC.MedRecord
             frm.OnRefreshView();
             return true;
         }
+
+        public class ShowSystemCommand21 : AbstractCommand
+        {
+            public ShowSystemCommand21()
+            {
+                this.m_name = "无效病人标记";
+            }
+            public override bool Execute(object param, object data)
+            {
+                MainForm form = param as MainForm;
+                if (form == null)
+                    return false;
+                foreach (DockContentBase item in form.DockPanel.Contents)
+                {
+                    if (item is InValidPatientForm)
+                    {
+                        item.Activate();
+                        item.OnRefreshView();
+                        return true;
+                    }
+                }
+                InValidPatientForm frm = new InValidPatientForm(form);
+                frm.Show(form.DockPanel, DockState.Document);
+                frm.Activate();
+                frm.OnRefreshView();
+                return true;
+            }
+
+        }
     }
 }

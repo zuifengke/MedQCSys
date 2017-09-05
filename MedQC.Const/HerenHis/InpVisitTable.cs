@@ -399,6 +399,10 @@ namespace EMRDBLib
             /// 出院方式
             /// </summary>
             public const string DISCHARGE_DISPOSITION = "DISCHARGE_DISPOSITION";
+            /// <summary>
+            /// 无效患者标识 0或null：有效 1表示无效
+            /// </summary>
+            public const string INVALID_PATIENT = "INVALID_PATIENT";
         }
     }
 }

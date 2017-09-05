@@ -29,18 +29,6 @@ namespace Heren.MedQC.Statistic
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.deptStayedIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInpNO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patientIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patientNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.deptStayedNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.questionContentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doctorInchargeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateCheckedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateConfirmedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnPrint = new System.Windows.Forms.Button();
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +39,18 @@ namespace Heren.MedQC.Statistic
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.cboUserList = new Heren.Common.Controls.DictInput.FindComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.deptStayedNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patientIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patientNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.questionContentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.doctorInchargeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deptStayedIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInpNO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateCheckedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateConfirmedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,14 +65,14 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deptStayedIDDataGridViewTextBoxColumn,
-            this.colInpNO,
+            this.deptStayedNameDataGridViewTextBoxColumn,
             this.patientIDDataGridViewTextBoxColumn,
             this.patientNameDataGridViewTextBoxColumn,
-            this.deptStayedNameDataGridViewTextBoxColumn,
-            this.colQaEventType,
             this.questionContentDataGridViewTextBoxColumn,
             this.doctorInchargeDataGridViewTextBoxColumn,
+            this.deptStayedIDDataGridViewTextBoxColumn,
+            this.colInpNO,
+            this.colQaEventType,
             this.colPARENT_DOCTOR,
             this.checkerDataGridViewTextBoxColumn,
             this.dateCheckedDataGridViewTextBoxColumn,
@@ -86,103 +86,8 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(977, 375);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // deptStayedIDDataGridViewTextBoxColumn
-            // 
-            this.deptStayedIDDataGridViewTextBoxColumn.DataPropertyName = "DeptCode";
-            this.deptStayedIDDataGridViewTextBoxColumn.HeaderText = "所在科室ID";
-            this.deptStayedIDDataGridViewTextBoxColumn.Name = "deptStayedIDDataGridViewTextBoxColumn";
-            this.deptStayedIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.deptStayedIDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // colInpNO
-            // 
-            this.colInpNO.HeaderText = "病案号";
-            this.colInpNO.Name = "colInpNO";
-            this.colInpNO.ReadOnly = true;
-            // 
-            // patientIDDataGridViewTextBoxColumn
-            // 
-            this.patientIDDataGridViewTextBoxColumn.DataPropertyName = "PatientID";
-            this.patientIDDataGridViewTextBoxColumn.FillWeight = 80F;
-            this.patientIDDataGridViewTextBoxColumn.HeaderText = "患者ID";
-            this.patientIDDataGridViewTextBoxColumn.Name = "patientIDDataGridViewTextBoxColumn";
-            this.patientIDDataGridViewTextBoxColumn.ReadOnly = true;
-            this.patientIDDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // patientNameDataGridViewTextBoxColumn
-            // 
-            this.patientNameDataGridViewTextBoxColumn.DataPropertyName = "PatientName";
-            this.patientNameDataGridViewTextBoxColumn.FillWeight = 88F;
-            this.patientNameDataGridViewTextBoxColumn.HeaderText = "患者姓名";
-            this.patientNameDataGridViewTextBoxColumn.Name = "patientNameDataGridViewTextBoxColumn";
-            this.patientNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.patientNameDataGridViewTextBoxColumn.Width = 88;
-            // 
-            // deptStayedNameDataGridViewTextBoxColumn
-            // 
-            this.deptStayedNameDataGridViewTextBoxColumn.DataPropertyName = "DeptName";
-            this.deptStayedNameDataGridViewTextBoxColumn.HeaderText = "科室";
-            this.deptStayedNameDataGridViewTextBoxColumn.Name = "deptStayedNameDataGridViewTextBoxColumn";
-            this.deptStayedNameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // colQaEventType
-            // 
-            this.colQaEventType.HeaderText = "问题类型";
-            this.colQaEventType.Name = "colQaEventType";
-            this.colQaEventType.ReadOnly = true;
-            this.colQaEventType.Width = 200;
-            // 
-            // questionContentDataGridViewTextBoxColumn
-            // 
-            this.questionContentDataGridViewTextBoxColumn.DataPropertyName = "QuestionContent";
-            this.questionContentDataGridViewTextBoxColumn.FillWeight = 350F;
-            this.questionContentDataGridViewTextBoxColumn.HeaderText = "问题";
-            this.questionContentDataGridViewTextBoxColumn.Name = "questionContentDataGridViewTextBoxColumn";
-            this.questionContentDataGridViewTextBoxColumn.ReadOnly = true;
-            this.questionContentDataGridViewTextBoxColumn.Width = 350;
-            // 
-            // doctorInchargeDataGridViewTextBoxColumn
-            // 
-            this.doctorInchargeDataGridViewTextBoxColumn.DataPropertyName = "DoctorInCharge";
-            this.doctorInchargeDataGridViewTextBoxColumn.FillWeight = 88F;
-            this.doctorInchargeDataGridViewTextBoxColumn.HeaderText = "经治医生";
-            this.doctorInchargeDataGridViewTextBoxColumn.Name = "doctorInchargeDataGridViewTextBoxColumn";
-            this.doctorInchargeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.doctorInchargeDataGridViewTextBoxColumn.Width = 88;
-            // 
-            // colPARENT_DOCTOR
-            // 
-            this.colPARENT_DOCTOR.HeaderText = "上级医生";
-            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
-            this.colPARENT_DOCTOR.ReadOnly = true;
-            // 
-            // checkerDataGridViewTextBoxColumn
-            // 
-            this.checkerDataGridViewTextBoxColumn.DataPropertyName = "CheckerName";
-            this.checkerDataGridViewTextBoxColumn.FillWeight = 80F;
-            this.checkerDataGridViewTextBoxColumn.HeaderText = "检查者";
-            this.checkerDataGridViewTextBoxColumn.Name = "checkerDataGridViewTextBoxColumn";
-            this.checkerDataGridViewTextBoxColumn.ReadOnly = true;
-            this.checkerDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // dateCheckedDataGridViewTextBoxColumn
-            // 
-            this.dateCheckedDataGridViewTextBoxColumn.DataPropertyName = "CheckTime";
-            this.dateCheckedDataGridViewTextBoxColumn.FillWeight = 130F;
-            this.dateCheckedDataGridViewTextBoxColumn.HeaderText = "检查日期";
-            this.dateCheckedDataGridViewTextBoxColumn.Name = "dateCheckedDataGridViewTextBoxColumn";
-            this.dateCheckedDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dateCheckedDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // dateConfirmedDataGridViewTextBoxColumn
-            // 
-            this.dateConfirmedDataGridViewTextBoxColumn.DataPropertyName = "ConfirmTime";
-            this.dateConfirmedDataGridViewTextBoxColumn.HeaderText = "确认日期";
-            this.dateConfirmedDataGridViewTextBoxColumn.Name = "dateConfirmedDataGridViewTextBoxColumn";
-            this.dateConfirmedDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dateConfirmedDataGridViewTextBoxColumn.Width = 150;
             // 
             // btnPrint
             // 
@@ -270,11 +175,9 @@ namespace Heren.MedQC.Statistic
             // cboUserList
             // 
             this.cboUserList.CandidateWidth = 200;
-            this.cboUserList.DroppedDown = false;
             this.cboUserList.Font = new System.Drawing.Font("宋体", 10.5F);
             this.cboUserList.Location = new System.Drawing.Point(55, 10);
             this.cboUserList.Name = "cboUserList";
-            this.cboUserList.SelectedItem = null;
             this.cboUserList.Size = new System.Drawing.Size(105, 23);
             this.cboUserList.TabIndex = 28;
             // 
@@ -294,6 +197,102 @@ namespace Heren.MedQC.Statistic
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(977, 42);
             this.panel1.TabIndex = 29;
+            // 
+            // deptStayedNameDataGridViewTextBoxColumn
+            // 
+            this.deptStayedNameDataGridViewTextBoxColumn.DataPropertyName = "DeptName";
+            this.deptStayedNameDataGridViewTextBoxColumn.HeaderText = "科室";
+            this.deptStayedNameDataGridViewTextBoxColumn.Name = "deptStayedNameDataGridViewTextBoxColumn";
+            this.deptStayedNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // patientIDDataGridViewTextBoxColumn
+            // 
+            this.patientIDDataGridViewTextBoxColumn.DataPropertyName = "PatientID";
+            this.patientIDDataGridViewTextBoxColumn.FillWeight = 80F;
+            this.patientIDDataGridViewTextBoxColumn.HeaderText = "患者ID";
+            this.patientIDDataGridViewTextBoxColumn.Name = "patientIDDataGridViewTextBoxColumn";
+            this.patientIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.patientIDDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // patientNameDataGridViewTextBoxColumn
+            // 
+            this.patientNameDataGridViewTextBoxColumn.DataPropertyName = "PatientName";
+            this.patientNameDataGridViewTextBoxColumn.FillWeight = 88F;
+            this.patientNameDataGridViewTextBoxColumn.HeaderText = "患者姓名";
+            this.patientNameDataGridViewTextBoxColumn.Name = "patientNameDataGridViewTextBoxColumn";
+            this.patientNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.patientNameDataGridViewTextBoxColumn.Width = 88;
+            // 
+            // questionContentDataGridViewTextBoxColumn
+            // 
+            this.questionContentDataGridViewTextBoxColumn.DataPropertyName = "QuestionContent";
+            this.questionContentDataGridViewTextBoxColumn.FillWeight = 350F;
+            this.questionContentDataGridViewTextBoxColumn.HeaderText = "问题";
+            this.questionContentDataGridViewTextBoxColumn.Name = "questionContentDataGridViewTextBoxColumn";
+            this.questionContentDataGridViewTextBoxColumn.ReadOnly = true;
+            this.questionContentDataGridViewTextBoxColumn.Width = 350;
+            // 
+            // doctorInchargeDataGridViewTextBoxColumn
+            // 
+            this.doctorInchargeDataGridViewTextBoxColumn.DataPropertyName = "DoctorInCharge";
+            this.doctorInchargeDataGridViewTextBoxColumn.FillWeight = 88F;
+            this.doctorInchargeDataGridViewTextBoxColumn.HeaderText = "经治医生";
+            this.doctorInchargeDataGridViewTextBoxColumn.Name = "doctorInchargeDataGridViewTextBoxColumn";
+            this.doctorInchargeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.doctorInchargeDataGridViewTextBoxColumn.Width = 88;
+            // 
+            // deptStayedIDDataGridViewTextBoxColumn
+            // 
+            this.deptStayedIDDataGridViewTextBoxColumn.DataPropertyName = "DeptCode";
+            this.deptStayedIDDataGridViewTextBoxColumn.HeaderText = "所在科室ID";
+            this.deptStayedIDDataGridViewTextBoxColumn.Name = "deptStayedIDDataGridViewTextBoxColumn";
+            this.deptStayedIDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.deptStayedIDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // colInpNO
+            // 
+            this.colInpNO.HeaderText = "病案号";
+            this.colInpNO.Name = "colInpNO";
+            this.colInpNO.ReadOnly = true;
+            // 
+            // colQaEventType
+            // 
+            this.colQaEventType.HeaderText = "问题类型";
+            this.colQaEventType.Name = "colQaEventType";
+            this.colQaEventType.ReadOnly = true;
+            this.colQaEventType.Width = 200;
+            // 
+            // colPARENT_DOCTOR
+            // 
+            this.colPARENT_DOCTOR.HeaderText = "上级医生";
+            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
+            this.colPARENT_DOCTOR.ReadOnly = true;
+            // 
+            // checkerDataGridViewTextBoxColumn
+            // 
+            this.checkerDataGridViewTextBoxColumn.DataPropertyName = "CheckerName";
+            this.checkerDataGridViewTextBoxColumn.FillWeight = 80F;
+            this.checkerDataGridViewTextBoxColumn.HeaderText = "检查者";
+            this.checkerDataGridViewTextBoxColumn.Name = "checkerDataGridViewTextBoxColumn";
+            this.checkerDataGridViewTextBoxColumn.ReadOnly = true;
+            this.checkerDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // dateCheckedDataGridViewTextBoxColumn
+            // 
+            this.dateCheckedDataGridViewTextBoxColumn.DataPropertyName = "CheckTime";
+            this.dateCheckedDataGridViewTextBoxColumn.FillWeight = 130F;
+            this.dateCheckedDataGridViewTextBoxColumn.HeaderText = "检查日期";
+            this.dateCheckedDataGridViewTextBoxColumn.Name = "dateCheckedDataGridViewTextBoxColumn";
+            this.dateCheckedDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dateCheckedDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // dateConfirmedDataGridViewTextBoxColumn
+            // 
+            this.dateConfirmedDataGridViewTextBoxColumn.DataPropertyName = "ConfirmTime";
+            this.dateConfirmedDataGridViewTextBoxColumn.HeaderText = "确认日期";
+            this.dateConfirmedDataGridViewTextBoxColumn.Name = "dateConfirmedDataGridViewTextBoxColumn";
+            this.dateConfirmedDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dateConfirmedDataGridViewTextBoxColumn.Width = 150;
             // 
             // StatByCheckerForm
             // 
@@ -323,18 +322,18 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnExportExcel;
         private Heren.Common.Controls.DictInput.FindComboBox cboUserList;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deptStayedNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn patientIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn patientNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn questionContentDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn doctorInchargeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deptStayedIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn colInpNO;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQaEventType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateConfirmedDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateCheckedDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn checkerDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn doctorInchargeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn questionContentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn deptStayedNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn patientNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn patientIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn deptStayedIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn checkerDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateCheckedDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateConfirmedDataGridViewTextBoxColumn;
     }
 }

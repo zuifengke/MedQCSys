@@ -165,7 +165,6 @@ namespace Heren.MedQC.Statistic
                 return;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            
             System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);
             ReportPrintHelper.Instance.DeptName = this.cboDeptName.Text;
             ReportPrintHelper.Instance.StatTimeBegin = this.dtpStatTimeBegin.Value;

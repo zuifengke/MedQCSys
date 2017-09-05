@@ -38,21 +38,21 @@ namespace Heren.MedQC.Statistic
             this.label1 = new System.Windows.Forms.Label();
             this.dtpStatTimeBegin = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.colCheckName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRequestDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInpNO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDiagnosis = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRequestDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSuperDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTopic = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLogDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -161,12 +161,12 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCheckName,
             this.colDeptName,
-            this.colPatientName,
             this.colPatientID,
+            this.colPatientName,
+            this.colRequestDoctor,
             this.colVisitID,
             this.colInpNO,
             this.colDiagnosis,
-            this.colRequestDoctor,
             this.colPARENT_DOCTOR,
             this.colSuperDoctor,
             this.colTopic,
@@ -185,6 +185,23 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cboUserList);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.btnPrint);
+            this.panel1.Controls.Add(this.dtpStatTimeEnd);
+            this.panel1.Controls.Add(this.btnQuery);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.btnExportExcel);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.dtpStatTimeBegin);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1145, 39);
+            this.panel1.TabIndex = 31;
+            // 
             // colCheckName
             // 
             this.colCheckName.HeaderText = "检查者";
@@ -198,17 +215,23 @@ namespace Heren.MedQC.Statistic
             this.colDeptName.ReadOnly = true;
             this.colDeptName.Width = 120;
             // 
+            // colPatientID
+            // 
+            this.colPatientID.HeaderText = "患者ID";
+            this.colPatientID.Name = "colPatientID";
+            this.colPatientID.ReadOnly = true;
+            // 
             // colPatientName
             // 
             this.colPatientName.HeaderText = "患者姓名";
             this.colPatientName.Name = "colPatientName";
             this.colPatientName.ReadOnly = true;
             // 
-            // colPatientID
+            // colRequestDoctor
             // 
-            this.colPatientID.HeaderText = "患者ID号";
-            this.colPatientID.Name = "colPatientID";
-            this.colPatientID.ReadOnly = true;
+            this.colRequestDoctor.HeaderText = "经治医生";
+            this.colRequestDoctor.Name = "colRequestDoctor";
+            this.colRequestDoctor.ReadOnly = true;
             // 
             // colVisitID
             // 
@@ -230,13 +253,6 @@ namespace Heren.MedQC.Statistic
             this.colDiagnosis.Name = "colDiagnosis";
             this.colDiagnosis.ReadOnly = true;
             this.colDiagnosis.Visible = false;
-            // 
-            // colRequestDoctor
-            // 
-            this.colRequestDoctor.HeaderText = "经治医生";
-            this.colRequestDoctor.Name = "colRequestDoctor";
-            this.colRequestDoctor.ReadOnly = true;
-            this.colRequestDoctor.Visible = false;
             // 
             // colPARENT_DOCTOR
             // 
@@ -279,23 +295,6 @@ namespace Heren.MedQC.Statistic
             this.colLogDesc.ReadOnly = true;
             this.colLogDesc.Width = 150;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cboUserList);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.btnPrint);
-            this.panel1.Controls.Add(this.dtpStatTimeEnd);
-            this.panel1.Controls.Add(this.btnQuery);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.btnExportExcel);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.dtpStatTimeBegin);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1145, 39);
-            this.panel1.TabIndex = 31;
-            // 
             // StatByJobDetailForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -327,12 +326,12 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCheckName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRequestDoctor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVisitID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colInpNO;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDiagnosis;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRequestDoctor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSuperDoctor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTopic;

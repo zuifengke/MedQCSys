@@ -149,7 +149,6 @@ namespace Heren.MedQC.ScriptEngine.FindReplace
                 ScriptConfig scriptConfig = new ScriptConfig();
                 scriptConfig.SCRIPT_ID = result.TempletID;
                 scriptConfig.SCRIPT_NAME = result.TempletName;
-              
                 this.m_ScriptEditForm = ScriptHandler.Instance.GetScriptForm(scriptConfig); 
                 if (this.m_ScriptEditForm == null)
                 {
