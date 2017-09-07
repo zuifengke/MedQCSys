@@ -48,6 +48,10 @@ namespace Heren.MedQC.Core
         /// 病历浏览审核
         /// </summary>
         public static string MedRecord_RecBrowseRequest = "MedRecord_RecBrowseRequest";
+        /// <summary>
+        /// 终末病历评分
+        /// </summary>
+        public static string MedRecord_DocScore = "MedRecord_DocScore";
 
 
         #region AbstractRight 成员
@@ -71,7 +75,8 @@ namespace Heren.MedQC.Core
                   new RightPoint(MedRecord_RecMrBatch,"纸质病历批次查询","纸质病历批次查询"),
                   new RightPoint(MedRecord_ReceiveInOrder,"纸质病历逐份接收","纸质病历逐份接收"),
                   new RightPoint(MedRecord_RecMrBatchSend,"纸质病历批量提交","纸质病历批量提交"),
-                  new RightPoint(MedRecord_RecBrowseRequest,"病历浏览审核","病历浏览审核")
+                  new RightPoint(MedRecord_RecBrowseRequest,"病历浏览审核","病历浏览审核"),
+                  new RightPoint(MedRecord_DocScore,"终末病历评分","终末病历评分")
                 };
                 return rightPoint;
             }

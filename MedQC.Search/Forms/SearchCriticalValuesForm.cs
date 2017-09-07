@@ -40,8 +40,7 @@ namespace Heren.MedQC.Search.Forms
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            this.dtpStatTimeEnd.Value = DateTime.Now;
-            this.dtpStatTimeBegin.Value = DateTime.Now.AddDays(-7);
+            
             this.OnRefreshView();
 
         }
@@ -69,16 +68,10 @@ namespace Heren.MedQC.Search.Forms
             if (row.DataGridView == null)
                 return;
 
-            row.Cells[this.colDeptName.Index].Value = docInfo.DEPT_NAME;
+           
             row.Cells[this.colPatientID.Index].Value = docInfo.PATIENT_ID;
             row.Cells[this.colPatientName.Index].Value = docInfo.PATIENT_NAME;
-            row.Cells[this.colVisitTime.Index].Value = docInfo.VISIT_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_DOC_TIME.Index].Value = docInfo.DOC_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_DOC_TITLE.Index].Value = docInfo.DOC_TITLE;
-            row.Cells[this.col_RECORD_TIME.Index].Value = docInfo.RECORD_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_CREATOR_NAME.Index].Value = docInfo.CREATOR_NAME;
-            if(docInfo.DischargeTime != docInfo.DefaultTime)
-                row.Cells[this.colDischargeTime.Index].Value = docInfo.DischargeTime.ToString("yyyy-MM-dd HH:mm");
+            
             row.Tag = docInfo;
         }
 
@@ -127,16 +120,6 @@ namespace Heren.MedQC.Search.Forms
                 value = szDeptName;
                 return true;
             }
-            if (name == "起始日期")
-            {
-                value = this.dtpStatTimeBegin.Value;
-                return true;
-            }
-            if (name == "截止日期")
-            {
-                value = this.dtpStatTimeEnd.Value;
-                return true;
-            }
             return false;
         }
 
@@ -149,42 +132,19 @@ namespace Heren.MedQC.Search.Forms
             if (string.IsNullOrEmpty(this.cboDeptName.Text))
                 szDeptCode = null;
 
-            string szDocTypeIDList = txtDocType.Tag as string;
-            if (string.IsNullOrEmpty(szDocTypeIDList))
-            {
-                MessageBoxEx.ShowMessage("病历过多，请先选择病历类型");
-                return;
-            }
-            String[] arrDocType = szDocTypeIDList.Split(';');
-            string szDocTypeIDListCondition = "";
-            foreach (string item in arrDocType)
-            {
-                if (szDocTypeIDListCondition == string.Empty)
-                    szDocTypeIDListCondition = "'" + item + "'";
-                else
-                    szDocTypeIDListCondition += ",'" + item + "'";
-            }
-            DateTime dtBeginTime = dtpStatTimeBegin.Value;
-            DateTime dtEndTime = dtpStatTimeEnd.Value;
-            string szTimeType = string.Empty;
-            if (rbtnDischargeTime.Checked)
-            {
-                szTimeType = "DISCHARGE_TIME";
-            }
-            else
-                szTimeType = "RECORD_TIME";
+           
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在查询数据，请稍候...");
             this.dataGridView1.Rows.Clear();
             List<MedDocInfo> lstMedDocInfos = null;
-            short shRet = EmrDocAccess.Instance.GetEmrDocList(szTimeType,szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
-            if (shRet != SystemData.ReturnValue.OK
-                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
-            {
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                MessageBoxEx.Show("查询数据失败！");
-                return;
-            }
+            //short shRet = EmrDocAccess.Instance.GetEmrDocList(szTimeType,szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
+            //if (shRet != SystemData.ReturnValue.OK
+            //    && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            //{
+            //    GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            //    MessageBoxEx.Show("查询数据失败！");
+            //    return;
+            //}
             if (lstMedDocInfos == null || lstMedDocInfos.Count <= 0)
             {
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
@@ -262,7 +222,6 @@ namespace Heren.MedQC.Search.Forms
             {
                 MessageBoxEx.ShowMessage("患者信息获取失败,无法打开病历");
                 return;
-
             }
 
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
@@ -275,44 +234,9 @@ namespace Heren.MedQC.Search.Forms
 
         private void txtDocType_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            ShowDocTypeSelectForm();
+            //ShowDocTypeSelectForm();
         }
-        /// <summary>
-        /// 显示文档类型设置对话框
-        /// </summary>
-        /// <param name="row">指定行</param>
-        private void ShowDocTypeSelectForm()
-        {
-            TempletSelectForm templetSelectForm = new TempletSelectForm();
-            templetSelectForm.DefaultDocTypeID = txtDocType.Tag as string;
-            templetSelectForm.MultiSelect = true;
-            templetSelectForm.Text = "选择病历类型";
-            templetSelectForm.Description = "请选择应书写的病历类型：";
-            if (templetSelectForm.ShowDialog() != DialogResult.OK)
-                return;
-            List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
-            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
-            {
-                return;
-            }
-
-            StringBuilder sbDocTypeIDList = new StringBuilder();
-            StringBuilder sbDocTypeNameList = new StringBuilder();
-            for (int index = 0; index < lstDocTypeInfos.Count; index++)
-            {
-                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
-                if (docTypeInfo == null)
-                    continue;
-                sbDocTypeIDList.Append(docTypeInfo.DocTypeID);
-                if (index < lstDocTypeInfos.Count - 1)
-                    sbDocTypeIDList.Append(";");
-                sbDocTypeNameList.Append(docTypeInfo.DocTypeName);
-                if (index < lstDocTypeInfos.Count - 1)
-                    sbDocTypeNameList.Append(";");
-            }
-            txtDocType.Text = sbDocTypeNameList.ToString();
-            txtDocType.Tag = sbDocTypeIDList.ToString();
-        }
+        
 
     }
 }

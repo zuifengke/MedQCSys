@@ -19,6 +19,7 @@ using EMRDBLib.DbAccess;
 using System.Linq;
 using Heren.MedQC.CheckPoint;
 using MedQCSys.Controls;
+using Heren.MedQC.Core;
 
 namespace MedQCSys.DockForms
 {
@@ -38,7 +39,10 @@ namespace MedQCSys.DockForms
             : base(parent, patientPageControl)
         {
             this.InitializeComponent();
-            if (SystemParam.Instance.LocalConfigOption.IsScoreRightShow)
+            //判断权限
+            bool bRight = RightHandler.Instance.HasRight(RightResource.MedRecord_DocScore);
+            if (SystemParam.Instance.LocalConfigOption.IsScoreRightShow
+                && bRight)
                 this.ShowHint = DockState.DockRight;
             else
             {
@@ -600,9 +604,10 @@ namespace MedQCSys.DockForms
             short shRet = QaEventTypeDictAccess.Instance.GetQCEventTypeList(ref lstQaEventTypeDict);
             List<QcMsgDict> lstQcMsgDict = null;
             shRet = QcMsgDictAccess.Instance.GetQcMsgDictList(ref lstQcMsgDict);
+            //if (SystemParam.Instance.PatVisitInfo == null)
 
-            string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
-            string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
+            //string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
+            //string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -644,7 +649,7 @@ namespace MedQCSys.DockForms
                                 row2.ReadOnly = true;
                                 row2.Cells[this.col_2_Item.Index].Value = string.Format("    {0}、{1}", secondMsgdict.IndexOf(itemMsgDict, 0) + 1, itemMsgDict.MESSAGE);
                                 row2.Cells[this.col_2_Score.Index].Value = itemMsgDict.SCORE;
-                                
+
                             }
                         }
                     }
@@ -664,7 +669,6 @@ namespace MedQCSys.DockForms
                     }
                 }
             }
-          
         }
         /// <summary>
         /// 加载系统检查扣分信息

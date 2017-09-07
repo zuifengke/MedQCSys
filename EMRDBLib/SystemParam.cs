@@ -151,7 +151,12 @@ namespace EMRDBLib
         /// </summary>
         public EMRDBLib.PatVisitInfo PatVisitInfo
         {
-            get { return this.m_patVisitLog; }
+            get
+            {
+                if (this.m_patVisitLog == null)
+                    this.m_patVisitLog = new PatVisitInfo();
+                return this.m_patVisitLog;
+            }
             set
             {
                 if (this.m_patVisitLog != value)
@@ -244,11 +249,12 @@ namespace EMRDBLib
 
         private QCUserRight m_QCUserRight = null;
 
-     
+
         private Hashtable m_htDMLB = null;
         public Hashtable HtDMLB
         {
-            get {
+            get
+            {
                 if (this.m_htDMLB == null)
                 {
                     this.m_htDMLB = new Hashtable();
@@ -346,7 +352,7 @@ namespace EMRDBLib
             return sbDocPath.ToString();
         }
 
-      
+
 
     }
 }
