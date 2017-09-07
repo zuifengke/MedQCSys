@@ -558,5 +558,18 @@ namespace Heren.MedQC.MedRecord
             }
 
         }
+        public class ShowSystemCommand22 : AbstractCommand
+        {
+            public ShowSystemCommand22()
+            {
+                this.m_name = "首页上传编码对照";
+            }
+            public override bool Execute(object param, object data)
+            {
+                CodeCompasionForm frm = new CodeCompasionForm();
+                frm.ShowDialog();
+                return true;
+            }
+        }
     }
 }

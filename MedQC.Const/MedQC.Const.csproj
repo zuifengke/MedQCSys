@@ -72,6 +72,7 @@
     <Compile Include="DataTable\RecBrowseRequestTable.cs" />
     <Compile Include="DataView\ChargeTypeDicView.cs" />
     <Compile Include="DataView\IDentityDicView.cs" />
+    <Compile Include="HerenHis\DiagComparingTable.cs" />
     <Compile Include="HerenHis\InpBillDetailTable.cs" />
     <Compile Include="TypeConst\DataGroup.cs" />
     <Compile Include="DataTable\HdpParameterTable.cs" />

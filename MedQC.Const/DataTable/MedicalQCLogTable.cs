@@ -40,6 +40,10 @@ namespace EMRDBLib
             /// </summary>
             public const string DOC_SETID = "DOC_SETID";
             /// <summary>
+            /// 文档ID
+            /// </summary>
+            public const string DOC_ID = "DOC_ID";
+            /// <summary>
             /// 病历操作者所在科室代码
             /// </summary>
             public const string DEPT_CODE = "DEPT_CODE";

@@ -137,6 +137,10 @@ namespace EMRDBLib
         /// 质检问题代码
         /// </summary>
         public string QC_MSG_CODE { get; set; }
+        /// <summary>
+        /// 文档ID
+        /// </summary>
+        public string DOC_ID { get; set; }
         public MedicalQcLog()
         {
             this.QC_MSG_CODE = string.Empty;

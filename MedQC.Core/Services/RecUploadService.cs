@@ -114,6 +114,14 @@ namespace Heren.MedQC.Core.Services
         /// 付款方式/费别
         /// </summary>
         private List<RecCodeCompasion> CHARGE_TYPE_DICT = null;
+        /// <summary>
+        /// 诊断对照组字典
+        /// </summary>
+        private List<RecCodeCompasion> DIAG_COMP_GROUP_DICT = null;
+        /// <summary>
+        /// 科室字典
+        /// </summary>
+        private List<RecCodeCompasion> DEPT_DICT = null;
         public bool InitializeDict()
         {
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("SEX_DICT", ref this.SexDict);
@@ -136,8 +144,16 @@ namespace Heren.MedQC.Core.Services
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("OPERATION_SCALE_DICT", ref this.OPERATION_SCALE_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("ALLERGEN_DRUG_DICT", ref this.ALLERGEN_DRUG_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("CHARGE_TYPE_DICT", ref this.CHARGE_TYPE_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DIAG_COMP_GROUP_DICT", ref this.DIAG_COMP_GROUP_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DEPT_DICT", ref this.DEPT_DICT);
             return true;
         }
+        /// <summary>
+        /// 省人民病案上传接口
+        /// </summary>
+        /// <param name="szPatientID"></param>
+        /// <param name="szVisitID"></param>
+        /// <returns></returns>
         public bool Upload(string szPatientID, string szVisitID)
         {
             try
@@ -149,9 +165,17 @@ namespace Heren.MedQC.Core.Services
                 shRet = PatMasterIndexAccess.Instance.GetModel(szPatientID, ref patMasterIndex);
                 if (inpVisit == null || patMasterIndex == null)
                     return false;
+
                 string patientID = inpVisit.PATIENT_ID;
                 string visitNo = inpVisit.VISIT_NO;
                 string visitID = inpVisit.VISIT_ID.ToString();
+                //1、获取和仁his患者诊断信息
+                List<Diagnosis> lstDiagnosis = null;
+                shRet = DiagnosisAccess.Instance.GetList(patientID, visitNo, ref lstDiagnosis);
+                //2、获取和仁his患者诊断对照记录
+                List<DiagComparing> lstDiagComparing = null;
+                shRet = DiagComparingAccess.Instance.GetList(patientID, visitNo, ref lstDiagComparing);
+
                 List<RecCodeCompasion> lstRecCodeCompasion = null;
                 shRet = RecCodeCompasionAccess.Instance.GetRecCodeCompasions(null, ref lstRecCodeCompasion);
                 if (inpVisit == null)
@@ -258,7 +282,6 @@ namespace Heren.MedQC.Core.Services
                 bajk08.COL0828 = inpVisit.DOCTOR_OF_CONTROL_QUALITY;
                 bajk08.COL0829 = inpVisit.NURSE_OF_CONTROL_QUALITY;
                 //bajk08.COL0830 治疗类别没有
-
                 if (this.PatientClassDict != null && !string.IsNullOrEmpty(inpVisit.PATIENT_CLASS))
                 {
                     var result = this.MrQualityDict.Where(m => m.CODE_ID == inpVisit.PATIENT_CLASS).FirstOrDefault();
@@ -302,10 +325,8 @@ namespace Heren.MedQC.Core.Services
                     bajk08.COL0851 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, inpVisit.DISCHARGE_DATE_TIME);
                 //bajk08.COL0852=其他方式未获取
                 bajk08.COL0853 = inpVisit.TOTAL_COSTS;
-                //bajk08.COL0854=疾病序号未获取，不确定首页改用哪个诊断
-                //bajk08.COL0855 转归情况未获取，不确定首页改用哪个诊断
-                //bajk08.COL0856 入出符合标志未获取
-                //bajk08.COL0857 门出符合标志未获取
+                //bajk08.COL0854=疾病序号未获取，
+                //bajk08.COL0855 转归情况未获取，
                 //bajk08.COL0858 E序号未获取，搞不清含义
                 //bajk08.COL0859 M序号未获取，
                 bajk08.COL0866 = inpVisit.AUTOPSY_INDICATOR; //是否尸检
@@ -316,17 +337,118 @@ namespace Heren.MedQC.Core.Services
                     var result = this.CountryDict.Where(m => m.CODE_ID == patMasterIndex.CITIZENSHIP).FirstOrDefault();
                     if (result != null && !string.IsNullOrEmpty(result.DM))
                     {
-                        bajk08.COL0873 = decimal.Parse(result.DM);
+                        decimal d = 0;
+                        if (GlobalMethods.Convert.StringToDecimal(result.DM, ref d))
+                            bajk08.COL0873 = d;
                     }
                 }
                 bajk08.COL0882 = inpVisit.DEPT_ADMISSION_TO;
                 bajk08.COL0883 = inpVisit.DEPT_DISCHARGE_FROM;
-                //bajk08.COL0884 临床与病理未获取
-                //bajk08.COL0885 放射与病理未获取
-                //bajk08.COL0887 主要诊断未获取
 
+                if (this.DIAG_COMP_GROUP_DICT != null && lstDiagComparing != null)
+                {
+                    #region 诊断对照记录上传
+
+                    //bajk08.COL0884 临床与病理未获取
+                    var result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "临床与病理").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0884 = d;
+                            }
+                        }
+                    }
+                    //bajk08.COL0885 放射与病理未获取
+                    result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "放射与病理").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0885 = d;
+                            }
+                        }
+                    }
+                    //bajk08.COL0885 放射与病理未获取
+                    result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "放射与病理").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0885 = d;
+                            }
+                        }
+                    }
+                    //bajk08.COL0889 术前与术后
+                    result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "术前与术后").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0889 = d;
+                            }
+                        }
+                    }
+                    //bajk08.COL0856 入出符合标志未获取
+                    result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "入院与出院").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0856 = d;
+                            }
+                        }
+                    }
+                    //bajk08.COL0857 门出符合标志未获取 
+                    result = this.DIAG_COMP_GROUP_DICT.Where(m => m.CODETYPE_NAME == "门诊与出院").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagComparing = lstDiagComparing.Where(m => m.DIAG_COMPARE_GROUP_CODE == result.CODE_ID).FirstOrDefault();
+                        if (diagComparing != null)
+                        {
+                            decimal d = 0;
+                            if (GlobalMethods.Convert.StringToDecimal(diagComparing.DIAG_CORRESPONDENCE, ref d))
+                            {
+                                bajk08.COL0857 = d;
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                //bajk08.COL0887 主要诊断未获取
+                if (this.DiagnosisTypeDict != null)
+                {
+                    var result = this.DiagnosisTypeDict.Where(m => m.CODE_NAME == "主要诊断").FirstOrDefault();
+                    if (result != null)
+                    {
+                        var diagnosis = lstDiagnosis.Where(m => m.DIAG_TYPE == result.CODE_ID).FirstOrDefault();
+                        if (diagnosis != null)
+                        {
+                            bajk08.COL0887 = diagnosis.DIAG_DESC;
+                        }
+                    }
+                }
                 //bajk08.COL0888 结帐标识未获取
-                //bajk08.COL0889 术前与术后
                 //bajk08.COL0890 自动出院
                 bajk08.COL0891 = inpVisit.SECURITY_NO;
                 //bajk08.COL0892 新生儿体重未获取
@@ -363,8 +485,15 @@ namespace Heren.MedQC.Core.Services
                 }
                 //bajk08.COLni0900= 拟接收医疗机构名称1未获取
                 //bajk08.COL0902再住院计划未获取
+                decimal HAS_ADMISSION_AGAIN_PLAN = 0;
+                if (GlobalMethods.Convert.StringToDecimal(inpVisit.HAS_ADMISSION_AGAIN_PLAN, ref HAS_ADMISSION_AGAIN_PLAN))
+                {
+                    bajk08.COL0902 = HAS_ADMISSION_AGAIN_PLAN;
+                }
                 //bajk08.COL0903再住院目的未获取
+                bajk08.COL0903 = inpVisit.FOR_INPATIENT_PURPOSES;
                 //bajk08.COL0904入院前昏迷时间
+
                 //bajk08.COL0905入院后昏迷时间
                 //bajk08.COL0906入院病情(主诊断)
                 //bajk08.COL0907 药物过敏标志
@@ -405,8 +534,8 @@ namespace Heren.MedQC.Core.Services
                 }
                 //上传诊断情况
                 //1、获取和仁his患者诊断信息
-                List<Diagnosis> lstDiagnosis = null;
-                shRet = DiagnosisAccess.Instance.GetList(patientID, visitNo, ref lstDiagnosis);
+                //List<Diagnosis> lstDiagnosis = null;
+                //shRet = DiagnosisAccess.Instance.GetList(patientID, visitNo, ref lstDiagnosis);
                 //2、获取联众已经上传的诊断情况
                 List<EMRDBLib.BAJK.BAJK09> lstBajk09 = null;
                 shRet = BAJK09Access.Instance.GetBAJK09s(bajk08.KEY0801, ref lstBajk09);
@@ -585,7 +714,7 @@ namespace Heren.MedQC.Core.Services
                 //上传费用
                 List<InpBillDetail> lstInpBillDetail = null;
                 shRet = InpBillDetailAccess.Instance.GetList(patientID, visitNo, ref lstInpBillDetail);
-                if(lstInpBillDetail!=null)
+                if (lstInpBillDetail != null)
                 {
                     BAJK15 bajk15 = null;
                     shRet = BAJK15Access.Instance.GetModel(bajk08.KEY0801, ref bajk15);

@@ -14,6 +14,78 @@ namespace EMRDBLib
         public struct InpVisitTable
         {
             /// <summary>
+            /// 院区
+            /// </summary>
+            public const string BRANCH_HOSP = "BRANCH_HOSP";
+            /// <summary>
+            /// 婴儿总数
+            /// </summary>
+            public const string BABY_NO = "BABY_NO";
+            /// <summary>
+            /// 有出院31天内再住院计划
+            /// </summary>
+            public const string HAS_ADMISSION_AGAIN_PLAN = "HAS_ADMISSION_AGAIN_PLAN";
+            /// <summary>
+            /// 入院前颅脑损伤患者昏迷时间（天）
+            /// </summary>
+            public const string COMA_DATE_DAYS_BEFORE = "COMA_DATE_DAYS_BEFORE";
+            /// <summary>
+            /// 入院前颅脑损伤患者昏迷时间（小时）
+            /// </summary>
+            public const string COMA_DATE_HOURS_BEFORE = "COMA_DATE_HOURS_BEFORE";
+            /// <summary>
+            /// 入院前颅脑损伤患者昏迷时间（分）
+            /// </summary>
+            public const string COMA_DATE_MINUTES_BEFORE = "COMA_DATE_MINUTES_BEFORE";
+            /// <summary>
+            /// 入院后颅脑损伤患者昏迷时间（天）
+            /// </summary>
+            public const string COMA_DATE_DAYS_AFTER = "COMA_DATE_DAYS_AFTER";
+            /// <summary>
+            /// 入院后颅脑损伤患者昏迷时间（小时）
+            /// </summary>
+            public const string COMA_DATE_HOURS_AFTER = "COMA_DATE_HOURS_AFTER";
+            /// <summary>
+            /// 入院后颅脑损伤患者昏迷时间（分）
+            /// </summary>
+            public const string COMA_DATE_MINUTES_AFTER = "COMA_DATE_MINUTES_AFTER";
+            /// <summary>
+            /// 单病种管理
+            /// </summary>
+            public const string SINGLE_DISEASE_MANAGE = "SINGLE_DISEASE_MANAGE";
+            /// <summary>
+            /// 临床路径管理
+            /// </summary>
+            public const string CP_MANAGE = "CP_MANAGE";
+            /// <summary>
+            /// 转归情况
+            /// </summary>
+            public const string PROGNOSIS = "PROGNOSIS";
+            /// <summary>
+            /// 转入医疗机构名称
+            /// </summary>
+            public const string TO_MEDICAL_INSTITUTION = "TO_MEDICAL_INSTITUTION";
+            /// <summary>
+            /// 再入院目的
+            /// </summary>
+            public const string FOR_INPATIENT_PURPOSES = "FOR_INPATIENT_PURPOSES";
+            /// <summary>
+            /// 收费方案ID
+            /// </summary>
+            public const string CHARGE_PRICE_SCHEDULE_ID = "CHARGE_PRICE_SCHEDULE_ID";
+            /// <summary>
+            /// 责任护士
+            /// </summary>
+            public const string BY_NURSE = "BY_NURSE";
+            /// <summary>
+            /// 责任护士姓名
+            /// </summary>
+            public const string BY_NURSE_NAME = "BY_NURSE_NAME";
+            /// <summary>
+            /// 无效患者标识 0或null：有效 1表示无效
+            /// </summary>
+            public const string INVALID_PATIENT = "INVALID_PATIENT";
+            /// <summary>
             /// 住院流水号
             /// </summary>
             public const string VISIT_NO = "VISIT_NO";
@@ -30,11 +102,11 @@ namespace EMRDBLib
             /// </summary>
             public const string VISIT_ID = "VISIT_ID";
             /// <summary>
-            /// 患者性别
+            /// 患者姓名
             /// </summary>
             public const string NAME = "NAME";
             /// <summary>
-            /// 住院流水号
+            /// 患者性别
             /// </summary>
             public const string SEX = "SEX";
             /// <summary>
@@ -94,11 +166,11 @@ namespace EMRDBLib
             /// </summary>
             public const string UNIT_IN_CONTRACT = "UNIT_IN_CONTRACT";
             /// <summary>
-            /// 在职标志0-在职 1-离休 2-退休
+            /// 在职标志
             /// </summary>
             public const string WORKING_STATUS = "WORKING_STATUS";
             /// <summary>
-            /// 训练伤0-否 1-是
+            /// 训练伤
             /// </summary>
             public const string TRAINING_INJURY = "TRAINING_INJURY";
             /// <summary>
@@ -198,13 +270,13 @@ namespace EMRDBLib
             /// </summary>
             public const string ESC_EMER_TIMES = "ESC_EMER_TIMES";
             /// <summary>
-            /// 病危天数
-            /// </summary>
-            public const string CRITICAL_COND_DAYS = "CRITICAL_COND_DAYS";
-            /// <summary>
             /// 病重天数
             /// </summary>
             public const string SERIOUS_COND_DAYS = "SERIOUS_COND_DAYS";
+            /// <summary>
+            /// 病危天数
+            /// </summary>
+            public const string CRITICAL_COND_DAYS = "CRITICAL_COND_DAYS";
             /// <summary>
             /// ICU天数
             /// </summary>
@@ -230,11 +302,11 @@ namespace EMRDBLib
             /// </summary>
             public const string AUTOPSY_INDICATOR = "AUTOPSY_INDICATOR";
             /// <summary>
-            /// 血型 
+            /// 血型
             /// </summary>
             public const string BLOOD_TYPE = "BLOOD_TYPE";
             /// <summary>
-            /// RH血型 取值：+、-
+            /// RH血型
             /// </summary>
             public const string BLOOD_TYPE_RH = "BLOOD_TYPE_RH";
             /// <summary>
@@ -249,27 +321,22 @@ namespace EMRDBLib
             /// 输血总量
             /// </summary>
             public const string BLOOD_TRAN_VOL = "BLOOD_TRAN_VOL";
-
             /// <summary>
             /// 输血反应次数
             /// </summary>
             public const string BLOOD_TRAN_REACT_TIMES = "BLOOD_TRAN_REACT_TIMES";
-
             /// <summary>
             /// 发生褥疮次数
             /// </summary>
             public const string DECUBITAL_ULCER_TIMES = "DECUBITAL_ULCER_TIMES";
-
             /// <summary>
             /// 过敏药物
             /// </summary>
             public const string ALERGY_DRUGS = "ALERGY_DRUGS";
-
             /// <summary>
             /// 不良反应药物
             /// </summary>
             public const string ADVERSE_REACTION_DRUGS = "ADVERSE_REACTION_DRUGS";
-
             /// <summary>
             /// 病案价值
             /// </summary>
@@ -302,107 +369,103 @@ namespace EMRDBLib
             /// 经治医师
             /// </summary>
             public const string DOCTOR_IN_CHARGE = "DOCTOR_IN_CHARGE";
-
-            /// <summary>
-            /// 质控护士
-            /// </summary>
-            public const string NURSE_OF_CONTROL_QUALITY = "NURSE_OF_CONTROL_QUALITY";
-            /// <summary>
-            /// 实习医师
-            /// </summary>
-            public const string PRACTICE_DOCTOR = "PRACTICE_DOCTOR";
-            /// <summary>
-            /// 研究生实习医师
-            /// </summary>
-            public const string PRACTICE_DOCTOR_OF_GRADUATE = "PRACTICE_DOCTOR_OF_GRADUATE";
-            /// <summary>
-            /// 进修医师
-            /// </summary>
-            public const string ADVANCED_STUDIES_DOCTOR = "ADVANCED_STUDIES_DOCTOR";
             /// <summary>
             /// 主（副主）任医师
             /// </summary>
             public const string CHIEF_DOCTOR = "CHIEF_DOCTOR";
             /// <summary>
-            /// HBSAG
+            /// 进修医师
             /// </summary>
-            public const string HBSAG_INDICATOR = "HBSAG_INDICATOR";
+            public const string ADVANCED_STUDIES_DOCTOR = "ADVANCED_STUDIES_DOCTOR";
             /// <summary>
-            /// 质控医师
+            /// 研究生实习医师
             /// </summary>
-            public const string DOCTOR_OF_CONTROL_QUALITY = "DOCTOR_OF_CONTROL_QUALITY";
+            public const string PRACTICE_DOCTOR_OF_GRADUATE = "PRACTICE_DOCTOR_OF_GRADUATE";
+            /// <summary>
+            /// 实习医师
+            /// </summary>
+            public const string PRACTICE_DOCTOR = "PRACTICE_DOCTOR";
+            /// <summary>
+            /// 质控护士
+            /// </summary>
+            public const string NURSE_OF_CONTROL_QUALITY = "NURSE_OF_CONTROL_QUALITY";
             /// <summary>
             /// 质控日期
             /// </summary>
             public const string DATE_OF_CONTROL_QUALITY = "DATE_OF_CONTROL_QUALITY";
             /// <summary>
-            /// 是否为本院第一例
+            /// 质控医师
             /// </summary>
-            public const string FIRST_CASE_INDICATOR = "FIRST_CASE_INDICATOR";
+            public const string DOCTOR_OF_CONTROL_QUALITY = "DOCTOR_OF_CONTROL_QUALITY";
             /// <summary>
-            ///   HIV-AB
+            /// HBSAG
             /// </summary>
-            public const string HIV_AB_INDICATOR = "HIV_AB_INDICATOR";
+            public const string HBSAG_INDICATOR = "HBSAG_INDICATOR";
             /// <summary>
-            ///   HCV-AB
+            /// HCV-AB
             /// </summary>
             public const string HCV_AB_INDICATOR = "HCV_AB_INDICATOR";
             /// <summary>
-            /// Y 主（副主）任医师
+            /// HIV-AB
             /// </summary>
-            public const string CHIEF_DOCTOR_ID = "CHIEF_DOCTOR_ID";
+            public const string HIV_AB_INDICATOR = "HIV_AB_INDICATOR";
             /// <summary>
-            /// 经治医师ID
+            /// 是否为本院第一例
             /// </summary>
-            public const string DOCTOR_IN_CHARGE_ID = "DOCTOR_IN_CHARGE_ID";
-            /// <summary>
-            /// 主治医师ID
-            /// </summary>
-            public const string ATTENDING_DOCTOR_ID = "ATTENDING_DOCTOR_ID";
-            /// <summary>
-            /// 科主任ID
-            /// </summary>
-            public const string DIRECTOR_ID = "DIRECTOR_ID";
-            /// <summary>
-            /// 门诊接诊医师
-            /// </summary>
-            public const string CONSULTING_DOCTOR = "CONSULTING_DOCTOR";
-            /// <summary>
-            /// 医疗付款方式
-            /// </summary>
-            public const string MEDICAL_PAYMENT = "MEDICAL_PAYMENT";
-            /// <summary>
-            /// 是否自身输血
-            /// </summary>
-            public const string AUTOTRANSFUSION = "AUTOTRANSFUSION";
-            /// <summary>
-            /// 示教病历
-            /// </summary>
-            public const string TEACHING_MR = "TEACHING_MR";
-            /// <summary>
-            /// 编目人
-            /// </summary>
-            public const string CATALOGER = "CATALOGER";
-            /// <summary>
-            /// 编目日期
-            /// </summary>
-            public const string CATALOG_DATE = "CATALOG_DATE";
-            /// <summary>
-            /// 实付费用
-            /// </summary>
-            public const string TOTAL_PAYMENTS = "TOTAL_PAYMENTS";
-            /// <summary>
-            /// 总费用
-            /// </summary>
-            public const string TOTAL_COSTS = "TOTAL_COSTS";
+            public const string FIRST_CASE_INDICATOR = "FIRST_CASE_INDICATOR";
             /// <summary>
             /// 出院方式
             /// </summary>
             public const string DISCHARGE_DISPOSITION = "DISCHARGE_DISPOSITION";
             /// <summary>
-            /// 无效患者标识 0或null：有效 1表示无效
+            /// 总费用
             /// </summary>
-            public const string INVALID_PATIENT = "INVALID_PATIENT";
+            public const string TOTAL_COSTS = "TOTAL_COSTS";
+            /// <summary>
+            /// 实付费用
+            /// </summary>
+            public const string TOTAL_PAYMENTS = "TOTAL_PAYMENTS";
+            /// <summary>
+            /// 编目日期
+            /// </summary>
+            public const string CATALOG_DATE = "CATALOG_DATE";
+            /// <summary>
+            /// 编目人
+            /// </summary>
+            public const string CATALOGER = "CATALOGER";
+            /// <summary>
+            /// 示教病历
+            /// </summary>
+            public const string TEACHING_MR = "TEACHING_MR";
+            /// <summary>
+            /// 是否自身输血
+            /// </summary>
+            public const string AUTOTRANSFUSION = "AUTOTRANSFUSION";
+            /// <summary>
+            /// 医疗付款方式
+            /// </summary>
+            public const string MEDICAL_PAYMENT = "MEDICAL_PAYMENT";
+            /// <summary>
+            /// 门诊接诊医师
+            /// </summary>
+            public const string CONSULTING_DOCTOR = "CONSULTING_DOCTOR";
+            /// <summary>
+            /// 科主任ID
+            /// </summary>
+            public const string DIRECTOR_ID = "DIRECTOR_ID";
+            /// <summary>
+            /// 主治医师ID
+            /// </summary>
+            public const string ATTENDING_DOCTOR_ID = "ATTENDING_DOCTOR_ID";
+            /// <summary>
+            /// 经治医师ID
+            /// </summary>
+            public const string DOCTOR_IN_CHARGE_ID = "DOCTOR_IN_CHARGE_ID";
+            /// <summary>
+            /// 主（副主）任医师
+            /// </summary>
+            public const string CHIEF_DOCTOR_ID = "CHIEF_DOCTOR_ID";
+
         }
     }
 }

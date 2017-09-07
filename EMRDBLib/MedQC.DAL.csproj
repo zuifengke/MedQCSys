@@ -85,6 +85,7 @@
     <Compile Include="DbAccess\ProviderFactory.cs" />
     <Compile Include="DbAccess\SafeDataReader.cs" />
     <Compile Include="DbAccess\SqlInfo.cs" />
+    <Compile Include="HerenHis\DiagComparingAccess.cs" />
     <Compile Include="HerenHis\InpBillDetailAccess.cs" />
     <Compile Include="HerenHis\OperationMasterAccess.cs" />
     <Compile Include="HerenHis\OperationNameAccess.cs" />

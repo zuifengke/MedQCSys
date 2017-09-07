@@ -47,6 +47,7 @@ namespace Heren.MedQC.MedRecord
             this.XLabel4 = new Heren.Common.Forms.XLabel();
             this.XLabel2 = new Heren.Common.Forms.XLabel();
             this.XDataGrid1 = new Heren.Common.Forms.XDataGrid();
+            this.chkAll = new System.Windows.Forms.CheckBox();
             this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
             this.col_姓名 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_性别 = new Heren.Common.Forms.XTextBoxColumn();
@@ -59,7 +60,6 @@ namespace Heren.MedQC.MedRecord
             this.col_病区 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_主治医生 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_上传 = new Heren.Common.Forms.XLinkColumn();
-            this.chkAll = new System.Windows.Forms.CheckBox();
             this.XPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.XDataGrid1)).BeginInit();
             this.SuspendLayout();
@@ -283,6 +283,16 @@ namespace Heren.MedQC.MedRecord
             this.XDataGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.XDataGrid1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
             // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(14, 55);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 9;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
             // col_Chk
             // 
             this.col_Chk.HeaderText = ".";
@@ -301,6 +311,7 @@ namespace Heren.MedQC.MedRecord
             this.col_性别.HeaderText = "性别";
             this.col_性别.Name = "col_性别";
             this.col_性别.ReadOnly = true;
+            this.col_性别.Width = 60;
             // 
             // col_患者ID号
             // 
@@ -347,6 +358,7 @@ namespace Heren.MedQC.MedRecord
             this.col_病区.HeaderText = "病区";
             this.col_病区.Name = "col_病区";
             this.col_病区.ReadOnly = true;
+            this.col_病区.Width = 150;
             // 
             // col_主治医生
             // 
@@ -360,16 +372,6 @@ namespace Heren.MedQC.MedRecord
             this.col_上传.Name = "col_上传";
             this.col_上传.ReadOnly = true;
             this.col_上传.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(14, 55);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(15, 14);
-            this.chkAll.TabIndex = 9;
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // RecUploadNewForm
             // 
@@ -409,6 +411,7 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XLabel XLabel4;
         private Common.Forms.XLabel XLabel2;
         private Common.Forms.XDataGrid XDataGrid1;
+        private System.Windows.Forms.CheckBox chkAll;
         private Common.Forms.XCheckBoxColumn col_Chk;
         private Common.Forms.XTextBoxColumn col_姓名;
         private Common.Forms.XTextBoxColumn col_性别;
@@ -421,6 +424,5 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XTextBoxColumn col_病区;
         private Common.Forms.XTextBoxColumn col_主治医生;
         private Common.Forms.XLinkColumn col_上传;
-        private System.Windows.Forms.CheckBox chkAll;
     }
 }

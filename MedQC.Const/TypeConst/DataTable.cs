@@ -52,6 +52,10 @@ namespace EMRDBLib
             /// 费用表
             /// </summary>
             public const string INP_BILL_DETAIL = "INP_BILL_DETAIL";
+            /// <summary>
+            /// 诊断对照记录表
+            /// </summary>
+            public const string DIAG_COMPARING = "DIAG_COMPARING";
         }
 
         public struct DataTable_BAJK
