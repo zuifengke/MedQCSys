@@ -104,7 +104,8 @@ namespace MedQCSys.DockForms
             this.virtualTree1.Columns.Add(new VirtualColumn("质检时间", 150, ContentAlignment.MiddleCenter));
             this.virtualTree1.Columns.Add(new VirtualColumn("审签状态", 64, ContentAlignment.MiddleCenter));
             this.virtualTree1.ImageList.Images.Add(global::MedQCSys.Properties.Resources.Share);
-            this.virtualTree1.ImageList.Images.Add(global::MedQCSys.Properties.Resources.CombinDoc);
+            this.virtualTree1.ImageList.Images.Add(Properties.Resources.FolderClose);
+            this.virtualTree1.ImageList.Images.Add(Properties.Resources.FolderOpen);
             this.virtualTree1.PerformLayout();
         }
 
@@ -208,8 +209,8 @@ namespace MedQCSys.DockForms
                 m_htQCMsgInfs.Clear();
             foreach (EMRDBLib.MedicalQcMsg questionInfo in lstQCQuestionInfos)
             {
-                if (!m_htQCMsgInfs.Contains(questionInfo.TOPIC_ID) && !string.IsNullOrEmpty(questionInfo.TOPIC_ID))
-                    m_htQCMsgInfs.Add(questionInfo.TOPIC_ID, questionInfo);
+                if (!m_htQCMsgInfs.Contains(questionInfo.DOC_ID) && !string.IsNullOrEmpty(questionInfo.DOC_ID))
+                    m_htQCMsgInfs.Add(questionInfo.DOC_ID, questionInfo);
             }
         }
 
@@ -281,7 +282,7 @@ namespace MedQCSys.DockForms
                 VirtualNode docInfoNode = new VirtualNode(docInfo.DOC_TITLE);
                 docInfoNode.Data = docInfo;
                 docInfoNode.ForeColor = Color.Black;
-                if (m_htQCMsgInfs != null && m_htQCMsgInfs.ContainsKey(docInfo.DOC_SETID))
+                if (m_htQCMsgInfs != null && m_htQCMsgInfs.ContainsKey(docInfo.DOC_ID))
                 {
                     docInfoNode.ForeColor = Color.OrangeRed;
                 }
@@ -359,7 +360,7 @@ namespace MedQCSys.DockForms
                     hostDocRootNode.HitExpand = HitExpandMode.Click;
                     hostDocRootNode.Expand();
                     hostDocRootNode.Font = new Font("宋体", 10.5f, FontStyle.Regular);
-                    hostDocRootNode.ImageIndex = 1;
+                    hostDocRootNode.ImageIndex = 2;
                     if (hostDocType.DocRight != MedDocSys.DataLayer.SystemData.UserType.NURSE)
                     {
                         lastDocRootNode.Nodes.Add(hostDocRootNode);
@@ -463,7 +464,7 @@ namespace MedQCSys.DockForms
                 docInfoNode.Expand();
                 docInfoNode.Data = docInfo;
                 docInfoNode.ForeColor = Color.Black;
-                if (m_htQCMsgInfs != null && m_htQCMsgInfs.ContainsKey(docInfo.DOC_SETID))
+                if (m_htQCMsgInfs != null && m_htQCMsgInfs.ContainsKey(docInfo.DOC_ID))
                 {
                     docInfoNode.ForeColor = Color.OrangeRed;
                 }
@@ -565,14 +566,30 @@ namespace MedQCSys.DockForms
                     hostDocRootNode = new VirtualNode();
                     hostDocRootNode.Text = hostDocType.DocTypeName;
                     hostDocRootNode.Tag = hostDocType.DocTypeName;
-                    hostDocRootNode.Data = COMBIN_NODE_TAG;
+                    hostDocRootNode.Data = hostDocType;
                     hostDocRootNode.HitExpand = HitExpandMode.Click;
                     hostDocRootNode.Expand();
                     hostDocRootNode.Font = new Font("宋体", 10.5f, FontStyle.Regular);
-                    hostDocRootNode.ImageIndex = 0;
+                    hostDocRootNode.ImageIndex = 1;
+                    hostDocRootNode.ExpandImageIndex = 2;
                     if (hostDocType.DocRight != MedDocSys.DataLayer.SystemData.UserType.NURSE)
                     {
-                        lastDocRootNode.Nodes.Add(hostDocRootNode);
+                        if (hostDocRootNode.Parent == null)
+                        {
+                            int insertIndex = 0;
+                            for (; insertIndex < lastDocRootNode.Nodes.Count; insertIndex++)
+                            {
+                                VirtualNode node = lastDocRootNode.Nodes[insertIndex];
+                                DocTypeInfo docTypeInfo = node.Data as DocTypeInfo;
+                                if (docTypeInfo == null)
+                                    continue;
+                                if (docTypeInfo.OrderValue > hostDocType.OrderValue)
+                                    break;
+                            }
+                            lastDocRootNode.Nodes.Insert(insertIndex, hostDocRootNode);
+                        }
+                        else
+                            lastDocRootNode.Nodes.Add(hostDocRootNode);
                     }
                     else if (hostDocType.DocRight == MedDocSys.DataLayer.SystemData.UserType.NURSE)
                     {

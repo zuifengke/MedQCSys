@@ -763,5 +763,22 @@ namespace MedQCSys.Document
             this.textEditorPrint.LoadDocument2(byteDocument);
             this.textEditorPrint.ShowPreviewDialog();
         }
+
+        private void toolbtnPrintAllPreview_Click(object sender, EventArgs e)
+        {
+            byte[] fileData = null;
+            bool result= this.textEditor1.SaveDocument2(out fileData);
+            if (fileData == null)
+            {
+                MessageBoxEx.ShowMessage("获取打印文档数据失败，无法预览");
+                return;
+            }
+            this.textEditorPrint.ReviseEnabled = false;
+            this.textEditorPrint.CommentEditMode = false;
+            this.textEditorPrint.CommentVisible = false;
+            this.textEditorPrint.RevisionVisible = false;
+            this.textEditorPrint.LoadDocument2(fileData);
+            this.textEditorPrint.ShowPreviewDialog();
+        }
     }
 }

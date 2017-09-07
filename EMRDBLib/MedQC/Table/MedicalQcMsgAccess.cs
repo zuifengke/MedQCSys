@@ -501,7 +501,7 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30}"
                 , SystemData.MedicalQcMsgTable.APPLY_ENV
                 , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
                 , SystemData.MedicalQcMsgTable.CREATOR_ID
@@ -531,7 +531,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.MedicalQcMsgTable.TOPIC_ID
                 , SystemData.MedicalQcMsgTable.VISIT_ID
                 , SystemData.MedicalQcMsgTable.VISIT_NO
-                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID);
+                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE_ID
+                , SystemData.MedicalQcMsgTable.DOC_ID);
 
             string szCondition = string.Format("1=1");
 
@@ -590,6 +591,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(27)) item.VISIT_ID = dataReader.GetString(27);
                     if (!dataReader.IsDBNull(28)) item.VISIT_NO = dataReader.GetString(28);
                     if (!dataReader.IsDBNull(29)) item.DOCTOR_IN_CHARGE_ID = dataReader.GetString(29);
+                    if (!dataReader.IsDBNull(30)) item.DOC_ID = dataReader.GetString(30);
                     lstQcMsg.Add(item);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

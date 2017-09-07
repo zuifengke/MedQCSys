@@ -74,7 +74,7 @@ namespace EMRDBLib
                 dtRecordTime1 = docInfo1.DOC_TIME;
             if (dtRecordTime2 == docInfo2.DefaultTime)
                 dtRecordTime2 = docInfo2.DOC_TIME;
-            if (docInfo1.ORDER_VALUE >= 0 && docInfo2.ORDER_VALUE >= 0)
+            if (docInfo1.ORDER_VALUE >= 0 || docInfo2.ORDER_VALUE >= 0)
                 return docInfo1.ORDER_VALUE - docInfo2.ORDER_VALUE;
             return dtRecordTime1.CompareTo(dtRecordTime2);
         }

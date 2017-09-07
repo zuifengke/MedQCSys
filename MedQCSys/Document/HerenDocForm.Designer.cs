@@ -34,6 +34,7 @@ namespace MedQCSys.Document
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolbtnPrintPreview = new System.Windows.Forms.ToolStripButton();
+            this.toolbtnPrintAllPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +65,8 @@ namespace MedQCSys.Document
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolbtnPrintPreview});
+            this.toolbtnPrintPreview,
+            this.toolbtnPrintAllPreview});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(744, 26);
@@ -79,6 +81,15 @@ namespace MedQCSys.Document
             this.toolbtnPrintPreview.Size = new System.Drawing.Size(76, 23);
             this.toolbtnPrintPreview.Text = "打印预览";
             this.toolbtnPrintPreview.Click += new System.EventHandler(this.toolbtnPrintPreview_Click);
+            // 
+            // toolbtnPrintAllPreview
+            // 
+            this.toolbtnPrintAllPreview.Image = global::MedQCSys.Properties.Resources.PrintDoc;
+            this.toolbtnPrintAllPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbtnPrintAllPreview.Name = "toolbtnPrintAllPreview";
+            this.toolbtnPrintAllPreview.Size = new System.Drawing.Size(100, 23);
+            this.toolbtnPrintAllPreview.Text = "打印整份预览";
+            this.toolbtnPrintAllPreview.Click += new System.EventHandler(this.toolbtnPrintAllPreview_Click);
             // 
             // HerenDocForm
             // 
@@ -107,5 +118,6 @@ namespace MedQCSys.Document
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolbtnPrintPreview;
+        private System.Windows.Forms.ToolStripButton toolbtnPrintAllPreview;
     }
 }

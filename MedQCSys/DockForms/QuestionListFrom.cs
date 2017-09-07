@@ -963,15 +963,27 @@ namespace MedQCSys.DockForms
             {
                 this.chbShowAll.Checked = false;
                 szCurrentDocSetID = docInfo.DOC_SETID;
+                string szDocID = docInfo.DOC_ID;
                 foreach (DataGridViewRow row in this.dataGridView1.Rows)
                 {
                     MedicalQcMsg medicalQcMsg = row.Tag as MedicalQcMsg;
                     if (medicalQcMsg == null)
                         continue;
-                    if (medicalQcMsg.TOPIC_ID == docInfo.DOC_SETID)
-                        row.Visible = true;
+                    if (!string.IsNullOrEmpty(medicalQcMsg.DOC_ID))
+                    {
+                        if (medicalQcMsg.DOC_ID == docInfo.DOC_ID)
+                            row.Visible = true;
+                        else
+                            row.Visible = false;
+                    }
                     else
-                        row.Visible = false;
+                    {
+                        if (medicalQcMsg.TOPIC == docInfo.DOC_SETID)
+                            row.Visible = true;
+                        else
+                            row.Visible = false;
+
+                    }
                 }
             }
 

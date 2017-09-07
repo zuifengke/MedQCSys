@@ -739,6 +739,9 @@
     <None Include="Resources\PrintPreview.png" />
     <None Include="Resources\Expand2.png" />
     <None Include="Resources\pdf.png" />
+    <None Include="Resources\FolderOpen.png" />
+    <None Include="Resources\NewFolder.png" />
+    <None Include="Resources\FolderClose.png" />
     <Content Include="Resources\Warn.png" />
     <None Include="Resources\WordDocIcon.ico" />
   </ItemGroup>
