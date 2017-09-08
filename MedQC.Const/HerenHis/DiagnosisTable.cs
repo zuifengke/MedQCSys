@@ -73,6 +73,14 @@ namespace EMRDBLib
             /// 手术治疗标志
             /// </summary>
             public const string OPER_TREAT_INDICATOR = "OPER_TREAT_INDICATOR";
+            /// <summary>
+            /// 诊断代码
+            /// </summary>
+            public const string DIAG_CODE = "DIAG_CODE";
+            /// <summary>
+            /// 入院病情
+            /// </summary>
+            public const string ADMISSION_CONDITION = "ADMISSION_CONDITION";
         }
     }
 }

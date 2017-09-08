@@ -79,6 +79,14 @@ namespace EMRDBLib.HerenHis
         /// 手术治疗标志
         /// </summary>
         public decimal OPER_TREAT_INDICATOR { get; set; }
+        /// <summary>
+        /// 诊断代码
+        /// </summary>
+        public string DIAG_CODE { get; set; }
+        /// <summary>
+        /// 入院病情
+        /// </summary>
+        public string ADMISSION_CONDITION { get; set; }
 
     }
 }

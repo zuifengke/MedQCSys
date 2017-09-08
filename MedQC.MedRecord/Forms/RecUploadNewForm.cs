@@ -242,7 +242,8 @@ namespace Heren.MedQC.MedRecord
                 this.XDataGrid1.Rows[index].Cells[this.col_上传.Index].Value = "已上传";
                 this.XDataGrid1.Rows[index].Cells[this.col_上传.Index].Tag = recUpload;
             }
-            bool result = RecUploadService.Instance.Upload(patient_id, visit_id);
+            string error = "";
+            bool result = RecUploadService.Instance.Upload(patient_id, visit_id,ref error);
         }
 
         private void XDataGrid1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)

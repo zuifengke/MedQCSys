@@ -35,7 +35,7 @@ namespace EMRDBLib.DbAccess.HerenHis
             }
         }
 
-        public short GetList(string patientID,string visitID, ref List<EMRDBLib.HerenHis.Operation> lstOperation)
+        public short GetList(string patientID,string visitNo, ref List<EMRDBLib.HerenHis.Operation> lstOperation)
         {
             if (base.HerenHisAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -46,8 +46,8 @@ namespace EMRDBLib.DbAccess.HerenHis
                 , szCondition
                 , SystemData.OperationTable.PATIENT_ID
                 , patientID
-                , SystemData.OperationTable.VISIT_ID
-                , visitID);
+                , SystemData.OperationTable.VISIT_NO
+                , visitNo);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
                     , sbField.ToString(), TableName, szCondition);
             IDataReader dataReader = null;

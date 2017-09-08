@@ -170,11 +170,36 @@ namespace EMRDBLib
             for (int i = 0; i < 100; i++)
             {
                 Random random = new Random((int)DateTime.Now.Ticks);
-                key0801 = random.Next(10000000, 99999999);
+                key0801 = random.Next(10000000, 19999999);
                 if (!this.Exist(key0801))
                     break;
             }
+
             return key0801;
+        }
+        public decimal GetNextKey0801()
+        {
+            decimal key0801 = 0;
+            string szSQL = "select max(key0801) from dbo.bajk08";
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.BAJKDataAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return 0;
+                }
+                if (GlobalMethods.Convert.StringToDecimal(dataReader.GetValue(0).ToString(), ref key0801))
+                    return key0801+1;
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+}, ex);
+                return 0;
+            }
+            finally { base.BAJKDataAccess.CloseConnnection(false); }
         }
         public short Update(BAJK08 model)
         {

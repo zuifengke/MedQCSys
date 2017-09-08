@@ -84,8 +84,9 @@ namespace MedQC.Test
         {
             string szPatientID = "10030";
             string szVisitID = "1";
+            string error = "";
             RecUploadService.Instance.InitializeDict();
-            bool result = RecUploadService.Instance.Upload(szPatientID, szVisitID);
+            bool result = RecUploadService.Instance.Upload(szPatientID, szVisitID, ref error);
         }
 
         private void button7_Click(object sender, EventArgs e)
