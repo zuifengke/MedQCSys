@@ -21,6 +21,7 @@ using EMRDBLib.DbAccess;
 using EMRDBLib.Entity;
 using EMRDBLib;
 using Heren.MedQC.Utilities;
+using Heren.MedQC.Core;
 
 namespace MedQCSys.DockForms
 {
@@ -70,8 +71,6 @@ namespace MedQCSys.DockForms
             this.ShowStatusMessage("正在下载医嘱记录，请稍候...");
             //医生下达医嘱标志
             int nOrderFlag = 0;
-            //if (this.ckbSwitch.Checked)
-            //    nOrderFlag = 1;
             this.LoadOrderInfoList(nOrderFlag);
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
@@ -147,6 +146,8 @@ namespace MedQCSys.DockForms
                     row.Cells[this.colOrderContent.Index].Value = orderInfo.OrderText;
                     if (orderInfo.Dosage > 0)
                         row.Cells[this.colDosage.Index].Value = string.Concat(orderInfo.Dosage, orderInfo.DosageUnits);
+                    if (orderInfo.START_DATE_TIME != orderInfo.DefaultTime)
+                        row.Cells[this.col_START_DATE_TIME.Index].Value = orderInfo.START_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
                     row.Cells[this.colAdministration.Index].Value = orderInfo.Administration;
                     row.Cells[this.colFrequency.Index].Value = orderInfo.Frequency;
                     row.Cells[this.colRepeatIndicator.Index].Value = orderInfo.IsRepeat ? "长期" : "临时";
@@ -351,7 +352,14 @@ namespace MedQCSys.DockForms
                 return;
             }
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            byte[] byteReportData = this.GetReportFileData(null);
+            ReportType reportType = ReportCache.Instance.GetWardReportType(SystemData.ReportTypeApplyEnv.ORDERS, this.Text);
+            if (reportType == null)
+            {
+                MessageBoxEx.ShowMessage("打印报表还没有制作");
+                return ;
+            }
+            byte[] byteReportData = null;
+            ReportCache.Instance.GetReportTemplet(reportType, ref byteReportData);
             if (byteReportData != null)
             {
                 System.Data.DataTable table = GlobalMethods.Table.GetDataTable(this.dataGridView1, false, 0);

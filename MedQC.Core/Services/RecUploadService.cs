@@ -194,6 +194,7 @@ namespace Heren.MedQC.Core.Services
                 if (bajk08 == null)
                     bajk08 = new EMRDBLib.BAJK.BAJK08();
                 //bajk08.COL0801 = szPatientID;
+                //病案号
                 bajk08.COL0801 = szPatientID;
                 if (string.IsNullOrEmpty(inpVisit.NAME))
                     bajk08.COL0802 = patMasterIndex.NAME;
@@ -222,6 +223,7 @@ namespace Heren.MedQC.Core.Services
                     var result = OccupationDict.Where(m => m.CODE_ID == inpVisit.OCCUPATION).FirstOrDefault();
                     if (result != null && !string.IsNullOrEmpty(result.DM))
                     {
+                        //职业序号
                         bajk08.COL0807 = decimal.Parse(result.DM);
                     }
                 }
@@ -230,6 +232,7 @@ namespace Heren.MedQC.Core.Services
                     var result = this.AreaDict.Where(m => m.CODE_ID == patMasterIndex.NATIVE_PLACE).FirstOrDefault();
                     if (result != null && !string.IsNullOrEmpty(result.DM))
                     {
+                        //籍贯序号
                         bajk08.COL0808 = decimal.Parse(result.DM);
                     }
                 }
@@ -239,10 +242,11 @@ namespace Heren.MedQC.Core.Services
                     var result = this.NationDict.Where(m => m.CODE_NAME == patMasterIndex.NATION).FirstOrDefault();
                     if (result != null && !string.IsNullOrEmpty(result.DM))
                     {
+                        //民族序号
                         bajk08.COL0809 = decimal.Parse(result.DM);
                     }
                 }
-
+                //身份证
                 bajk08.COL0810 = patMasterIndex.ID_NO;
                 bajk08.COL0811 = patMasterIndex.WORKING_ADDRESS;
                 bajk08.COL0812 = patMasterIndex.PHONE_NUMBER_BUSINESS;

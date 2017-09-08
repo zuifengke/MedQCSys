@@ -47,6 +47,7 @@ namespace MedQCSys.DockForms
             this.colAdministration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_START_DATE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStopDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStopTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +72,7 @@ namespace MedQCSys.DockForms
             this.colAdministration,
             this.colFrequency,
             this.colOrderDoctor,
+            this.col_START_DATE_TIME,
             this.colStopDoctor,
             this.colStopTime,
             this.colOrderStatus,
@@ -236,6 +238,13 @@ namespace MedQCSys.DockForms
             this.colOrderDoctor.ReadOnly = true;
             this.colOrderDoctor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // col_START_DATE_TIME
+            // 
+            this.col_START_DATE_TIME.HeaderText = "开始时间";
+            this.col_START_DATE_TIME.Name = "col_START_DATE_TIME";
+            this.col_START_DATE_TIME.ReadOnly = true;
+            this.col_START_DATE_TIME.Width = 120;
+            // 
             // colStopDoctor
             // 
             this.colStopDoctor.HeaderText = "停止医师";
@@ -308,6 +317,7 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.DataGridViewTextBoxColumn colAdministration;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFrequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderDoctor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_START_DATE_TIME;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStopDoctor;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStopTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderStatus;

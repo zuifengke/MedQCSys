@@ -265,5 +265,10 @@ namespace MedQC.Test
             }
         }
 
+        private void button17_Click(object sender, EventArgs e)
+        {
+            LiveChartForm frm = new LiveChartForm();
+            frm.Show();
+        }
     }
 }

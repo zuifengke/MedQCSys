@@ -95,6 +95,10 @@ namespace EMRDBLib
             /// 医嘱标识
             /// </summary>
             public const string ORDER_FLAG = "ORDER_FLAG";
+            /// <summary>
+            /// 开始时间
+            /// </summary>
+            public const string START_DATE_TIME = "START_DATE_TIME";
         }
     }
 }

@@ -49,7 +49,7 @@ namespace EMRDBLib.DbAccess
             else
                 lstOrderInfo.Clear();
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18}"
                 , SystemData.OrdersView.ORDER_NO, SystemData.OrdersView.ORDER_SUB_NO
                 , SystemData.OrdersView.REPEAT_INDICATOR, SystemData.OrdersView.ORDER_CLASS
                 , SystemData.OrdersView.ENTER_DATE_TIME, SystemData.OrdersView.ORDER_TEXT
@@ -58,7 +58,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.OrdersView.FREQUENCY, SystemData.OrdersView.FREQ_DETAIL
                 , SystemData.OrdersView.END_DATE_TIME, SystemData.OrdersView.PACK_COUNT
                 , SystemData.OrdersView.DOCTOR, SystemData.OrdersView.NURSE
-                , SystemData.OrdersView.START_STOP_INDICATOR, SystemData.OrdersView.ORDER_STATUS);
+                , SystemData.OrdersView.START_STOP_INDICATOR, SystemData.OrdersView.ORDER_STATUS
+                , SystemData.OrdersView.START_DATE_TIME);
             string szTable = SystemData.DataView.ORDERS;
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}'"
                 , SystemData.OrdersView.PATIENT_ID, szPatientID, SystemData.OrdersView.VISIT_ID, szVisitID);
@@ -97,6 +98,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(15)) orderInfo.Nurse = dataReader.GetString(15);
                     if (!dataReader.IsDBNull(16)) orderInfo.IsStartStop = dataReader.GetValue(16).ToString().Equals("1");
                     if (!dataReader.IsDBNull(17)) orderInfo.OrderStatus = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(18)) orderInfo.START_DATE_TIME = dataReader.GetDateTime(18);
                     lstOrderInfo.Add(orderInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

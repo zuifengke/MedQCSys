@@ -62,7 +62,10 @@ namespace EMRDBLib
             get { return this.m_szOrderText; }
             set { this.m_szOrderText = value; }
         }
-
+        /// <summary>
+        /// 开始时间
+        /// </summary>
+        public DateTime START_DATE_TIME { get; set; }
         private DateTime m_dtEnterTime = DateTime.Now;
         /// <summary>
         /// 获取或设置医嘱下达时间
@@ -217,6 +220,7 @@ namespace EMRDBLib
         {
             this.m_dtEnterTime = this.DefaultTime;
             this.m_dtStopTime = this.DefaultTime;
+            this.START_DATE_TIME = this.DefaultTime;
         }
     }
 

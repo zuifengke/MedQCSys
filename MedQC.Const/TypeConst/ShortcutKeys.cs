@@ -13,28 +13,18 @@ namespace EMRDBLib
         /// </summary>
         public struct ShortcutKeys
         {
-            /// <summary>
-            /// Ctrl+D
-            /// </summary>
-            public const string Ctrl_D = "Ctrl+D";
-
-            /// <summary>
-            /// Ctrl_F
-            /// </summary>
-            public const string Ctrl_F = "Ctrl_F";
-
             public const string F2 = "F2";
             public const string F3 = "F3";
             public const string F1 = "F1";
-            public const string Ctrl_P = "Ctrl+P";
-
-            public const string Ctrl_O = "Ctrl+O";
-            public const string Ctrl_L = "Ctrl+L";
+            public const string Ctrl_D = "Ctrl+D";
             public const string Ctrl_E = "Ctrl+E";
-            public const string Ctrl_T = "Ctrl+T";
+            public const string Ctrl_F = "Ctrl_F";
+            public const string Ctrl_L = "Ctrl+L";
+            public const string Ctrl_O = "Ctrl+O";
+            public const string Ctrl_P = "Ctrl+P";
             public const string Ctrl_Q = "Ctrl+Q";
+            public const string Ctrl_T = "Ctrl+T";
             public const string Ctrl_W = "Ctrl+W";
-
             public const string ALt_A = "ALt+A";
             public const string ALt_B = "ALt+B";
             public const string ALt_C = "ALt+C";
@@ -101,6 +91,12 @@ namespace EMRDBLib
                         break;
                     case ALt_O:
                         key = (Keys)((Keys.Alt | Keys.O));
+                        break;
+                    case ALt_P:
+                        key = (Keys)((Keys.Alt | Keys.P));
+                        break;
+                    case ALt_Q:
+                        key = (Keys)((Keys.Alt | Keys.Q));
                         break;
                     case ALt_T:
                         key = (Keys)((Keys.Alt | Keys.T));

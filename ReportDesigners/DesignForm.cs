@@ -74,8 +74,8 @@ namespace Designers
             }
             //修改注册表默认打开
             RegisterFileType();
-            this.ShowReportTreeForm();
             this.ShowTempletTreeForm();
+            this.ShowReportTreeForm();
         }
 
         private void RegisterFileType()

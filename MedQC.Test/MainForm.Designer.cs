@@ -269,7 +269,7 @@
             this.button17.TabIndex = 3;
             this.button17.Text = "LiveCharts";
             this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button16_Click);
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // MainForm
             // 
