@@ -28,6 +28,10 @@ namespace EMRDBLib
             /// </summary>
             public const string ORDERS = "ORDRES";
             /// <summary>
+            /// 检验报告单
+            /// </summary>
+            public const string LAB_RESULT = "LAB_RESULT";
+            /// <summary>
             /// 护理记录单 NUR_RECORD
             /// </summary>
             public const string NUR_RECORD = "NUR_RECORD";
@@ -58,7 +62,9 @@ namespace EMRDBLib
                     "体温单",
                     "病案首页",
                     "统计清单",
-                    "医嘱单"};
+                    "医嘱单",
+                    "检验记录"
+                };
             }
 
             public static string GetTypeName(string typeCode)
@@ -71,6 +77,8 @@ namespace EMRDBLib
                     return "统计清单";
                 else if (typeCode == ORDERS)
                     return "医嘱单";
+                else if (typeCode == LAB_RESULT)
+                    return "检验报告单";
                 else if (typeCode == NUR_RECORD)
                     return "护理记录单";
                 else if (typeCode == NUR_SHIFT)
@@ -94,6 +102,8 @@ namespace EMRDBLib
                     return STATISTIC;
                 else if (typeName == "医嘱单")
                     return ORDERS;
+                else if (typeName == "检验记录")
+                    return LAB_RESULT;
                 else if (typeName == "护理记录单")
                     return NUR_RECORD;
                 else if (typeName == "护理交接班")
