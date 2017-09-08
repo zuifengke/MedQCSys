@@ -35,18 +35,26 @@ namespace EMRDBLib
             public const string Ctrl_Q = "Ctrl+Q";
             public const string Ctrl_W = "Ctrl+W";
 
+            public const string ALt_A = "ALt+A";
             public const string ALt_B = "ALt+B";
-            public const string ALt_W = "ALt+W";
-            public const string ALt_T = "ALt+T";
-            public const string ALt_O = "ALt+O";
+            public const string ALt_C = "ALt+C";
+            public const string ALt_D = "ALt+D";
+            public const string ALt_E = "ALt+E";
+            public const string ALt_F = "ALt+F";
             public const string ALt_H = "ALt+H";
             public const string ALt_M = "ALt+M";
-            public const string ALt_S= "ALt+S";
-            public const string ALt_C = "ALt+C";
-            public const string ALt_F = "ALt+F";
+            public const string ALt_O = "ALt+O";
+            public const string ALt_P = "ALt+P";
+            public const string ALt_Q = "ALt+Q";
+            public const string ALt_R = "ALt+R";
+            public const string ALt_S = "ALt+S";
+            public const string ALt_T = "ALt+T";
+            public const string ALt_W = "ALt+W";
             public static string[] GetArrShortcutKeys()
             {
-                return new string[] { Ctrl_D, Ctrl_F, Ctrl_E, Ctrl_L, Ctrl_O, Ctrl_P, Ctrl_Q, Ctrl_T, Ctrl_W, ALt_T,ALt_W, ALt_O, ALt_H,ALt_M,ALt_S,ALt_C,ALt_B, F1, F2, F3,ALt_F };
+                return new string[] {
+                    Ctrl_D, Ctrl_F, Ctrl_E, Ctrl_L, Ctrl_O, Ctrl_P, Ctrl_Q, Ctrl_T, Ctrl_W, F1, F2, F3
+                    , ALt_B, ALt_A, ALt_C, ALt_D,ALt_E, ALt_F, ALt_H, ALt_M, ALt_O,ALt_P, ALt_S, ALt_Q ,ALt_S,ALt_T, ALt_W };
             }
             /// <summary>
             /// 获取菜单的快捷方式
