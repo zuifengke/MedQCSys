@@ -41,7 +41,7 @@ namespace Heren.MedQC.Search
             base.OnShown(e);
             this.dtpStatTimeEnd.Value = DateTime.Now;
             this.dtpStatTimeBegin.Value = DateTime.Now.AddDays(-1);
-            
+            this.OnRefreshView();
         }
 
         public override void OnRefreshView()

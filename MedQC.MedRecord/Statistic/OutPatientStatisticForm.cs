@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Collections;
 using System.Windows.Forms;
-using System.Linq;
+
 using Heren.Common.Controls;
 using Heren.Common.Libraries;
 using Heren.Common.Report;
@@ -22,13 +22,12 @@ using EMRDBLib;
 using Heren.MedQC.Utilities;
 using MedQCSys.DockForms;
 using MedQCSys;
-using MedQCSys.Dialogs;
 
-namespace Heren.MedQC.Search
+namespace Heren.MedQC.MedRecord
 {
-    public partial class SearchEmrDocForm : DockContentBase
+    public partial class OutPatientStatisticForm : DockContentBase
     {
-        public SearchEmrDocForm(MainForm mainForm)
+        public OutPatientStatisticForm(MainForm mainForm)
             : base(mainForm)
         {
             InitializeComponent();
@@ -41,9 +40,8 @@ namespace Heren.MedQC.Search
         {
             base.OnShown(e);
             this.dtpStatTimeEnd.Value = DateTime.Now;
-            this.dtpStatTimeBegin.Value = DateTime.Now.AddDays(-7);
+            this.dtpStatTimeBegin.Value = DateTime.Now.AddMonths(-1);
             this.OnRefreshView();
-
         }
 
         public override void OnRefreshView()
@@ -62,24 +60,26 @@ namespace Heren.MedQC.Search
         /// </summary>
         /// <param name="row"></param>
         /// <param name="qcWorkloadStatInfo"></param>
-        private void SetRowData(DataGridViewRow row, MedDocInfo docInfo)
+        private void SetRowData(DataGridViewRow row, EMRDBLib.PatVisitInfo patVisitLog, EMRDBLib.PatDoctorInfo patDoctorInfo)
         {
-            if (row == null || docInfo == null)
+            if (row == null || patVisitLog == null)
                 return;
             if (row.DataGridView == null)
                 return;
-
-            row.Cells[this.colDeptName.Index].Value = docInfo.DEPT_NAME;
-            row.Cells[this.colPatientID.Index].Value = docInfo.PATIENT_ID;
-            row.Cells[this.colPatientName.Index].Value = docInfo.PATIENT_NAME;
-            row.Cells[this.colVisitTime.Index].Value = docInfo.VISIT_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_DOC_TIME.Index].Value = docInfo.DOC_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_DOC_TITLE.Index].Value = docInfo.DOC_TITLE;
-            row.Cells[this.col_RECORD_TIME.Index].Value = docInfo.RECORD_TIME.ToString("yyyy-MM-dd HH:mm");
-            row.Cells[this.col_CREATOR_NAME.Index].Value = docInfo.CREATOR_NAME;
-            if(docInfo.DischargeTime != docInfo.DefaultTime)
-                row.Cells[this.colDischargeTime.Index].Value = docInfo.DischargeTime.ToString("yyyy-MM-dd HH:mm");
-            row.Tag = docInfo;
+            row.Cells[this.col_ORDER_NO.Index].Value = row.Index + 1;
+            row.Cells[this.colDeptName.Index].Value = patVisitLog.DEPT_NAME;
+            row.Cells[this.colPatientID.Index].Value = patVisitLog.PATIENT_ID;
+            row.Cells[this.colPatientName.Index].Value = patVisitLog.PATIENT_NAME;
+            row.Cells[this.colPatSex.Index].Value = patVisitLog.PATIENT_SEX;
+            row.Cells[this.colVisitTime.Index].Value = patVisitLog.VISIT_TIME.ToString("yyyy-MM-dd");
+            row.Cells[this.colChargeType.Index].Value = patVisitLog.CHARGE_TYPE;
+            row.Cells[this.colAge.Index].Value = GlobalMethods.SysTime.GetAgeText(patVisitLog.BIRTH_TIME, DateTime.Now);
+            row.Cells[this.colDischargeTime.Index].Value = patVisitLog.DISCHARGE_TIME.ToString("yyyy-MM-dd");
+            row.Cells[this.colDiagnosis.Index].Value = patVisitLog.DIAGNOSIS;
+            TimeSpan timeSpan = patVisitLog.DISCHARGE_TIME - patVisitLog.VISIT_TIME;
+            row.Cells[this.colCost.Index].Value = patVisitLog.TOTAL_COSTS;
+            row.Cells[this.colRequestDoc.Index].Value = patVisitLog.INCHARGE_DOCTOR;
+            row.Tag = patVisitLog;
         }
 
         private ReportExplorerForm GetReportExplorerForm()
@@ -139,9 +139,13 @@ namespace Heren.MedQC.Search
             }
             return false;
         }
-
+        /// <summary>
+        /// 出院人次
+        /// </summary>
+        private decimal m_OutPatientCount;
         private void btnQuery_Click(object sender, EventArgs e)
         {
+            this.m_OutPatientCount = 0;
             DeptInfo deptInfo = this.cboDeptName.SelectedItem as DeptInfo;
             string szDeptCode = null;
             if (deptInfo != null)
@@ -149,38 +153,14 @@ namespace Heren.MedQC.Search
             if (string.IsNullOrEmpty(this.cboDeptName.Text))
                 szDeptCode = null;
 
-            string szDocTypeIDList = txtDocType.Tag as string;
-            //if (string.IsNullOrEmpty(szDocTypeIDList))
-            //{
-            //    MessageBoxEx.ShowMessage("病历过多，请先选择病历类型");
-            //    return;
-            //}
-            string szDocTypeIDListCondition = "";
-            if (!string.IsNullOrEmpty(szDocTypeIDList))
-            {
-                String[] arrDocType = szDocTypeIDList.Split(';');
-                foreach (string item in arrDocType)
-                {
-                    if (szDocTypeIDListCondition == string.Empty)
-                        szDocTypeIDListCondition = "'" + item + "'";
-                    else
-                        szDocTypeIDListCondition += ",'" + item + "'";
-                }
-            }
-            DateTime dtBeginTime = dtpStatTimeBegin.Value;
-            DateTime dtEndTime = dtpStatTimeEnd.Value;
-            string szTimeType = string.Empty;
-            if (rbtnDischargeTime.Checked)
-            {
-                szTimeType = "DISCHARGE_TIME";
-            }
-            else
-                szTimeType = "RECORD_TIME";
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             this.ShowStatusMessage("正在查询数据，请稍候...");
             this.dataGridView1.Rows.Clear();
-            List<MedDocInfo> lstMedDocInfos = null;
-            short shRet = EmrDocAccess.Instance.GetEmrDocList(szTimeType,szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
+            List<EMRDBLib.PatVisitInfo> lstPatVisitLog = null;
+
+            short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
+                DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), szDeptCode, ref lstPatVisitLog);
+
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -188,20 +168,90 @@ namespace Heren.MedQC.Search
                 MessageBoxEx.Show("查询数据失败！");
                 return;
             }
-            if (lstMedDocInfos == null || lstMedDocInfos.Count <= 0)
+            if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
             {
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
                 MessageBoxEx.Show("没有符合条件的数据！", MessageBoxIcon.Information);
                 return;
             }
-            int nRowIndex = 0;
-            for (int index = 0; index < lstMedDocInfos.Count; index++)
+            this.m_OutPatientCount = lstPatVisitLog.Count;
+            List<EMRDBLib.PatDoctorInfo> lstPatDoctorInfos = new List<EMRDBLib.PatDoctorInfo>();
+            Hashtable hashtable = new Hashtable();
+            for (int index = 0; index < lstPatVisitLog.Count; index++)
             {
-                MedDocInfo item = lstMedDocInfos[index];
-                nRowIndex = this.dataGridView1.Rows.Add();
-                DataGridViewRow row = this.dataGridView1.Rows[nRowIndex];
-                this.SetRowData(row, item);
+                EMRDBLib.PatVisitInfo patLog = lstPatVisitLog[index];
+                if (!hashtable.ContainsKey(patLog.PATIENT_ID + patLog.VISIT_ID))
+                {
+                    EMRDBLib.PatDoctorInfo patDoctorInfo = new EMRDBLib.PatDoctorInfo();
+                    patDoctorInfo.PatientID = patLog.PATIENT_ID;
+                    patDoctorInfo.VisitID = patLog.VISIT_ID;
+                    hashtable.Add(patLog.PATIENT_ID + patLog.VISIT_ID, patDoctorInfo);
+                    lstPatDoctorInfos.Add(patDoctorInfo);
+                }
             }
+            //获取三级医生信息
+            shRet = PatVisitAccess.Instance.GetPatSanjiDoctors(ref lstPatDoctorInfos);
+
+            for (int index = 0; index < lstPatVisitLog.Count; index++)
+            {
+                EMRDBLib.PatVisitInfo patVisitLog = lstPatVisitLog[index];
+                int nRowIndex = this.dataGridView1.Rows.Add();
+                DataGridViewRow row = this.dataGridView1.Rows[nRowIndex];
+                EMRDBLib.PatDoctorInfo patDoctorInfo = lstPatDoctorInfos.Find(delegate (EMRDBLib.PatDoctorInfo p)
+                {
+                    if (p.PatientID == lstPatVisitLog[index].PATIENT_ID && p.VisitID == lstPatVisitLog[index].VISIT_ID)
+                        return true;
+                    else
+                        return false;
+                });
+                this.SetRowData(row, patVisitLog, patDoctorInfo);
+            }
+            #region 重新绑定出院诊断
+            List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo = new List<EMRDBLib.DiagnosisInfo>();
+            shRet = PatVisitAccess.Instance.GetOutPatientFirstDiagnosis(lstPatVisitLog, lstDiagnosInfo);
+            if (shRet == SystemData.ReturnValue.OK
+                && lstDiagnosInfo.Count > 0)
+            {
+                for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
+                {
+                    DataGridViewRow row = this.dataGridView1.Rows[index];
+                    EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
+                    if (patVisitLog == null)
+                        continue;
+                    EMRDBLib.DiagnosisInfo diagnosisInfo = lstDiagnosInfo.Find(
+                        delegate (EMRDBLib.DiagnosisInfo p)
+                        {
+                            return p.PatientID == patVisitLog.PATIENT_ID && p.VisitID == patVisitLog.VISIT_ID;
+                        });
+                    if (diagnosisInfo != null)
+                        row.Cells[this.colDiagnosis.Index].Value =
+                            string.Format("{0}({1})", diagnosisInfo.DiagnosisDesc, string.IsNullOrEmpty(diagnosisInfo.TreatResult) ? "未知" : diagnosisInfo.TreatResult);
+                }
+            }
+            #endregion
+            #region 重新绑定费用
+            PatVisitAccess.Instance.GetPatConstInfo(ref lstPatVisitLog);
+            if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                MessageBoxEx.Show("费用信息查询失败！", MessageBoxIcon.Information);
+                return;
+            }
+            for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
+            {
+                DataGridViewRow row = this.dataGridView1.Rows[index];
+                EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
+                if (patVisitLog == null)
+                    continue;
+                EMRDBLib.PatVisitInfo findPatVisitLog = lstPatVisitLog.Find(
+                    delegate (EMRDBLib.PatVisitInfo p)
+                    {
+                        return p.PATIENT_ID == patVisitLog.PATIENT_ID && p.VISIT_ID == patVisitLog.VISIT_ID;
+                    });
+                if (findPatVisitLog != null)
+                    row.Cells[this.colCost.Index].Value = Math.Round(findPatVisitLog.TOTAL_COSTS, 2).ToString();
+            }
+            #endregion
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -258,66 +308,18 @@ namespace Heren.MedQC.Search
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
                 return;
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
-            MedDocInfo docInfo = row.Tag as MedDocInfo;
-            PatVisitInfo patVisitInfo = null;
-            short shRet = PatVisitAccess.Instance.GetPatVisit(docInfo.PATIENT_ID, docInfo.VISIT_ID, ref patVisitInfo);
-            if (patVisitInfo == null)
-            {
-                MessageBoxEx.ShowMessage("患者信息获取失败,无法打开病历");
-                return;
+            EMRDBLib.PatVisitInfo patVisit = row.Tag as EMRDBLib.PatVisitInfo;
 
-            }
+            if (patVisit == null)
+                return;
 
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {
-                this.MainForm.SwitchPatient(patVisitInfo,docInfo);
+
+                this.MainForm.SwitchPatient(patVisit);
                 return;
             }
-            this.MainForm.OpenDocument(string.Empty, patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_ID);
+            this.MainForm.OpenDocument(string.Empty, patVisit.PATIENT_ID, patVisit.VISIT_ID);
         }
-
-        private void txtDocType_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ShowDocTypeSelectForm();
-        }
-        /// <summary>
-        /// 显示文档类型设置对话框
-        /// </summary>
-        /// <param name="row">指定行</param>
-        private void ShowDocTypeSelectForm()
-        {
-            TempletSelectForm templetSelectForm = new TempletSelectForm();
-            templetSelectForm.DefaultDocTypeID = txtDocType.Tag as string;
-            templetSelectForm.MultiSelect = true;
-            templetSelectForm.Text = "选择病历类型";
-            templetSelectForm.Description = "请选择应书写的病历类型：";
-            if (templetSelectForm.ShowDialog() != DialogResult.OK)
-                return;
-            List<DocTypeInfo> lstDocTypeInfos = templetSelectForm.SelectedDocTypes;
-            if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
-            {
-                this.txtDocType.Text = "<双击选择>";
-                this.txtDocType.Tag = null;
-                return;
-            }
-
-            StringBuilder sbDocTypeIDList = new StringBuilder();
-            StringBuilder sbDocTypeNameList = new StringBuilder();
-            for (int index = 0; index < lstDocTypeInfos.Count; index++)
-            {
-                DocTypeInfo docTypeInfo = lstDocTypeInfos[index];
-                if (docTypeInfo == null)
-                    continue;
-                sbDocTypeIDList.Append(docTypeInfo.DocTypeID);
-                if (index < lstDocTypeInfos.Count - 1)
-                    sbDocTypeIDList.Append(";");
-                sbDocTypeNameList.Append(docTypeInfo.DocTypeName);
-                if (index < lstDocTypeInfos.Count - 1)
-                    sbDocTypeNameList.Append(";");
-            }
-            txtDocType.Text = sbDocTypeNameList.ToString();
-            txtDocType.Tag = sbDocTypeIDList.ToString();
-        }
-
     }
 }

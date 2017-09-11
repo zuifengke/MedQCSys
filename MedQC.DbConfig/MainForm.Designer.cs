@@ -592,7 +592,8 @@ namespace Heren.MedQC.DbConfig
             "System.Data.SqlClient",
             "System.Data.OleDb",
             "System.Data.Odbc",
-            "Oracle.DataAccess.Client"});
+            "Oracle.DataAccess.Client",
+            "Oracle.ManagedDataAccess.Client"});
             this.cboHisDbProvider.Location = new System.Drawing.Point(146, 127);
             this.cboHisDbProvider.Name = "cboHisDbProvider";
             this.cboHisDbProvider.Size = new System.Drawing.Size(486, 20);

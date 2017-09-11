@@ -1100,9 +1100,6 @@ namespace EMRDBLib.DbAccess
         {
             if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-            if (string.IsNullOrEmpty(szDocTypeIDList))
-                return SystemData.ReturnValue.PARAM_ERROR;
-            szDocTypeIDList = szDocTypeIDList.Replace(';', ',');
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
@@ -1118,10 +1115,14 @@ namespace EMRDBLib.DbAccess
                 , szCondition
                 , SystemData.EmrDocTable.PATIENT_ID
                 , SystemData.EmrDocTable.VISIT_ID);
-            szCondition = string.Format("{0} AND A.{1} in ({2})"
-                , szCondition
-                , SystemData.EmrDocTable.DOC_TYPE
-                , szDocTypeIDList);
+            if(!string.IsNullOrEmpty(szDocTypeIDList))
+            {
+                szDocTypeIDList = szDocTypeIDList.Replace(';', ',');
+                szCondition = string.Format("{0} AND A.{1} in ({2})"
+                    , szCondition
+                    , SystemData.EmrDocTable.DOC_TYPE
+                    , szDocTypeIDList);
+            }
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition = string.Format("{0} AND A.{1} = '{2}'"
                     , szCondition

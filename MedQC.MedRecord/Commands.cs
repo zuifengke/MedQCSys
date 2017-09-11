@@ -571,5 +571,34 @@ namespace Heren.MedQC.MedRecord
                 return true;
             }
         }
+
+        public class ShowSystemCommand23 : AbstractCommand
+        {
+            public ShowSystemCommand23()
+            {
+                this.m_name = "出院人数统计";
+            }
+            public override bool Execute(object param, object data)
+            {
+                MainForm form = param as MainForm;
+                if (form == null)
+                    return false;
+                foreach (DockContentBase item in form.DockPanel.Contents)
+                {
+                    if (item is OutPatientStatisticForm)
+                    {
+                        item.Activate();
+                        item.OnRefreshView();
+                        return true;
+                    }
+                }
+                OutPatientStatisticForm frm = new OutPatientStatisticForm(form);
+                frm.Show(form.DockPanel, DockState.Document);
+                frm.Activate();
+                frm.OnRefreshView();
+                return true;
+            }
+
+        }
     }
 }

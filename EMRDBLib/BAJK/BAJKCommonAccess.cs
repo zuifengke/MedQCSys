@@ -41,7 +41,8 @@ namespace EMRDBLib
             result = null;
             if (base.BAJKDataAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
-
+            if (string.IsNullOrEmpty(sql))
+                return SystemData.ReturnValue.PARAM_ERROR;
             try
             {
                 result = base.BAJKDataAccess.ExecuteDataSet(sql, CommandType.Text);
