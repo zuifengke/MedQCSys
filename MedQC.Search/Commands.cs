@@ -126,7 +126,7 @@ namespace Heren.MedQC.Search
                 return false;
             foreach (DockContentBase item in form.DockPanel.Contents)
             {
-                if (item is SearchByOutPatientForm)
+                if (item is SearchEmrDocForm)
                 {
                     item.Activate();
                     item.OnRefreshView();

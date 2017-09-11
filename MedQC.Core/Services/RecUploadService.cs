@@ -339,8 +339,8 @@ namespace Heren.MedQC.Core.Services
 
                 //总费用
                 bajk08.COL0853 = inpVisit.TOTAL_COSTS;
-                //bajk08.COL0854=疾病序号未获取，
-                //bajk08.COL0855 转归情况未获取，
+               
+                //bajk08.COL0855 转归情况，
                 if (this.TreatingResultDict != null)
                 {
                     var result = this.TreatingResultDict.Where(m => m.CODE_NAME == inpVisit.PROGNOSIS).FirstOrDefault();
@@ -482,6 +482,13 @@ namespace Heren.MedQC.Core.Services
                             if (GlobalMethods.Convert.StringToDecimal(diagnosis.ADMISSION_CONDITION, ref d))
                                 bajk08.COL0906 = d;
                         }
+                        //bajk08.COL0854=疾病序号未获取，
+                        BaIcdDM baicdDM = null;
+                        shRet = BaIcdDMAccess.Instance.GetModel(diagnosis.DIAG_CODE, ref baicdDM);
+                        if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                        {
+                            bajk08.COL0854 = baicdDM.JBXH;
+                        }
                         //bajk08.COL0843 手术标志
                         bajk08.COL0843 = diagnosis.OPER_TREAT_INDICATOR;
                         //bajk08.COL0849= 确诊天数
@@ -622,6 +629,7 @@ namespace Heren.MedQC.Core.Services
                                 bajk09.COL0902 = decimal.Parse(result.DM);
                             }
                         }
+                        //诊断全称
                         bajk09.COL0903 = item.DIAG_DESC;
                         //bajk09.COL0904 入院病情
                         decimal d = 0;
@@ -642,7 +650,7 @@ namespace Heren.MedQC.Core.Services
                     }
                 }
                 #endregion
-                #region 上传手术
+                #region 上传手术 当前方式可能存在问题
                 List<OperationName> lstOperationNames = null;
                 shRet = OperationNameAccess.Instance.GetOperationNames(patientID, visitID, ref lstOperationNames);
                 //List<EMRDBLib.HerenHis.Operation> lstOperation = null;
@@ -655,7 +663,6 @@ namespace Heren.MedQC.Core.Services
                 {
                     shRet = BAJK11Access.Instance.Delete(bajk08.KEY0801);
                 }
-              
 
                 if (lstOperationNames != null)
                 {
@@ -691,6 +698,7 @@ namespace Heren.MedQC.Core.Services
                                 var result = this.HEAL_DICT.Where(m => m.CODE_ID == operation.HEAL).FirstOrDefault();
                                 if (result != null)
                                 {
+                                    //bajk11.COL1106 切口愈合情况
                                     bajk11.COL1106 = decimal.Parse(result.DM);
                                 }
                             }
@@ -700,6 +708,7 @@ namespace Heren.MedQC.Core.Services
                             bajk11.COL1110 = operationMaster.ANESTHESIA_DOCTOR_ID;
                             //bajk11.COL1111=符合标志未获取
                             //bajk11.COL1112 手术组号未获取
+                            bajk11.COL1112 = operation.OPERATION_NO;
                             //bajk11.COL1113
                             bajk11.COL1114 = operationMaster.DIAG_BEFORE_OPERATION;
                             bajk11.COL1115 = operationMaster.DIAG_AFTER_OPERATION;
@@ -713,7 +722,6 @@ namespace Heren.MedQC.Core.Services
                             }
                             bajk11.KEY1101 = bajk08.KEY0801;
                             bajk11.KEY1102 = operation.OPERATION_NO;
-                            //bajk11.COL1106
                             shRet = BAJK11Access.Instance.Insert(bajk11);
                         }
                     }

@@ -1106,7 +1106,7 @@ namespace EMRDBLib.DbAccess
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szField = string.Format("A.*,C.{0}",SystemData.PatVisitView.DISCHARGE_TIME);
+            string szField = string.Format("A.*,C.{0}", SystemData.PatVisitView.DISCHARGE_TIME);
             string szCondition = string.Format("1=1 AND {0} >= {1} AND {0} <= {2} AND A.{3} = B.{3} AND B.{4} != {5} "
                 , szTimeType
                 , base.MeddocAccess.GetSqlTimeFormat(dtBeginTime)
@@ -1115,7 +1115,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.DocStatusTable.DOC_STATUS
                 , SystemData.DocStatus.CANCELED);
             szCondition = string.Format("{0} AND A.{1}=C.{1} AND A.{2}=C.{2}"
-                ,szCondition
+                , szCondition
                 , SystemData.EmrDocTable.PATIENT_ID
                 , SystemData.EmrDocTable.VISIT_ID);
             szCondition = string.Format("{0} AND A.{1} in ({2})"
@@ -1123,7 +1123,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.EmrDocTable.DOC_TYPE
                 , szDocTypeIDList);
             if (!string.IsNullOrEmpty(szDeptCode))
-                szCondition = string.Format("{0} AND {1} = '{2}'"
+                szCondition = string.Format("{0} AND A.{1} = '{2}'"
+                    , szCondition
                     , SystemData.EmrDocTable.DEPT_CODE
                     , szDeptCode);
             string szTalbe = String.Format(" {0} A,{1} B,{2} C"
@@ -1136,7 +1137,7 @@ namespace EMRDBLib.DbAccess
                 , SystemData.EmrDocTable.PATIENT_NAME
                 , SystemData.EmrDocTable.VISIT_ID);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, szTalbe, szCondition
-                ,"A."+SystemData.EmrDocTable.DEPT_CODE);
+                , "A." + SystemData.EmrDocTable.DEPT_CODE);
             IDataReader dataReader = null;
             try
             {
@@ -1161,7 +1162,7 @@ namespace EMRDBLib.DbAccess
                                 medDocInfo.CONFID_CODE = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.CREATOR_ID:
-                                medDocInfo.CREATOR_ID= dataReader.GetValue(i).ToString();
+                                medDocInfo.CREATOR_ID = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.CREATOR_NAME:
                                 medDocInfo.CREATOR_NAME = dataReader.GetValue(i).ToString();
@@ -1206,7 +1207,7 @@ namespace EMRDBLib.DbAccess
                                 medDocInfo.ORDER_VALUE = int.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.EmrDocTable.PATIENT_ID:
-                                medDocInfo.PATIENT_ID =dataReader.GetValue(i).ToString();
+                                medDocInfo.PATIENT_ID = dataReader.GetValue(i).ToString();
                                 break;
                             case SystemData.EmrDocTable.PATIENT_NAME:
                                 medDocInfo.PATIENT_NAME = dataReader.GetValue(i).ToString();
