@@ -13,6 +13,10 @@ namespace EMRDBLib
         public struct DataView
         {
             /// <summary>
+            /// 转科记录视图
+            /// </summary>
+            public const string TRANSFER_V = "TRANSFER_V";
+            /// <summary>
             /// 病案归档视图
             /// </summary>
             public const string MR_ARCHIVE_V = "MR_ARCHIVE_V";

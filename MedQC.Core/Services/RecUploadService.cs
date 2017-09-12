@@ -812,8 +812,8 @@ namespace Heren.MedQC.Core.Services
                 }
                 #endregion
                 #region 上传转科情况
-                List<Transfer> lstTransfers = null;
-                shRet = TransferAccess.Instance.GetList(patientID, visitNo, ref lstTransfers);
+                List<EMRDBLib.HerenHis.Transfer> lstTransfers = null;
+                shRet = EMRDBLib.HerenHis.TransferAccess.Instance.GetList(patientID, visitNo, ref lstTransfers);
                 List<BAJK13> lstBAJK13 = null;
                 shRet = BAJK13Access.Instance.GetBAJK13s(bajk08.KEY0801, ref lstBAJK13);
                 if (lstBAJK13 != null && lstBAJK13.Count > 0)

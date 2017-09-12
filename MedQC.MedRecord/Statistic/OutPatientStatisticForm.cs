@@ -22,6 +22,7 @@ using EMRDBLib;
 using Heren.MedQC.Utilities;
 using MedQCSys.DockForms;
 using MedQCSys;
+using System.Linq;
 
 namespace Heren.MedQC.MedRecord
 {
@@ -60,7 +61,7 @@ namespace Heren.MedQC.MedRecord
         /// </summary>
         /// <param name="row"></param>
         /// <param name="qcWorkloadStatInfo"></param>
-        private void SetRowData(DataGridViewRow row, EMRDBLib.PatVisitInfo patVisitLog, EMRDBLib.PatDoctorInfo patDoctorInfo)
+        private void SetRowData(DataGridViewRow row, PatVisitInfo patVisitLog)
         {
             if (row == null || patVisitLog == null)
                 return;
@@ -75,8 +76,7 @@ namespace Heren.MedQC.MedRecord
             row.Cells[this.colChargeType.Index].Value = patVisitLog.CHARGE_TYPE;
             row.Cells[this.colAge.Index].Value = GlobalMethods.SysTime.GetAgeText(patVisitLog.BIRTH_TIME, DateTime.Now);
             row.Cells[this.colDischargeTime.Index].Value = patVisitLog.DISCHARGE_TIME.ToString("yyyy-MM-dd");
-            row.Cells[this.colDiagnosis.Index].Value = patVisitLog.DIAGNOSIS;
-            TimeSpan timeSpan = patVisitLog.DISCHARGE_TIME - patVisitLog.VISIT_TIME;
+            row.Cells[this.col_INDAYS.Index].Value = GlobalMethods.SysTime.GetInpDays(patVisitLog.VISIT_TIME, patVisitLog.DISCHARGE_TIME);
             row.Cells[this.colCost.Index].Value = patVisitLog.TOTAL_COSTS;
             row.Cells[this.colRequestDoc.Index].Value = patVisitLog.INCHARGE_DOCTOR;
             row.Tag = patVisitLog;
@@ -145,115 +145,98 @@ namespace Heren.MedQC.MedRecord
         private decimal m_OutPatientCount;
         private void btnQuery_Click(object sender, EventArgs e)
         {
-            this.m_OutPatientCount = 0;
-            DeptInfo deptInfo = this.cboDeptName.SelectedItem as DeptInfo;
-            string szDeptCode = null;
-            if (deptInfo != null)
-                szDeptCode = deptInfo.DEPT_CODE;
-            if (string.IsNullOrEmpty(this.cboDeptName.Text))
-                szDeptCode = null;
-
-            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
-            this.ShowStatusMessage("正在查询数据，请稍候...");
-            this.dataGridView1.Rows.Clear();
-            List<EMRDBLib.PatVisitInfo> lstPatVisitLog = null;
-
-            short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
-                DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), szDeptCode, ref lstPatVisitLog);
-
-            if (shRet != SystemData.ReturnValue.OK
-                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            try
             {
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                MessageBoxEx.Show("查询数据失败！");
-                return;
-            }
-            if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
-            {
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                MessageBoxEx.Show("没有符合条件的数据！", MessageBoxIcon.Information);
-                return;
-            }
-            this.m_OutPatientCount = lstPatVisitLog.Count;
-            List<EMRDBLib.PatDoctorInfo> lstPatDoctorInfos = new List<EMRDBLib.PatDoctorInfo>();
-            Hashtable hashtable = new Hashtable();
-            for (int index = 0; index < lstPatVisitLog.Count; index++)
-            {
-                EMRDBLib.PatVisitInfo patLog = lstPatVisitLog[index];
-                if (!hashtable.ContainsKey(patLog.PATIENT_ID + patLog.VISIT_ID))
+                this.m_OutPatientCount = 0;
+                DeptInfo deptInfo = this.cboDeptName.SelectedItem as DeptInfo;
+                string szDeptCode = null;
+                if (deptInfo != null)
+                    szDeptCode = deptInfo.DEPT_CODE;
+                if (string.IsNullOrEmpty(this.cboDeptName.Text))
+                    szDeptCode = null;
+
+                GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+                this.ShowStatusMessage("正在查询数据，请稍候...");
+                this.dataGridView1.Rows.Clear();
+                List<PatVisitInfo> lstPatVisitLog = null;
+
+                short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
+                    DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), szDeptCode, ref lstPatVisitLog);
+
+                if (shRet != SystemData.ReturnValue.OK
+                    && shRet != SystemData.ReturnValue.RES_NO_FOUND)
                 {
-                    EMRDBLib.PatDoctorInfo patDoctorInfo = new EMRDBLib.PatDoctorInfo();
-                    patDoctorInfo.PatientID = patLog.PATIENT_ID;
-                    patDoctorInfo.VisitID = patLog.VISIT_ID;
-                    hashtable.Add(patLog.PATIENT_ID + patLog.VISIT_ID, patDoctorInfo);
-                    lstPatDoctorInfos.Add(patDoctorInfo);
+                    GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                    MessageBoxEx.Show("查询数据失败！");
+                    return;
                 }
-            }
-            //获取三级医生信息
-            shRet = PatVisitAccess.Instance.GetPatSanjiDoctors(ref lstPatDoctorInfos);
-
-            for (int index = 0; index < lstPatVisitLog.Count; index++)
-            {
-                EMRDBLib.PatVisitInfo patVisitLog = lstPatVisitLog[index];
-                int nRowIndex = this.dataGridView1.Rows.Add();
-                DataGridViewRow row = this.dataGridView1.Rows[nRowIndex];
-                EMRDBLib.PatDoctorInfo patDoctorInfo = lstPatDoctorInfos.Find(delegate (EMRDBLib.PatDoctorInfo p)
+                if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
                 {
-                    if (p.PatientID == lstPatVisitLog[index].PATIENT_ID && p.VisitID == lstPatVisitLog[index].VISIT_ID)
-                        return true;
-                    else
-                        return false;
-                });
-                this.SetRowData(row, patVisitLog, patDoctorInfo);
-            }
-            #region 重新绑定出院诊断
-            List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo = new List<EMRDBLib.DiagnosisInfo>();
-            shRet = PatVisitAccess.Instance.GetOutPatientFirstDiagnosis(lstPatVisitLog, lstDiagnosInfo);
-            if (shRet == SystemData.ReturnValue.OK
-                && lstDiagnosInfo.Count > 0)
-            {
-                for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
-                {
-                    DataGridViewRow row = this.dataGridView1.Rows[index];
-                    EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
-                    if (patVisitLog == null)
-                        continue;
-                    EMRDBLib.DiagnosisInfo diagnosisInfo = lstDiagnosInfo.Find(
-                        delegate (EMRDBLib.DiagnosisInfo p)
-                        {
-                            return p.PatientID == patVisitLog.PATIENT_ID && p.VisitID == patVisitLog.VISIT_ID;
-                        });
-                    if (diagnosisInfo != null)
-                        row.Cells[this.colDiagnosis.Index].Value =
-                            string.Format("{0}({1})", diagnosisInfo.DiagnosisDesc, string.IsNullOrEmpty(diagnosisInfo.TreatResult) ? "未知" : diagnosisInfo.TreatResult);
+                    GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                    MessageBoxEx.Show("没有符合条件的数据！", MessageBoxIcon.Information);
+                    return;
                 }
-            }
-            #endregion
-            #region 重新绑定费用
-            PatVisitAccess.Instance.GetPatConstInfo(ref lstPatVisitLog);
-            if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
-            {
-                GlobalMethods.UI.SetCursor(this, Cursors.Default);
-                MessageBoxEx.Show("费用信息查询失败！", MessageBoxIcon.Information);
-                return;
-            }
-            for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
-            {
-                DataGridViewRow row = this.dataGridView1.Rows[index];
-                EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
-                if (patVisitLog == null)
-                    continue;
-                EMRDBLib.PatVisitInfo findPatVisitLog = lstPatVisitLog.Find(
-                    delegate (EMRDBLib.PatVisitInfo p)
+                this.m_OutPatientCount = lstPatVisitLog.Count;
+                string preDeptName = string.Empty;
+                int nRowIndex = 0;
+                for (int index = 0; index < lstPatVisitLog.Count; index++)
+                {
+                    EMRDBLib.PatVisitInfo patVisitLog = lstPatVisitLog[index];
+                    if (preDeptName == string.Empty)
+                        preDeptName = patVisitLog.DEPT_NAME;
+                    if (preDeptName != patVisitLog.DEPT_NAME)
                     {
-                        return p.PATIENT_ID == patVisitLog.PATIENT_ID && p.VISIT_ID == patVisitLog.VISIT_ID;
-                    });
-                if (findPatVisitLog != null)
-                    row.Cells[this.colCost.Index].Value = Math.Round(findPatVisitLog.TOTAL_COSTS, 2).ToString();
+                        nRowIndex = this.dataGridView1.Rows.Add();
+                        this.dataGridView1.Rows[nRowIndex].Cells[2].Value = "合计";
+                        this.dataGridView1.Rows[nRowIndex].Cells[3].Value = "出院人次：";
+                        this.dataGridView1.Rows[nRowIndex].DefaultCellStyle.BackColor = Color.FromArgb(200, 200, 200);
+                        this.dataGridView1.Rows[nRowIndex].Cells[4].Value = lstPatVisitLog.Where(m => m.DEPT_NAME == preDeptName).Count();
+                        preDeptName = patVisitLog.DEPT_NAME;
+                    }
+                    nRowIndex = this.dataGridView1.Rows.Add();
+                    DataGridViewRow row = this.dataGridView1.Rows[nRowIndex];
+                    this.SetRowData(row, patVisitLog);
+                }
+                nRowIndex = this.dataGridView1.Rows.Add();
+                this.dataGridView1.Rows[nRowIndex].Cells[2].Value = "合计";
+                this.dataGridView1.Rows[nRowIndex].Cells[3].Value = "出院人次：";
+                this.dataGridView1.Rows[nRowIndex].Cells[4].Value = lstPatVisitLog.Where(m => m.DEPT_NAME == preDeptName).Count();
+                this.dataGridView1.Rows[nRowIndex].DefaultCellStyle.BackColor = Color.FromArgb(200, 200, 200);
+                #region 绑定转科记录
+                List<Transfer> lstTransfers = null;
+                TransferAccess.Instance.GetList(lstPatVisitLog, ref lstTransfers);
+                if (lstTransfers != null && lstTransfers.Count > 0)
+                {
+                    foreach (DataGridViewRow item in this.dataGridView1.Rows)
+                    {
+                        PatVisitInfo patVisitInfo = item.Tag as PatVisitInfo;
+                        if (patVisitInfo == null)
+                            continue;
+                        var result = lstTransfers.Where(m => m.PATIENT_ID == patVisitInfo.PATIENT_ID && m.VISIT_ID == patVisitInfo.VISIT_ID).ToList();
+                        if (result != null && result.Count > 1)
+                        {
+                            var first = result.FirstOrDefault();
+                            if (first.DEPT_STAYED != first.DEPT_TRANSFER_TO)
+                                item.Cells[this.colTransferTime.Index].Value = first.DISCHARGE_DATE_TIME.ToString("yyyy-MM-dd");
+
+                        }
+                        if (result != null && result.Count > 0)
+                        {
+                            var last = result.LastOrDefault();
+                            item.Cells[this.col_MEDICAL_GROUP.Index].Value = last.MEDICAL_GROUP_NAME;
+                            item.Cells[this.col_BED_CODE.Index].Value = last.BED_LABEL;
+                        }
+
+                    }
+                }
+                #endregion
+                this.ShowStatusMessage(null);
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
             }
-            #endregion
-            this.ShowStatusMessage(null);
-            GlobalMethods.UI.SetCursor(this, Cursors.Default);
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)

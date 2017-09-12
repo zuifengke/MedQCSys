@@ -62,7 +62,7 @@ namespace Heren.MedQC.MedRecord
             this.col_DRUG_COST = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVisitTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDischargeTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDiagnosis = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTransferTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_INDAYS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -101,7 +101,7 @@ namespace Heren.MedQC.MedRecord
             this.col_DRUG_COST,
             this.colVisitTime,
             this.colDischargeTime,
-            this.colDiagnosis,
+            this.colTransferTime,
             this.col_INDAYS});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 63);
@@ -359,11 +359,11 @@ namespace Heren.MedQC.MedRecord
             this.colDischargeTime.Name = "colDischargeTime";
             this.colDischargeTime.Width = 90;
             // 
-            // colDiagnosis
+            // colTransferTime
             // 
-            this.colDiagnosis.HeaderText = "转科日期";
-            this.colDiagnosis.Name = "colDiagnosis";
-            this.colDiagnosis.Width = 120;
+            this.colTransferTime.HeaderText = "转科日期";
+            this.colTransferTime.Name = "colTransferTime";
+            this.colTransferTime.Width = 120;
             // 
             // col_INDAYS
             // 
@@ -423,7 +423,7 @@ namespace Heren.MedQC.MedRecord
         private System.Windows.Forms.DataGridViewTextBoxColumn col_DRUG_COST;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVisitTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDischargeTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDiagnosis;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTransferTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_INDAYS;
     }
 }

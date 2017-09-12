@@ -156,6 +156,7 @@
     <Compile Include="MedQC\Table\SpecialAccess.cs" />
     <Compile Include="MedDoc\TimeQCRuleAccess.cs" />
     <Compile Include="MedDoc\TimeQCEventAccess.cs" />
+    <Compile Include="MedQC\View\TransferAccess.cs" />
     <Compile Include="MedQC\View\UserAccess.cs" />
     <Compile Include="MedDoc\EMRDBAccess.cs" />
     <Compile Include="NurDoc\NurDocCommonAccess.cs" />

@@ -47,8 +47,6 @@ namespace Heren.MedQC.MedRecord
             {
                 MessageBoxEx.ShowError("加载科室列表失败");
             }
-            this.Text = "在院患者";
-
         }
         public override void OnRefreshView()
         {
@@ -79,14 +77,34 @@ namespace Heren.MedQC.MedRecord
             }
             DateTime dtVisitTimeBegin = SystemParam.Instance.DefaultTime;
             DateTime dtVisitTimeEnd = SystemParam.Instance.DefaultTime;
-            
+
             List<PatVisitInfo> lstPatVisitInfo = null;
-            short shRet = InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode,szPatientID, szPatientName,ref lstPatVisitInfo);
+            short shRet = InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, szPatientID, szPatientName, ref lstPatVisitInfo);
             if (lstPatVisitInfo == null)
                 return;
+            //查找转科记录
+            List<Transfer> lstTransfers = null;
+            shRet = TransferAccess.Instance.GetList(lstPatVisitInfo, ref lstTransfers);
             int rowIndex = 0;
+            int nTransferCount = 0;
+            WorkProcess.Instance.Initialize(this, lstPatVisitInfo.Count, "正在加载留院患者列表...");
+            string preDeptName = string.Empty;
             foreach (var item in lstPatVisitInfo)
             {
+                if (WorkProcess.Instance.Canceled)
+                    return;
+                if (preDeptName == string.Empty)
+                    preDeptName = item.DEPT_NAME;
+                if (preDeptName != item.DEPT_NAME)
+                {
+                    rowIndex = this.dataTableView1.Rows.Add();
+                    this.dataTableView1.Rows[rowIndex].Cells[2].Value = "合计";
+                    this.dataTableView1.Rows[rowIndex].Cells[3].Value = "留院人数：";
+                    this.dataTableView1.Rows[rowIndex].Cells[4].Value = lstPatVisitInfo.Where(m => m.DEPT_NAME == preDeptName).Count().ToString();
+                    this.dataTableView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(200, 200, 200);
+                    preDeptName = item.DEPT_NAME;
+                }
+                WorkProcess.Instance.Show(lstPatVisitInfo.IndexOf(item));
                 rowIndex = this.dataTableView1.Rows.Add();
                 DataGridViewRow row = this.dataTableView1.Rows[rowIndex];
                 row.Cells[this.col_ORDER_NO.Index].Value = row.Index + 1;
@@ -98,8 +116,37 @@ namespace Heren.MedQC.MedRecord
                 row.Cells[this.col_VISIT_TIME.Index].Value = item.VISIT_TIME.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.col_PATIENT_SEX.Index].Value = item.PATIENT_SEX;
                 row.Cells[this.col_PATIENT_ID.Index].Value = item.PATIENT_ID;
+
+                if (shRet == SystemData.ReturnValue.OK
+                    && lstTransfers != null && lstTransfers.Count > 0)
+                {
+                    var lstTransfer = lstTransfers.Where(m => m.PATIENT_ID == item.PATIENT_ID && m.VISIT_ID == item.VISIT_ID).ToList();
+                    if (lstTransfer != null && lstTransfer.Count > 1)
+                    {
+                        nTransferCount++;
+                        var first = lstTransfer.FirstOrDefault();
+                        if (first != null && first.DISCHARGE_DATE_TIME != first.DefaultTime)
+                        {
+                            row.Cells[this.col_TRANSFER_TIME.Index].Value = first.DISCHARGE_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
+                        }
+                    }
+                    if (lstTransfer != null && lstTransfer.Count > 0)
+                    {
+                        var last = lstTransfer.LastOrDefault();
+                        if (last != null && !string.IsNullOrEmpty(last.MEDICAL_GROUP_NAME))
+                            row.Cells[this.col_1_MEDICAL_GROUP.Index].Value = last.MEDICAL_GROUP_NAME;
+                    }
+                }
+                //row.Cells[this.col_TRANSFER_TIME.Index].Value=
                 row.Tag = item;
             }
+            rowIndex = this.dataTableView1.Rows.Add();
+            this.dataTableView1.Rows[rowIndex].Cells[2].Value = "合计";
+            this.dataTableView1.Rows[rowIndex].Cells[3].Value = "留院人数：";
+            this.dataTableView1.Rows[rowIndex].Cells[4].Value = lstPatVisitInfo.Where(m => m.DEPT_NAME == preDeptName).Count().ToString();
+            this.dataTableView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(200, 200, 200);
+            WorkProcess.Instance.Close();
+            this.lblTransferCount.Text = nTransferCount.ToString();
             this.lblInPatientCount.Text = lstPatVisitInfo.Count.ToString();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
