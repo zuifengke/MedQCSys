@@ -47,10 +47,6 @@ namespace Heren.MedQC.MedRecord
             {
                 MessageBoxEx.ShowError("加载科室列表失败");
             }
-            if (!InitControlData.InitcboUserList(ref this.cboUserList))
-            {
-                MessageBoxEx.ShowError("加载质控医生列表失败");
-            }
             this.Text = "在院患者";
 
         }
@@ -76,21 +72,16 @@ namespace Heren.MedQC.MedRecord
             string szUserID = string.Empty;
             string szPatientID = this.txtPatientID.Text.Trim();
             string szPatientName = this.txtName.Text.Trim();
-            string szMsgState = string.Empty;
 
             if (this.cboDeptName.Text.Trim() != string.Empty && this.cboDeptName.SelectedItem != null)
             {
                 szDeptCode = (this.cboDeptName.SelectedItem as DeptInfo).DEPT_CODE;
             }
-            if (this.cboUserList.Text.Trim() != string.Empty && this.cboUserList.SelectedItem != null)
-            {
-                szUserID = (this.cboUserList.SelectedItem as UserInfo).USER_ID;
-            }
             DateTime dtVisitTimeBegin = SystemParam.Instance.DefaultTime;
             DateTime dtVisitTimeEnd = SystemParam.Instance.DefaultTime;
             
             List<PatVisitInfo> lstPatVisitInfo = null;
-            short shRet = InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode, szUserID, szPatientID, szPatientName, dtVisitTimeBegin, dtVisitTimeEnd, ref lstPatVisitInfo);
+            short shRet = InpVisitAccess.Instance.GetInpVisitInfos(szDeptCode,szPatientID, szPatientName,ref lstPatVisitInfo);
             if (lstPatVisitInfo == null)
                 return;
             int rowIndex = 0;
@@ -98,19 +89,18 @@ namespace Heren.MedQC.MedRecord
             {
                 rowIndex = this.dataTableView1.Rows.Add();
                 DataGridViewRow row = this.dataTableView1.Rows[rowIndex];
+                row.Cells[this.col_ORDER_NO.Index].Value = row.Index + 1;
                 row.Cells[this.col_1_BED_NO.Index].Value = item.BED_CODE;
+                row.Cells[this.col_CHARGE_TYPE.Index].Value = item.CHARGE_TYPE;
                 row.Cells[this.col_1_PATIENT_NAME.Index].Value = item.PATIENT_NAME;
                 row.Cells[this.col_AGE.Index].Value = GlobalMethods.SysTime.GetAgeText(item.BIRTH_TIME);
-              
-                row.Cells[this.col_INCHARGE_DOCTOR.Index].Value = item.INCHARGE_DOCTOR;
-              
                 row.Cells[this.col_1_DEPT_NAME.Index].Value = item.DEPT_NAME;
                 row.Cells[this.col_VISIT_TIME.Index].Value = item.VISIT_TIME.ToString("yyyy-MM-dd HH:mm");
-                row.Cells[this.col_INCHARGE_DOCTOR.Index].Value = item.INCHARGE_DOCTOR;
                 row.Cells[this.col_PATIENT_SEX.Index].Value = item.PATIENT_SEX;
                 row.Cells[this.col_PATIENT_ID.Index].Value = item.PATIENT_ID;
                 row.Tag = item;
             }
+            this.lblInPatientCount.Text = lstPatVisitInfo.Count.ToString();
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 

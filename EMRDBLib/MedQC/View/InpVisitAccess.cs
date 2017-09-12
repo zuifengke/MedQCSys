@@ -369,6 +369,177 @@ namespace EMRDBLib.DbAccess
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
+        public short GetInpVisitInfos(string szDeptCode, string szPatientID, string szPatientName, ref List<PatVisitInfo> lstPatVisitInfos)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.ADM_WARD_TIME);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.ALLERGY_DRUGS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.BED_CODE);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.DEPT_CODE);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.DEPT_NAME);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.DIAGNOSIS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.INCHARGE_DOCTOR);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.INCHARGE_DOCTOR_ID);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.MR_STATUS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.NURSING_CLASS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.PATIENT_CONDITION);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.PATIENT_ID);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.PREPAYMENTS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.TOTAL_CHARGES);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.TOTAL_COSTS);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.VISIT_ID);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.VISIT_NO);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.VISIT_TIME);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.WARD_CODE);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.PATIENT_SEX);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.BIRTH_TIME);
+            sbField.AppendFormat("{0},", SystemData.InpVisitView.CHARGE_TYPE);
+            sbField.AppendFormat("{0}", SystemData.InpVisitView.PATIENT_NAME);
+
+            string szCondition = string.Format("1=1");
+
+            if (!string.IsNullOrEmpty(szDeptCode))
+            {
+                szCondition = string.Format("{0} AND {1}='{2}'"
+                    , szCondition
+                    , SystemData.InpVisitView.DEPT_CODE
+                    , szDeptCode);
+            }
+            if (!string.IsNullOrEmpty(szPatientID))
+            {
+                szCondition = string.Format("{0} AND {1}='{2}'"
+                    , szCondition
+                    , SystemData.InpVisitView.PATIENT_ID
+                    , szPatientID);
+            }
+            if (!string.IsNullOrEmpty(szPatientName))
+            {
+                szCondition = string.Format("{0} AND {1} like '%{2}%'"
+                    , szCondition
+                    , SystemData.InpVisitView.PATIENT_NAME
+                    , szPatientName);
+            }
+            string szOrderBy = string.Format("{0},{1}", SystemData.InpVisitView.DEPT_NAME, SystemData.InpVisitView.BED_CODE);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC
+                    , sbField.ToString(), SystemData.DataView.INP_VISIT_V, szCondition, szOrderBy);
+
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstPatVisitInfos == null)
+                    lstPatVisitInfos = new List<PatVisitInfo>();
+                do
+                {
+                    PatVisitInfo patVisitInfo = new PatVisitInfo();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.InpVisitView.ADM_WARD_TIME:
+                                patVisitInfo.ADM_WARD_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.InpVisitView.ALLERGY_DRUGS:
+                                patVisitInfo.ALLERGY_DRUGS = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.BED_CODE:
+                                patVisitInfo.BED_CODE = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.BED_LABEL:
+                                patVisitInfo.BED_LABEL = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.BIRTH_TIME:
+                                patVisitInfo.BIRTH_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.InpVisitView.CHARGE_TYPE:
+                                patVisitInfo.CHARGE_TYPE = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.DEPT_CODE:
+                                patVisitInfo.DEPT_CODE = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.DEPT_NAME:
+                                patVisitInfo.DEPT_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.DIAGNOSIS:
+                                patVisitInfo.DIAGNOSIS = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.IDENTITY:
+                                patVisitInfo.IDENTITY = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.INCHARGE_DOCTOR:
+                                patVisitInfo.INCHARGE_DOCTOR = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.INCHARGE_DOCTOR_ID:
+                                patVisitInfo.INCHARGE_DOCTOR_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.INP_NO:
+                                patVisitInfo.INP_NO = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.MR_STATUS:
+                                patVisitInfo.MR_STATUS = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.NURSING_CLASS:
+                                patVisitInfo.NURSING_CLASS = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.PATIENT_CONDITION:
+                                patVisitInfo.PATIENT_CONDITION = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.PATIENT_ID:
+                                patVisitInfo.PATIENT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.PATIENT_NAME:
+                                patVisitInfo.PATIENT_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.PATIENT_SEX:
+                                patVisitInfo.PATIENT_SEX = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.PREPAYMENTS:
+                                patVisitInfo.PREPAYMENTS = double.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.InpVisitView.TOTAL_CHARGES:
+                                patVisitInfo.TOTAL_CHARGES = double.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.InpVisitView.TOTAL_COSTS:
+                                patVisitInfo.TOTAL_COSTS = double.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.InpVisitView.VISIT_ID:
+                                patVisitInfo.VISIT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.VISIT_NO:
+                                patVisitInfo.VISIT_NO = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.VISIT_TIME:
+                                patVisitInfo.VISIT_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.InpVisitView.VISIT_TYPE:
+                                patVisitInfo.VISIT_TYPE = dataReader.GetString(i);
+                                break;
+                            case SystemData.InpVisitView.WARD_CODE:
+                                patVisitInfo.WARD_CODE = dataReader.GetString(i);
+                                break;
+                            default: break;
+                        }
+                    }
+                    lstPatVisitInfos.Add(patVisitInfo);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
+
         /// <summary>
         /// 获取病危病重病人的信息
         /// </summary>

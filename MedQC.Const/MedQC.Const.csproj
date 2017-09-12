@@ -71,6 +71,7 @@
     <Compile Include="DataTable\ScriptConfigTable.cs" />
     <Compile Include="DataTable\RecBrowseRequestTable.cs" />
     <Compile Include="DataView\ChargeTypeDicView.cs" />
+    <Compile Include="DataView\TransferView.cs" />
     <Compile Include="DataView\IDentityDicView.cs" />
     <Compile Include="HerenHis\DiagComparingTable.cs" />
     <Compile Include="HerenHis\InpBillDetailTable.cs" />

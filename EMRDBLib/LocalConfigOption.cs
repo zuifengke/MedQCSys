@@ -581,6 +581,7 @@ namespace EMRDBLib
             }
             if (option.HOSPITAL_NAME.IndexOf("解放军") >= 0)
             {
+                option.DefaultEditor = "1";
                 option.IsDrawingPatientIdentification = true;
             }
             if (option.HOSPITAL_NAME.IndexOf("中国人民解放军总医院") >= 0)
