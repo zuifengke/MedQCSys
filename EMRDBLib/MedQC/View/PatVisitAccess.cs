@@ -1793,10 +1793,10 @@ namespace EMRDBLib.DbAccess
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szSQL = string.Format("SELECT DISTINCT PATIENT_ID,VISIT_ID FROM EMR_TRANSFER_V" +
+            string szSQL = string.Format("SELECT DISTINCT PATIENT_ID,VISIT_ID FROM TRANSFER_V" +
                                             " WHERE DISCHARGE_DATE_TIME > {0}" +
                                             " AND DISCHARGE_DATE_TIME <={1}" +
-                                            " AND DEPT_TRANSFERED_TO IS NOT NULL",
+                                            " AND dept_transfer_to IS NOT NULL",
                                          base.MedQCAccess.GetSqlTimeFormat(dtStartTime),
                                          base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
             IDataReader dataReader = null;

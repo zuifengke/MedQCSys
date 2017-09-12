@@ -147,7 +147,7 @@ namespace EMRDBLib
             set { iSearchTimeSpanDays = value; }
         }
 
-        private int iSearchTimeSpanMonths = 2;
+        private int iSearchTimeSpanMonths = 1;
         /// <summary>
         /// 左侧搜索面板月数
         /// </summary>

@@ -261,6 +261,12 @@
     <Compile Include="Statistic\OutPatientStatisticForm.designer.cs">
       <DependentUpon>OutPatientStatisticForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Statistic\InPatientStatisticForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Statistic\InPatientStatisticForm.Designer.cs">
+      <DependentUpon>InPatientStatisticForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\CodeCompasionForm.resx">
       <DependentUpon>CodeCompasionForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -340,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Statistic\OutPatientStatisticForm.resx">
       <DependentUpon>OutPatientStatisticForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Statistic\InPatientStatisticForm.resx">
+      <DependentUpon>InPatientStatisticForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
