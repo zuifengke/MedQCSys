@@ -78,7 +78,6 @@
     <Compile Include="HerenHis\Transfer.cs" />
     <Compile Include="HerenHis\Diagnosis.cs" />
     <Compile Include="HerenHis\DiagnosisDict.cs" />
-    <Compile Include="HerenHis\Operation.cs" />
     <Compile Include="HerenHis\PatientAllergy.cs" />
     <Compile Include="HerenHis\PatMasterIndex.cs" />
     <Compile Include="HerenHis\BaseCodeDict.cs" />

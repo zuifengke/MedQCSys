@@ -91,7 +91,6 @@
     <Compile Include="HerenHis\OperationNameAccess.cs" />
     <Compile Include="HerenHis\TransferAccess.cs" />
     <Compile Include="HerenHis\PatientAllergyAccess.cs" />
-    <Compile Include="HerenHis\OperationAccess.cs" />
     <Compile Include="HerenHis\DiagnosisDictAccess.cs" />
     <Compile Include="HerenHis\DiagnosisAccess.cs" />
     <Compile Include="HerenHis\PatMasterIndexAccess.cs" />

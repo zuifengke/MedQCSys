@@ -95,7 +95,6 @@
     <Compile Include="HerenHis\TransferTable.cs" />
     <Compile Include="HerenHis\PatientAllergyTable.cs" />
     <Compile Include="HerenHis\DiagnosisTable.cs" />
-    <Compile Include="HerenHis\OperationTable.cs" />
     <Compile Include="HerenHis\PatMasterIndexTable.cs" />
     <Compile Include="HerenHis\BaseCodeDictTable.cs" />
     <Compile Include="HerenHis\InpVisitTable.cs" />

@@ -20,6 +20,10 @@ namespace EMRDBLib
             /// </summary>
             public const string VISIT_ID = "VISIT_ID";
             /// <summary>
+            /// 就诊ID
+            /// </summary>
+            public const string VISIT_NO = "VISIT_NO";
+            /// <summary>
             /// 患者姓名
             /// </summary>
             public const string PATIENT_NAME = "PATIENT_NAME";
@@ -47,6 +51,10 @@ namespace EMRDBLib
             /// 手术编码
             /// </summary>
             public const string OPERATION_CODE = "OPERATION_CODE";
+            /// <summary>
+            /// 手术级别
+            /// </summary>
+            public const string OPERATION_SCALE = "OPERATION_SCALE";
             /// <summary>
             /// 切口愈合情况
             /// </summary>

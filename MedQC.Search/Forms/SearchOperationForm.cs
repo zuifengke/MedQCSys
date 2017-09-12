@@ -68,18 +68,19 @@ namespace Heren.MedQC.Search
                 return;
             if (row.DataGridView == null)
                 return;
-            row.Cells[this.colPatientID.Index].Value = operation.PatientID;
-            row.Cells[this.colVisitID.Index].Value = operation.VisitID==0?string.Empty:operation.VisitID.ToString();
+            row.Cells[this.colPatientID.Index].Value = operation.PATIENT_ID;
+            row.Cells[this.colVisitID.Index].Value = operation.VISIT_ID==0?string.Empty:operation.VISIT_ID.ToString();
             row.Cells[this.colDeptName.Index].Value = operation.DeptName;
             row.Cells[this.colSex.Index].Value = operation.Sex;
-            row.Cells[this.colPatientName.Index].Value = operation.PatientName;
-            row.Cells[this.colOpeartionDesc.Index].Value = operation.OperationDesc;
-            row.Cells[this.colOperationDate.Index].Value = operation.OperationDate.ToShortDateString();
-            row.Cells[this.colOperationNo.Index].Value = operation.OperationNo;
-            row.Cells[this.colOperator.Index].Value = operation.Operator;
-            row.Cells[this.colAnaesthesiaMethod.Index].Value = operation.AnaesthesiaMethod;
-            row.Cells[this.colHeal.Index].Value = operation.Heal;
-            row.Cells[this.colWoundGrade.Index].Value = operation.WoundGrade;
+            row.Cells[this.colPatientName.Index].Value = operation.PATIENT_NAME;
+            row.Cells[this.colOpeartionDesc.Index].Value = operation.OPERATION_DESC;
+            row.Cells[this.colOperationDate.Index].Value = operation.OPERATING_DATE.ToShortDateString();
+            row.Cells[this.colOperationNo.Index].Value = operation.OPERATION_NO;
+            row.Cells[this.colOperator.Index].Value = operation.OPERATOR;
+            row.Cells[this.colAnaesthesiaMethod.Index].Value = operation.ANAESTHESIA_METHOD;
+            row.Cells[this.colHeal.Index].Value = operation.HEAL;
+            row.Cells[this.col_OPERATION_SCALE.Index].Value = operation.OPERATION_SCALE;
+            row.Cells[this.colWoundGrade.Index].Value = operation.WOUND_GRADE;
 
             row.Tag = operation;
         }
@@ -224,11 +225,11 @@ namespace Heren.MedQC.Search
                 return;
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {
-                PatVisitInfo patVisit = new PatVisitInfo() { PATIENT_ID = operation.PatientID, VISIT_ID = operation.VisitID.ToString(),PATIENT_NAME=operation.PatientName };
+                PatVisitInfo patVisit = new PatVisitInfo() { PATIENT_ID = operation.PATIENT_ID, VISIT_ID = operation.VISIT_ID.ToString(),PATIENT_NAME=operation.PATIENT_NAME };
                 this.MainForm.SwitchPatient(patVisit);
                 return;
             }
-            this.MainForm.OpenDocument(string.Empty, operation.PatientID, operation.VisitID.ToString());
+            this.MainForm.OpenDocument(string.Empty, operation.PATIENT_ID, operation.VISIT_ID.ToString());
         }
     }
 }

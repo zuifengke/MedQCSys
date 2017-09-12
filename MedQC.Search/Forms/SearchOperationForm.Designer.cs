@@ -28,23 +28,11 @@ namespace Heren.MedQC.Search
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOperationNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOpeartionDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOperationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHeal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAnaesthesiaMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOperator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWoundGrade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtPatientName = new Heren.Common.Forms.XTextBox();
             this.txtPatientID = new Heren.Common.Forms.XTextBox();
@@ -58,6 +46,19 @@ namespace Heren.MedQC.Search
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpStatTimeBegin = new System.Windows.Forms.DateTimePicker();
+            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperationNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOpeartionDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHeal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAnaesthesiaMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWoundGrade = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_OPERATION_SCALE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -70,14 +71,14 @@ namespace Heren.MedQC.Search
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDeptName,
@@ -91,107 +92,26 @@ namespace Heren.MedQC.Search
             this.colHeal,
             this.colAnaesthesiaMethod,
             this.colOperator,
-            this.colWoundGrade});
+            this.colWoundGrade,
+            this.col_OPERATION_SCALE});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 53);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(935, 420);
             this.dataGridView1.TabIndex = 37;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // colDeptName
-            // 
-            this.colDeptName.FillWeight = 140F;
-            this.colDeptName.HeaderText = "所在科室";
-            this.colDeptName.Name = "colDeptName";
-            this.colDeptName.ReadOnly = true;
-            this.colDeptName.Width = 140;
-            // 
-            // colPatientName
-            // 
-            this.colPatientName.HeaderText = "患者姓名";
-            this.colPatientName.Name = "colPatientName";
-            this.colPatientName.ReadOnly = true;
-            // 
-            // colPatientID
-            // 
-            this.colPatientID.HeaderText = "患者ID号";
-            this.colPatientID.Name = "colPatientID";
-            this.colPatientID.ReadOnly = true;
-            // 
-            // colVisitID
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colVisitID.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colVisitID.HeaderText = "入院次";
-            this.colVisitID.Name = "colVisitID";
-            this.colVisitID.ReadOnly = true;
-            this.colVisitID.Width = 80;
-            // 
-            // colSex
-            // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colSex.DefaultCellStyle = dataGridViewCellStyle7;
-            this.colSex.FillWeight = 70F;
-            this.colSex.HeaderText = "性别";
-            this.colSex.Name = "colSex";
-            this.colSex.ReadOnly = true;
-            this.colSex.Width = 70;
-            // 
-            // colOperationNo
-            // 
-            this.colOperationNo.HeaderText = "手术序号";
-            this.colOperationNo.Name = "colOperationNo";
-            this.colOperationNo.ReadOnly = true;
-            // 
-            // colOpeartionDesc
-            // 
-            this.colOpeartionDesc.HeaderText = "手术名称";
-            this.colOpeartionDesc.Name = "colOpeartionDesc";
-            this.colOpeartionDesc.ReadOnly = true;
-            // 
-            // colOperationDate
-            // 
-            this.colOperationDate.HeaderText = "手术日期";
-            this.colOperationDate.Name = "colOperationDate";
-            this.colOperationDate.ReadOnly = true;
-            // 
-            // colHeal
-            // 
-            this.colHeal.HeaderText = "切口愈合情况";
-            this.colHeal.Name = "colHeal";
-            this.colHeal.ReadOnly = true;
-            this.colHeal.Width = 120;
-            // 
-            // colAnaesthesiaMethod
-            // 
-            this.colAnaesthesiaMethod.HeaderText = "麻醉方法";
-            this.colAnaesthesiaMethod.Name = "colAnaesthesiaMethod";
-            this.colAnaesthesiaMethod.ReadOnly = true;
-            // 
-            // colOperator
-            // 
-            this.colOperator.HeaderText = "手术医师";
-            this.colOperator.Name = "colOperator";
-            this.colOperator.ReadOnly = true;
-            // 
-            // colWoundGrade
-            // 
-            this.colWoundGrade.HeaderText = "切口等级";
-            this.colWoundGrade.Name = "colWoundGrade";
-            this.colWoundGrade.ReadOnly = true;
             // 
             // panel1
             // 
@@ -331,6 +251,95 @@ namespace Heren.MedQC.Search
             this.dtpStatTimeBegin.Size = new System.Drawing.Size(121, 23);
             this.dtpStatTimeBegin.TabIndex = 29;
             // 
+            // colDeptName
+            // 
+            this.colDeptName.FillWeight = 140F;
+            this.colDeptName.HeaderText = "所在科室";
+            this.colDeptName.Name = "colDeptName";
+            this.colDeptName.ReadOnly = true;
+            this.colDeptName.Width = 140;
+            // 
+            // colPatientName
+            // 
+            this.colPatientName.HeaderText = "患者姓名";
+            this.colPatientName.Name = "colPatientName";
+            this.colPatientName.ReadOnly = true;
+            // 
+            // colPatientID
+            // 
+            this.colPatientID.HeaderText = "患者ID号";
+            this.colPatientID.Name = "colPatientID";
+            this.colPatientID.ReadOnly = true;
+            // 
+            // colVisitID
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colVisitID.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colVisitID.HeaderText = "入院次";
+            this.colVisitID.Name = "colVisitID";
+            this.colVisitID.ReadOnly = true;
+            this.colVisitID.Width = 80;
+            // 
+            // colSex
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colSex.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colSex.FillWeight = 70F;
+            this.colSex.HeaderText = "性别";
+            this.colSex.Name = "colSex";
+            this.colSex.ReadOnly = true;
+            this.colSex.Width = 70;
+            // 
+            // colOperationNo
+            // 
+            this.colOperationNo.HeaderText = "手术序号";
+            this.colOperationNo.Name = "colOperationNo";
+            this.colOperationNo.ReadOnly = true;
+            // 
+            // colOpeartionDesc
+            // 
+            this.colOpeartionDesc.HeaderText = "手术名称";
+            this.colOpeartionDesc.Name = "colOpeartionDesc";
+            this.colOpeartionDesc.ReadOnly = true;
+            // 
+            // colOperationDate
+            // 
+            this.colOperationDate.HeaderText = "手术日期";
+            this.colOperationDate.Name = "colOperationDate";
+            this.colOperationDate.ReadOnly = true;
+            // 
+            // colHeal
+            // 
+            this.colHeal.HeaderText = "切口愈合情况";
+            this.colHeal.Name = "colHeal";
+            this.colHeal.ReadOnly = true;
+            this.colHeal.Width = 120;
+            // 
+            // colAnaesthesiaMethod
+            // 
+            this.colAnaesthesiaMethod.HeaderText = "麻醉方法";
+            this.colAnaesthesiaMethod.Name = "colAnaesthesiaMethod";
+            this.colAnaesthesiaMethod.ReadOnly = true;
+            // 
+            // colOperator
+            // 
+            this.colOperator.HeaderText = "手术医师";
+            this.colOperator.Name = "colOperator";
+            this.colOperator.ReadOnly = true;
+            // 
+            // colWoundGrade
+            // 
+            this.colWoundGrade.HeaderText = "切口等级";
+            this.colWoundGrade.Name = "colWoundGrade";
+            this.colWoundGrade.ReadOnly = true;
+            // 
+            // col_OPERATION_SCALE
+            // 
+            this.col_OPERATION_SCALE.HeaderText = "手术级别";
+            this.col_OPERATION_SCALE.Name = "col_OPERATION_SCALE";
+            this.col_OPERATION_SCALE.ReadOnly = true;
+            this.col_OPERATION_SCALE.Width = 90;
+            // 
             // SearchOperationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -376,5 +385,6 @@ namespace Heren.MedQC.Search
         private System.Windows.Forms.DataGridViewTextBoxColumn colAnaesthesiaMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOperator;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWoundGrade;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_OPERATION_SCALE;
     }
 }

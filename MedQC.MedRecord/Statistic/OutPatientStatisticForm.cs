@@ -205,6 +205,7 @@ namespace Heren.MedQC.MedRecord
                 #region 绑定转科记录
                 List<Transfer> lstTransfers = null;
                 TransferAccess.Instance.GetList(lstPatVisitLog, ref lstTransfers);
+                int nTransfer = 0;
                 if (lstTransfers != null && lstTransfers.Count > 0)
                 {
                     foreach (DataGridViewRow item in this.dataGridView1.Rows)
@@ -218,7 +219,7 @@ namespace Heren.MedQC.MedRecord
                             var first = result.FirstOrDefault();
                             if (first.DEPT_STAYED != first.DEPT_TRANSFER_TO)
                                 item.Cells[this.colTransferTime.Index].Value = first.DISCHARGE_DATE_TIME.ToString("yyyy-MM-dd");
-
+                            nTransfer++;
                         }
                         if (result != null && result.Count > 0)
                         {
@@ -226,10 +227,11 @@ namespace Heren.MedQC.MedRecord
                             item.Cells[this.col_MEDICAL_GROUP.Index].Value = last.MEDICAL_GROUP_NAME;
                             item.Cells[this.col_BED_CODE.Index].Value = last.BED_LABEL;
                         }
-
                     }
                 }
                 #endregion
+                this.lblTransferCount.Text = nTransfer.ToString();
+                this.lblOutPatientCount.Text = lstPatVisitLog.Count.ToString();
                 this.ShowStatusMessage(null);
                 GlobalMethods.UI.SetCursor(this, Cursors.Default);
             }

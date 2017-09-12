@@ -651,10 +651,8 @@ namespace Heren.MedQC.Core.Services
                 }
                 #endregion
                 #region 上传手术 当前方式可能存在问题
-                List<OperationName> lstOperationNames = null;
-                shRet = OperationNameAccess.Instance.GetOperationNames(patientID, visitID, ref lstOperationNames);
-                //List<EMRDBLib.HerenHis.Operation> lstOperation = null;
-                //shRet = EMRDBLib.DbAccess.HerenHis.OperationAccess.Instance.GetList(patientID, visitNo, ref lstOperation);
+                List<EMRDBLib.Operation> lstOperation = null;
+                shRet = OperationAccess.Instance.GetOperationList(patientID, visitNo, ref lstOperation);
                 //2、获取联众已经上传的手术情况
                 List<EMRDBLib.BAJK.BAJK11> lstBajk11 = null;
                 shRet = BAJK11Access.Instance.GetBAJK11s(bajk08.KEY0801, ref lstBajk11);
@@ -663,123 +661,60 @@ namespace Heren.MedQC.Core.Services
                 {
                     shRet = BAJK11Access.Instance.Delete(bajk08.KEY0801);
                 }
-
-                if (lstOperationNames != null)
+                if (lstOperation != null)
                 {
-                    foreach (var item in lstOperationNames)
+                    foreach (var item in lstOperation)
                     {
-                        EMRDBLib.HerenHis.Operation operation = null;
-                        shRet = EMRDBLib.DbAccess.HerenHis.OperationAccess.Instance.GetModel(item.PATIENT_ID, item.VISIT_ID.ToString(), item.OPERATION_NO.ToString(), ref operation);
-                        OperationMaster operationMaster = null;
-                        shRet = OperationMasterAccess.Instance.GetOperationMaster(item.OPER_NO, ref operationMaster);
-                        if (operation != null && operationMaster != null)
+                        BAJK11 bajk11 = new BAJK11();
+                        bajk11.COL1101 = item.OPERATING_DATE;
+                        bajk11.COL1102 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, item.OPERATING_DATE);
+                        if (this.ANAESTHESIA_DICT != null)
                         {
-                            BAJK11 bajk11 = new BAJK11();
-                            bajk11.COL1101 = operation.OPERATING_DATE.Date;
-                            bajk11.COL1102 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, operation.OPERATING_DATE);
-                            if (this.ANAESTHESIA_DICT != null)
+                            var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == item.ANAESTHESIA_METHOD).FirstOrDefault();
+                            if (result != null)
                             {
-                                var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == operation.ANAESTHESIA_METHOD).FirstOrDefault();
-                                if (result != null)
-                                {
-                                    bajk11.COL1104 = decimal.Parse(result.DM);
-                                }
+                                bajk11.COL1104 = decimal.Parse(result.DM);
                             }
-                            if (this.WOUND_GRADE_DICT != null)
-                            {
-                                var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_ID == operation.WOUND_GRADE).FirstOrDefault();
-                                if (result != null)
-                                {
-                                    bajk11.COL1105 = decimal.Parse(result.DM);
-                                }
-                            }
-                            if (this.HEAL_DICT != null)
-                            {
-                                var result = this.HEAL_DICT.Where(m => m.CODE_ID == operation.HEAL).FirstOrDefault();
-                                if (result != null)
-                                {
-                                    //bajk11.COL1106 切口愈合情况
-                                    bajk11.COL1106 = decimal.Parse(result.DM);
-                                }
-                            }
-                            bajk11.COL1107 = operationMaster.OPERATOR_DOCTOR_ID;
-                            bajk11.COL1108 = operationMaster.FIRST_ANESTHESIA_ID;
-                            bajk11.COL1109 = operationMaster.SECOND_ANESTHESIA_ID;
-                            bajk11.COL1110 = operationMaster.ANESTHESIA_DOCTOR_ID;
-                            //bajk11.COL1111=符合标志未获取
-                            //bajk11.COL1112 手术组号未获取
-                            bajk11.COL1112 = operation.OPERATION_NO;
-                            //bajk11.COL1113
-                            bajk11.COL1114 = operationMaster.DIAG_BEFORE_OPERATION;
-                            bajk11.COL1115 = operationMaster.DIAG_AFTER_OPERATION;
-                            if (this.OPERATION_SCALE_DICT != null)
-                            {
-                                var result = this.OPERATION_SCALE_DICT.Where(m => m.CODE_ID == item.OPERATION_SCALE).FirstOrDefault();
-                                if (result != null)
-                                {
-                                    bajk11.COL1116 = decimal.Parse(result.DM);
-                                }
-                            }
-                            bajk11.KEY1101 = bajk08.KEY0801;
-                            bajk11.KEY1102 = operation.OPERATION_NO;
-                            shRet = BAJK11Access.Instance.Insert(bajk11);
                         }
+                        if (this.WOUND_GRADE_DICT != null)
+                        {
+                            var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_NAME == item.WOUND_GRADE).FirstOrDefault();
+                            if (result != null)
+                            {
+                                bajk11.COL1105 = decimal.Parse(result.DM);
+                            }
+                        }
+                        if (this.HEAL_DICT != null)
+                        {
+                            var result = this.HEAL_DICT.Where(m => m.CODE_NAME == item.HEAL).FirstOrDefault();
+                            if (result != null)
+                            {
+                                bajk11.COL1106 = decimal.Parse(result.DM);
+                            }
+                        }
+                        bajk11.COL1107 =item.OPERATOR;
+                        bajk11.COL1108 = item.FIRST_ASSISTANT;
+                        bajk11.COL1109 = item.SECOND_ASSISTANT;
+                        bajk11.COL1110 = item.ANESTHESIA_DOCTOR;
+                        //bajk11.COL1111=符合标志未获取
+                        //bajk11.COL1112 手术组号未获取
+                        //bajk11.COL1113
+                        //bajk11.COL1114 = operationMaster.DIAG_BEFORE_OPERATION;
+                        //bajk11.COL1115 = operationMaster.DIAG_AFTER_OPERATION;
+                        if (this.OPERATION_SCALE_DICT != null)
+                        {
+                            var result = this.OPERATION_SCALE_DICT.Where(m => m.CODE_ID == item.OPERATION_SCALE).FirstOrDefault();
+                            if (result != null)
+                            {
+                                bajk11.COL1116 = decimal.Parse(result.DM);
+                            }
+                        }
+                        bajk11.KEY1101 = bajk08.BRXH;
+                        bajk11.KEY1102 = item.OPERATION_NO;
+                        //bajk11.COL1106
+                        shRet = BAJK11Access.Instance.Insert(bajk11);
                     }
                 }
-                //if (lstOperation != null)
-                //{
-                //    foreach (var item in lstOperation)
-                //    {
-                //        BAJK11 bajk11 = new BAJK11();
-                //        bajk11.COL1101 = item.OPERATING_DATE.Date;
-                //        bajk11.COL1102 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, item.OPERATING_DATE);
-                //        if (this.ANAESTHESIA_DICT != null)
-                //        {
-                //            var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == item.ANAESTHESIA_METHOD).FirstOrDefault();
-                //            if (result != null)
-                //            {
-                //                bajk11.COL1104 = decimal.Parse(result.DM);
-                //            }
-                //        }
-                //        if (this.WOUND_GRADE_DICT != null)
-                //        {
-                //            var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_ID == item.WOUND_GRADE).FirstOrDefault();
-                //            if (result != null)
-                //            {
-                //                bajk11.COL1105 = decimal.Parse(result.DM);
-                //            }
-                //        }
-                //        if (this.HEAL_DICT != null)
-                //        {
-                //            var result = this.HEAL_DICT.Where(m => m.CODE_ID == item.HEAL).FirstOrDefault();
-                //            if (result != null)
-                //            {
-                //                bajk11.COL1106 = decimal.Parse(result.DM);
-                //            }
-                //        }
-                //        bajk11.COL1107 = operationMaster.OPERATOR_DOCTOR_ID;
-                //        bajk11.COL1108 = operationMaster.FIRST_ANESTHESIA_ID;
-                //        bajk11.COL1109 = operationMaster.SECOND_ANESTHESIA_ID;
-                //        bajk11.COL1110 = operationMaster.ANESTHESIA_DOCTOR_ID;
-                //        //bajk11.COL1111=符合标志未获取
-                //        //bajk11.COL1112 手术组号未获取
-                //        //bajk11.COL1113
-                //        bajk11.COL1114 = operationMaster.DIAG_BEFORE_OPERATION;
-                //        bajk11.COL1115 = operationMaster.DIAG_AFTER_OPERATION;
-                //        if (this.OPERATION_SCALE_DICT != null)
-                //        {
-                //            var result = this.OPERATION_SCALE_DICT.Where(m => m.CODE_ID == item.OPERATION_SCALE).FirstOrDefault();
-                //            if (result != null)
-                //            {
-                //                bajk11.COL1116 = decimal.Parse(result.DM);
-                //            }
-                //        }
-                //        bajk11.KEY1101 = bajk08.BRXH;
-                //        bajk11.KEY1102 = operation.OPERATION_NO;
-                //        //bajk11.COL1106
-                //        shRet = BAJK11Access.Instance.Insert(bajk11);
-                //    }
-                //}
                 #endregion
                 #region 上传过敏药物
                 //获取和仁his过敏史
