@@ -160,6 +160,14 @@ namespace MedQCSys.DockForms
                 value = SystemParam.Instance.PatVisitInfo.VISIT_NO;
                 return true;
             }
+            else if (name == "入院时间")
+            {
+                if (SystemParam.Instance.PatVisitInfo == null)
+                    return false;
+                value = SystemParam.Instance.PatVisitInfo.VISIT_TIME;
+                return true;
+            }
+
             else if (name.ToUpper() == "DBLINK")
             {
                 value = SystemParam.Instance.LocalConfigOption.DBLINK;

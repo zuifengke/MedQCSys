@@ -296,6 +296,7 @@ namespace Heren.MedQC.MedRecord
             string patient_id = this.XDataGrid1.Rows[e.RowIndex].Cells[this.col_患者ID号.Index].Value.ToString();
             string visit_id = this.XDataGrid1.Rows[e.RowIndex].Cells[this.col_入院次.Index].Value.ToString();
             PatVisitInfo patVisit = new PatVisitInfo() { PATIENT_ID = patient_id, VISIT_ID = visit_id };
+            short shRet = PatVisitAccess.Instance.GetPatVisitInfo(patVisit.PATIENT_ID, patVisit.VISIT_ID, ref patVisit);
             this.MainForm.ShowPatientPageForm(patVisit);
         }
     }

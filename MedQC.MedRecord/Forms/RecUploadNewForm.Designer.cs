@@ -42,12 +42,9 @@ namespace Heren.MedQC.MedRecord
             this.XLabel1 = new Heren.Common.Forms.XLabel();
             this.txt_PATIENT_ID = new Heren.Common.Forms.XTextBox();
             this.lbl_msg = new Heren.Common.Forms.XLabel();
-            this.dtpTimeEnd = new Heren.Common.Forms.XDateTime();
-            this.dtpTimeBegin = new Heren.Common.Forms.XDateTime();
             this.XLabel4 = new Heren.Common.Forms.XLabel();
             this.XLabel2 = new Heren.Common.Forms.XLabel();
             this.XDataGrid1 = new Heren.Common.Forms.XDataGrid();
-            this.chkAll = new System.Windows.Forms.CheckBox();
             this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
             this.col_姓名 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_性别 = new Heren.Common.Forms.XTextBoxColumn();
@@ -60,12 +57,17 @@ namespace Heren.MedQC.MedRecord
             this.col_病区 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_主治医生 = new Heren.Common.Forms.XTextBoxColumn();
             this.col_上传 = new Heren.Common.Forms.XLinkColumn();
+            this.chkAll = new System.Windows.Forms.CheckBox();
+            this.dtpTimeBegin = new System.Windows.Forms.DateTimePicker();
+            this.dtpTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.XPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.XDataGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // XPanel1
             // 
+            this.XPanel1.Controls.Add(this.dtpTimeEnd);
+            this.XPanel1.Controls.Add(this.dtpTimeBegin);
             this.XPanel1.Controls.Add(this.txt_DEPT_NAME);
             this.XPanel1.Controls.Add(this.XLabel3);
             this.XPanel1.Controls.Add(this.cboTimeType);
@@ -75,8 +77,6 @@ namespace Heren.MedQC.MedRecord
             this.XPanel1.Controls.Add(this.XLabel1);
             this.XPanel1.Controls.Add(this.txt_PATIENT_ID);
             this.XPanel1.Controls.Add(this.lbl_msg);
-            this.XPanel1.Controls.Add(this.dtpTimeEnd);
-            this.XPanel1.Controls.Add(this.dtpTimeBegin);
             this.XPanel1.Controls.Add(this.XLabel4);
             this.XPanel1.Controls.Add(this.XLabel2);
             this.XPanel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -187,30 +187,6 @@ namespace Heren.MedQC.MedRecord
             this.lbl_msg.TabIndex = 1;
             this.lbl_msg.Text = "共{}份患者病历";
             // 
-            // dtpTimeEnd
-            // 
-            this.dtpTimeEnd.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtpTimeEnd.Location = new System.Drawing.Point(367, 5);
-            this.dtpTimeEnd.Name = "dtpTimeEnd";
-            this.dtpTimeEnd.NullableValue = null;
-            this.dtpTimeEnd.ShowHour = false;
-            this.dtpTimeEnd.ShowMinute = false;
-            this.dtpTimeEnd.ShowSecond = false;
-            this.dtpTimeEnd.Size = new System.Drawing.Size(112, 20);
-            this.dtpTimeEnd.TabIndex = 2;
-            // 
-            // dtpTimeBegin
-            // 
-            this.dtpTimeBegin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtpTimeBegin.Location = new System.Drawing.Point(226, 5);
-            this.dtpTimeBegin.Name = "dtpTimeBegin";
-            this.dtpTimeBegin.NullableValue = null;
-            this.dtpTimeBegin.ShowHour = false;
-            this.dtpTimeBegin.ShowMinute = false;
-            this.dtpTimeBegin.ShowSecond = false;
-            this.dtpTimeBegin.Size = new System.Drawing.Size(112, 20);
-            this.dtpTimeBegin.TabIndex = 2;
-            // 
             // XLabel4
             // 
             this.XLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -282,16 +258,6 @@ namespace Heren.MedQC.MedRecord
             this.XDataGrid1.TabIndex = 8;
             this.XDataGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.XDataGrid1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(14, 55);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(15, 14);
-            this.chkAll.TabIndex = 9;
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // col_Chk
             // 
@@ -373,6 +339,32 @@ namespace Heren.MedQC.MedRecord
             this.col_上传.ReadOnly = true;
             this.col_上传.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(14, 55);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 9;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
+            // dtpTimeBegin
+            // 
+            this.dtpTimeBegin.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpTimeBegin.Location = new System.Drawing.Point(227, 3);
+            this.dtpTimeBegin.Name = "dtpTimeBegin";
+            this.dtpTimeBegin.Size = new System.Drawing.Size(111, 21);
+            this.dtpTimeBegin.TabIndex = 49;
+            // 
+            // dtpTimeEnd
+            // 
+            this.dtpTimeEnd.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpTimeEnd.Location = new System.Drawing.Point(367, 3);
+            this.dtpTimeEnd.Name = "dtpTimeEnd";
+            this.dtpTimeEnd.Size = new System.Drawing.Size(111, 21);
+            this.dtpTimeEnd.TabIndex = 49;
+            // 
             // RecUploadNewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -406,8 +398,6 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XLabel XLabel1;
         private Common.Forms.XTextBox txt_PATIENT_ID;
         private Common.Forms.XLabel lbl_msg;
-        private Common.Forms.XDateTime dtpTimeEnd;
-        private Common.Forms.XDateTime dtpTimeBegin;
         private Common.Forms.XLabel XLabel4;
         private Common.Forms.XLabel XLabel2;
         private Common.Forms.XDataGrid XDataGrid1;
@@ -424,5 +414,7 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XTextBoxColumn col_病区;
         private Common.Forms.XTextBoxColumn col_主治医生;
         private Common.Forms.XLinkColumn col_上传;
+        private System.Windows.Forms.DateTimePicker dtpTimeBegin;
+        private System.Windows.Forms.DateTimePicker dtpTimeEnd;
     }
 }

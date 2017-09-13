@@ -534,7 +534,7 @@ namespace Heren.MedQC.Core.Services
                     }
                 }
                 //bajk08.COLni0900= 拟接收医疗机构名称1未获取
-                //bajk08.COL0902再住院计划未获取
+                //bajk08.COL0902再住院计划
                 decimal HAS_ADMISSION_AGAIN_PLAN = 0;
                 if (GlobalMethods.Convert.StringToDecimal(inpVisit.HAS_ADMISSION_AGAIN_PLAN, ref HAS_ADMISSION_AGAIN_PLAN))
                 {

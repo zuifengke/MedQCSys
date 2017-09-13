@@ -544,6 +544,11 @@ namespace MedQCSys.DockForms
                 value = SysTimeHelper.Instance.Now;
                 return true;
             }
+            if (name == "医院名称")
+            {
+                value = SystemParam.Instance.LocalConfigOption.HOSPITAL_NAME;
+                return true;
+            }
             return false;
             #endregion
         }
