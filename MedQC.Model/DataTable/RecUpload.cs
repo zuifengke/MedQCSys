@@ -30,12 +30,46 @@ namespace EMRDBLib
         /// </summary>
         public  string PATIENT_NAME { get; set; }
         /// <summary>
+        /// 上传日志
+        /// </summary>
+        public string UPLOAD_LOG { get; set; }
+        /// <summary>
+        /// 上传时间
+        /// </summary>
+        public DateTime UPLOAD_TIME { get; set; }
+        /// <summary>
         /// 状态 0:未上传 1已上传
         /// </summary>
-        public  int STATUS { get; set; }
+        public  int UPLOAD_STATUS { get; set; }
+        /// <summary>
+        /// 患者诊断
+        /// </summary>
+        public string Diagnosis { get; set; }
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public string PatientSex { get; set; }
+        /// <summary>
+        /// 就诊时间
+        /// </summary>
+        public DateTime VisitTime { get; set; }
+        /// <summary>
+        /// 出院时间
+        /// </summary>
+        public DateTime DischargeTime { get; set; }
+        /// <summary>
+        /// 科室名称
+        /// </summary>
+        public string DeptName { get; set; }
+        /// <summary>
+        /// 责任医生
+        /// </summary>
+        public string InchargeDoctor { get; set; }
+
         public RecUpload()
         {
-           
+            this.DischargeTime = base.DefaultTime;
+            this.UPLOAD_TIME = base.DefaultTime;
         }
         public string MakeID()
         {

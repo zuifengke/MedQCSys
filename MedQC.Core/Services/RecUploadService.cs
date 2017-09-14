@@ -164,7 +164,7 @@ namespace Heren.MedQC.Core.Services
         /// <param name="szPatientID"></param>
         /// <param name="szVisitID"></param>
         /// <returns></returns>
-        public bool Upload(string szPatientID, string szVisitID, ref string error)
+        public bool Upload(string szPatientID, string szVisitID, ref string szUploadLog)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace Heren.MedQC.Core.Services
                 string visitID = inpVisit.VISIT_ID.ToString();
                 string inpNo = inpVisit.INP_NO;
                 //1、获取和仁his患者诊断信息
-                List<Diagnosis> lstDiagnosis = null;
+                List<EMRDBLib.HerenHis.Diagnosis> lstDiagnosis = null;
                 shRet = DiagnosisAccess.Instance.GetList(patientID, visitNo, ref lstDiagnosis);
                 //2、获取和仁his患者诊断对照记录
                 List<DiagComparing> lstDiagComparing = null;
@@ -318,8 +318,12 @@ namespace Heren.MedQC.Core.Services
                 }
                 bajk08.COL0834 = inpVisit.DIRECTOR_ID;
                 bajk08.COL0835 = inpVisit.CHIEF_DOCTOR_ID;
-                bajk08.COL0836 = inpVisit.ATTENDING_DOCTOR_ID;
-                bajk08.COL0837 = inpVisit.DOCTOR_IN_CHARGE_ID;
+                if (!string.IsNullOrEmpty(inpVisit.ATTENDING_DOCTOR_ID)
+                    && inpVisit.DOCTOR_IN_CHARGE_ID.Length <= 8)
+                    bajk08.COL0836 = inpVisit.ATTENDING_DOCTOR_ID;
+                if (!string.IsNullOrEmpty(inpVisit.DOCTOR_IN_CHARGE_ID)
+                    && inpVisit.DOCTOR_IN_CHARGE_ID.Length <= 8)
+                    bajk08.COL0837 = inpVisit.DOCTOR_IN_CHARGE_ID;
                 //bajk08.COL0838 = inpVisit.ADVANCED_STUDIES_DOCTOR;//进修医师编号未获取
                 //bajk08.COL0839 = inpVisit.PRACTICE_DOCTOR;//实习医师编号未获取
                 if (inpVisit.CATALOG_DATE != inpVisit.DefaultTime2)
@@ -331,7 +335,7 @@ namespace Heren.MedQC.Core.Services
                 bajk08.COL0847 = inpVisit.DEPT_DISCHARGE_FROM;//未对照出院科室代码
                 if (inpVisit.DISCHARGE_DATE_TIME != inpVisit.DefaultTime2)
                     bajk08.COL0848 = inpVisit.DISCHARGE_DATE_TIME;
-               
+
                 if (inpVisit.DISCHARGE_DATE_TIME != inpVisit.DefaultTime2
                     && inpVisit.ADMISSION_DATE_TIME != inpVisit.DefaultTime2)
                     bajk08.COL0851 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, inpVisit.DISCHARGE_DATE_TIME);
@@ -339,7 +343,7 @@ namespace Heren.MedQC.Core.Services
 
                 //总费用
                 bajk08.COL0853 = inpVisit.TOTAL_COSTS;
-               
+
                 //bajk08.COL0855 转归情况，
                 if (this.TreatingResultDict != null)
                 {
@@ -473,28 +477,27 @@ namespace Heren.MedQC.Core.Services
                         if (diagnosis != null)
                         {
                             bajk08.COL0887 = diagnosis.DIAG_DESC;
+                            //bajk08.COL0906入院病情(主诊断)1.有; 2.临床未确定; 3.情况不明; 4.无
+                            if (this.PAT_ADM_CONDITION_DICT != null && !string.IsNullOrEmpty(diagnosis.ADMISSION_CONDITION))
+                            {
+                                decimal d = 0;
+                                if (GlobalMethods.Convert.StringToDecimal(diagnosis.ADMISSION_CONDITION, ref d))
+                                    bajk08.COL0906 = d;
+                            }
+                            //bajk08.COL0854=疾病序号未获取，
+                            BaIcdDM baicdDM = null;
+                            shRet = BaIcdDMAccess.Instance.GetModel(diagnosis.DIAG_CODE, ref baicdDM);
+                            if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                            {
+                                bajk08.COL0854 = baicdDM.JBXH;
+                            }
+                            //bajk08.COL0843 手术标志
+                            bajk08.COL0843 = diagnosis.OPER_TREAT_INDICATOR;
+                            //bajk08.COL0849= 确诊天数
+                            bajk08.COL0849 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, diagnosis.DIAG_DATE);
+                            //bajk08.COL0850 确诊日期
+                            bajk08.COL0850 = diagnosis.DIAG_DATE;
                         }
-
-                        //bajk08.COL0906入院病情(主诊断)1.有; 2.临床未确定; 3.情况不明; 4.无
-                        if (this.PAT_ADM_CONDITION_DICT != null && !string.IsNullOrEmpty(diagnosis.ADMISSION_CONDITION))
-                        {
-                            decimal d = 0;
-                            if (GlobalMethods.Convert.StringToDecimal(diagnosis.ADMISSION_CONDITION, ref d))
-                                bajk08.COL0906 = d;
-                        }
-                        //bajk08.COL0854=疾病序号未获取，
-                        BaIcdDM baicdDM = null;
-                        shRet = BaIcdDMAccess.Instance.GetModel(diagnosis.DIAG_CODE, ref baicdDM);
-                        if (baicdDM != null)//代码库中未找到，则不上传（暂定）
-                        {
-                            bajk08.COL0854 = baicdDM.JBXH;
-                        }
-                        //bajk08.COL0843 手术标志
-                        bajk08.COL0843 = diagnosis.OPER_TREAT_INDICATOR;
-                        //bajk08.COL0849= 确诊天数
-                        bajk08.COL0849 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, diagnosis.DIAG_DATE);
-                        //bajk08.COL0850 确诊日期
-                        bajk08.COL0850 = diagnosis.DIAG_DATE;
                     }
 
                 }
@@ -580,12 +583,15 @@ namespace Heren.MedQC.Core.Services
                     bajk08.KEY0801 = BAJK08Access.Instance.GetNextKey0801();
                     if (bajk08.KEY0801 == 0)
                     {
-                        error = "获取病案接口库的病人序号失败";
+                        szUploadLog = "获取病案接口库的病人序号失败";
                         return false;
                     }
                     shRet = BAJK08Access.Instance.Insert(bajk08);
                     if (shRet != SystemData.ReturnValue.OK)
+                    {
+                        szUploadLog += "上传患者信息失败";
                         return false;
+                    }
                 }
                 else
                 {
@@ -610,7 +616,7 @@ namespace Heren.MedQC.Core.Services
                     foreach (var item in lstDiagnosis)
                     {
                         string jbmc = item.DIAG_DESC;
-                        DiagnosisDict diagnosisDict = new DiagnosisDict();
+                        DiagnosisDict diagnosisDict = null;
                         shRet = DiagnosisDictAccess.Instance.GetModel(item.DIAG_DESC, ref diagnosisDict);
                         if (diagnosisDict == null)//首页诊断不标准，不上传
                             continue;
@@ -692,7 +698,7 @@ namespace Heren.MedQC.Core.Services
                                 bajk11.COL1106 = decimal.Parse(result.DM);
                             }
                         }
-                        bajk11.COL1107 =item.OPERATOR;
+                        bajk11.COL1107 = item.OPERATOR;
                         bajk11.COL1108 = item.FIRST_ASSISTANT;
                         bajk11.COL1109 = item.SECOND_ASSISTANT;
                         bajk11.COL1110 = item.ANESTHESIA_DOCTOR;
@@ -756,12 +762,15 @@ namespace Heren.MedQC.Core.Services
                     //清空已上传记录
                     BAJK13Access.Instance.Delete(bajk08.KEY0801);
                 }
-                if (lstTransfers != null && lstTransfers.Count > 0)
+                if (lstTransfers != null && lstTransfers.Count > 1)
                 {
                     int orderNo = 1;
                     lstTransfers = lstTransfers.OrderBy(m => m.ADMISSION_DATE_TIME).ToList();
                     foreach (var item in lstTransfers)
                     {
+                        //转向科室为空的记录代表患者所在当前科室，不上传转科记录
+                        if (string.IsNullOrEmpty(item.DEPT_TRANSFER_TO))
+                            continue;
                         BAJK13 bajk13 = new BAJK13();
                         bajk13.COL1301 = item.ADMISSION_DATE_TIME;
                         bajk13.COL1302 = item.DEPT_TRANSFER_TO;

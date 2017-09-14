@@ -141,29 +141,16 @@
         b24xX0NsaWNrCw==
 </value>
   </data>
-  <data name="XDataGrid1.BindingEvents" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
-        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
-        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAAA5DZWxsTW91c2VDbGljawYE
-        AAAAGVhEYXRhR3JpZDFfQ2VsbE1vdXNlQ2xpY2sL
-</value>
-  </data>
-  <data name="XDataGrid1.BindingEvents1" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAENDb21tb24uRm9ybXMsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVy
-        ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBQEAAAAfSGVyZW4uQ29tbW9uLkZvcm1zLkJpbmRp
-        bmdFdmVudAIAAAALbV9ldmVudE5hbWUIbV9tZXRob2QBAQIAAAAGAwAAABRDZWxsTW91c2VEb3VibGVD
-        bGljawYEAAAAH1hEYXRhR3JpZDFfQ2VsbE1vdXNlRG91YmxlQ2xpY2sL
-</value>
-  </data>
   <metadata name="col_Chk.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="col_入院次.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="col_UPLOAD_TIME.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="col_就诊流水号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="col_VISIT_NO.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="col_UPLOAD_LOG.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
 </root>

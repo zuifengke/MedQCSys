@@ -932,7 +932,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="szVisitID">住院标识</param>
         /// <param name="lstDiagnosisInfo">诊断信息</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetDiagnosisInfo(string szPatientID, string szVisitID, ref List<DiagnosisInfo> lstDiagnosisInfo)
+        public short GetDiagnosisInfo(string szPatientID, string szVisitID, ref List<Diagnosis> lstDiagnosisInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -954,16 +954,16 @@ namespace EMRDBLib.DbAccess
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
                 if (lstDiagnosisInfo == null)
-                    lstDiagnosisInfo = new List<DiagnosisInfo>();
+                    lstDiagnosisInfo = new List<Diagnosis>();
                 do
                 {
-                    DiagnosisInfo diagnosisInfo = new DiagnosisInfo();
-                    if (!dataReader.IsDBNull(0)) diagnosisInfo.DiagnosisType = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) diagnosisInfo.DiagnosisTypeName = dataReader.GetString(1);
-                    if (!dataReader.IsDBNull(2)) diagnosisInfo.DiagnosisNO = int.Parse(dataReader.GetValue(2).ToString());
-                    if (!dataReader.IsDBNull(3)) diagnosisInfo.DiagnosisDesc = dataReader.GetString(3);
-                    if (!dataReader.IsDBNull(4)) diagnosisInfo.DiagnosisDate = dataReader.GetDateTime(4);
-                    if (!dataReader.IsDBNull(5)) diagnosisInfo.TreatResult = dataReader.GetString(5);
+                    Diagnosis diagnosisInfo = new Diagnosis();
+                    if (!dataReader.IsDBNull(0)) diagnosisInfo.DIAGNOSIS_TYPE = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) diagnosisInfo.DIAGNOSIS_TYPE_NAME = dataReader.GetString(1);
+                    if (!dataReader.IsDBNull(2)) diagnosisInfo.DIAGNOSIS_NO = int.Parse(dataReader.GetValue(2).ToString());
+                    if (!dataReader.IsDBNull(3)) diagnosisInfo.DIAGNOSIS_DESC = dataReader.GetString(3);
+                    if (!dataReader.IsDBNull(4)) diagnosisInfo.DIAGNOSIS_DATE = dataReader.GetDateTime(4);
+                    if (!dataReader.IsDBNull(5)) diagnosisInfo.TREAT_RESULT = dataReader.GetString(5);
                     lstDiagnosisInfo.Add(diagnosisInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -1843,7 +1843,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="lstPatVisitInfo"></param>
         /// <returns></returns>
-        public short GetOutPatientFirstDiagnosis(List<PatVisitInfo> lstPatVisitInfos, List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo)
+        public short GetOutPatientFirstDiagnosis(List<PatVisitInfo> lstPatVisitInfos, List<EMRDBLib.Diagnosis> lstDiagnosInfo)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1870,15 +1870,15 @@ namespace EMRDBLib.DbAccess
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
                 if (lstDiagnosInfo == null)
-                    lstDiagnosInfo = new List<DiagnosisInfo>();
+                    lstDiagnosInfo = new List<Diagnosis>();
                 lstDiagnosInfo.Clear();
                 do
                 {
-                    DiagnosisInfo diag = new DiagnosisInfo();
-                    if (!dataReader.IsDBNull(0)) diag.PatientID = dataReader.GetString(0);
-                    if (!dataReader.IsDBNull(1)) diag.VisitID = dataReader.GetValue(1).ToString();
-                    if (!dataReader.IsDBNull(2)) diag.DiagnosisDesc = dataReader.GetString(2);
-                    if (!dataReader.IsDBNull(3)) diag.TreatResult = dataReader.GetString(3);
+                    Diagnosis diag = new Diagnosis();
+                    if (!dataReader.IsDBNull(0)) diag.PATIENT_ID = dataReader.GetString(0);
+                    if (!dataReader.IsDBNull(1)) diag.VISIT_ID = dataReader.GetValue(1).ToString();
+                    if (!dataReader.IsDBNull(2)) diag.DIAGNOSIS_DESC = dataReader.GetString(2);
+                    if (!dataReader.IsDBNull(3)) diag.TREAT_RESULT = dataReader.GetString(3);
                     lstDiagnosInfo.Add(diag);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

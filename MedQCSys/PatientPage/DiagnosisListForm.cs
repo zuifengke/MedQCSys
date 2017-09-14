@@ -101,7 +101,7 @@ namespace MedQCSys.DockForms
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
 
-            List<EMRDBLib.DiagnosisInfo> lstDiagnosisInfo = null;
+            List<EMRDBLib.Diagnosis> lstDiagnosisInfo = null;
             short shRet = PatVisitAccess.Instance.GetDiagnosisInfo(szPatientID, szVisitID, ref lstDiagnosisInfo);
             if (shRet != SystemData.ReturnValue.OK)
                 return;
@@ -112,14 +112,14 @@ namespace MedQCSys.DockForms
             DataGridViewRow row = null;
             for (int index = 0; index < lstDiagnosisInfo.Count; index++)
             {
-                EMRDBLib.DiagnosisInfo diagnosisInfo = lstDiagnosisInfo[index];
+                EMRDBLib.Diagnosis diagnosisInfo = lstDiagnosisInfo[index];
                 nRowIndex = this.dataGridView1.Rows.Add();
                 row = this.dataGridView1.Rows[nRowIndex];
                 row.Cells[this.colDiagnosisDate.Index].Value =
-                    diagnosisInfo.DiagnosisDate.ToString("yyyy-M-d HH:mm");
-                row.Cells[this.colDiagnosisType.Index].Value = diagnosisInfo.DiagnosisTypeName;
-                row.Cells[this.colNum.Index].Value = diagnosisInfo.DiagnosisNO;
-                row.Cells[this.colDiagnosisDesc.Index].Value = diagnosisInfo.DiagnosisDesc;
+                    diagnosisInfo.DIAGNOSIS_DATE.ToString("yyyy-M-d HH:mm");
+                row.Cells[this.colDiagnosisType.Index].Value = diagnosisInfo.DIAGNOSIS_TYPE_NAME;
+                row.Cells[this.colNum.Index].Value = diagnosisInfo.DIAGNOSIS_NO;
+                row.Cells[this.colDiagnosisDesc.Index].Value = diagnosisInfo.DIAGNOSIS_DESC;
                 row.Tag = diagnosisInfo;
             }
             this.dataGridView1.Tag = SystemParam.Instance.PatVisitInfo;

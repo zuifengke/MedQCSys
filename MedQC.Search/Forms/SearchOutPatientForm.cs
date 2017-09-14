@@ -211,7 +211,7 @@ namespace Heren.MedQC.Search
                 this.SetRowData(row, patVisitLog, patDoctorInfo);
             }
             #region 重新绑定出院诊断
-            List<EMRDBLib.DiagnosisInfo> lstDiagnosInfo = new List<EMRDBLib.DiagnosisInfo>();
+            List<EMRDBLib.Diagnosis> lstDiagnosInfo = new List<EMRDBLib.Diagnosis>();
             shRet = PatVisitAccess.Instance.GetOutPatientFirstDiagnosis(lstPatVisitLog, lstDiagnosInfo);
             if (shRet == SystemData.ReturnValue.OK
                 && lstDiagnosInfo.Count > 0)
@@ -222,14 +222,14 @@ namespace Heren.MedQC.Search
                     EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
                     if (patVisitLog == null)
                         continue;
-                    EMRDBLib.DiagnosisInfo diagnosisInfo = lstDiagnosInfo.Find(
-                        delegate (EMRDBLib.DiagnosisInfo p)
+                    EMRDBLib.Diagnosis diagnosisInfo = lstDiagnosInfo.Find(
+                        delegate (EMRDBLib.Diagnosis p)
                         {
-                            return p.PatientID == patVisitLog.PATIENT_ID && p.VisitID == patVisitLog.VISIT_ID;
+                            return p.PATIENT_ID == patVisitLog.PATIENT_ID && p.VISIT_ID == patVisitLog.VISIT_ID;
                         });
                     if (diagnosisInfo != null)
                         row.Cells[this.colDiagnosis.Index].Value =
-                            string.Format("{0}({1})", diagnosisInfo.DiagnosisDesc, string.IsNullOrEmpty(diagnosisInfo.TreatResult) ? "未知" : diagnosisInfo.TreatResult);
+                            string.Format("{0}({1})", diagnosisInfo.DIAGNOSIS_DESC, string.IsNullOrEmpty(diagnosisInfo.TREAT_RESULT) ? "未知" : diagnosisInfo.TREAT_RESULT);
                 }
             }
             #endregion

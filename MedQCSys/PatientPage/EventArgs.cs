@@ -1,9 +1,5 @@
 ﻿using EMRDBLib;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace MedQCSys.PatPage
 {
@@ -20,14 +16,6 @@ namespace MedQCSys.PatPage
         }
 
         private PatVisitInfo m_newPatVisit = null;
-
-        /// <summary>
-        /// 获取即将要改变的病人信息
-        /// </summary>
-        public PatVisitInfo NewPatVisit
-        {
-            get { return this.m_newPatVisit; }
-        }
 
         public PatientInfoChangingEventArgs(PatVisitInfo currPatVisit, PatVisitInfo newPatVisit)
         {

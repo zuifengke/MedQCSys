@@ -33,6 +33,8 @@ namespace Heren.MedQC.MedRecord
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.XPanel1 = new Heren.Common.Forms.XPanel();
+            this.dtpTimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.dtpTimeBegin = new System.Windows.Forms.DateTimePicker();
             this.txt_DEPT_NAME = new Heren.Common.Forms.XTextBox();
             this.XLabel3 = new Heren.Common.Forms.XLabel();
             this.cboTimeType = new Heren.Common.Forms.XComboBox();
@@ -44,24 +46,22 @@ namespace Heren.MedQC.MedRecord
             this.lbl_msg = new Heren.Common.Forms.XLabel();
             this.XLabel4 = new Heren.Common.Forms.XLabel();
             this.XLabel2 = new Heren.Common.Forms.XLabel();
-            this.XDataGrid1 = new Heren.Common.Forms.XDataGrid();
-            this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
-            this.col_姓名 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_性别 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_患者ID号 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_入院次 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_就诊流水号 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_入院时间 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_出院时间 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_诊断 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_病区 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_主治医生 = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_上传 = new Heren.Common.Forms.XLinkColumn();
+            this.dataGridView1 = new Heren.Common.Controls.TableView.DataTableView();
             this.chkAll = new System.Windows.Forms.CheckBox();
-            this.dtpTimeBegin = new System.Windows.Forms.DateTimePicker();
-            this.dtpTimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
+            this.col_UPLOAD = new Heren.Common.Forms.XLinkColumn();
+            this.col_UPLOAD_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PATIENT_NAME = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_PATIENT_ID = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_VISIT_ID = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_VISIT_NO = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_VISIT_TIME = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_DISCHARGE_TIME = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_UPLOAD_LOG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_DEPT_NAME = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_DOCTOR_IN_CHARGE = new Heren.Common.Forms.XTextBoxColumn();
             this.XPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.XDataGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // XPanel1
@@ -84,6 +84,22 @@ namespace Heren.MedQC.MedRecord
             this.XPanel1.Name = "XPanel1";
             this.XPanel1.Size = new System.Drawing.Size(991, 51);
             this.XPanel1.TabIndex = 7;
+            // 
+            // dtpTimeEnd
+            // 
+            this.dtpTimeEnd.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpTimeEnd.Location = new System.Drawing.Point(367, 3);
+            this.dtpTimeEnd.Name = "dtpTimeEnd";
+            this.dtpTimeEnd.Size = new System.Drawing.Size(111, 21);
+            this.dtpTimeEnd.TabIndex = 49;
+            // 
+            // dtpTimeBegin
+            // 
+            this.dtpTimeBegin.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpTimeBegin.Location = new System.Drawing.Point(227, 3);
+            this.dtpTimeBegin.Name = "dtpTimeBegin";
+            this.dtpTimeBegin.Size = new System.Drawing.Size(111, 21);
+            this.dtpTimeBegin.TabIndex = 49;
             // 
             // txt_DEPT_NAME
             // 
@@ -204,13 +220,8 @@ namespace Heren.MedQC.MedRecord
             this.XLabel2.TabIndex = 1;
             this.XLabel2.Text = "至";
             // 
-            // XDataGrid1
+            // dataGridView1
             // 
-            this.XDataGrid1.AllowUserToAddRows = false;
-            this.XDataGrid1.AllowUserToResizeRows = false;
-            this.XDataGrid1.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
-        ((Heren.Common.Forms.BindingEvent)(resources.GetObject("XDataGrid1.BindingEvents"))),
-        ((Heren.Common.Forms.BindingEvent)(resources.GetObject("XDataGrid1.BindingEvents1")))};
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -218,21 +229,21 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.XDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.XDataGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_Chk,
-            this.col_姓名,
-            this.col_性别,
-            this.col_患者ID号,
-            this.col_入院次,
-            this.col_就诊流水号,
-            this.col_入院时间,
-            this.col_出院时间,
-            this.col_诊断,
-            this.col_病区,
-            this.col_主治医生,
-            this.col_上传});
+            this.col_UPLOAD,
+            this.col_UPLOAD_TIME,
+            this.col_PATIENT_NAME,
+            this.col_PATIENT_ID,
+            this.col_VISIT_ID,
+            this.col_VISIT_NO,
+            this.col_VISIT_TIME,
+            this.col_DISCHARGE_TIME,
+            this.col_UPLOAD_LOG,
+            this.col_DEPT_NAME,
+            this.col_DOCTOR_IN_CHARGE});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -240,11 +251,11 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.XDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.XDataGrid1.Location = new System.Drawing.Point(0, 51);
-            this.XDataGrid1.Name = "XDataGrid1";
-            this.XDataGrid1.ReadOnly = true;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 51);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -252,92 +263,12 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.XDataGrid1.RowHeadersVisible = false;
-            this.XDataGrid1.Size = new System.Drawing.Size(991, 644);
-            this.XDataGrid1.TabIndex = 8;
-            this.XDataGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
-            this.XDataGrid1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
-            // 
-            // col_Chk
-            // 
-            this.col_Chk.HeaderText = ".";
-            this.col_Chk.Name = "col_Chk";
-            this.col_Chk.ReadOnly = true;
-            this.col_Chk.Width = 40;
-            // 
-            // col_姓名
-            // 
-            this.col_姓名.HeaderText = "姓名";
-            this.col_姓名.Name = "col_姓名";
-            this.col_姓名.ReadOnly = true;
-            // 
-            // col_性别
-            // 
-            this.col_性别.HeaderText = "性别";
-            this.col_性别.Name = "col_性别";
-            this.col_性别.ReadOnly = true;
-            this.col_性别.Width = 60;
-            // 
-            // col_患者ID号
-            // 
-            this.col_患者ID号.HeaderText = "患者ID号";
-            this.col_患者ID号.Name = "col_患者ID号";
-            this.col_患者ID号.ReadOnly = true;
-            // 
-            // col_入院次
-            // 
-            this.col_入院次.HeaderText = "入院次";
-            this.col_入院次.Name = "col_入院次";
-            this.col_入院次.ReadOnly = true;
-            // 
-            // col_就诊流水号
-            // 
-            this.col_就诊流水号.HeaderText = "就诊流水号";
-            this.col_就诊流水号.Name = "col_就诊流水号";
-            this.col_就诊流水号.ReadOnly = true;
-            this.col_就诊流水号.Visible = false;
-            // 
-            // col_入院时间
-            // 
-            this.col_入院时间.HeaderText = "入院时间";
-            this.col_入院时间.Name = "col_入院时间";
-            this.col_入院时间.ReadOnly = true;
-            this.col_入院时间.Width = 150;
-            // 
-            // col_出院时间
-            // 
-            this.col_出院时间.HeaderText = "出院时间";
-            this.col_出院时间.Name = "col_出院时间";
-            this.col_出院时间.ReadOnly = true;
-            this.col_出院时间.Width = 150;
-            // 
-            // col_诊断
-            // 
-            this.col_诊断.HeaderText = "诊断";
-            this.col_诊断.Name = "col_诊断";
-            this.col_诊断.ReadOnly = true;
-            this.col_诊断.Width = 200;
-            // 
-            // col_病区
-            // 
-            this.col_病区.HeaderText = "病区";
-            this.col_病区.Name = "col_病区";
-            this.col_病区.ReadOnly = true;
-            this.col_病区.Width = 150;
-            // 
-            // col_主治医生
-            // 
-            this.col_主治医生.HeaderText = "主治医生";
-            this.col_主治医生.Name = "col_主治医生";
-            this.col_主治医生.ReadOnly = true;
-            // 
-            // col_上传
-            // 
-            this.col_上传.HeaderText = "上传";
-            this.col_上传.Name = "col_上传";
-            this.col_上传.ReadOnly = true;
-            this.col_上传.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(991, 644);
+            this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
+            this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
             // 
             // chkAll
             // 
@@ -349,21 +280,85 @@ namespace Heren.MedQC.MedRecord
             this.chkAll.UseVisualStyleBackColor = true;
             this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
-            // dtpTimeBegin
+            // col_Chk
             // 
-            this.dtpTimeBegin.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpTimeBegin.Location = new System.Drawing.Point(227, 3);
-            this.dtpTimeBegin.Name = "dtpTimeBegin";
-            this.dtpTimeBegin.Size = new System.Drawing.Size(111, 21);
-            this.dtpTimeBegin.TabIndex = 49;
+            this.col_Chk.HeaderText = ".";
+            this.col_Chk.Name = "col_Chk";
+            this.col_Chk.ReadOnly = true;
+            this.col_Chk.Width = 40;
             // 
-            // dtpTimeEnd
+            // col_UPLOAD
             // 
-            this.dtpTimeEnd.CalendarFont = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpTimeEnd.Location = new System.Drawing.Point(367, 3);
-            this.dtpTimeEnd.Name = "dtpTimeEnd";
-            this.dtpTimeEnd.Size = new System.Drawing.Size(111, 21);
-            this.dtpTimeEnd.TabIndex = 49;
+            this.col_UPLOAD.HeaderText = "上传";
+            this.col_UPLOAD.Name = "col_UPLOAD";
+            this.col_UPLOAD.ReadOnly = true;
+            this.col_UPLOAD.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // col_UPLOAD_TIME
+            // 
+            this.col_UPLOAD_TIME.HeaderText = "上传时间";
+            this.col_UPLOAD_TIME.Name = "col_UPLOAD_TIME";
+            this.col_UPLOAD_TIME.ReadOnly = true;
+            this.col_UPLOAD_TIME.Width = 120;
+            // 
+            // col_PATIENT_NAME
+            // 
+            this.col_PATIENT_NAME.HeaderText = "姓名";
+            this.col_PATIENT_NAME.Name = "col_PATIENT_NAME";
+            this.col_PATIENT_NAME.ReadOnly = true;
+            // 
+            // col_PATIENT_ID
+            // 
+            this.col_PATIENT_ID.HeaderText = "患者ID号";
+            this.col_PATIENT_ID.Name = "col_PATIENT_ID";
+            this.col_PATIENT_ID.ReadOnly = true;
+            // 
+            // col_VISIT_ID
+            // 
+            this.col_VISIT_ID.HeaderText = "入院次";
+            this.col_VISIT_ID.Name = "col_VISIT_ID";
+            this.col_VISIT_ID.ReadOnly = true;
+            // 
+            // col_VISIT_NO
+            // 
+            this.col_VISIT_NO.HeaderText = "就诊流水号";
+            this.col_VISIT_NO.Name = "col_VISIT_NO";
+            this.col_VISIT_NO.ReadOnly = true;
+            this.col_VISIT_NO.Visible = false;
+            // 
+            // col_VISIT_TIME
+            // 
+            this.col_VISIT_TIME.HeaderText = "入院时间";
+            this.col_VISIT_TIME.Name = "col_VISIT_TIME";
+            this.col_VISIT_TIME.ReadOnly = true;
+            this.col_VISIT_TIME.Width = 150;
+            // 
+            // col_DISCHARGE_TIME
+            // 
+            this.col_DISCHARGE_TIME.HeaderText = "出院时间";
+            this.col_DISCHARGE_TIME.Name = "col_DISCHARGE_TIME";
+            this.col_DISCHARGE_TIME.ReadOnly = true;
+            this.col_DISCHARGE_TIME.Width = 150;
+            // 
+            // col_UPLOAD_LOG
+            // 
+            this.col_UPLOAD_LOG.HeaderText = "上传日志";
+            this.col_UPLOAD_LOG.Name = "col_UPLOAD_LOG";
+            this.col_UPLOAD_LOG.ReadOnly = true;
+            this.col_UPLOAD_LOG.Width = 200;
+            // 
+            // col_DEPT_NAME
+            // 
+            this.col_DEPT_NAME.HeaderText = "病区";
+            this.col_DEPT_NAME.Name = "col_DEPT_NAME";
+            this.col_DEPT_NAME.ReadOnly = true;
+            this.col_DEPT_NAME.Width = 150;
+            // 
+            // col_DOCTOR_IN_CHARGE
+            // 
+            this.col_DOCTOR_IN_CHARGE.HeaderText = "主治医生";
+            this.col_DOCTOR_IN_CHARGE.Name = "col_DOCTOR_IN_CHARGE";
+            this.col_DOCTOR_IN_CHARGE.ReadOnly = true;
             // 
             // RecUploadNewForm
             // 
@@ -373,14 +368,14 @@ namespace Heren.MedQC.MedRecord
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(991, 695);
             this.Controls.Add(this.chkAll);
-            this.Controls.Add(this.XDataGrid1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.XPanel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "RecUploadNewForm";
             this.Text = "病案上传";
             this.XPanel1.ResumeLayout(false);
             this.XPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.XDataGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -400,21 +395,21 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XLabel lbl_msg;
         private Common.Forms.XLabel XLabel4;
         private Common.Forms.XLabel XLabel2;
-        private Common.Forms.XDataGrid XDataGrid1;
+        private Heren.Common.Controls.TableView.DataTableView  dataGridView1;
         private System.Windows.Forms.CheckBox chkAll;
-        private Common.Forms.XCheckBoxColumn col_Chk;
-        private Common.Forms.XTextBoxColumn col_姓名;
-        private Common.Forms.XTextBoxColumn col_性别;
-        private Common.Forms.XTextBoxColumn col_患者ID号;
-        private Common.Forms.XTextBoxColumn col_入院次;
-        private Common.Forms.XTextBoxColumn col_就诊流水号;
-        private Common.Forms.XTextBoxColumn col_入院时间;
-        private Common.Forms.XTextBoxColumn col_出院时间;
-        private Common.Forms.XTextBoxColumn col_诊断;
-        private Common.Forms.XTextBoxColumn col_病区;
-        private Common.Forms.XTextBoxColumn col_主治医生;
-        private Common.Forms.XLinkColumn col_上传;
         private System.Windows.Forms.DateTimePicker dtpTimeBegin;
         private System.Windows.Forms.DateTimePicker dtpTimeEnd;
+        private Common.Forms.XCheckBoxColumn col_Chk;
+        private Common.Forms.XLinkColumn col_UPLOAD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_UPLOAD_TIME;
+        private Common.Forms.XTextBoxColumn col_PATIENT_NAME;
+        private Common.Forms.XTextBoxColumn col_PATIENT_ID;
+        private Common.Forms.XTextBoxColumn col_VISIT_ID;
+        private Common.Forms.XTextBoxColumn col_VISIT_NO;
+        private Common.Forms.XTextBoxColumn col_VISIT_TIME;
+        private Common.Forms.XTextBoxColumn col_DISCHARGE_TIME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_UPLOAD_LOG;
+        private Common.Forms.XTextBoxColumn col_DEPT_NAME;
+        private Common.Forms.XTextBoxColumn col_DOCTOR_IN_CHARGE;
     }
 }

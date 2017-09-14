@@ -35,7 +35,7 @@ namespace EMRDBLib
             }
         }
 
-        public short GetList(string patientID, string szVisitNO, ref List<Diagnosis> lstDiagnosis)
+        public short GetList(string patientID, string szVisitNO, ref List<HerenHis.Diagnosis> lstDiagnosis)
         {
             if (base.HerenHisAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -59,16 +59,16 @@ namespace EMRDBLib
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 }
                 if (lstDiagnosis == null)
-                    lstDiagnosis = new List<Diagnosis>();
+                    lstDiagnosis = new List<HerenHis.Diagnosis>();
                 lstDiagnosis.Clear();
                 do
                 {
-                    Diagnosis model = new Diagnosis();
+                    HerenHis.Diagnosis model = new HerenHis.Diagnosis();
                     for (int i = 0; i < dataReader.FieldCount; i++)
                     {
                         if (dataReader.IsDBNull(i))
                             continue;
-                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(Diagnosis), dataReader.GetName(i));
+                        PropertyInfo property = Reflect.GetPropertyInfo(typeof(HerenHis.Diagnosis), dataReader.GetName(i));
                         bool result = Reflect.SetPropertyValue(model, property, dataReader.GetValue(i));
                     }
                     lstDiagnosis.Add(model);

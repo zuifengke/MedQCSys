@@ -35,7 +35,16 @@ namespace EMRDBLib
             /// <summary>
             /// 状态 0:未上传 1已上传
             /// </summary>
-            public const string STATUS = "STATUS";
+            public const string UPLOAD_STATUS = "UPLOAD_STATUS";
+            /// <summary>
+            /// 上传日志
+            /// </summary>
+            public const string UPLOAD_LOG = "UPLOAD_LOG";
+            /// <summary>
+            /// 上传时间
+            /// </summary>
+            public const string UPLOAD_TIME = "UPLOAD_TIME";
+
         }
     }
 }

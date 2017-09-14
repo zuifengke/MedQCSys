@@ -45,10 +45,12 @@ namespace EMRDBLib.DbAccess
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_NAME);
-            sbField.AppendFormat("{0},", SystemData.RecUploadTable.STATUS);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_STATUS);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.VISIT_ID);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_LOG);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_TIME);
             sbField.AppendFormat("{0}", SystemData.RecUploadTable.VISIT_NO);
             string szCondition = string.Format("1=1");
             if (!string.IsNullOrEmpty(szUploadID))
@@ -83,8 +85,8 @@ namespace EMRDBLib.DbAccess
                         case SystemData.RecUploadTable.PATIENT_NAME:
                             RecUpload.PATIENT_NAME = dataReader.GetString(i);
                             break;
-                        case SystemData.RecUploadTable.STATUS:
-                            RecUpload.STATUS = int.Parse(dataReader.GetValue(i).ToString());
+                        case SystemData.RecUploadTable.UPLOAD_STATUS:
+                            RecUpload.UPLOAD_STATUS = int.Parse(dataReader.GetValue(i).ToString());
                             break;
                         case SystemData.RecUploadTable.UPLOAD_ID:
                             RecUpload.UPLOAD_ID = dataReader.GetString(i);
@@ -94,6 +96,12 @@ namespace EMRDBLib.DbAccess
                             break;
                         case SystemData.RecUploadTable.VISIT_NO:
                             RecUpload.VISIT_NO = dataReader.GetString(i);
+                            break;
+                        case SystemData.RecUploadTable.UPLOAD_LOG:
+                            RecUpload.UPLOAD_LOG = dataReader.GetString(i);
+                            break;
+                        case SystemData.RecUploadTable.UPLOAD_TIME:
+                            RecUpload.UPLOAD_TIME = dataReader.GetDateTime(i);
                             break;
                     }
                 }
@@ -116,16 +124,18 @@ namespace EMRDBLib.DbAccess
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_NAME);
-            sbField.AppendFormat("{0},", SystemData.RecUploadTable.STATUS);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_STATUS);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.VISIT_ID);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_LOG);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_TIME);
             sbField.AppendFormat("{0}", SystemData.RecUploadTable.VISIT_NO);
             string szCondition = string.Format("1=1");
             szCondition = string.Format("{0} AND {1} = '{2}' AND {3} = '{4}'"
                 , szCondition
                 , SystemData.RecUploadTable.PATIENT_ID, szPatientID
-                , SystemData.RecUploadTable.VISIT_NO,szVisitNo);
+                , SystemData.RecUploadTable.VISIT_NO, szVisitNo);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
                     , sbField.ToString(), SystemData.DataTable.REC_UPLOAD, szCondition);
 
@@ -154,8 +164,8 @@ namespace EMRDBLib.DbAccess
                             case SystemData.RecUploadTable.PATIENT_NAME:
                                 RecUpload.PATIENT_NAME = dataReader.GetString(i);
                                 break;
-                            case SystemData.RecUploadTable.STATUS:
-                                RecUpload.STATUS = int.Parse(dataReader.GetValue(i).ToString());
+                            case SystemData.RecUploadTable.UPLOAD_STATUS:
+                                RecUpload.UPLOAD_STATUS = int.Parse(dataReader.GetValue(i).ToString());
                                 break;
                             case SystemData.RecUploadTable.UPLOAD_ID:
                                 RecUpload.UPLOAD_ID = dataReader.GetString(i);
@@ -165,6 +175,12 @@ namespace EMRDBLib.DbAccess
                                 break;
                             case SystemData.RecUploadTable.VISIT_NO:
                                 RecUpload.VISIT_NO = dataReader.GetString(i);
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_LOG:
+                                RecUpload.UPLOAD_LOG = dataReader.GetString(i);
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_TIME:
+                                RecUpload.UPLOAD_TIME = dataReader.GetDateTime(i);
                                 break;
                         }
                     }
@@ -180,37 +196,175 @@ namespace EMRDBLib.DbAccess
             finally { base.MedQCAccess.CloseConnnection(false); }
         }
 
+        public short GetRecUploads(string szPatientID, string szUploadStatus, string szTimeType, DateTime dtStartTime, DateTime dtEndTime, string szDeptCodes, ref List<RecUpload> lstRecUploads)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.PATIENT_ID);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.PATIENT_NAME);
+            sbField.AppendFormat("B.{0},", SystemData.RecUploadTable.UPLOAD_STATUS);
+            sbField.AppendFormat("B.{0},", SystemData.RecUploadTable.UPLOAD_ID);
+            sbField.AppendFormat("B.{0},", SystemData.RecUploadTable.UPLOAD_LOG);
+            sbField.AppendFormat("B.{0},", SystemData.RecUploadTable.UPLOAD_TIME);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.PATIENT_ID);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.VISIT_ID);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.DIAGNOSIS);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.DISCHARGE_TIME);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.DEPT_NAME);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.VISIT_TIME);
+            sbField.AppendFormat("A.{0},", SystemData.PatVisitView.INCHARGE_DOCTOR);
+            sbField.AppendFormat("A.{0}", SystemData.RecUploadTable.VISIT_NO);
+            string szCondition = string.Format("1=1 AND A.{0}=B.{0}(+) AND A.{1}=B.{1}(+)"
+                , SystemData.PatVisitView.PATIENT_ID
+                , SystemData.PatVisitView.VISIT_ID);
+            if (!string.IsNullOrEmpty(szPatientID))
+            {
+                szCondition = string.Format("{0} AND {1} = '{2}'"
+                    , szCondition
+                    , SystemData.RecUploadTable.PATIENT_ID, szPatientID);
+            }
+            if (!string.IsNullOrEmpty(szDeptCodes))
+            {
+                szCondition = string.Format("{0} AND {1} in({2})"
+                    , szCondition
+                    , SystemData.PatVisitView.DEPT_CODE, szDeptCodes);
+            }
+            szCondition = string.Format("{0} AND {1} >= {2} AND {1}<={3}"
+                , szCondition
+                , szTimeType
+                , base.MedQCAccess.GetSqlTimeFormat(dtStartTime)
+                , base.MedQCAccess.GetSqlTimeFormat(dtEndTime));
+            if (!string.IsNullOrEmpty(szUploadStatus))
+            {
+                int nUploadStatus = SystemData.UploadStatus.GetMsgStateCode(szUploadStatus);
+                if (szUploadStatus == SystemData.UploadStatus.CnNot)
+                {
+                    szCondition = string.Format("{0} AND ({1} is null or {1} = 0 )"
+                        , szCondition
+                        , SystemData.RecUploadTable.UPLOAD_STATUS);
+                }
+                else
+                    szCondition = string.Format("{0} AND {1} = {2}"
+                        , szCondition
+                        , SystemData.RecUploadTable.UPLOAD_STATUS
+                        , nUploadStatus);
+            }
+            string szTable = string.Format("{0} A,{1} B"
+                , SystemData.DataView.PAT_VISIT_V
+                , SystemData.DataTable.REC_UPLOAD);
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE
+                    , sbField.ToString(), szTable, szCondition);
+
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (lstRecUploads == null)
+                    lstRecUploads = new List<RecUpload>();
+                do
+                {
+                    RecUpload RecUpload = new RecUpload();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.RecUploadTable.PATIENT_ID:
+                                RecUpload.PATIENT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.RecUploadTable.PATIENT_NAME:
+                                RecUpload.PATIENT_NAME = dataReader.GetString(i);
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_STATUS:
+                                RecUpload.UPLOAD_STATUS = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_ID:
+                                RecUpload.UPLOAD_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecUploadTable.VISIT_ID:
+                                RecUpload.VISIT_ID = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecUploadTable.VISIT_NO:
+                                RecUpload.VISIT_NO = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_LOG:
+                                RecUpload.UPLOAD_LOG = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.RecUploadTable.UPLOAD_TIME:
+                                RecUpload.UPLOAD_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.PatVisitView.DIAGNOSIS:
+                                RecUpload.Diagnosis = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.PatVisitView.DEPT_NAME:
+                                RecUpload.DeptName = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.PatVisitView.DISCHARGE_TIME:
+                                RecUpload.DischargeTime = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.PatVisitView.VISIT_TIME:
+                                RecUpload.VisitTime = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.PatVisitView.INCHARGE_DOCTOR:
+                                RecUpload.InchargeDoctor = dataReader.GetValue(i).ToString();
+                                break;
+                            case SystemData.PatVisitView.PATIENT_SEX:
+                                RecUpload.PatientSex = dataReader.GetValue(i).ToString();
+                                break;
+                        }
+                    }
+                    lstRecUploads.Add(RecUpload);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL }, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
         /// <summary>
         /// 新增一条人工核查结果信息
         /// </summary>
-        /// <param name="RecUpload">自动核查规则配置信息</param>
+        /// <param name="recUpload">自动核查规则配置信息</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short Insert(RecUpload RecUpload)
+        public short Insert(RecUpload recUpload)
         {
-            if (RecUpload == null)
+            if (recUpload == null)
             {
                 LogManager.Instance.WriteLog("", new string[] { "" }
-                    , new object[] { RecUpload }, "参数不能为空");
+                    , new object[] { recUpload }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
-            if (RecUpload.UPLOAD_ID == string.Empty)
+            if (recUpload.UPLOAD_ID == string.Empty)
             {
                 return SystemData.ReturnValue.EXCEPTION;
             }
             StringBuilder sbField = new StringBuilder();
             StringBuilder sbValue = new StringBuilder();
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_ID);
-            sbValue.AppendFormat("'{0}',", RecUpload.PATIENT_ID);
+            sbValue.AppendFormat("'{0}',", recUpload.PATIENT_ID);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.PATIENT_NAME);
-            sbValue.AppendFormat("'{0}',", RecUpload.PATIENT_NAME);
-            sbField.AppendFormat("{0},", SystemData.RecUploadTable.STATUS);
-            sbValue.AppendFormat("{0},", RecUpload.STATUS);
+            sbValue.AppendFormat("'{0}',", recUpload.PATIENT_NAME);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_STATUS);
+            sbValue.AppendFormat("{0},", recUpload.UPLOAD_STATUS);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_TIME);
+            sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(recUpload.UPLOAD_TIME));
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_ID);
-            sbValue.AppendFormat("'{0}',", RecUpload.UPLOAD_ID);
+            sbValue.AppendFormat("'{0}',", recUpload.UPLOAD_ID);
+            sbField.AppendFormat("{0},", SystemData.RecUploadTable.UPLOAD_LOG);
+            sbValue.AppendFormat("'{0}',", recUpload.UPLOAD_LOG);
             sbField.AppendFormat("{0},", SystemData.RecUploadTable.VISIT_ID);
-            sbValue.AppendFormat("'{0}',", RecUpload.VISIT_ID);
+            sbValue.AppendFormat("'{0}',", recUpload.VISIT_ID);
             sbField.AppendFormat("{0}", SystemData.RecUploadTable.VISIT_NO);
-            sbValue.AppendFormat("'{0}'", RecUpload.VISIT_NO);
+            sbValue.AppendFormat("'{0}'", recUpload.VISIT_NO);
             string szSQL = string.Format(SystemData.SQL.INSERT, SystemData.DataTable.REC_UPLOAD, sbField.ToString(), sbValue.ToString());
             int nCount = 0;
             try
@@ -234,31 +388,33 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="timeQCRule">自动核查规则配置信息</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short Update(RecUpload RecUpload)
+        public short Update(RecUpload model)
         {
-            if (RecUpload == null)
+            if (model == null)
             {
                 LogManager.Instance.WriteLog("", new string[] { "" }
-                    , new object[] { RecUpload }, "参数不能为空");
+                    , new object[] { model }, "参数不能为空");
                 return SystemData.ReturnValue.PARAM_ERROR;
             }
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("{0}='{1}',"
-                , SystemData.RecUploadTable.PATIENT_ID,RecUpload.PATIENT_ID);
+                , SystemData.RecUploadTable.PATIENT_ID, model.PATIENT_ID);
             sbField.AppendFormat("{0}='{1}',"
-                , SystemData.RecUploadTable.PATIENT_NAME, RecUpload.PATIENT_NAME);
+                , SystemData.RecUploadTable.PATIENT_NAME, model.PATIENT_NAME);
             sbField.AppendFormat("{0}={1},"
-                , SystemData.RecUploadTable.STATUS, RecUpload.STATUS);
-            sbField.AppendFormat("{0}={1},"
-                , SystemData.RecUploadTable.UPLOAD_ID, RecUpload.UPLOAD_ID);
+                , SystemData.RecUploadTable.UPLOAD_STATUS, model.UPLOAD_STATUS);
             sbField.AppendFormat("{0}='{1}',"
-                , SystemData.RecUploadTable.VISIT_ID, RecUpload.VISIT_ID);
-            sbField.AppendFormat("{0}='{1}'"
-                , SystemData.RecUploadTable.VISIT_NO, RecUpload.VISIT_NO);
-            string szCondition = string.Format("{0}='{1}'", SystemData.RecUploadTable.UPLOAD_ID, RecUpload.UPLOAD_ID);
-            string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.REC_PAPER, sbField.ToString(), szCondition);
+                , SystemData.RecUploadTable.VISIT_ID, model.VISIT_ID);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.RecUploadTable.VISIT_NO, model.VISIT_NO);
+            sbField.AppendFormat("{0}='{1}',"
+                , SystemData.RecUploadTable.UPLOAD_LOG, model.UPLOAD_LOG);
+            sbField.AppendFormat("{0}={1}"
+                , SystemData.RecUploadTable.UPLOAD_TIME,base.MedQCAccess.GetSqlTimeFormat(model.UPLOAD_TIME));
+            string szCondition = string.Format("{0}='{1}'", SystemData.RecUploadTable.UPLOAD_ID, model.UPLOAD_ID);
+            string szSQL = string.Format(SystemData.SQL.UPDATE, SystemData.DataTable.REC_UPLOAD, sbField.ToString(), szCondition);
             int nCount = 0;
             try
             {

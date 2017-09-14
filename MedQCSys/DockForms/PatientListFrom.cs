@@ -7,17 +7,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using Heren.Common.Libraries;
 using Heren.Common.DockSuite;
-using Heren.Common.Controls;
-using Heren.Common.Controls.VirtualTreeView;
-using MedDocSys.QCEngine.TimeCheck;
-
 using MedQCSys.Dialogs;
 using MedQCSys.Utility;
 using MedQCSys.Controls.PatInfoList;
@@ -871,7 +864,6 @@ namespace MedQCSys.DockForms
             EMRDBLib.PatVisitInfo patVisitLog = this.patInfoList.SelectedCard.Tag as EMRDBLib.PatVisitInfo;
             if (patVisitLog == null)
                 return;
-
             this.Update();
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             SystemConfig.Instance.Write(SystemData.ConfigKey.DEFAULT_PATIENT_ID, patVisitLog.PATIENT_ID);

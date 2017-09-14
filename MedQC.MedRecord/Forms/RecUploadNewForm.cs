@@ -117,73 +117,56 @@ namespace Heren.MedQC.MedRecord
 
         private void Search()
         {
-            this.XDataGrid1.Rows.Clear();
+            this.dataGridView1.Rows.Clear();
             this.chkAll.Checked = false;
             DateTime dtTimeBegin = dtpTimeBegin.Value;
             DateTime dtTimeEnd = dtpTimeEnd.Value;
             string patientID = txt_PATIENT_ID.Text.Trim();
             string szStatus = cboStatus.Text;
-            StringBuilder sbSql = new StringBuilder();
-            sbSql.Append(" select t.patient_id,t.visit_id,t.visit_no,t.patient_name,diagnosis,patient_sex,visit_time,discharge_time,dept_name,incharge_doctor,t2.status");
-            sbSql.Append(" from pat_visit_v t, rec_upload t2");
-            sbSql.Append(" where 1=1 and t.patient_id = t2.patient_id(+) and t.visit_id = t2.visit_id(+)");
+            string szTimeType = string.Empty;
+            string szDeptCodes = string.Empty;
             if (cboTimeType.Text == "入院日期")
             {
-                sbSql.AppendFormat(" and t.VISIT_TIME >= to_date('{0}',  'yyyy-MM-dd HH24:mi:ss') and t.visit_time <= to_date('{1}', 'yyyy-MM-dd HH24:mi:ss')"
-                    , dtTimeBegin.ToString()
-                    , dtTimeEnd.ToString());
+                szTimeType = "VISIT_TIME";
             }
             else
             {
-                sbSql.AppendFormat(" and t.discharge_time >= to_date('{0}',  'yyyy-MM-dd HH24:mi:ss') and t.discharge_time <= to_date('{1}', 'yyyy-MM-dd HH24:mi:ss')"
-                    , dtTimeBegin.ToString()
-                    , dtTimeEnd.ToString());
+                szTimeType = "DISCHARGE_TIME";
             }
             DataTable dtWardList = this.txt_DEPT_NAME.Tag as DataTable;
             if (dtWardList != null && dtWardList.Rows.Count > 0)
             {
-                sbSql.AppendFormat(" and t.DEPT_CODE in ({0}) ", GetStrWards(dtWardList));
+                szDeptCodes = GetStrWards(dtWardList);
             }
-            if (!string.IsNullOrEmpty(patientID))
-            {
-                sbSql.Append(" and t.patient_id = '" + patientID + "'");
-            }
-            if (szStatus == "未上传")
-            {
-                sbSql.Append(" and t2.status is null ");
-            }
-            else
-            {
-                sbSql.Append(" and t2.status = 1");
-            }
-            DataSet ds = null;
-            short shRet = CommonAccess.Instance.ExecuteQuery(sbSql.ToString(), out ds);
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow item in ds.Tables[0].Rows)
-                {
-                    int i = this.XDataGrid1.Rows.Add();
-                    DataTableViewRow r = this.XDataGrid1.Rows[i];
-                    r.Cells[this.col_姓名.Index].Value = item["patient_name"];
-                    r.Cells[this.col_上传.Index].Value = item["status"].ToString() == "1" ? "已上传" : "上传";
-                    r.Cells[this.col_主治医生.Index].Value = item["incharge_doctor"];
-                    r.Cells[this.col_入院时间.Index].Value = item["visit_time"];
-                    r.Cells[this.col_入院次.Index].Value = item["visit_id"];
-                    r.Cells[this.col_出院时间.Index].Value = item["discharge_time"];
-                    r.Cells[this.col_就诊流水号.Index].Value = item["visit_no"];
-                    r.Cells[this.col_性别.Index].Value = item["patient_sex"];
-                    r.Cells[this.col_患者ID号.Index].Value = item["patient_id"];
-                    r.Cells[this.col_病区.Index].Value = item["dept_name"];
-                    r.Cells[this.col_诊断.Index].Value = item["diagnosis"];
-
-                }
-            }
-            else
+            List<RecUpload> lstRecUpload = null;
+            short shRet = RecUploadAccess.Instance.GetRecUploads(patientID, szStatus, szTimeType, dtTimeBegin, dtTimeEnd, szDeptCodes, ref lstRecUpload);
+            if (lstRecUpload == null || lstRecUpload.Count <= 0)
             {
                 this.lbl_msg.Text = string.Format("未找到患者病历");
                 return;
             }
-            this.lbl_msg.Text = string.Format("共{0}份患者病历", ds.Tables[0].Rows.Count);
+            if (lstRecUpload != null && lstRecUpload.Count > 0)
+            {
+                foreach (RecUpload item in lstRecUpload)
+                {
+                    int i = this.dataGridView1.Rows.Add();
+                    DataTableViewRow row = this.dataGridView1.Rows[i];
+                    row.Cells[this.col_PATIENT_NAME.Index].Value = item.PATIENT_NAME;
+                    row.Cells[this.col_UPLOAD.Index].Value = item.UPLOAD_STATUS == 1 ? "已上传" : "未上传";
+                    row.Cells[this.col_DOCTOR_IN_CHARGE.Index].Value = item.InchargeDoctor;
+                    row.Cells[this.col_VISIT_TIME.Index].Value = item.VisitTime.ToString("yyyy-MM-dd HH:mm");
+                    row.Cells[this.col_VISIT_ID.Index].Value = item.VISIT_ID;
+                    row.Cells[this.col_DISCHARGE_TIME.Index].Value = item.DischargeTime.ToString("yyyy-MM-dd HH:mm");
+                    row.Cells[this.col_VISIT_NO.Index].Value = item.VISIT_NO;
+                    row.Cells[this.col_PATIENT_ID.Index].Value = item.PATIENT_ID;
+                    row.Cells[this.col_DEPT_NAME.Index].Value = item.DeptName;
+                    row.Cells[this.col_UPLOAD_LOG.Index].Value = item.UPLOAD_LOG;
+                    if (item.UPLOAD_TIME != item.DefaultTime)
+                        row.Cells[this.col_UPLOAD_TIME.Index].Value = item.UPLOAD_TIME.ToString("yyyy-MM-dd HH:mm");
+                    row.Tag = item;
+                }
+            }
+            this.lbl_msg.Text = string.Format("共{0}份患者病历", lstRecUpload.Count);
         }
 
         ///将选择的病区装换成字符串 用于查询
@@ -202,86 +185,110 @@ namespace Heren.MedQC.MedRecord
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            if (this.XDataGrid1.Rows.Count <= 0)
+            if (this.dataGridView1.Rows.Count <= 0)
                 return;
             RecUploadService.Instance.InitializeDict();
-            WorkProcess.Instance.Initialize(this, this.XDataGrid1.Rows.Count, "正在上传....");
-            foreach (DataTableViewRow row in this.XDataGrid1.Rows)
+            int nFail = 0;
+            int nSuccess = 0;
+            WorkProcess.Instance.Initialize(this, this.dataGridView1.Rows.Count, "正在上传....");
+            foreach (DataTableViewRow row in this.dataGridView1.Rows)
             {
                 WorkProcess.Instance.Show(row.Index, true);
                 if (row.Cells[this.col_Chk.Index].Value != null
                     && row.Cells[this.col_Chk.Index].Value.ToString().ToLower() == "true")
-                    RecUploadLog(row.Index);
+                {
+                    if (RecUploadRow(row))
+                        nSuccess++;
+                    else
+                        nFail++;
+                }
             }
             WorkProcess.Instance.Close();
+            if (nFail > 0)
+                MessageBoxEx.ShowMessage(string.Format("本次上传结束，成功{0}个，失败{1}个。详情见上传日志列"
+                    , nSuccess, nFail));
+            else
+                this.ShowStatusMessage(string.Format("本次上传结束，成功{0}个", nSuccess));
         }
 
-        private void RecUploadLog(int index)
-        {
-            string patient_id = this.XDataGrid1.Rows[index].Cells[col_患者ID号.Index].Value.ToString();
-            string visit_id = this.XDataGrid1.Rows[index].Cells[col_入院次.Index].Value.ToString();
-            string visit_no = this.XDataGrid1.Rows[index].Cells[this.col_就诊流水号.Index].Value.ToString();
-            string patient_name = this.XDataGrid1.Rows[index].Cells[this.col_姓名.Index].Value.ToString();
-            List<RecUpload> lstRecUpload = null;
-            short shRet = RecUploadAccess.Instance.GetRecUploads(patient_id, visit_no, ref lstRecUpload);
-            if (lstRecUpload == null)
-            {
-                RecUpload recUpload = new RecUpload();
-                recUpload.UPLOAD_ID = recUpload.MakeID();
-                recUpload.PATIENT_ID = patient_id;
-                recUpload.PATIENT_NAME = patient_name;
-                recUpload.STATUS = 1;
-                recUpload.VISIT_ID = visit_id;
-                recUpload.VISIT_NO = visit_no;
-                shRet = RecUploadAccess.Instance.Insert(recUpload);
-                if (shRet != SystemData.ReturnValue.OK)
-                {
-                    MessageBoxEx.Show("上传失败");
-                    return;
-                }
-                this.XDataGrid1.Rows[index].Cells[this.col_上传.Index].Value = "已上传";
-                this.XDataGrid1.Rows[index].Cells[this.col_上传.Index].Tag = recUpload;
-            }
-            string error = "";
-            bool result = RecUploadService.Instance.Upload(patient_id, visit_id,ref error);
-        }
 
         private void XDataGrid1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
-            if (e.ColumnIndex == this.col_上传.Index)
+            if (e.ColumnIndex == this.col_UPLOAD.Index)
             {
-                RecUploadLog(e.RowIndex);
+                if (!RecUploadRow(this.dataGridView1.Rows[e.RowIndex]))
+                    MessageBoxEx.ShowMessage(string.Format("本次上传失败"));
             }
             if (e.ColumnIndex == this.col_Chk.Index)
             {
-                if (this.XDataGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null
-                    || this.XDataGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToLower() == "false")
+                if (this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null
+                    || this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToLower() == "false")
                 {
-                    this.XDataGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                    this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
                 }
                 else
                 {
-                    this.XDataGrid1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                    this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
                 }
             }
         }
+        private bool RecUploadRow(DataGridViewRow row)
+        {
+            RecUpload recUpload = row.Tag as RecUpload;
+            string szUploadLog = "";
+            bool result = RecUploadService.Instance.Upload(recUpload.PATIENT_ID, recUpload.VISIT_ID, ref szUploadLog);
+            if (!result)
+            {
+                recUpload.UPLOAD_STATUS = 0;
+                row.Cells[this.col_UPLOAD.Index].Value = "上传失败";
+                row.Cells[this.col_UPLOAD.Index].Style.ForeColor = Color.Red;
+            }
+            else
+            {
+                recUpload.UPLOAD_STATUS = 1;
+                row.Cells[this.col_UPLOAD.Index].Value = "已上传";
+            }
+            recUpload.UPLOAD_LOG = szUploadLog;
+            row.Cells[this.col_UPLOAD_LOG.Index].Value = szUploadLog;
 
+            recUpload.UPLOAD_TIME = SysTimeHelper.Instance.Now;
+            if (string.IsNullOrEmpty(recUpload.UPLOAD_ID))
+            {
+                recUpload.UPLOAD_ID = recUpload.MakeID();
+                short shRet = RecUploadAccess.Instance.Insert(recUpload);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    row.Cells[this.col_UPLOAD_LOG.Index].Value = "更新上传记录失败";
+                    return false;
+                }
+            }
+            else
+            {
+                short shRet = RecUploadAccess.Instance.Update(recUpload);
+                if (shRet != SystemData.ReturnValue.OK)
+                {
+                    row.Cells[this.col_UPLOAD_LOG.Index].Value = "更新上传记录失败";
+                    return false;
+                }
+            }
+            return result;
+        }
         private void chkAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.XDataGrid1.Rows.Count <= 0)
+            if (this.dataGridView1.Rows.Count <= 0)
                 return;
             if (this.chkAll.Checked)
             {
-                foreach (DataTableViewRow item in this.XDataGrid1.Rows)
+                foreach (DataTableViewRow item in this.dataGridView1.Rows)
                 {
                     item.Cells[this.col_Chk.Index].Value = true;
                 }
             }
             else
             {
-                foreach (DataTableViewRow item in this.XDataGrid1.Rows)
+                foreach (DataTableViewRow item in this.dataGridView1.Rows)
                 {
                     item.Cells[this.col_Chk.Index].Value = false;
                 }
@@ -293,8 +300,8 @@ namespace Heren.MedQC.MedRecord
         {
             if (e.RowIndex < 0)
                 return;
-            string patient_id = this.XDataGrid1.Rows[e.RowIndex].Cells[this.col_患者ID号.Index].Value.ToString();
-            string visit_id = this.XDataGrid1.Rows[e.RowIndex].Cells[this.col_入院次.Index].Value.ToString();
+            string patient_id = this.dataGridView1.Rows[e.RowIndex].Cells[this.col_PATIENT_ID.Index].Value.ToString();
+            string visit_id = this.dataGridView1.Rows[e.RowIndex].Cells[this.col_VISIT_ID.Index].Value.ToString();
             PatVisitInfo patVisit = new PatVisitInfo() { PATIENT_ID = patient_id, VISIT_ID = visit_id };
             short shRet = PatVisitAccess.Instance.GetPatVisitInfo(patVisit.PATIENT_ID, patVisit.VISIT_ID, ref patVisit);
             this.MainForm.ShowPatientPageForm(patVisit);
