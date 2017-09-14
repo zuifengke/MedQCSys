@@ -342,7 +342,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="szDeptCode">当前用户所在科室代码</param>
         /// <param name="lstPatVisitInfos">该入院时间段内的患者列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetPatientListByDisChargeTime(DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitInfos)
+        public short GetPatientListByDisChargeTime(string szPatientID,DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<PatVisitInfo> lstPatVisitInfos)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -359,11 +359,17 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.MR_STATUS
                 , SystemData.PatVisitView.VISIT_NO
                 , SystemData.PatVisitView.TOTAL_COSTS);
-
             string szCondition = string.Format("{0}>={1} AND {0}<={2} AND {3}='IP'", SystemData.PatVisitView.DISCHARGE_TIME
                 , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.VISIT_TYPE);
             if (!string.IsNullOrEmpty(szDeptCode))
                 szCondition = string.Format("{0} AND {1}='{2}'", szCondition, SystemData.PatVisitView.DEPT_CODE, szDeptCode);
+            if(!string.IsNullOrEmpty(szPatientID))
+            {
+                szCondition = string.Format("{0} AND {1}='{2}'"
+                    , szCondition
+                    , SystemData.PatVisitView.PATIENT_ID
+                    , szPatientID);
+            }
             string szOrderBy = string.Format("{0},{1}", SystemData.PatVisitView.DEPT_CODE, SystemData.PatVisitView.PATIENT_NAME);
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC, szField, SystemData.DataView.PAT_VISIT_V, szCondition, szOrderBy);
 

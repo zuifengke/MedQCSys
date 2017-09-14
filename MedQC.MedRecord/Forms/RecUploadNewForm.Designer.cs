@@ -82,7 +82,7 @@ namespace Heren.MedQC.MedRecord
             this.XPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.XPanel1.Location = new System.Drawing.Point(0, 0);
             this.XPanel1.Name = "XPanel1";
-            this.XPanel1.Size = new System.Drawing.Size(991, 51);
+            this.XPanel1.Size = new System.Drawing.Size(991, 59);
             this.XPanel1.TabIndex = 7;
             // 
             // dtpTimeEnd
@@ -106,7 +106,7 @@ namespace Heren.MedQC.MedRecord
             this.txt_DEPT_NAME.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("txt_DEPT_NAME.BindingEvents")))};
             this.txt_DEPT_NAME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txt_DEPT_NAME.Location = new System.Drawing.Point(62, 27);
+            this.txt_DEPT_NAME.Location = new System.Drawing.Point(62, 32);
             this.txt_DEPT_NAME.Name = "txt_DEPT_NAME";
             this.txt_DEPT_NAME.ReadOnly = true;
             this.txt_DEPT_NAME.Size = new System.Drawing.Size(145, 23);
@@ -117,7 +117,7 @@ namespace Heren.MedQC.MedRecord
             // XLabel3
             // 
             this.XLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.XLabel3.Location = new System.Drawing.Point(12, 30);
+            this.XLabel3.Location = new System.Drawing.Point(12, 35);
             this.XLabel3.Name = "XLabel3";
             this.XLabel3.Size = new System.Drawing.Size(49, 14);
             this.XLabel3.TabIndex = 47;
@@ -155,9 +155,9 @@ namespace Heren.MedQC.MedRecord
             this.btnUpload.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnUpload.BindingEvents")))};
             this.btnUpload.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnUpload.Location = new System.Drawing.Point(574, 24);
+            this.btnUpload.Location = new System.Drawing.Point(563, 25);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(75, 23);
+            this.btnUpload.Size = new System.Drawing.Size(77, 28);
             this.btnUpload.TabIndex = 4;
             this.btnUpload.Text = "上传选中";
             this.btnUpload.UseVisualStyleBackColor = true;
@@ -168,9 +168,9 @@ namespace Heren.MedQC.MedRecord
             this.btnSearch.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnSearch.BindingEvents")))};
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(493, 24);
+            this.btnSearch.Location = new System.Drawing.Point(494, 26);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.Size = new System.Drawing.Size(65, 28);
             this.btnSearch.TabIndex = 4;
             this.btnSearch.Text = "查询";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -188,7 +188,7 @@ namespace Heren.MedQC.MedRecord
             // txt_PATIENT_ID
             // 
             this.txt_PATIENT_ID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txt_PATIENT_ID.Location = new System.Drawing.Point(290, 25);
+            this.txt_PATIENT_ID.Location = new System.Drawing.Point(290, 30);
             this.txt_PATIENT_ID.Name = "txt_PATIENT_ID";
             this.txt_PATIENT_ID.Size = new System.Drawing.Size(77, 23);
             this.txt_PATIENT_ID.TabIndex = 3;
@@ -196,7 +196,7 @@ namespace Heren.MedQC.MedRecord
             // lbl_msg
             // 
             this.lbl_msg.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_msg.Location = new System.Drawing.Point(375, 30);
+            this.lbl_msg.Location = new System.Drawing.Point(375, 35);
             this.lbl_msg.Name = "lbl_msg";
             this.lbl_msg.Size = new System.Drawing.Size(105, 14);
             this.lbl_msg.TabIndex = 1;
@@ -205,7 +205,7 @@ namespace Heren.MedQC.MedRecord
             // XLabel4
             // 
             this.XLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.XLabel4.Location = new System.Drawing.Point(212, 31);
+            this.XLabel4.Location = new System.Drawing.Point(212, 36);
             this.XLabel4.Name = "XLabel4";
             this.XLabel4.Size = new System.Drawing.Size(77, 14);
             this.XLabel4.TabIndex = 1;
@@ -252,7 +252,7 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 51);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 59);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -264,7 +264,7 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(991, 644);
+            this.dataGridView1.Size = new System.Drawing.Size(991, 636);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
@@ -272,7 +272,7 @@ namespace Heren.MedQC.MedRecord
             // chkAll
             // 
             this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(14, 55);
+            this.chkAll.Location = new System.Drawing.Point(4, 65);
             this.chkAll.Name = "chkAll";
             this.chkAll.Size = new System.Drawing.Size(15, 14);
             this.chkAll.TabIndex = 9;

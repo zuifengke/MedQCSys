@@ -154,13 +154,13 @@ namespace Heren.MedQC.MedRecord
                     szDeptCode = deptInfo.DEPT_CODE;
                 if (string.IsNullOrEmpty(this.cboDeptName.Text))
                     szDeptCode = null;
-
+                string szPatientID = this.txtPatientID.Text.Trim();
                 GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
                 this.ShowStatusMessage("正在查询数据，请稍候...");
                 this.dataGridView1.Rows.Clear();
                 List<PatVisitInfo> lstPatVisitLog = null;
 
-                short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
+                short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(szPatientID, DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
                     DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), szDeptCode, ref lstPatVisitLog);
 
                 if (shRet != SystemData.ReturnValue.OK
@@ -227,6 +227,25 @@ namespace Heren.MedQC.MedRecord
                             item.Cells[this.col_MEDICAL_GROUP.Index].Value = last.MEDICAL_GROUP_NAME;
                             item.Cells[this.col_BED_CODE.Index].Value = last.BED_LABEL;
                         }
+                    }
+                }
+                #endregion
+                #region 绑定取消催送病历（归档日期）
+                List<QcMrIndex> lstQcMrIndexs = null;
+                QcMrIndexAccess.Instance.GetList(lstPatVisitLog, ref lstQcMrIndexs);
+                if (lstTransfers != null && lstTransfers.Count > 0)
+                {
+                    foreach (DataGridViewRow item in this.dataGridView1.Rows)
+                    {
+                        PatVisitInfo patVisitInfo = item.Tag as PatVisitInfo;
+                        if (patVisitInfo == null)
+                            continue;
+                        var result = lstQcMrIndexs.Where(m => m.PATIENT_ID == patVisitInfo.PATIENT_ID && m.VISIT_ID == patVisitInfo.VISIT_ID).FirstOrDefault();
+                        if (result != null && result.ARCHIVE_TIME != result.DefaultTime)
+                        {
+                            item.Cells[this.col_ARCHIVE_TIME.Index].Value = result.ARCHIVE_TIME.ToString("yyyy-MM-dd HH:mm");
+                        }
+                        item.Cells[this.col_ARCHIVE_TIME.Index].Tag = result;
                     }
                 }
                 #endregion
@@ -305,6 +324,76 @@ namespace Heren.MedQC.MedRecord
                 return;
             }
             this.MainForm.OpenDocument(string.Empty, patVisit.PATIENT_ID, patVisit.VISIT_ID);
+        }
+
+        private void btnArchiveTime_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.SelectedRows.Count <= 0)
+                return;
+            PatVisitInfo patVisitInfo = this.dataGridView1.SelectedRows[0].Tag as PatVisitInfo;
+            QcMrIndex qcMrIndex = this.dataGridView1.SelectedRows[0].Cells[this.col_ARCHIVE_TIME.Index].Tag as QcMrIndex;
+            if (patVisitInfo == null)
+            {
+                MessageBoxEx.ShowMessage("取消催送失败");
+                return;
+            }
+            short shRet = SystemData.ReturnValue.OK;
+            if (qcMrIndex == null)
+            {
+                qcMrIndex = new QcMrIndex();
+                qcMrIndex.ARCHIVE_DOCTOR = SystemParam.Instance.UserInfo.USER_NAME;
+                qcMrIndex.ARCHIVE_DOCTOR_ID = SystemParam.Instance.UserInfo.USER_ID;
+                qcMrIndex.ARCHIVE_TIME = SysTimeHelper.Instance.Now;
+                qcMrIndex.PATIENT_ID = patVisitInfo.PATIENT_ID;
+                qcMrIndex.VISIT_ID = patVisitInfo.VISIT_ID;
+                qcMrIndex.VISIT_NO = patVisitInfo.VISIT_NO;
+                shRet = QcMrIndexAccess.Instance.Insert(qcMrIndex);
+            }
+            else
+            {
+                qcMrIndex.ARCHIVE_TIME = SysTimeHelper.Instance.Now;
+                shRet = QcMrIndexAccess.Instance.Update(qcMrIndex);
+            }
+            if (shRet != SystemData.ReturnValue.OK)
+            {
+                MessageBoxEx.ShowMessage("取消催送失败");
+                return;
+            }
+            this.dataGridView1.SelectedRows[0].Cells[this.col_ARCHIVE_TIME.Index].Value = qcMrIndex.ARCHIVE_TIME.ToString("yyyy-MM-dd HH:mm");
+            MessageBoxEx.ShowMessage("取消催送成功");
+        }
+
+        private void btnWarningArchive_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.SelectedRows.Count <= 0)
+                return;
+            PatVisitInfo patVisitInfo = this.dataGridView1.SelectedRows[0].Tag as PatVisitInfo;
+
+            if (patVisitInfo == null)
+            {
+                MessageBoxEx.ShowMessage("催送提醒发送失败");
+                return;
+            }
+            short shRet = SystemData.ReturnValue.OK;
+            ClinicWorklist clinicWorklist = new ClinicWorklist();
+            clinicWorklist.CREATE_DEPT = SystemParam.Instance.UserInfo.DEPT_CODE;
+            clinicWorklist.CREATE_STAFF = SystemParam.Instance.UserInfo.EMP_ID;
+            clinicWorklist.CREATE_TIME = SysTimeHelper.Instance.Now;
+            clinicWorklist.TARGET_DEPT = patVisitInfo.DEPT_CODE;
+            clinicWorklist.WORKLIST_TYPE = "13";
+            clinicWorklist.TARGET_STAFF = patVisitInfo.INCHARGE_DOCTOR_ID;
+            clinicWorklist.WORKLIST_CONTENT = string.Format("{0}提醒{1}尽快将患者{2}的病历送到病案室"
+                , SystemParam.Instance.UserInfo.USER_NAME
+                , patVisitInfo.DEPT_NAME
+                , patVisitInfo.PATIENT_NAME
+                );
+            shRet = ClinicWorklistAccess.Instance.UpdateClinicWorklist(clinicWorklist, SystemData.OperFlag.INSERT);
+            if (shRet != SystemData.ReturnValue.OK)
+            {
+                MessageBoxEx.ShowMessage("催送提醒发送失败");
+                return;
+            }
+            MessageBoxEx.ShowMessage("催送提醒发送成功");
         }
     }
 }

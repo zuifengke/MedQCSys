@@ -164,7 +164,7 @@ namespace Heren.MedQC.Search
             this.dataGridView1.Rows.Clear();
             List<EMRDBLib.PatVisitInfo> lstPatVisitLog = null;
 
-            short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
+            short shRet = PatVisitAccess.Instance.GetPatientListByDisChargeTime(null,DateTime.Parse(dtpStatTimeBegin.Value.ToString("yyyy-M-d 00:00:00")),
                 DateTime.Parse(dtpStatTimeEnd.Value.ToString("yyyy-M-d 23:59:59")), szDeptCode, ref lstPatVisitLog);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)

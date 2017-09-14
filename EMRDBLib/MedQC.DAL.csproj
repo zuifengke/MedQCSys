@@ -122,6 +122,7 @@
     <Compile Include="MedQC\View\ExamMasterAccess.cs" />
     <Compile Include="MedQC\View\LabResultAccess.cs" />
     <Compile Include="MedQC\View\LabMasterAccess.cs" />
+    <Compile Include="MedQC\View\ClinicWorklistAccess.cs" />
     <Compile Include="MedQC\View\OrdersAccess.cs" />
     <Compile Include="MedQC\View\InpVisitAccess.cs" />
     <Compile Include="MedQC\View\MrIndexAccess.cs" />

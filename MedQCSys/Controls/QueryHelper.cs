@@ -416,7 +416,7 @@ namespace MedQCSys.Utility
                 else if (this.m_PatSearchType == EMRDBLib.PatSearchType.Death)
                     PatVisitAccess.Instance.GetPatsListByDeadTime(this.m_dtBeginTime, this.m_dtEndTime, szDeptCode, ref lstPatVisitLog);
                 else if (this.m_PatSearchType == EMRDBLib.PatSearchType.Discharge)
-                    PatVisitAccess.Instance.GetPatientListByDisChargeTime(this.m_dtBeginTime, this.m_dtEndTime, szDeptCode, ref lstPatVisitLog);
+                    PatVisitAccess.Instance.GetPatientListByDisChargeTime(null,this.m_dtBeginTime, this.m_dtEndTime, szDeptCode, ref lstPatVisitLog);
                 else if (this.m_PatSearchType == EMRDBLib.PatSearchType.SeriousAndCritical)
                   InpVisitAccess.Instance.GetPatsListBySerious(this.m_dtBeginTime, this.m_dtEndTime, szDeptCode, ref lstPatVisitLog);
                 else if (this.m_PatSearchType == EMRDBLib.PatSearchType.OperationPatient)

@@ -32,6 +32,10 @@ namespace EMRDBLib
             /// </summary>
             public const string USER_PWD = "USER_PWD";
             /// <summary>
+            /// 用户密码
+            /// </summary>
+            public const string EMP_ID = "EMP_ID";
+            /// <summary>
             /// 用户等级
             /// </summary>
             public const string USER_GRADE = "USER_GRADE";

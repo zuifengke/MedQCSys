@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
-
+using System.Linq;
 namespace EMRDBLib.DbAccess
 {
 
@@ -30,6 +30,7 @@ namespace EMRDBLib.DbAccess
                 return QcMrIndexAccess.m_Instance;
             }
         }
+
         public short GetQcMrIndex(string szPatientID, string szVisitID, ref QcMrIndex qcMrIndex)
         {
             if (base.MedQCAccess == null)
@@ -217,6 +218,121 @@ namespace EMRDBLib.DbAccess
             }
             return SystemData.ReturnValue.OK;
         }
-
+        public short GetList(List<PatVisitInfo> lstPatVisitInfo, ref List<QcMrIndex> lstQcMrIndexs)
+        {
+            try
+            {
+                if (lstQcMrIndexs == null)
+                    lstQcMrIndexs = new List<QcMrIndex>();
+                for (int i = 0; i < lstPatVisitInfo.Count() / 100 + 1; i++)
+                {
+                    var result = lstPatVisitInfo.Skip(i * 100).Take(100).ToList();
+                    if (result != null && result.Count > 0)
+                    {
+                        string szCondition = string.Format("");
+                        foreach (var item in result)
+                        {
+                            if (szCondition == string.Empty)
+                                szCondition = string.Format("({0}='{1}' and {2}='{3}')"
+                                    , SystemData.PatVisitView.PATIENT_ID, item.PATIENT_ID
+                                    , SystemData.PatVisitView.VISIT_ID, item.VISIT_ID);
+                            else
+                                szCondition = string.Format("({0}='{1}' and {2}='{3}') or {4}"
+                                     , SystemData.PatVisitView.PATIENT_ID, item.PATIENT_ID
+                                    , SystemData.PatVisitView.VISIT_ID, item.VISIT_ID
+                                    , szCondition);
+                        }
+                        List<QcMrIndex> list = null;
+                        this.GetList(szCondition, ref list);
+                        if (list != null)
+                            lstQcMrIndexs.AddRange(list);
+                    }
+                }
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+        }
+        public short GetList(string szCondition, ref List<QcMrIndex> list)
+        {
+            if (base.MedQCAccess == null)
+                return SystemData.ReturnValue.PARAM_ERROR;
+            if (string.IsNullOrEmpty(szCondition))
+                return SystemData.ReturnValue.PARAM_ERROR;
+            StringBuilder sbField = new StringBuilder();
+            sbField.AppendFormat("*");
+            string szSQL = string.Format(SystemData.SQL.SELECT_WHERE_ORDER_ASC
+                    , sbField.ToString(), SystemData.DataTable.QC_MR_INDEX, szCondition, SystemData.QcMrIndexTable.ARCHIVE_TIME);
+            IDataReader dataReader = null;
+            try
+            {
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
+                if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
+                {
+                    return SystemData.ReturnValue.RES_NO_FOUND;
+                }
+                if (list == null)
+                    list = new List<QcMrIndex>();
+                list.Clear();
+                do
+                {
+                    QcMrIndex item = new QcMrIndex();
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        if (dataReader.IsDBNull(i))
+                            continue;
+                        switch (dataReader.GetName(i))
+                        {
+                            case SystemData.QcMrIndexTable.ARCHIVE_DOCTOR:
+                                item.ARCHIVE_DOCTOR = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.ARCHIVE_DOCTOR_ID:
+                                item.ARCHIVE_DOCTOR_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.ARCHIVE_TIME:
+                                item.ARCHIVE_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.QcMrIndexTable.PAPER_RECEIVE:
+                                item.PAPER_RECEIVE = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcMrIndexTable.PATIENT_ID:
+                                item.PATIENT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.RETURN_COUNT:
+                                item.RETURN_COUNT = int.Parse(dataReader.GetValue(i).ToString());
+                                break;
+                            case SystemData.QcMrIndexTable.SUBMIT_DOCTOR:
+                                item.SUBMIT_DOCTOR = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.SUBMIT_DOCTOR_ID:
+                                item.SUBMIT_DOCTOR_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.SUBMIT_TIME:
+                                item.SUBMIT_TIME = dataReader.GetDateTime(i);
+                                break;
+                            case SystemData.QcMrIndexTable.VISIT_ID:
+                                item.VISIT_ID = dataReader.GetString(i);
+                                break;
+                            case SystemData.QcMrIndexTable.VISIT_NO:
+                                item.VISIT_NO = dataReader.GetString(i);
+                                break;
+                            default: break;
+                        }
+                    }
+                    list.Add(item);
+                } while (dataReader.Read());
+                return SystemData.ReturnValue.OK;
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog("", new string[] { "szSQL" }, new object[] { szSQL
+}, ex);
+                return SystemData.ReturnValue.EXCEPTION;
+            }
+            finally { base.MedQCAccess.CloseConnnection(false); }
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace EMRDBLib
         protected string m_szPassword = string.Empty;        //用户密码
         protected UserLevel m_eLevel = UserLevel.Normal;//用户等级
         protected UserPower m_ePower = UserPower.Invisible;  //用户权限
+        public string EMP_ID { get; set; }//工号
         /// <summary>
         /// 获取或设置用户ID
         /// </summary>

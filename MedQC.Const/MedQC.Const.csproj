@@ -70,6 +70,7 @@
     <Compile Include="DataTable\ScriptDataTable.cs" />
     <Compile Include="DataTable\ScriptConfigTable.cs" />
     <Compile Include="DataTable\RecBrowseRequestTable.cs" />
+    <Compile Include="DataView\ClinicWorklistView.cs" />
     <Compile Include="DataView\ChargeTypeDicView.cs" />
     <Compile Include="DataView\TransferView.cs" />
     <Compile Include="DataView\IDentityDicView.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="HerenHis\BaseCodeDictTable.cs" />
     <Compile Include="HerenHis\InpVisitTable.cs" />
     <Compile Include="TypeConst\BrowseRequestStatus.cs" />
+    <Compile Include="TypeConst\OperFlag.cs" />
     <Compile Include="TypeConst\UploadStatus.cs" />
     <Compile Include="TypeConst\ReportTypeApplyEnv.cs" />
     <Compile Include="TypeConst\PaperState.cs" />

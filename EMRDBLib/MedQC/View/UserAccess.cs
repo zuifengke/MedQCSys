@@ -42,9 +42,10 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
-            string szField = string.Format("{0},{1},{2},{3},{4}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5}"
                 , SystemData.UserView.USER_ID, SystemData.UserView.USER_NAME
-                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD);
+                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD
+                , SystemData.UserView.EMP_ID);
             string szTable = SystemData.DataView.USER_V;
             string szCondition = string.Format("{0}={1}", SystemData.UserView.DEPT_CODE, base.ParaHolder(SystemData.UserView.DEPT_CODE));
             string szSQL = string.Format(SystemData.SQL.SELECT_WHERE, szField, szTable, szCondition);
@@ -67,6 +68,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(2)) userInfo.DEPT_CODE = dataReader.GetString(2);
                     if (!dataReader.IsDBNull(3)) userInfo.DEPT_NAME = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) userInfo.Password = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) userInfo.EMP_ID= dataReader.GetString(5);
                     lstUserInfos.Add(userInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -97,9 +99,10 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
-            string szField = string.Format("{0},{1},{2},{3},{4}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5}"
                 , SystemData.UserView.USER_ID, SystemData.UserView.USER_NAME
-                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD);
+                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD
+                , SystemData.UserView.EMP_ID);
             string szCondition = string.Format("{0} like '%{1}%'", SystemData.UserView.USER_NAME, szUserName);
             string szTable = SystemData.DataView.USER_V;
             string szOrder = SystemData.UserView.DEPT_CODE;
@@ -122,6 +125,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(2)) userInfo.DEPT_CODE = dataReader.GetString(2);
                     if (!dataReader.IsDBNull(3)) userInfo.DEPT_NAME = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) userInfo.Password = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) userInfo.EMP_ID = dataReader.GetValue(5).ToString();
                     lstUserInfo.Add(userInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -144,9 +148,10 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
-            string szField = string.Format("{0},{1},{2},{3},{4}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5}"
                 , SystemData.UserView.USER_ID, SystemData.UserView.USER_NAME
-                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD);
+                , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME, SystemData.UserView.USER_PWD
+                , SystemData.UserView.EMP_ID);
             string szTable = SystemData.DataView.USER_V;
             string szOrder = SystemData.UserView.DEPT_NAME;
             string szSQL = string.Format(SystemData.SQL.SELECT_ORDER_ASC, szField, szTable, szOrder);
@@ -168,6 +173,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(2)) userInfo.DEPT_CODE = dataReader.GetString(2);
                     if (!dataReader.IsDBNull(3)) userInfo.DEPT_NAME = dataReader.GetString(3);
                     if (!dataReader.IsDBNull(4)) userInfo.Password = dataReader.GetString(4);
+                    if (!dataReader.IsDBNull(5)) userInfo.EMP_ID = dataReader.GetValue(5).ToString();
                     lstUserInfos.Add(userInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;
@@ -197,10 +203,11 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             //先获取用户信息
-            string szField = string.Format("{0},{1},{2},{3},{4}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5}"
                 , SystemData.UserView.USER_ID, SystemData.UserView.USER_NAME
                 , SystemData.UserView.DEPT_CODE, SystemData.UserView.DEPT_NAME
-                , SystemData.UserView.USER_PWD);
+                , SystemData.UserView.USER_PWD
+                , SystemData.UserView.EMP_ID);
             string szCondition = string.Format("{0}='{1}' "
                 , SystemData.UserView.USER_ID, szUserID);
             string szTable = SystemData.DataView.USER_V;
@@ -220,6 +227,7 @@ namespace EMRDBLib.DbAccess
                 if (!dataReader.IsDBNull(2)) userInfo.DEPT_CODE = dataReader.GetString(2);
                 if (!dataReader.IsDBNull(3)) userInfo.DEPT_NAME = dataReader.GetString(3);
                 if (!dataReader.IsDBNull(4)) userInfo.Password = dataReader.GetString(4);
+                if (!dataReader.IsDBNull(5)) userInfo.EMP_ID = dataReader.GetString(5);
                 return SystemData.ReturnValue.OK;
             }
             catch (Exception ex)
