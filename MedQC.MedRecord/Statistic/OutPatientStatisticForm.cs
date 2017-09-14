@@ -312,14 +312,11 @@ namespace Heren.MedQC.MedRecord
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
                 return;
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
-            EMRDBLib.PatVisitInfo patVisit = row.Tag as EMRDBLib.PatVisitInfo;
-
+            PatVisitInfo patVisit = row.Tag as PatVisitInfo;
             if (patVisit == null)
                 return;
-
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {
-
                 this.MainForm.SwitchPatient(patVisit);
                 return;
             }

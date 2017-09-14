@@ -41,6 +41,12 @@ namespace MedQCSys
                 Application.EnableVisualStyles();
                 LogManager.Instance.TextLogOnly = true;
                 SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
+                System.Data.DataSet ds = null;
+                if (EMRDBLib.DbAccess.CommonAccess.Instance.ExecuteQuery("select sysdate from dual", out ds) != SystemData.ReturnValue.OK)
+                {
+                    MessageBoxEx.ShowMessage("系统无法连接数据库，程序无法正常启动,请联系管理员","在程序根目录下找到dbconfig.exe,进行数据库连接配置");
+                    return;
+                }
                 CommandHandler.Instance.Initialize();
                 Startup.FileMapping = new FileMapping(SINGLE_INSTANCE_MONIKER_NAME);
                 //  版本更新检查
