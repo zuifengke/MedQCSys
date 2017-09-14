@@ -263,6 +263,7 @@ namespace Heren.MedQC.MedRecord
             }
             WorkProcess.Instance.Close();
             MessageBoxEx.ShowMessage("成功保存" + count.ToString() + "条数据");
+            Heren.MedQC.Core.Services.RecUploadService.Instance.InitializeDict();
         }
 
         private short SaveRowData(DataTableViewRow row)

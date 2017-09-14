@@ -167,7 +167,7 @@ namespace EMRDBLib.DbAccess
         }
         public short GetOperationList(string patientID, string visitNo, ref List<Operation> lstOperation)
         {
-            if (base.HerenHisAccess == null)
+            if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
             StringBuilder sbField = new StringBuilder();
             sbField.AppendFormat("*");
@@ -183,7 +183,7 @@ namespace EMRDBLib.DbAccess
             IDataReader dataReader = null;
             try
             {
-                dataReader = base.HerenHisAccess.ExecuteReader(szSQL, CommandType.Text);
+                dataReader = base.MedQCAccess.ExecuteReader(szSQL, CommandType.Text);
                 if (dataReader == null || dataReader.IsClosed || !dataReader.Read())
                 {
                     return SystemData.ReturnValue.RES_NO_FOUND;
@@ -267,7 +267,7 @@ namespace EMRDBLib.DbAccess
 }, ex);
                 return SystemData.ReturnValue.EXCEPTION;
             }
-            finally { base.HerenHisAccess.CloseConnnection(false); }
+            finally { base.MedQCAccess.CloseConnnection(false); }
         }
         public short GetOperations(string szPatientID, string szPatientName, ref List<Operation> lstOperations)
         {

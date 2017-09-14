@@ -220,13 +220,13 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.VISIT_ID);
             if (!string.IsNullOrEmpty(szPatientID))
             {
-                szCondition = string.Format("{0} AND {1} = '{2}'"
+                szCondition = string.Format("{0} AND A.{1} = '{2}'"
                     , szCondition
                     , SystemData.RecUploadTable.PATIENT_ID, szPatientID);
             }
             if (!string.IsNullOrEmpty(szDeptCodes))
             {
-                szCondition = string.Format("{0} AND {1} in({2})"
+                szCondition = string.Format("{0} AND A.{1} in({2})"
                     , szCondition
                     , SystemData.PatVisitView.DEPT_CODE, szDeptCodes);
             }

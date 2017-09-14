@@ -216,7 +216,8 @@ namespace EMRDBLib
                         break;
                     case "DateTime":
                         DateTime dt = DateTime.Parse(value.ToString());
-                        if (dt == model.DefaultTime || dt == model.DefaultTime2)
+                        if (dt == model.DefaultTime || dt == model.DefaultTime2
+                            || dt == model.DefaultTime3)
                             break;
                         sbField.AppendFormat("{0}={1},", name, base.BAJKDataAccess.GetSqlTimeFormat(dt));
                         break;

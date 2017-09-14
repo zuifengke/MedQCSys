@@ -57,9 +57,9 @@ namespace Heren.MedQC.MedRecord
             this.col_VISIT_NO = new Heren.Common.Forms.XTextBoxColumn();
             this.col_VISIT_TIME = new Heren.Common.Forms.XTextBoxColumn();
             this.col_DISCHARGE_TIME = new Heren.Common.Forms.XTextBoxColumn();
-            this.col_UPLOAD_LOG = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_DEPT_NAME = new Heren.Common.Forms.XTextBoxColumn();
             this.col_DOCTOR_IN_CHARGE = new Heren.Common.Forms.XTextBoxColumn();
+            this.col_UPLOAD_LOG = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -141,6 +141,7 @@ namespace Heren.MedQC.MedRecord
             this.cboStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboStatus.FormattingEnabled = true;
             this.cboStatus.Items.AddRange(new object[] {
+            "",
             "未上传",
             "已上传"});
             this.cboStatus.Location = new System.Drawing.Point(62, 3);
@@ -151,11 +152,10 @@ namespace Heren.MedQC.MedRecord
             // 
             // btnUpload
             // 
-            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnUpload.BindingEvents")))};
             this.btnUpload.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnUpload.Location = new System.Drawing.Point(901, 22);
+            this.btnUpload.Location = new System.Drawing.Point(574, 24);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 23);
             this.btnUpload.TabIndex = 4;
@@ -165,11 +165,10 @@ namespace Heren.MedQC.MedRecord
             // 
             // btnSearch
             // 
-            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("btnSearch.BindingEvents")))};
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(820, 22);
+            this.btnSearch.Location = new System.Drawing.Point(493, 24);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 4;
@@ -241,9 +240,9 @@ namespace Heren.MedQC.MedRecord
             this.col_VISIT_NO,
             this.col_VISIT_TIME,
             this.col_DISCHARGE_TIME,
-            this.col_UPLOAD_LOG,
             this.col_DEPT_NAME,
-            this.col_DOCTOR_IN_CHARGE});
+            this.col_DOCTOR_IN_CHARGE,
+            this.col_UPLOAD_LOG});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F);
@@ -340,13 +339,6 @@ namespace Heren.MedQC.MedRecord
             this.col_DISCHARGE_TIME.ReadOnly = true;
             this.col_DISCHARGE_TIME.Width = 150;
             // 
-            // col_UPLOAD_LOG
-            // 
-            this.col_UPLOAD_LOG.HeaderText = "上传日志";
-            this.col_UPLOAD_LOG.Name = "col_UPLOAD_LOG";
-            this.col_UPLOAD_LOG.ReadOnly = true;
-            this.col_UPLOAD_LOG.Width = 200;
-            // 
             // col_DEPT_NAME
             // 
             this.col_DEPT_NAME.HeaderText = "病区";
@@ -359,6 +351,13 @@ namespace Heren.MedQC.MedRecord
             this.col_DOCTOR_IN_CHARGE.HeaderText = "主治医生";
             this.col_DOCTOR_IN_CHARGE.Name = "col_DOCTOR_IN_CHARGE";
             this.col_DOCTOR_IN_CHARGE.ReadOnly = true;
+            // 
+            // col_UPLOAD_LOG
+            // 
+            this.col_UPLOAD_LOG.HeaderText = "上传日志";
+            this.col_UPLOAD_LOG.Name = "col_UPLOAD_LOG";
+            this.col_UPLOAD_LOG.ReadOnly = true;
+            this.col_UPLOAD_LOG.Width = 200;
             // 
             // RecUploadNewForm
             // 
@@ -408,8 +407,8 @@ namespace Heren.MedQC.MedRecord
         private Common.Forms.XTextBoxColumn col_VISIT_NO;
         private Common.Forms.XTextBoxColumn col_VISIT_TIME;
         private Common.Forms.XTextBoxColumn col_DISCHARGE_TIME;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_UPLOAD_LOG;
         private Common.Forms.XTextBoxColumn col_DEPT_NAME;
         private Common.Forms.XTextBoxColumn col_DOCTOR_IN_CHARGE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_UPLOAD_LOG;
     }
 }

@@ -45,6 +45,7 @@ namespace Heren.MedQC.MedRecord
             base.OnRefreshView();
             this.dtpTimeBegin.Value = DateTime.Now.AddMonths(-1);
             this.dtpTimeEnd.Value = DateTime.Now;
+            this.dataGridView1.Rows.Clear();
 
         }
         /// <summary>
@@ -156,7 +157,8 @@ namespace Heren.MedQC.MedRecord
                     row.Cells[this.col_DOCTOR_IN_CHARGE.Index].Value = item.InchargeDoctor;
                     row.Cells[this.col_VISIT_TIME.Index].Value = item.VisitTime.ToString("yyyy-MM-dd HH:mm");
                     row.Cells[this.col_VISIT_ID.Index].Value = item.VISIT_ID;
-                    row.Cells[this.col_DISCHARGE_TIME.Index].Value = item.DischargeTime.ToString("yyyy-MM-dd HH:mm");
+                    if (item.DischargeTime != item.DefaultTime)
+                        row.Cells[this.col_DISCHARGE_TIME.Index].Value = item.DischargeTime.ToString("yyyy-MM-dd HH:mm");
                     row.Cells[this.col_VISIT_NO.Index].Value = item.VISIT_NO;
                     row.Cells[this.col_PATIENT_ID.Index].Value = item.PATIENT_ID;
                     row.Cells[this.col_DEPT_NAME.Index].Value = item.DeptName;
@@ -218,8 +220,8 @@ namespace Heren.MedQC.MedRecord
                 return;
             if (e.ColumnIndex == this.col_UPLOAD.Index)
             {
-                if (!RecUploadRow(this.dataGridView1.Rows[e.RowIndex]))
-                    MessageBoxEx.ShowMessage(string.Format("本次上传失败"));
+                if (!RecUploadRow(this.dataGridView1.Rows[e.RowIndex])) { this.dataGridView1.SelectRow(e.RowIndex); }
+                //MessageBoxEx.ShowMessage(string.Format("本次上传失败"));
             }
             if (e.ColumnIndex == this.col_Chk.Index)
             {
@@ -243,7 +245,8 @@ namespace Heren.MedQC.MedRecord
             {
                 recUpload.UPLOAD_STATUS = 0;
                 row.Cells[this.col_UPLOAD.Index].Value = "上传失败";
-                row.Cells[this.col_UPLOAD.Index].Style.ForeColor = Color.Red;
+
+                row.Cells[this.col_UPLOAD_LOG.Index].Style.ForeColor = Color.Red;
             }
             else
             {
@@ -251,9 +254,9 @@ namespace Heren.MedQC.MedRecord
                 row.Cells[this.col_UPLOAD.Index].Value = "已上传";
             }
             recUpload.UPLOAD_LOG = szUploadLog;
-            row.Cells[this.col_UPLOAD_LOG.Index].Value = szUploadLog;
-
             recUpload.UPLOAD_TIME = SysTimeHelper.Instance.Now;
+            row.Cells[this.col_UPLOAD_LOG.Index].Value = szUploadLog;
+            row.Cells[this.col_UPLOAD_TIME.Index].Value = recUpload.UPLOAD_TIME.ToString("yyyy-MM-dd HH:mm");
             if (string.IsNullOrEmpty(recUpload.UPLOAD_ID))
             {
                 recUpload.UPLOAD_ID = recUpload.MakeID();

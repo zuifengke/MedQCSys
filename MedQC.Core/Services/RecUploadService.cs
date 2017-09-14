@@ -130,6 +130,10 @@ namespace Heren.MedQC.Core.Services
         /// 入院病情
         /// </summary>
         private List<RecCodeCompasion> PAT_ADM_CONDITION_DICT = null;
+        /// <summary>
+        /// 是否已初始化
+        /// </summary>
+        private bool m_bInitialized = false;
         public bool InitializeDict()
         {
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("SEX_DICT", ref this.SexDict);
@@ -156,6 +160,7 @@ namespace Heren.MedQC.Core.Services
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DEPT_DICT", ref this.DEPT_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MR_FEE_CLASS_DICT", ref this.MR_FEE_CLASS_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("PAT_ADM_CONDITION_DICT", ref this.PAT_ADM_CONDITION_DICT);
+            this.m_bInitialized = true;
             return true;
         }
         /// <summary>
@@ -168,6 +173,9 @@ namespace Heren.MedQC.Core.Services
         {
             try
             {
+
+                if (!this.m_bInitialized)
+                    this.InitializeDict();
                 StringBuilder sbField = new StringBuilder();
                 InpVisit inpVisit = null;
                 PatMasterIndex patMasterIndex = null;
@@ -348,7 +356,7 @@ namespace Heren.MedQC.Core.Services
                 if (this.TreatingResultDict != null)
                 {
                     var result = this.TreatingResultDict.Where(m => m.CODE_NAME == inpVisit.PROGNOSIS).FirstOrDefault();
-                    if (result != null)
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
                     {
                         decimal d = 0;
                         if (GlobalMethods.Convert.StringToDecimal(result.DM, ref d))
@@ -478,7 +486,7 @@ namespace Heren.MedQC.Core.Services
                         {
                             bajk08.COL0887 = diagnosis.DIAG_DESC;
                             //bajk08.COL0906入院病情(主诊断)1.有; 2.临床未确定; 3.情况不明; 4.无
-                            if (this.PAT_ADM_CONDITION_DICT != null && !string.IsNullOrEmpty(diagnosis.ADMISSION_CONDITION))
+                            if (!string.IsNullOrEmpty(diagnosis.ADMISSION_CONDITION))
                             {
                                 decimal d = 0;
                                 if (GlobalMethods.Convert.StringToDecimal(diagnosis.ADMISSION_CONDITION, ref d))
@@ -620,13 +628,14 @@ namespace Heren.MedQC.Core.Services
                         shRet = DiagnosisDictAccess.Instance.GetModel(item.DIAG_DESC, ref diagnosisDict);
                         if (diagnosisDict == null)//首页诊断不标准，不上传
                             continue;
+                        EMRDBLib.BAJK.BAJK09 bajk09 = new EMRDBLib.BAJK.BAJK09();
                         //查询联众疾病代码库疾病序号
                         BaIcdDM baicdDM = null;
                         shRet = BaIcdDMAccess.Instance.GetModel(diagnosisDict.DIAGNOSIS_CODE, ref baicdDM);
-                        if (baicdDM == null)//代码库中未找到，则不上传（暂定）
-                            continue;
-                        EMRDBLib.BAJK.BAJK09 bajk09 = new EMRDBLib.BAJK.BAJK09();
-                        bajk09.COL0901 = baicdDM.JBXH;
+                        if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                        {
+                            bajk09.COL0901 = baicdDM.JBXH;
+                        }
                         if (this.TreatingResultDict != null && !string.IsNullOrEmpty(item.TREAT_RESULT))
                         {
                             var result = this.TreatingResultDict.Where(m => m.CODE_NAME == item.TREAT_RESULT).FirstOrDefault();
@@ -742,7 +751,7 @@ namespace Heren.MedQC.Core.Services
                         if (string.IsNullOrEmpty(item.ALLERGEN_DRUG_CODE))
                             continue;
                         var result = ALLERGEN_DRUG_DICT.Where(m => m.CODE_ID == item.ALLERGEN_DRUG_CODE).FirstOrDefault();
-                        if (result != null)
+                        if (result != null && !string.IsNullOrEmpty(result.DM))
                         {
                             BAJK12 bajk12 = new BAJK12();
                             bajk12.KEY1201 = bajk08.KEY0801;
