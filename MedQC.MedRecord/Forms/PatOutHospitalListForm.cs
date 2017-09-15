@@ -35,7 +35,7 @@ namespace Heren.MedQC.MedRecord
             : base(parent)
         {
             this.InitializeComponent();
-            this.HideOnClose = true;
+            this.HideOnClose = false;
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
             this.CloseButtonVisible = true;

@@ -554,8 +554,21 @@ namespace Heren.MedQC.Core.Services
                 //bajk08.COL0903再住院目的
                 bajk08.COL0903 = inpVisit.FOR_INPATIENT_PURPOSES;
                 //bajk08.COL0904入院前昏迷时间
-
+                if (!string.IsNullOrEmpty(inpVisit.COMA_DATE_DAYS_BEFORE)
+                    && !string.IsNullOrEmpty(inpVisit.COMA_DATE_HOURS_BEFORE)
+                    && !string.IsNullOrEmpty(inpVisit.COMA_DATE_MINUTES_BEFORE))
+                    bajk08.COL0904 = string.Format("{0}D{1}H{2}M"
+                        , inpVisit.COMA_DATE_DAYS_BEFORE
+                        , inpVisit.COMA_DATE_HOURS_BEFORE
+                        , inpVisit.COMA_DATE_MINUTES_BEFORE);
                 //bajk08.COL0905入院后昏迷时间
+                if (!string.IsNullOrEmpty(inpVisit.COMA_DATE_DAYS_AFTER)
+                   && !string.IsNullOrEmpty(inpVisit.COMA_DATE_HOURS_AFTER)
+                   && !string.IsNullOrEmpty(inpVisit.COMA_DATE_MINUTES_AFTER))
+                    bajk08.COL0905 = string.Format("{0}D{1}H{2}M"
+                        , inpVisit.COMA_DATE_DAYS_AFTER
+                        , inpVisit.COMA_DATE_HOURS_AFTER
+                        , inpVisit.COMA_DATE_MINUTES_AFTER);
                 //bajk08.COL0907 药物过敏标志
                 if (!string.IsNullOrEmpty(inpVisit.ALERGY_DRUGS))
                 {

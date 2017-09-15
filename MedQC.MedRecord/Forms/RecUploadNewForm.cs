@@ -33,7 +33,7 @@ namespace Heren.MedQC.MedRecord
             : base(mainForm)
         {
             InitializeComponent();
-            this.HideOnClose = true;
+            this.HideOnClose = false;
             this.CloseButtonVisible = true;
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;

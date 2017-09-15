@@ -139,7 +139,7 @@
     <Compile Include="MedDoc\MedQCRule.cs" />
     <Compile Include="MedDoc\MedDocInfo.cs" />
     <Compile Include="MedDoc\PatDoctorInfo.cs" />
-    <Compile Include="MedDoc\UserInfo.cs" />
+    <Compile Include="DataView\UserInfo.cs" />
     <Compile Include="DataTable\HdpRoleUser.cs" />
     <Compile Include="DataTable\HdpRole.cs" />
     <Compile Include="DataTable\HdpProduct.cs" />

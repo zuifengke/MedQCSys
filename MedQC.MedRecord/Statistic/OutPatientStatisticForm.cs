@@ -374,7 +374,7 @@ namespace Heren.MedQC.MedRecord
             short shRet = SystemData.ReturnValue.OK;
             ClinicWorklist clinicWorklist = new ClinicWorklist();
             clinicWorklist.CREATE_DEPT = SystemParam.Instance.UserInfo.DEPT_CODE;
-            clinicWorklist.CREATE_STAFF = SystemParam.Instance.UserInfo.EMP_ID;
+            clinicWorklist.CREATE_STAFF = SystemParam.Instance.UserInfo.EMP_NO;
             clinicWorklist.CREATE_TIME = SysTimeHelper.Instance.Now;
             clinicWorklist.TARGET_DEPT = patVisitInfo.DEPT_CODE;
             clinicWorklist.WORKLIST_TYPE = "13";
