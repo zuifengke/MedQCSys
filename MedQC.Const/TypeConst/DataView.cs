@@ -25,6 +25,10 @@ namespace EMRDBLib
             /// </summary>
             public const string BLOOD_TRANSFUSION_V = "BLOOD_TRANSFUSION_V";
             /// <summary>
+            /// 新生儿登记表
+            /// </summary>
+            public const string BABY_JUST_BORN_RECORD_V = "BABY_JUST_BORN_RECORD_V";
+            /// <summary>
             /// 病案索引表
             /// </summary>
             public const string MR_INDEX_V = "MR_INDEX_V";
@@ -73,6 +77,10 @@ namespace EMRDBLib
             /// 病人诊断信息视图
             /// </summary>
             public const string DIAGNOSIS_V = "DIAGNOSIS_V";
+            /// <summary>
+            /// 患者体征视图
+            /// </summary>
+            public const string VITAL_SIGNS_V = "VITAL_SIGNS_V";
             /// <summary>
             /// 在院病人信息视图
             /// </summary>

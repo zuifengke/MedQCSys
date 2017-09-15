@@ -303,26 +303,6 @@ namespace MedQCSys.Document
 
             return SystemData.ReturnValue.OK;
         }
-
-        /// <summary>
-        /// 插入空白纸张到合并显示的文档
-        /// </summary>
-        /// <param name="nBlankCount">需要追加的空白页的数目</param>
-        /// <param name="bNeedPrint">空白页是否需要打印</param>
-        private void AppendBlankToCombin(int nBlankCount, bool bNeedPrint)
-        {
-        }
-
-        /// <summary>
-        /// 打印当前文档
-        /// </summary>
-        /// <param name="bNeedPreview">是否需要先预览再打印</param>
-        /// <returns>DataLayer.SystemData.ReturnValue</returns>
-        public short PrintDocument(bool bNeedPreview)
-        {
-            return SystemData.ReturnValue.OK;
-        }
-
         /// <summary>
         /// 关闭当前文档
         /// </summary>

@@ -127,6 +127,18 @@ namespace Heren.MedQC.Model.BAJK
         /// 手术用一次性医用材料费
         /// </summary>
         public decimal COL1538 { get; set; }
+        /// <summary>
+        /// 自付金额
+        /// </summary>
+        public decimal COL1540 { get; set; }
+        /// <summary>
+        /// 临床物理治疗费
+        /// </summary>
+        public decimal COL1541 { get; set; }
+        /// <summary>
+        /// 抗菌药物费用
+        /// </summary>
+        public decimal COL1542 { get; set; }
         public override string ToString()
         {
             return base.ToString();

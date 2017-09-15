@@ -196,6 +196,13 @@ namespace Heren.MedQC.Core.Services
                 shRet = DiagComparingAccess.Instance.GetList(patientID, visitNo, ref lstDiagComparing);
                 if (inpVisit == null)
                     return false;
+                #region 首页信息校验
+                if (inpVisit.TOTAL_COSTS == 0)
+                {
+                    szUploadLog = "总费用为0";
+                    return false;
+                }
+                #endregion
                 #region 上传患者基本信息
                 EMRDBLib.BAJK.BAJK08 bajk08 = null;
                 shRet = BAJK08Access.Instance.GetBAJK08s(szPatientID, szVisitID, ref bajk08);
@@ -327,7 +334,7 @@ namespace Heren.MedQC.Core.Services
                 bajk08.COL0834 = inpVisit.DIRECTOR_ID;
                 bajk08.COL0835 = inpVisit.CHIEF_DOCTOR_ID;
                 if (!string.IsNullOrEmpty(inpVisit.ATTENDING_DOCTOR_ID)
-                    && inpVisit.DOCTOR_IN_CHARGE_ID.Length <= 8)
+                    && inpVisit.ATTENDING_DOCTOR_ID.Length <= 8) 
                     bajk08.COL0836 = inpVisit.ATTENDING_DOCTOR_ID;
                 if (!string.IsNullOrEmpty(inpVisit.DOCTOR_IN_CHARGE_ID)
                     && inpVisit.DOCTOR_IN_CHARGE_ID.Length <= 8)
@@ -475,7 +482,7 @@ namespace Heren.MedQC.Core.Services
                     #endregion
                 }
                 //bajk08.COL0887 主要诊断
-                if (this.DiagnosisTypeDict != null)
+                if (this.DiagnosisTypeDict != null&&lstDiagnosis!=null)
                 {
                     var result = this.DiagnosisTypeDict.Where(m => m.CODE_NAME == "主要诊断").FirstOrDefault();
                     if (result != null)
@@ -512,7 +519,19 @@ namespace Heren.MedQC.Core.Services
                 //bajk08.COL0890 自动出院
                 bajk08.COL0891 = inpVisit.SECURITY_NO;
                 //bajk08.COL0892 新生儿体重未获取
+                BabyJustBornRecord babyJustBornRecord = null;
+                shRet = BabyJustBornRecordAccess.Instance.GetModel(inpVisit.PATIENT_ID, inpVisit.VISIT_NO, ref babyJustBornRecord);
+                if (babyJustBornRecord != null)
+                {
+                    bajk08.COL0892 = babyJustBornRecord.WEIGHT;
+                }
                 //bajk08.COL0893 新生儿入院体重未获取
+                List<VitalSigns> lstVitalSigns = null;
+                shRet = VitalSignsAccess.Instance.GetList(patientID, visitNo, "体重", ref lstVitalSigns);
+                if (lstVitalSigns != null&&lstVitalSigns.Count>0)
+                {
+                    bajk08.COL0893 = lstVitalSigns[0].VITAL_SIGNS_VALUES;
+                }
                 if (this.AreaDict != null && !string.IsNullOrEmpty(patMasterIndex.BIRTH_PLACE_CODE))
                 {
                     var result = this.AreaDict.Where(m => m.CODE_ID == patMasterIndex.BIRTH_PLACE_CODE).FirstOrDefault();
@@ -699,7 +718,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.ANAESTHESIA_DICT != null)
                         {
                             var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == item.ANAESTHESIA_METHOD).FirstOrDefault();
-                            if (result != null)
+                            if (result != null&&!string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1104 = decimal.Parse(result.DM);
                             }
@@ -707,7 +726,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.WOUND_GRADE_DICT != null)
                         {
                             var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_NAME == item.WOUND_GRADE).FirstOrDefault();
-                            if (result != null)
+                            if (result != null&& !string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1105 = decimal.Parse(result.DM);
                             }
@@ -715,7 +734,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.HEAL_DICT != null)
                         {
                             var result = this.HEAL_DICT.Where(m => m.CODE_NAME == item.HEAL).FirstOrDefault();
-                            if (result != null)
+                            if (result != null&&!string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1106 = decimal.Parse(result.DM);
                             }
@@ -732,7 +751,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.OPERATION_SCALE_DICT != null)
                         {
                             var result = this.OPERATION_SCALE_DICT.Where(m => m.CODE_ID == item.OPERATION_SCALE).FirstOrDefault();
-                            if (result != null)
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1116 = decimal.Parse(result.DM);
                             }
@@ -985,6 +1004,8 @@ namespace Heren.MedQC.Core.Services
                             bajk15.COL1538 = lstInpBillDetail.Where(m => m.CLASS_ON_MR == result.CODE_ID).Sum(m => m.COSTS);
                         }
                     }
+                    //自付金额COL1540
+                    bajk15.COL1540 = inpVisit.TOTAL_PAYMENTS;
                     if (!bajk15Exise)
                     {
                         shRet = BAJK15Access.Instance.Insert(bajk15);
@@ -994,6 +1015,7 @@ namespace Heren.MedQC.Core.Services
                         shRet = BAJK15Access.Instance.Update(bajk15);
                     }
                 }
+               
                 #endregion
 
             }

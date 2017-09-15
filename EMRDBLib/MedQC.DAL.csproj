@@ -117,6 +117,7 @@
     <Compile Include="MedQC\Table\RecCodeCompasionAccess.cs" />
     <Compile Include="MedQC\Table\ScriptDataAccess.cs" />
     <Compile Include="MedQC\Table\ScriptConfigAccess.cs" />
+    <Compile Include="MedQC\View\VitalSignsAccess.cs" />
     <Compile Include="MedQC\View\DeptAccess.cs" />
     <Compile Include="MedQC\View\ExamResultAccess.cs" />
     <Compile Include="MedQC\View\ExamMasterAccess.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="MedQC\Table\SpecialAccess.cs" />
     <Compile Include="MedDoc\TimeQCRuleAccess.cs" />
     <Compile Include="MedDoc\TimeQCEventAccess.cs" />
+    <Compile Include="MedQC\View\BabyJustBornRecordAccess.cs" />
     <Compile Include="MedQC\View\TransferAccess.cs" />
     <Compile Include="MedQC\View\UserAccess.cs" />
     <Compile Include="MedDoc\EMRDBAccess.cs" />

@@ -70,7 +70,9 @@
     <Compile Include="BAJK\BAJK11.cs" />
     <Compile Include="BAJK\BAJK09.cs" />
     <Compile Include="BAJK\GyGydm.cs" />
+    <Compile Include="DataView\BabyJustBornRecord.cs" />
     <Compile Include="DataView\ClinicWorklist.cs" />
+    <Compile Include="DataView\VitalSigns.cs" />
     <Compile Include="DataView\Transfer.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DbTypeBase.cs" />
