@@ -356,6 +356,18 @@ namespace Heren.MedQC.MedRecord
                 MessageBoxEx.ShowMessage("取消催送失败");
                 return;
             }
+            //更新mrIndex表,将病案设为归档状态
+            MrIndex mrIndex = new MrIndex();
+            mrIndex.PATIENT_ID = qcMrIndex.PATIENT_ID;
+            mrIndex.VISIT_ID = qcMrIndex.VISIT_ID;
+            mrIndex.VISIT_NO = qcMrIndex.VISIT_NO;
+            mrIndex.MR_STATUS = SystemData.MrStatus.Archive;
+            shRet = MrIndexAccess.Instance.UpdateMrStatus(mrIndex);
+            if (shRet != SystemData.ReturnValue.OK)
+            {
+                MessageBoxEx.ShowMessage("更新病案状态失败");
+                return;
+            }
             this.dataGridView1.SelectedRows[0].Cells[this.col_ARCHIVE_TIME.Index].Value = qcMrIndex.ARCHIVE_TIME.ToString("yyyy-MM-dd HH:mm");
             MessageBoxEx.ShowMessage("取消催送成功");
         }

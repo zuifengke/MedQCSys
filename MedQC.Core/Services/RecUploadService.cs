@@ -368,7 +368,6 @@ namespace Heren.MedQC.Core.Services
                 //bajk08.COL0858 E序号未获取，搞不清含义
                 //bajk08.COL0859 M序号未获取，
                 bajk08.COL0866 = inpVisit.AUTOPSY_INDICATOR; //是否尸检
-                bajk08.BRXH = bajk08.KEY0801;
                 bajk08.FLAG = 0;
                 bajk08.COL0871 = inpVisit.VISIT_NO;//唯一号设为就诊流水号
                 //bajk08.COL0873 国籍
@@ -602,6 +601,7 @@ namespace Heren.MedQC.Core.Services
                 {
                     //bajk08.KEY0801 = BAJK08Access.Instance.MakeKey0801();
                     bajk08.KEY0801 = BAJK08Access.Instance.GetNextKey0801();
+                    bajk08.BRXH = bajk08.KEY0801;
                     if (bajk08.KEY0801 == 0)
                     {
                         szUploadLog = "获取病案接口库的病人序号失败";

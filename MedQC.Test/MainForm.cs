@@ -270,5 +270,13 @@ namespace MedQC.Test
             LiveChartForm frm = new LiveChartForm();
             frm.Show();
         }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            //表结构说明生成语句
+            string sql = @"select t.table_name,t.column_name,t.comments,t1.DATA_TYPE,t1.DATA_LENGTH from user_col_comments t,user_tab_cols t1
+where t.TABLE_NAME = t1.TABLE_NAME and t.COLUMN_NAME = t1.COLUMN_NAME and t.TABLE_NAME not like '%BIN%' and t.TABLE_NAME not like '%_V%'
+order by t.table_name; ";
+        }
     }
 }

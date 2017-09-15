@@ -190,7 +190,11 @@ namespace EMRDBLib
                     return 0;
                 }
                 if (GlobalMethods.Convert.StringToDecimal(dataReader.GetValue(0).ToString(), ref key0801))
-                    return key0801+1;
+                {
+                    if (key0801 < 7000000)
+                        key0801 = 70000000;//和仁新系统望江山上线默认从70000000开始累加
+                    return key0801 + 1;
+                }   
                 return 0;
             }
             catch (Exception ex)

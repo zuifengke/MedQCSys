@@ -51,7 +51,10 @@ namespace MedQCSys.Document
 
 
             this.textEditor1.BeforeCopy += new CancelEventHandler(this.textEditor1_BeforeCopy);
-
+            this.textEditor1.CommentEditMode = true;
+            this.textEditor1.ReviseEnabled = false;
+            this.textEditor1.RevisionVisible = false;
+            this.textEditor1.FieldFlagColor = Color.Transparent;
         }
         private void InsertMenuItem(string szText, EventHandler handler)
         {
@@ -259,9 +262,6 @@ namespace MedQCSys.Document
                 MessageBoxEx.Show("无法打开文档！文档数据加载失败！");
                 return shRet;
             }
-            this.textEditor1.ReviseEnabled = false;
-            this.textEditor1.RevisionVisible = false;
-            this.textEditor1.ReadOnly = true;
             this.AppendHistory(SystemParam.Instance.UserInfo);
             this.GoSection(document);
             
@@ -403,12 +403,10 @@ namespace MedQCSys.Document
 
         private void mnuInsertCommentForm_Click(object sender, EventArgs e)
         {
-            this.textEditor1.CommentEditMode = true;
             this.textEditor1.InsertComment();
         }
         private void mnuDeleteCommentForm_Click(object sender, EventArgs e)
         {
-            this.textEditor1.CommentEditMode = true;
             this.textEditor1.DeleteComment();
         }
         /// <summary>
@@ -548,12 +546,6 @@ namespace MedQCSys.Document
 
         private void textEditor1_PrintButtonClick(object sender, EventArgs e)
         {
-            //bool bReadonly = this.textEditor1.Readonly;
-            //if (!this.textEditor1.Readonly)
-            //    this.textEditor1.Readonly = true;
-            //MedDocSys.DataLayer.PrintSettings printSettings = new MedDocSys.DataLayer.PrintSettings();
-            //this.textEditor1.PrintDocument(printSettings);
-            //this.textEditor1.Readonly = bReadonly;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
