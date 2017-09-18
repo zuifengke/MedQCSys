@@ -169,28 +169,28 @@ namespace MedQC.Test
         {
             try
             {
-                ShareFolderRead.Download(@"\\129.88.47.11\ris\report\PDF\FSK\2017-08-30\9337401.pdf", @"D:\download\9337401.pdf", "129.88.47.11", "ris", "maroland");
-                bool status = false;
+                //ShareFolderRead.Download(@"\\129.88.47.11\ris\report\PDF\FSK\2017-08-30\9337401.pdf", @"D:\download\9337401.pdf", "129.88.47.11", "ris", "maroland");
+                //bool status = false;
 
-                //连接共享文件夹
-                status = ShareFolderRead.connectState(@"\\DESKTOP-L0DIMB0\share", "zuifengke111@outlook.com", "yehui198971");
-                if (status)
-                {
-                    //共享文件夹的目录
-                    DirectoryInfo theFolder = new DirectoryInfo(@"\\DESKTOP-L0DIMB0\share");
-                    //相对共享文件夹的路径
-                    string fielpath = @"\test";
-                    //获取保存文件的路径
-                    string filename = theFolder.ToString() + fielpath;
-                    //执行方法
-                    ShareFolderRead.Transport(filename + @"\11.txt", @"D:\download\", "11.txt");
-                }
-                else
-                {
-                    //ListBox1.Items.Add("未能连接！");
-                }
+                ////连接共享文件夹
+                //status = ShareFolderRead.connectState(@"\\DESKTOP-L0DIMB0\share", "zuifengke111@outlook.com", "yehui198971");
+                //if (status)
+                //{
+                //    //共享文件夹的目录
+                //    DirectoryInfo theFolder = new DirectoryInfo(@"\\DESKTOP-L0DIMB0\share");
+                //    //相对共享文件夹的路径
+                //    string fielpath = @"\test";
+                //    //获取保存文件的路径
+                //    string filename = theFolder.ToString() + fielpath;
+                //    //执行方法
+                //    ShareFolderRead.Transport(filename + @"\11.txt", @"D:\download\", "11.txt");
+                //}
+                //else
+                //{
+                //    //ListBox1.Items.Add("未能连接！");
+                //}
 
-                status = false;
+               bool status = false;
 
                 //连接共享文件夹
                 status = ShareFolderRead.connectState(@"\\129.88.47.11", "ris", "maroland");

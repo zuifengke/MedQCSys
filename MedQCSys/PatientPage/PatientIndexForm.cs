@@ -197,8 +197,7 @@ namespace MedQCSys.DockForms
             }
             catch (Exception ex)
             {
-
-                throw;
+                LogManager.Instance.WriteLog(ex.ToString());
             }
         }
         private void reportDesigner1_NotifyNextReport(object sender, NotifyNextReportEventArgs e)

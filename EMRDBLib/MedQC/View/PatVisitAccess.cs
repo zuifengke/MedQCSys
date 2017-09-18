@@ -350,7 +350,7 @@ namespace EMRDBLib.DbAccess
             if (dtBeginTime.CompareTo(dtEndTime) > 0)
                 return SystemData.ReturnValue.RES_NO_FOUND;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.PatVisitView.VISIT_ID
                 , SystemData.PatVisitView.VISIT_TIME, SystemData.PatVisitView.PATIENT_NAME, SystemData.PatVisitView.INP_NO
                 , SystemData.PatVisitView.PATIENT_SEX, SystemData.PatVisitView.BIRTH_TIME, SystemData.PatVisitView.CHARGE_TYPE
@@ -358,7 +358,8 @@ namespace EMRDBLib.DbAccess
                 , SystemData.PatVisitView.INCHARGE_DOCTOR, SystemData.PatVisitView.DIAGNOSIS, SystemData.PatVisitView.DEPT_CODE
                 , SystemData.PatVisitView.DISCHARGE_TIME, SystemData.PatVisitView.DISCHARGE_MODE, SystemData.PatVisitView.MR_STATUS
                 , SystemData.PatVisitView.VISIT_NO
-                , SystemData.PatVisitView.TOTAL_COSTS);
+                , SystemData.PatVisitView.TOTAL_COSTS
+                , SystemData.PatVisitView.INCHARGE_DOCTOR_ID);
             string szCondition = string.Format("{0}>={1} AND {0}<={2} AND {3}='IP'", SystemData.PatVisitView.DISCHARGE_TIME
                 , base.MedQCAccess.GetSqlTimeFormat(dtBeginTime), base.MedQCAccess.GetSqlTimeFormat(dtEndTime), SystemData.PatVisitView.VISIT_TYPE);
             if (!string.IsNullOrEmpty(szDeptCode))
@@ -406,6 +407,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(16)) PatVisitInfo.MR_STATUS = dataReader.GetString(16);
                     if (!dataReader.IsDBNull(17)) PatVisitInfo.VISIT_NO = dataReader.GetString(17);
                     if (!dataReader.IsDBNull(18)) PatVisitInfo.TOTAL_COSTS =double.Parse(dataReader.GetValue(18).ToString());
+                    if (!dataReader.IsDBNull(19)) PatVisitInfo.INCHARGE_DOCTOR_ID = dataReader.GetValue(19).ToString();
                     lstPatVisitInfos.Add(PatVisitInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

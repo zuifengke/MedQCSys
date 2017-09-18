@@ -139,7 +139,7 @@ namespace Heren.MedQC.Hdp
                 return;
             }
             MessageBoxEx.ShowMessage("ÊÚÈ¨³É¹¦");
-
+            this.DialogResult = DialogResult.OK;
         }
 
         private void UserGrantForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -102,6 +102,7 @@
     <Compile Include="HerenHis\BaseCodeDictTable.cs" />
     <Compile Include="HerenHis\InpVisitTable.cs" />
     <Compile Include="TypeConst\BrowseRequestStatus.cs" />
+    <Compile Include="TypeConst\WorklistType.cs" />
     <Compile Include="TypeConst\OperFlag.cs" />
     <Compile Include="TypeConst\UploadStatus.cs" />
     <Compile Include="TypeConst\ReportTypeApplyEnv.cs" />

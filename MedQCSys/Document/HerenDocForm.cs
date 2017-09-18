@@ -733,7 +733,9 @@ namespace MedQCSys.Document
             this.textEditorPrint.CommentVisible = false;
             this.textEditorPrint.RevisionVisible = false;
             this.textEditorPrint.LoadDocument2(byteDocument);
+            this.textEditorPrint.Design = true;
             this.textEditorPrint.ShowPreviewDialog();
+            this.textEditorPrint.Design = false;
         }
 
         private void toolbtnPrintAllPreview_Click(object sender, EventArgs e)

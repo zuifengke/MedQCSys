@@ -91,7 +91,6 @@ namespace Heren.MedQC.MedRecord
         {
             try
             {
-
                 this.XDataGrid1.Rows.Clear();
                 this.chkAll.Checked = false;
                 DateTime dtRequestTimeBegin = dtpTimeBegin.Value;
@@ -126,9 +125,7 @@ namespace Heren.MedQC.MedRecord
                     row.Cells[this.col_STATUS.Index].Value = SystemData.BrowseRequestStatus.GetStatusName(item.STATUS);
                     row.Cells[this.col_VISIT_ID.Index].Value = item.VISIT_ID;
                     row.Cells[this.col_VISIT_NO.Index].Value = item.VISIT_NO;
-
                 }
-
                 this.lbl_msg.Text = string.Format("π≤{0}Ãı…Í«Îº«¬º", lstRecBrowseRequest.Count);
             }
             catch (Exception ex)
@@ -166,14 +163,12 @@ namespace Heren.MedQC.MedRecord
 
         private void RecUploadLog(int index)
         {
-
         }
 
         private void XDataGrid1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
-
         }
 
         private void chkAll_CheckedChanged(object sender, EventArgs e)

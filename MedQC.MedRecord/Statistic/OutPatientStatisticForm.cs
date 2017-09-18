@@ -386,10 +386,11 @@ namespace Heren.MedQC.MedRecord
             short shRet = SystemData.ReturnValue.OK;
             ClinicWorklist clinicWorklist = new ClinicWorklist();
             clinicWorklist.CREATE_DEPT = SystemParam.Instance.UserInfo.DEPT_CODE;
-            clinicWorklist.CREATE_STAFF = SystemParam.Instance.UserInfo.EMP_NO;
+            clinicWorklist.CREATE_STAFF = SystemParam.Instance.UserInfo.USER_ID;
             clinicWorklist.CREATE_TIME = SysTimeHelper.Instance.Now;
             clinicWorklist.TARGET_DEPT = patVisitInfo.DEPT_CODE;
-            clinicWorklist.WORKLIST_TYPE = "13";
+            clinicWorklist.WORKLIST_TYPE = SystemData.WorklistType.病案;
+            clinicWorklist.PARAMETER = string.Format("visitNo={0}", patVisitInfo.VISIT_NO);
             clinicWorklist.TARGET_STAFF = patVisitInfo.INCHARGE_DOCTOR_ID;
             clinicWorklist.WORKLIST_CONTENT = string.Format("{0}提醒{1}尽快将患者{2}的病历送到病案室"
                 , SystemParam.Instance.UserInfo.USER_NAME

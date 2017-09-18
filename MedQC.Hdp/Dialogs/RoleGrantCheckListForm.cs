@@ -203,6 +203,7 @@ namespace Heren.MedQC.Hdp
                 return;
             }
             MessageBoxEx.ShowMessage("ÊÚÈ¨³É¹¦£¡");
+            this.DialogResult = DialogResult.OK;
         }
 
         private void btnCopyGrant_Click(object sender, EventArgs e)
