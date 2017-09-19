@@ -28,6 +28,10 @@ namespace EMRDBLib
         /// </summary>
         public string PATIENT_NAME { get; set; }
         /// <summary>
+        /// 床位号
+        /// </summary>
+        public string BED_CODE { get; set; }
+        /// <summary>
         /// 获取或设置患者的本次就诊ID
         /// </summary>
         public string VISIT_ID { get; set; }

@@ -146,9 +146,9 @@ namespace Heren.MedQC.Statistic
             row.Cells[this.colPARENT_DOCTOR.Index].Value = questionInfo.PARENT_DOCTOR;
             row.Cells[this.colQaEventType.Index].Value = questionInfo.QA_EVENT_TYPE;
             row.Cells[this.colMessage.Index].Value = questionInfo.MESSAGE;
-          
-                row.Cells[this.colCheckerName.Index].Value = questionInfo.ISSUED_BY;
-            
+            row.Cells[this.col_BED_CODE.Index].Value = questionInfo.BED_CODE;
+            row.Cells[this.colCheckerName.Index].Value = questionInfo.ISSUED_BY;
+
             row.Cells[this.colCheckDataTime.Index].Value = questionInfo.ISSUED_DATE_TIME;
             row.Cells[this.colMsgStatus.Index].Value = questionInfo.MSG_STATUS;
             if (questionInfo.ASK_DATE_TIME != questionInfo.DefaultTime)

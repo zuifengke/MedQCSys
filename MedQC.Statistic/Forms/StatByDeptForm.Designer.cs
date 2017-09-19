@@ -40,6 +40,7 @@ namespace Heren.MedQC.Statistic
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Dept_NameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patientIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patientNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.msgDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,6 +67,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Dept_NameDataGridViewTextBoxColumn,
+            this.col_BED_CODE,
             this.patientIDDataGridViewTextBoxColumn,
             this.patientNameDataGridViewTextBoxColumn,
             this.msgDataGridViewTextBoxColumn,
@@ -204,6 +206,13 @@ namespace Heren.MedQC.Statistic
             this.Dept_NameDataGridViewTextBoxColumn.Name = "Dept_NameDataGridViewTextBoxColumn";
             this.Dept_NameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "´²ºÅ";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
+            // 
             // patientIDDataGridViewTextBoxColumn
             // 
             this.patientIDDataGridViewTextBoxColumn.DataPropertyName = "PatientID";
@@ -321,6 +330,7 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Button btnExportExcel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dept_NameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn patientIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn patientNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn msgDataGridViewTextBoxColumn;

@@ -51,6 +51,10 @@ namespace Heren.MedQC.Search
             this.btnQuery = new System.Windows.Forms.Button();
             this.dtpStatTimeBegin = new System.Windows.Forms.DateTimePicker();
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtPatientName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtPatientID = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -147,13 +151,17 @@ namespace Heren.MedQC.Search
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txtPatientID);
+            this.panel1.Controls.Add(this.txtPatientName);
             this.panel1.Controls.Add(this.rbtnDischargeTime);
             this.panel1.Controls.Add(this.rbtnRecordTime);
             this.panel1.Controls.Add(this.txtDocType);
             this.panel1.Controls.Add(this.cboDeptName);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btnExportExcel);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Controls.Add(this.dtpStatTimeBegin);
@@ -231,8 +239,7 @@ namespace Heren.MedQC.Search
             // 
             // btnExportExcel
             // 
-            this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Location = new System.Drawing.Point(930, 24);
+            this.btnExportExcel.Location = new System.Drawing.Point(850, 27);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 8;
@@ -252,9 +259,8 @@ namespace Heren.MedQC.Search
             // 
             // btnQuery
             // 
-            this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(858, 24);
+            this.btnQuery.Location = new System.Drawing.Point(778, 27);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(65, 28);
             this.btnQuery.TabIndex = 7;
@@ -277,6 +283,42 @@ namespace Heren.MedQC.Search
             this.dtpStatTimeEnd.Name = "dtpStatTimeEnd";
             this.dtpStatTimeEnd.Size = new System.Drawing.Size(121, 23);
             this.dtpStatTimeEnd.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label2.Location = new System.Drawing.Point(593, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 14);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "姓名：";
+            // 
+            // txtPatientName
+            // 
+            this.txtPatientName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPatientName.Location = new System.Drawing.Point(649, 30);
+            this.txtPatientName.Name = "txtPatientName";
+            this.txtPatientName.Size = new System.Drawing.Size(123, 23);
+            this.txtPatientName.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label5.Location = new System.Drawing.Point(579, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 14);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "患者ID：";
+            // 
+            // txtPatientID
+            // 
+            this.txtPatientID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPatientID.Location = new System.Drawing.Point(649, 5);
+            this.txtPatientID.Name = "txtPatientID";
+            this.txtPatientID.Size = new System.Drawing.Size(123, 23);
+            this.txtPatientID.TabIndex = 12;
             // 
             // SearchEmrDocForm
             // 
@@ -319,5 +361,9 @@ namespace Heren.MedQC.Search
         private System.Windows.Forms.DataGridViewTextBoxColumn col_DOC_TITLE;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_DOC_TIME;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_RECORD_TIME;
+        private System.Windows.Forms.TextBox txtPatientID;
+        private System.Windows.Forms.TextBox txtPatientName;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
     }
 }

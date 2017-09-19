@@ -38,8 +38,8 @@ namespace MedQCSys.DockForms
             this.dataGridView1.Font = new Font("宋体", 10.5f);
         }
 
-        public OrdersListForm(MainForm parent,PatPage.PatientPageControl patientPageControl)
-            : base(parent,patientPageControl)
+        public OrdersListForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
+            : base(parent, patientPageControl)
         {
             this.InitializeComponent();
             this.HideOnClose = true;
@@ -143,7 +143,12 @@ namespace MedQCSys.DockForms
                     nRowIndex = this.dataGridView1.Rows.Add();
                     row = this.dataGridView1.Rows[nRowIndex];
                     row.Cells[this.colBeginTime.Index].Value = orderInfo.EnterTime.ToString("yyyy-MM-dd HH:mm");
-                    row.Cells[this.colOrderContent.Index].Value = orderInfo.OrderText;
+                    string orderText = string.Empty;
+                    if (!string.IsNullOrEmpty(orderInfo.Frequency))
+                        orderText = orderInfo.OrderText.Replace(orderInfo.Frequency, "");
+                    else
+                        orderText = orderInfo.OrderText;
+                    row.Cells[this.colOrderContent.Index].Value = orderText;
                     if (orderInfo.Dosage > 0)
                         row.Cells[this.colDosage.Index].Value = string.Concat(orderInfo.Dosage, orderInfo.DosageUnits);
                     if (orderInfo.START_DATE_TIME != orderInfo.DefaultTime)
@@ -155,7 +160,7 @@ namespace MedQCSys.DockForms
                     row.Cells[this.colOrderDoctor.Index].Value = orderInfo.Doctor;
                     row.Cells[this.colNurse.Index].Value = orderInfo.Nurse;
                     if (orderInfo.StopTime != orderInfo.DefaultTime
-                        && orderInfo.StopTime!=orderInfo.DefaultTime3)
+                        && orderInfo.StopTime != orderInfo.DefaultTime3)
                     {
                         row.Cells[this.colStopTime.Index].Value = orderInfo.StopTime.ToString("yyyy-MM-dd HH:mm");
                     }
@@ -356,7 +361,7 @@ namespace MedQCSys.DockForms
             if (reportType == null)
             {
                 MessageBoxEx.ShowMessage("打印报表还没有制作");
-                return ;
+                return;
             }
             byte[] byteReportData = null;
             ReportCache.Instance.GetReportTemplet(reportType, ref byteReportData);
@@ -432,10 +437,10 @@ namespace MedQCSys.DockForms
                 using (var rowPen = new Pen(Color.Gray, 1))
                 using (var gridlinePen = new Pen(Color.White, 1))
                 {
-                    var topLeftPoint = new Point(e.CellBounds.Left-1, e.CellBounds.Top-1);
-                    var topRightPoint = new Point(e.CellBounds.Right-1, e.CellBounds.Top-1);
-                    var bottomRightPoint = new Point(e.CellBounds.Right-1, e.CellBounds.Bottom-1);
-                    var bottomLeftPoint = new Point(e.CellBounds.Left-1, e.CellBounds.Bottom-1);
+                    var topLeftPoint = new Point(e.CellBounds.Left - 1, e.CellBounds.Top - 1);
+                    var topRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Top - 1);
+                    var bottomRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                    var bottomLeftPoint = new Point(e.CellBounds.Left - 1, e.CellBounds.Bottom - 1);
                     e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
                     if (e.ColumnIndex == 3)
                     {

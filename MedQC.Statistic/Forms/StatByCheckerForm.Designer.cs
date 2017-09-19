@@ -40,6 +40,7 @@ namespace Heren.MedQC.Statistic
             this.cboUserList = new Heren.Common.Controls.DictInput.FindComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.deptStayedNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patientIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patientNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.questionContentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,6 +67,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.deptStayedNameDataGridViewTextBoxColumn,
+            this.col_BED_CODE,
             this.patientIDDataGridViewTextBoxColumn,
             this.patientNameDataGridViewTextBoxColumn,
             this.questionContentDataGridViewTextBoxColumn,
@@ -205,6 +207,13 @@ namespace Heren.MedQC.Statistic
             this.deptStayedNameDataGridViewTextBoxColumn.Name = "deptStayedNameDataGridViewTextBoxColumn";
             this.deptStayedNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "´²ºÅ";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
+            // 
             // patientIDDataGridViewTextBoxColumn
             // 
             this.patientIDDataGridViewTextBoxColumn.DataPropertyName = "PatientID";
@@ -324,6 +333,7 @@ namespace Heren.MedQC.Statistic
         private Heren.Common.Controls.DictInput.FindComboBox cboUserList;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn deptStayedNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn patientIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn patientNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn questionContentDataGridViewTextBoxColumn;

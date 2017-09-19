@@ -1096,7 +1096,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="dtEndTime"></param>
         /// <param name="lstPatVisitLogs"></param>
         /// <returns></returns>
-        public short GetEmrDocList(string szTimeType, string szDocTypeIDList, DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<MedDocInfo> lstMedDocInfos)
+        public short GetEmrDocList(string szPatientID, string szPatientName,string szTimeType, string szDocTypeIDList, DateTime dtBeginTime, DateTime dtEndTime, string szDeptCode, ref List<MedDocInfo> lstMedDocInfos)
         {
             if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -1128,6 +1128,16 @@ namespace EMRDBLib.DbAccess
                     , szCondition
                     , SystemData.EmrDocTable.DEPT_CODE
                     , szDeptCode);
+            if (!string.IsNullOrEmpty(szPatientID))
+                szCondition = string.Format("{0} AND A.{1} = '{2}'"
+                    , szCondition
+                    , SystemData.EmrDocTable.PATIENT_ID
+                    , szPatientID);
+            if (!string.IsNullOrEmpty(szPatientName))
+                szCondition = string.Format("{0} AND A.{1} = '{2}'"
+                    , szCondition
+                    , SystemData.EmrDocTable.PATIENT_NAME
+                    , szPatientName);
             string szTalbe = String.Format(" {0} A,{1} B,{2} C"
                 , SystemData.DataTable.EMR_DOC
                 , SystemData.DataTable.DOC_STATUS

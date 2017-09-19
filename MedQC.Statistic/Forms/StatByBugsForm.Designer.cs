@@ -31,19 +31,6 @@ namespace Heren.MedQC.Statistic
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuestionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuestionContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuestionStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuestionCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDoctorInCharege = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colConfirmDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chkContentCheck = new System.Windows.Forms.CheckBox();
             this.chkTimeCheck = new System.Windows.Forms.CheckBox();
@@ -58,6 +45,20 @@ namespace Heren.MedQC.Statistic
             this.btnExportExcel = new System.Windows.Forms.Button();
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.btnPrint = new System.Windows.Forms.Button();
+            this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuestionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuestionContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuestionStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuestionCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoctorInCharege = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConfirmDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +74,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDeptName,
+            this.col_BED_CODE,
             this.colPatientID,
             this.colVisitID,
             this.colPatientName,
@@ -96,132 +98,6 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-            // 
-            // colDeptName
-            // 
-            this.colDeptName.DataPropertyName = "DeptName";
-            this.colDeptName.FillWeight = 130F;
-            this.colDeptName.HeaderText = "科室";
-            this.colDeptName.Name = "colDeptName";
-            this.colDeptName.ReadOnly = true;
-            this.colDeptName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDeptName.Width = 130;
-            // 
-            // colPatientID
-            // 
-            this.colPatientID.DataPropertyName = "PatientID";
-            this.colPatientID.FillWeight = 80F;
-            this.colPatientID.HeaderText = "患者ID号";
-            this.colPatientID.Name = "colPatientID";
-            this.colPatientID.ReadOnly = true;
-            this.colPatientID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colPatientID.Width = 80;
-            // 
-            // colVisitID
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colVisitID.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colVisitID.FillWeight = 60F;
-            this.colVisitID.HeaderText = "入院次";
-            this.colVisitID.Name = "colVisitID";
-            this.colVisitID.ReadOnly = true;
-            this.colVisitID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colVisitID.Width = 60;
-            // 
-            // colPatientName
-            // 
-            this.colPatientName.DataPropertyName = "PatientName";
-            this.colPatientName.FillWeight = 88F;
-            this.colPatientName.HeaderText = "患者姓名";
-            this.colPatientName.Name = "colPatientName";
-            this.colPatientName.ReadOnly = true;
-            this.colPatientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colPatientName.Width = 80;
-            // 
-            // colQuestionType
-            // 
-            this.colQuestionType.FillWeight = 150F;
-            this.colQuestionType.HeaderText = "问题类型";
-            this.colQuestionType.Name = "colQuestionType";
-            this.colQuestionType.ReadOnly = true;
-            this.colQuestionType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colQuestionType.Width = 120;
-            // 
-            // colQuestionContent
-            // 
-            this.colQuestionContent.DataPropertyName = "QuestionContent";
-            this.colQuestionContent.FillWeight = 300F;
-            this.colQuestionContent.HeaderText = "问题";
-            this.colQuestionContent.Name = "colQuestionContent";
-            this.colQuestionContent.ReadOnly = true;
-            this.colQuestionContent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colQuestionContent.Width = 200;
-            // 
-            // colQuestionStatus
-            // 
-            this.colQuestionStatus.HeaderText = "问题状态";
-            this.colQuestionStatus.Name = "colQuestionStatus";
-            this.colQuestionStatus.ReadOnly = true;
-            this.colQuestionStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colQuestionStatus.Width = 90;
-            // 
-            // colQuestionCount
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colQuestionCount.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colQuestionCount.FillWeight = 88F;
-            this.colQuestionCount.HeaderText = "检查例数";
-            this.colQuestionCount.Name = "colQuestionCount";
-            this.colQuestionCount.ReadOnly = true;
-            this.colQuestionCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colQuestionCount.Width = 80;
-            // 
-            // colCheckName
-            // 
-            this.colCheckName.DataPropertyName = "CheckerName";
-            this.colCheckName.FillWeight = 88F;
-            this.colCheckName.HeaderText = "检查者";
-            this.colCheckName.Name = "colCheckName";
-            this.colCheckName.ReadOnly = true;
-            this.colCheckName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colCheckName.Width = 88;
-            // 
-            // colCheckTime
-            // 
-            this.colCheckTime.DataPropertyName = "CheckTime";
-            this.colCheckTime.FillWeight = 150F;
-            this.colCheckTime.HeaderText = "检查时间";
-            this.colCheckTime.Name = "colCheckTime";
-            this.colCheckTime.ReadOnly = true;
-            this.colCheckTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colCheckTime.Width = 150;
-            // 
-            // colDoctorInCharege
-            // 
-            this.colDoctorInCharege.DataPropertyName = "colDoctorInCharege";
-            this.colDoctorInCharege.FillWeight = 88F;
-            this.colDoctorInCharege.HeaderText = "经治医生";
-            this.colDoctorInCharege.Name = "colDoctorInCharege";
-            this.colDoctorInCharege.ReadOnly = true;
-            this.colDoctorInCharege.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDoctorInCharege.Width = 88;
-            // 
-            // colPARENT_DOCTOR
-            // 
-            this.colPARENT_DOCTOR.HeaderText = "上级医生";
-            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
-            this.colPARENT_DOCTOR.ReadOnly = true;
-            this.colPARENT_DOCTOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colConfirmDate
-            // 
-            this.colConfirmDate.DataPropertyName = "ConfirmTime";
-            this.colConfirmDate.FillWeight = 150F;
-            this.colConfirmDate.HeaderText = "确认日期";
-            this.colConfirmDate.Name = "colConfirmDate";
-            this.colConfirmDate.ReadOnly = true;
-            this.colConfirmDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colConfirmDate.Width = 150;
             // 
             // panel1
             // 
@@ -380,6 +256,139 @@ namespace Heren.MedQC.Statistic
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
+            // colDeptName
+            // 
+            this.colDeptName.DataPropertyName = "DeptName";
+            this.colDeptName.FillWeight = 130F;
+            this.colDeptName.HeaderText = "科室";
+            this.colDeptName.Name = "colDeptName";
+            this.colDeptName.ReadOnly = true;
+            this.colDeptName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDeptName.Width = 130;
+            // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "床号";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
+            // 
+            // colPatientID
+            // 
+            this.colPatientID.DataPropertyName = "PatientID";
+            this.colPatientID.FillWeight = 80F;
+            this.colPatientID.HeaderText = "患者ID号";
+            this.colPatientID.Name = "colPatientID";
+            this.colPatientID.ReadOnly = true;
+            this.colPatientID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colPatientID.Width = 80;
+            // 
+            // colVisitID
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colVisitID.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colVisitID.FillWeight = 60F;
+            this.colVisitID.HeaderText = "入院次";
+            this.colVisitID.Name = "colVisitID";
+            this.colVisitID.ReadOnly = true;
+            this.colVisitID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colVisitID.Width = 60;
+            // 
+            // colPatientName
+            // 
+            this.colPatientName.DataPropertyName = "PatientName";
+            this.colPatientName.FillWeight = 88F;
+            this.colPatientName.HeaderText = "患者姓名";
+            this.colPatientName.Name = "colPatientName";
+            this.colPatientName.ReadOnly = true;
+            this.colPatientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colPatientName.Width = 80;
+            // 
+            // colQuestionType
+            // 
+            this.colQuestionType.FillWeight = 150F;
+            this.colQuestionType.HeaderText = "问题类型";
+            this.colQuestionType.Name = "colQuestionType";
+            this.colQuestionType.ReadOnly = true;
+            this.colQuestionType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colQuestionType.Width = 120;
+            // 
+            // colQuestionContent
+            // 
+            this.colQuestionContent.DataPropertyName = "QuestionContent";
+            this.colQuestionContent.FillWeight = 300F;
+            this.colQuestionContent.HeaderText = "问题";
+            this.colQuestionContent.Name = "colQuestionContent";
+            this.colQuestionContent.ReadOnly = true;
+            this.colQuestionContent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colQuestionContent.Width = 200;
+            // 
+            // colQuestionStatus
+            // 
+            this.colQuestionStatus.HeaderText = "问题状态";
+            this.colQuestionStatus.Name = "colQuestionStatus";
+            this.colQuestionStatus.ReadOnly = true;
+            this.colQuestionStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colQuestionStatus.Width = 90;
+            // 
+            // colQuestionCount
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colQuestionCount.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colQuestionCount.FillWeight = 88F;
+            this.colQuestionCount.HeaderText = "检查例数";
+            this.colQuestionCount.Name = "colQuestionCount";
+            this.colQuestionCount.ReadOnly = true;
+            this.colQuestionCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colQuestionCount.Width = 80;
+            // 
+            // colCheckName
+            // 
+            this.colCheckName.DataPropertyName = "CheckerName";
+            this.colCheckName.FillWeight = 88F;
+            this.colCheckName.HeaderText = "检查者";
+            this.colCheckName.Name = "colCheckName";
+            this.colCheckName.ReadOnly = true;
+            this.colCheckName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colCheckName.Width = 88;
+            // 
+            // colCheckTime
+            // 
+            this.colCheckTime.DataPropertyName = "CheckTime";
+            this.colCheckTime.FillWeight = 150F;
+            this.colCheckTime.HeaderText = "检查时间";
+            this.colCheckTime.Name = "colCheckTime";
+            this.colCheckTime.ReadOnly = true;
+            this.colCheckTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colCheckTime.Width = 150;
+            // 
+            // colDoctorInCharege
+            // 
+            this.colDoctorInCharege.DataPropertyName = "colDoctorInCharege";
+            this.colDoctorInCharege.FillWeight = 88F;
+            this.colDoctorInCharege.HeaderText = "经治医生";
+            this.colDoctorInCharege.Name = "colDoctorInCharege";
+            this.colDoctorInCharege.ReadOnly = true;
+            this.colDoctorInCharege.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDoctorInCharege.Width = 88;
+            // 
+            // colPARENT_DOCTOR
+            // 
+            this.colPARENT_DOCTOR.HeaderText = "上级医生";
+            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
+            this.colPARENT_DOCTOR.ReadOnly = true;
+            this.colPARENT_DOCTOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colConfirmDate
+            // 
+            this.colConfirmDate.DataPropertyName = "ConfirmTime";
+            this.colConfirmDate.FillWeight = 150F;
+            this.colConfirmDate.HeaderText = "确认日期";
+            this.colConfirmDate.Name = "colConfirmDate";
+            this.colConfirmDate.ReadOnly = true;
+            this.colConfirmDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colConfirmDate.Width = 150;
+            // 
             // StatByBugsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -410,21 +419,22 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkTimeCheck;
         private System.Windows.Forms.CheckBox chkContentCheck;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCheckTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colConfirmDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDoctorInCharege;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCheckName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionContent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colVisitID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private Heren.Common.Controls.DictInput.FindComboBox cboMsgStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colVisitID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionContent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCheckName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCheckTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDoctorInCharege;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConfirmDate;
     }
 }

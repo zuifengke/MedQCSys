@@ -110,7 +110,7 @@ namespace Heren.MedQC.Statistic
             row.Cells[this.docInChargeDataGridViewTextBoxColumn.Index].Value = qcDeptStatInfo.DoctorInCharge;
             row.Cells[this.colQCEventType.Index].Value = qcDeptStatInfo.QaEventType;
             row.Cells[this.colParentDotor.Index].Value = qcDeptStatInfo.ParentDoctor;
-
+            row.Cells[this.col_BED_CODE.Index].Value = qcDeptStatInfo.BED_CODE;
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
            

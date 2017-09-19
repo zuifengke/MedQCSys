@@ -41,6 +41,7 @@ namespace Heren.MedQC.Statistic
             this.panel1 = new System.Windows.Forms.Panel();
             this.colCheckName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRequestDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -161,6 +162,7 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCheckName,
             this.colDeptName,
+            this.col_BED_CODE,
             this.colPatientID,
             this.colPatientName,
             this.colRequestDoctor,
@@ -214,6 +216,13 @@ namespace Heren.MedQC.Statistic
             this.colDeptName.Name = "colDeptName";
             this.colDeptName.ReadOnly = true;
             this.colDeptName.Width = 120;
+            // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "´²ºÅ";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
             // 
             // colPatientID
             // 
@@ -326,6 +335,7 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCheckName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRequestDoctor;

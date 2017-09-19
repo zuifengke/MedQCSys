@@ -46,7 +46,10 @@ namespace Heren.MedQC.Statistic
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colPatientID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.chboxSimple = new System.Windows.Forms.CheckBox();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDocSetID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPatName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDoctorInCharge = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,8 +65,6 @@ namespace Heren.MedQC.Statistic
             this.colDocLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDocChecker = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMrStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.chboxSimple = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -212,7 +213,8 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colPatientID,
+            this.col_BED_CODE,
+            this.colPatID,
             this.colDocSetID,
             this.colPatName,
             this.colDoctorInCharge,
@@ -257,12 +259,50 @@ namespace Heren.MedQC.Statistic
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnSearch);
+            this.panel1.Controls.Add(this.chboxSimple);
+            this.panel1.Controls.Add(this.btnExport);
+            this.panel1.Controls.Add(this.cbbMrStatus);
+            this.panel1.Controls.Add(this.btnPrint);
+            this.panel1.Controls.Add(this.cbbScoreLow);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.cbx);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.cbbScoreHigh);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(988, 36);
+            this.panel1.TabIndex = 36;
+            // 
+            // chboxSimple
+            // 
+            this.chboxSimple.AutoSize = true;
+            this.chboxSimple.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chboxSimple.Location = new System.Drawing.Point(3, 11);
+            this.chboxSimple.Name = "chboxSimple";
+            this.chboxSimple.Size = new System.Drawing.Size(82, 18);
+            this.chboxSimple.TabIndex = 36;
+            this.chboxSimple.Text = "扣分详情";
+            this.chboxSimple.UseVisualStyleBackColor = true;
+            // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "床号";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
+            // 
             // colPatID
             // 
-            this.colPatientID.HeaderText = "患者ID";
-            this.colPatientID.Name = "colPatID";
-            this.colPatientID.ReadOnly = true;
-            this.colPatientID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colPatID.HeaderText = "患者ID";
+            this.colPatID.Name = "colPatID";
+            this.colPatID.ReadOnly = true;
+            this.colPatID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // colDocSetID
             // 
@@ -393,37 +433,6 @@ namespace Heren.MedQC.Statistic
             this.colMrStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colMrStatus.Width = 70;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnSearch);
-            this.panel1.Controls.Add(this.chboxSimple);
-            this.panel1.Controls.Add(this.btnExport);
-            this.panel1.Controls.Add(this.cbbMrStatus);
-            this.panel1.Controls.Add(this.btnPrint);
-            this.panel1.Controls.Add(this.cbbScoreLow);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.cbx);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.cbbScoreHigh);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(988, 36);
-            this.panel1.TabIndex = 36;
-            // 
-            // chboxSimple
-            // 
-            this.chboxSimple.AutoSize = true;
-            this.chboxSimple.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chboxSimple.Location = new System.Drawing.Point(3, 11);
-            this.chboxSimple.Name = "chboxSimple";
-            this.chboxSimple.Size = new System.Drawing.Size(82, 18);
-            this.chboxSimple.TabIndex = 36;
-            this.chboxSimple.Text = "扣分详情";
-            this.chboxSimple.UseVisualStyleBackColor = true;
-            // 
             // StatByDocScoreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -431,6 +440,7 @@ namespace Heren.MedQC.Statistic
             this.ClientSize = new System.Drawing.Size(988, 458);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "StatByDocScoreForm";
             this.Text = "病案评分一览表";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -456,21 +466,23 @@ namespace Heren.MedQC.Statistic
         private System.Windows.Forms.ComboBox cbbMrStatus;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox chboxSimple;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colMrStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocChecker;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocLevel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDischargeDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptDischargeFrom;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAdmissionDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptAdmissionTo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDoctorInCharge;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPatName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDocSetID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatientID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPatID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocSetID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPatName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDoctorInCharge;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPARENT_DOCTOR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptAdmissionTo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAdmissionDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDeptDischargeFrom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDischargeDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuestionList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocLevel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDocChecker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMrStatus;
     }
 }

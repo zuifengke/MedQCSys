@@ -61,6 +61,7 @@ namespace Heren.MedQC.Statistic
             if (row.DataGridView == null)
                 return;
             row.Tag = qcQuesiontionInfo;
+            row.Cells[this.col_BED_CODE.Index].Value = qcQuesiontionInfo.BED_CODE;
             row.Cells[this.colInpNO.Index].Value = qcQuesiontionInfo.InpNo;
             row.Cells[this.colPatientName.Index].Value = qcQuesiontionInfo.PATIENT_NAME;
             row.Cells[this.colPatientID.Index].Value = qcQuesiontionInfo.PATIENT_ID;

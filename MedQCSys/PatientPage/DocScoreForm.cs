@@ -666,6 +666,7 @@ namespace MedQCSys.DockForms
                         qcQuestionInfo.POINT_TYPE = 1;
                         qcQuestionInfo.ISSUED_ID = SystemParam.Instance.UserInfo.USER_ID;
                         qcQuestionInfo.POINT = float.Parse(row.Cells[this.colHosPoint.Index].Value.ToString());
+                        qcQuestionInfo.BED_CODE = SystemParam.Instance.PatVisitInfo.BED_CODE;
                         shRet = MedicalQcMsgAccess.Instance.Insert(qcQuestionInfo);
                         if (shRet != SystemData.ReturnValue.OK)
                         {

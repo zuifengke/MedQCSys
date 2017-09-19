@@ -29,18 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colPatID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPatDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDoctorInCharge = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCheckDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMsgStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDateConfirmed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
             this.btnExportExcel = new System.Windows.Forms.Button();
@@ -55,6 +43,19 @@
             this.dtpStatTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.dtpStatTimeBegin = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
+            this.col_BED_CODE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVisitID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPatDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDoctorInCharge = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPARENT_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQaEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCheckDataTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMsgStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDateConfirmed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +69,7 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_BED_CODE,
             this.colPatID,
             this.colPatName,
             this.colVisitID,
@@ -90,97 +92,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1020, 468);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // colPatID
-            // 
-            this.colPatID.FillWeight = 80F;
-            this.colPatID.HeaderText = "患者ID";
-            this.colPatID.Name = "colPatID";
-            this.colPatID.ReadOnly = true;
-            this.colPatID.Width = 80;
-            // 
-            // colPatName
-            // 
-            this.colPatName.FillWeight = 88F;
-            this.colPatName.HeaderText = "患者姓名";
-            this.colPatName.Name = "colPatName";
-            this.colPatName.ReadOnly = true;
-            this.colPatName.Width = 88;
-            // 
-            // colVisitID
-            // 
-            this.colVisitID.FillWeight = 60F;
-            this.colVisitID.HeaderText = "入院次";
-            this.colVisitID.Name = "colVisitID";
-            this.colVisitID.ReadOnly = true;
-            this.colVisitID.Width = 60;
-            // 
-            // colPatDeptName
-            // 
-            this.colPatDeptName.FillWeight = 130F;
-            this.colPatDeptName.HeaderText = "所在科室";
-            this.colPatDeptName.Name = "colPatDeptName";
-            this.colPatDeptName.ReadOnly = true;
-            this.colPatDeptName.Width = 130;
-            // 
-            // colDoctorInCharge
-            // 
-            this.colDoctorInCharge.HeaderText = "经治医师";
-            this.colDoctorInCharge.Name = "colDoctorInCharge";
-            this.colDoctorInCharge.ReadOnly = true;
-            // 
-            // colPARENT_DOCTOR
-            // 
-            this.colPARENT_DOCTOR.HeaderText = "上级医生";
-            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
-            this.colPARENT_DOCTOR.ReadOnly = true;
-            // 
-            // colQaEventType
-            // 
-            this.colQaEventType.HeaderText = "质量问题分类";
-            this.colQaEventType.Name = "colQaEventType";
-            this.colQaEventType.ReadOnly = true;
-            this.colQaEventType.Width = 120;
-            // 
-            // colMessage
-            // 
-            this.colMessage.FillWeight = 350F;
-            this.colMessage.HeaderText = "质检问题描述";
-            this.colMessage.Name = "colMessage";
-            this.colMessage.ReadOnly = true;
-            this.colMessage.Width = 350;
-            // 
-            // colCheckerName
-            // 
-            this.colCheckerName.FillWeight = 88F;
-            this.colCheckerName.HeaderText = "检查者";
-            this.colCheckerName.Name = "colCheckerName";
-            this.colCheckerName.ReadOnly = true;
-            this.colCheckerName.Width = 88;
-            // 
-            // colCheckDataTime
-            // 
-            this.colCheckDataTime.FillWeight = 130F;
-            this.colCheckDataTime.HeaderText = "检查日期";
-            this.colCheckDataTime.Name = "colCheckDataTime";
-            this.colCheckDataTime.ReadOnly = true;
-            this.colCheckDataTime.Width = 130;
-            // 
-            // colMsgStatus
-            // 
-            this.colMsgStatus.FillWeight = 88F;
-            this.colMsgStatus.HeaderText = "信息状态";
-            this.colMsgStatus.Name = "colMsgStatus";
-            this.colMsgStatus.ReadOnly = true;
-            this.colMsgStatus.Width = 88;
-            // 
-            // colDateConfirmed
-            // 
-            this.colDateConfirmed.FillWeight = 130F;
-            this.colDateConfirmed.HeaderText = "信息确认时间";
-            this.colDateConfirmed.Name = "colDateConfirmed";
-            this.colDateConfirmed.ReadOnly = true;
-            this.colDateConfirmed.Width = 150;
             // 
             // panel1
             // 
@@ -334,6 +245,104 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "检查时间";
             // 
+            // col_BED_CODE
+            // 
+            this.col_BED_CODE.HeaderText = "床号";
+            this.col_BED_CODE.Name = "col_BED_CODE";
+            this.col_BED_CODE.ReadOnly = true;
+            this.col_BED_CODE.Width = 60;
+            // 
+            // colPatID
+            // 
+            this.colPatID.FillWeight = 80F;
+            this.colPatID.HeaderText = "患者ID";
+            this.colPatID.Name = "colPatID";
+            this.colPatID.ReadOnly = true;
+            this.colPatID.Width = 80;
+            // 
+            // colPatName
+            // 
+            this.colPatName.FillWeight = 88F;
+            this.colPatName.HeaderText = "患者姓名";
+            this.colPatName.Name = "colPatName";
+            this.colPatName.ReadOnly = true;
+            this.colPatName.Width = 88;
+            // 
+            // colVisitID
+            // 
+            this.colVisitID.FillWeight = 60F;
+            this.colVisitID.HeaderText = "入院次";
+            this.colVisitID.Name = "colVisitID";
+            this.colVisitID.ReadOnly = true;
+            this.colVisitID.Width = 60;
+            // 
+            // colPatDeptName
+            // 
+            this.colPatDeptName.FillWeight = 130F;
+            this.colPatDeptName.HeaderText = "所在科室";
+            this.colPatDeptName.Name = "colPatDeptName";
+            this.colPatDeptName.ReadOnly = true;
+            this.colPatDeptName.Width = 130;
+            // 
+            // colDoctorInCharge
+            // 
+            this.colDoctorInCharge.HeaderText = "经治医师";
+            this.colDoctorInCharge.Name = "colDoctorInCharge";
+            this.colDoctorInCharge.ReadOnly = true;
+            // 
+            // colPARENT_DOCTOR
+            // 
+            this.colPARENT_DOCTOR.HeaderText = "上级医生";
+            this.colPARENT_DOCTOR.Name = "colPARENT_DOCTOR";
+            this.colPARENT_DOCTOR.ReadOnly = true;
+            // 
+            // colQaEventType
+            // 
+            this.colQaEventType.HeaderText = "质量问题分类";
+            this.colQaEventType.Name = "colQaEventType";
+            this.colQaEventType.ReadOnly = true;
+            this.colQaEventType.Width = 120;
+            // 
+            // colMessage
+            // 
+            this.colMessage.FillWeight = 350F;
+            this.colMessage.HeaderText = "质检问题描述";
+            this.colMessage.Name = "colMessage";
+            this.colMessage.ReadOnly = true;
+            this.colMessage.Width = 350;
+            // 
+            // colCheckerName
+            // 
+            this.colCheckerName.FillWeight = 88F;
+            this.colCheckerName.HeaderText = "检查者";
+            this.colCheckerName.Name = "colCheckerName";
+            this.colCheckerName.ReadOnly = true;
+            this.colCheckerName.Width = 88;
+            // 
+            // colCheckDataTime
+            // 
+            this.colCheckDataTime.FillWeight = 130F;
+            this.colCheckDataTime.HeaderText = "检查日期";
+            this.colCheckDataTime.Name = "colCheckDataTime";
+            this.colCheckDataTime.ReadOnly = true;
+            this.colCheckDataTime.Width = 130;
+            // 
+            // colMsgStatus
+            // 
+            this.colMsgStatus.FillWeight = 88F;
+            this.colMsgStatus.HeaderText = "信息状态";
+            this.colMsgStatus.Name = "colMsgStatus";
+            this.colMsgStatus.ReadOnly = true;
+            this.colMsgStatus.Width = 88;
+            // 
+            // colDateConfirmed
+            // 
+            this.colDateConfirmed.FillWeight = 130F;
+            this.colDateConfirmed.HeaderText = "信息确认时间";
+            this.colDateConfirmed.Name = "colDateConfirmed";
+            this.colDateConfirmed.ReadOnly = true;
+            this.colDateConfirmed.Width = 150;
+            // 
             // StatByQuestionForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -366,6 +375,8 @@
         private System.Windows.Forms.Button btnExportExcel;
         private Heren.Common.Controls.DictInput.FindComboBox cboDeptName;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_BED_CODE;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPatName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVisitID;
@@ -378,6 +389,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCheckDataTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMsgStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDateConfirmed;
-        private System.Windows.Forms.Panel panel1;
     }
 }

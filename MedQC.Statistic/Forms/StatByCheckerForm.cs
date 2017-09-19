@@ -74,12 +74,14 @@ namespace Heren.MedQC.Statistic
                 row.Cells[this.patientNameDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.PATIENT_NAME;
                 row.Cells[this.colInpNO.Index].Value = qcQuestionInfo.InpNo;
             }
+            row.Cells[this.col_BED_CODE.Index].Value = qcQuestionInfo.BED_CODE;
             row.Cells[this.deptStayedNameDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.DEPT_NAME;
             row.Cells[this.deptStayedIDDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.DEPT_STAYED;
             row.Cells[this.colQaEventType.Index].Value = qcQuestionInfo.QA_EVENT_TYPE;
             row.Cells[this.questionContentDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.MESSAGE;
             row.Cells[this.doctorInchargeDataGridViewTextBoxColumn.Index].Value = qcQuestionInfo.DOCTOR_IN_CHARGE;
             row.Cells[this.colPARENT_DOCTOR.Index].Value = qcQuestionInfo.PARENT_DOCTOR;
+            row.Cells[this.col_BED_CODE.Index].Value = qcQuestionInfo.BED_CODE;
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))
            

@@ -37,6 +37,10 @@ namespace EMRDBLib
             get { return m_InpNO; }
             set { m_InpNO = value; }
         }
+        /// <summary>
+        /// 床号
+        /// </summary>
+        public string BED_CODE { get; set; }
         private string m_szPatientName = string.Empty;
         /// <summary>
         /// 获取或设置患者姓名

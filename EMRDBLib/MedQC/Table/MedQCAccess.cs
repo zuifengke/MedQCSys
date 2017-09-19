@@ -104,13 +104,24 @@ namespace EMRDBLib.DbAccess
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
+            string szField = string.Format("B.{0},C.{1},B.{2},A.{3},B.{4},B.{5},B.{6},B.{7},B.{8},B.{9},B.{10},B.{11},A.{12},A.{13},B.{14},B.{15}"
+                                , SystemData.MedicalQcMsgTable.DEPT_STAYED
+                                , SystemData.DeptView.DEPT_NAME
+                                , SystemData.MedicalQcMsgTable.PATIENT_ID
+                                , SystemData.PatVisitView.PATIENT_NAME
+                                , SystemData.MedicalQcMsgTable.MESSAGE
+                                , SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE
+                                , SystemData.MedicalQcMsgTable.ISSUED_BY
+                                , SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME
+                                , SystemData.MedicalQcMsgTable.ASK_DATE_TIME
+                                , SystemData.MedicalQcMsgTable.PARENT_DOCTOR
+                                , SystemData.MedicalQcMsgTable.SUPER_DOCTOR
+                                , SystemData.MedicalQcMsgTable.TOPIC_ID
+                                , SystemData.MedicalQcMsgTable.VISIT_ID
+                                , SystemData.PatVisitView.INP_NO
+                                , SystemData.MedicalQcMsgTable.QA_EVENT_TYPE
+                                , SystemData.MedicalQcMsgTable.BED_CODE);
 
-            string szField = string.Format("B.{0},C.{1},B.{2},A.{3},B.{4},B.{5},B.{6},B.{7},B.{8},B.{9},B.{10},B.{11},A.{12},A.{13},B.{14}",
-                                SystemData.MedicalQcMsgTable.DEPT_STAYED, SystemData.DeptView.DEPT_NAME, SystemData.MedicalQcMsgTable.PATIENT_ID,
-                                SystemData.PatVisitView.PATIENT_NAME, SystemData.MedicalQcMsgTable.MESSAGE, SystemData.MedicalQcMsgTable.DOCTOR_IN_CHARGE,
-                                SystemData.MedicalQcMsgTable.ISSUED_BY, SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME, SystemData.MedicalQcMsgTable.ASK_DATE_TIME,
-                                SystemData.MedicalQcMsgTable.PARENT_DOCTOR, SystemData.MedicalQcMsgTable.SUPER_DOCTOR, SystemData.MedicalQcMsgTable.TOPIC_ID,
-                                SystemData.MedicalQcMsgTable.VISIT_ID, SystemData.PatVisitView.INP_NO, SystemData.MedicalQcMsgTable.QA_EVENT_TYPE);
             string szCondition = string.Format("A.{0} = B.{1} AND A.{2}=B.{2} AND B.{3} = C.{4} AND B.{5} >= {6} AND B.{7} < {8}"
                 , SystemData.PatVisitView.PATIENT_ID, SystemData.MedicalQcMsgTable.PATIENT_ID, SystemData.MedicalQcMsgTable.VISIT_ID
                 , SystemData.MedicalQcMsgTable.DEPT_STAYED, SystemData.DeptView.DEPT_CODE, SystemData.MedicalQcMsgTable.ISSUED_DATE_TIME
@@ -150,6 +161,7 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(12)) clsQCDeptStatInfo.VisitID = dataReader.GetString(12);
                     if (!dataReader.IsDBNull(13)) clsQCDeptStatInfo.InpNo = dataReader.GetString(13);
                     if (!dataReader.IsDBNull(14)) clsQCDeptStatInfo.QaEventType = dataReader.GetString(14);
+                    if (!dataReader.IsDBNull(15)) clsQCDeptStatInfo.BED_CODE = dataReader.GetString(15);
                     lstQCDeptStatInfos.Add(clsQCDeptStatInfo);
                 } while (dataReader.Read());
 
@@ -453,7 +465,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="fScore">病历总扣分</param>
         /// <param name="szQCResultStatus">质控结果状态</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetQCResultStatus(string szPatientID, string szVisitID,int nGradingLow, ref float fScore, ref string szQCResultStatus)
+        public short GetQCResultStatus(string szPatientID, string szVisitID, int nGradingLow, ref float fScore, ref string szQCResultStatus)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -532,7 +544,7 @@ namespace EMRDBLib.DbAccess
         /// </summary>
         /// <param name="lstPatVisitLogs"></param>
         /// <param name="lstPatVisistQCStatus"></param>
-        public short GetQCResultStatus(int nGradingLow,ref List<PatVisitInfo> lstPatVisitLogs)
+        public short GetQCResultStatus(int nGradingLow, ref List<PatVisitInfo> lstPatVisitLogs)
         {
             if (base.MedQCAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
@@ -640,7 +652,7 @@ namespace EMRDBLib.DbAccess
                         {
                             pat.QCResultStatus = SystemData.MedQCStatus.EXIST_BUG;
                         }
-                        if (fScore > (100 -  nGradingLow))
+                        if (fScore > (100 - nGradingLow))
                         {
                             pat.QCResultStatus = SystemData.MedQCStatus.SERIOUS_BUG;
                         }

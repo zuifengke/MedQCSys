@@ -210,6 +210,7 @@ namespace Heren.MedQC.Statistic
                 DataGridViewRow row = this.dataGridView1.Rows[nRowIndex];
                 row.DefaultCellStyle.BackColor = backColor;
                 row.Cells[this.colPatientID.Index].Value = patVisitLog.PATIENT_ID;
+                row.Cells[this.col_BED_CODE.Index].Value = patVisitLog.BED_CODE;
                 row.Cells[this.colPatName.Index].Value = patVisitLog.PATIENT_NAME;
                 row.Cells[this.colDoctorInCharge.Index].Value = patVisitLog.INCHARGE_DOCTOR;
                 row.Cells[this.colPARENT_DOCTOR.Index].Value = patVisitLog.AttendingDoctor;

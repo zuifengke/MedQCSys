@@ -611,6 +611,7 @@ namespace MedQCSys.DockForms
             MedicalQcMsg medicalQcMsg = new MedicalQcMsg();
             medicalQcMsg.APPLY_ENV = "MEDDOC";
             medicalQcMsg.ERROR_COUNT = 1;
+            medicalQcMsg.BED_CODE = SystemParam.Instance.PatVisitInfo.BED_CODE;
             medicalQcMsg.InpNo = SystemParam.Instance.PatVisitInfo.INP_NO;
             medicalQcMsg.ISSUED_BY = SystemParam.Instance.UserInfo.USER_NAME;
             medicalQcMsg.ISSUED_DATE_TIME = SysTimeHelper.Instance.Now;

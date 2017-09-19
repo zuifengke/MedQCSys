@@ -77,7 +77,7 @@ namespace Heren.MedQC.Search
             row.Cells[this.col_DOC_TITLE.Index].Value = docInfo.DOC_TITLE;
             row.Cells[this.col_RECORD_TIME.Index].Value = docInfo.RECORD_TIME.ToString("yyyy-MM-dd HH:mm");
             row.Cells[this.col_CREATOR_NAME.Index].Value = docInfo.CREATOR_NAME;
-            if(docInfo.DischargeTime != docInfo.DefaultTime)
+            if (docInfo.DischargeTime != docInfo.DefaultTime)
                 row.Cells[this.colDischargeTime.Index].Value = docInfo.DischargeTime.ToString("yyyy-MM-dd HH:mm");
             row.Tag = docInfo;
         }
@@ -146,6 +146,8 @@ namespace Heren.MedQC.Search
             string szDeptCode = null;
             if (deptInfo != null)
                 szDeptCode = deptInfo.DEPT_CODE;
+            string szPatientID = this.txtPatientID.Text.Trim();
+            string szPatientName = this.txtPatientName.Text.Trim();
             if (string.IsNullOrEmpty(this.cboDeptName.Text))
                 szDeptCode = null;
 
@@ -180,7 +182,7 @@ namespace Heren.MedQC.Search
             this.ShowStatusMessage("正在查询数据，请稍候...");
             this.dataGridView1.Rows.Clear();
             List<MedDocInfo> lstMedDocInfos = null;
-            short shRet = EmrDocAccess.Instance.GetEmrDocList(szTimeType,szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
+            short shRet = EmrDocAccess.Instance.GetEmrDocList(szPatientID,szPatientName, szTimeType, szDocTypeIDListCondition, dtBeginTime, dtEndTime, szDeptCode, ref lstMedDocInfos);
             if (shRet != SystemData.ReturnValue.OK
                 && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
@@ -270,7 +272,7 @@ namespace Heren.MedQC.Search
 
             if (SystemParam.Instance.LocalConfigOption.IsNewTheme)
             {
-                this.MainForm.SwitchPatient(patVisitInfo,docInfo);
+                this.MainForm.SwitchPatient(patVisitInfo, docInfo);
                 return;
             }
             this.MainForm.OpenDocument(string.Empty, patVisitInfo.PATIENT_ID, patVisitInfo.VISIT_ID);

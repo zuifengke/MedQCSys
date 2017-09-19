@@ -329,6 +329,7 @@ namespace Heren.MedQC.Statistic
             row.Cells[this.colQuestionContent.Index].Value = qcQuestionInfo.MESSAGE;
             row.Cells[this.colDoctorInCharege.Index].Value = qcQuestionInfo.DOCTOR_IN_CHARGE;
             row.Cells[this.colPARENT_DOCTOR.Index].Value = qcQuestionInfo.PARENT_DOCTOR;
+            row.Cells[this.col_BED_CODE.Index].Value = qcQuestionInfo.BED_CODE;
 
             //显示权限改到质控权限控制
             //if (SystemConfig.Instance.Get(SystemData.ConfigKey.STAT_SHOW_CHECKER_NAME, false))

@@ -24,6 +24,10 @@ namespace EMRDBLib
             /// </summary>
             public const string PATIENT_ID = "PATIENT_ID";
             /// <summary>
+            /// 床位号
+            /// </summary>
+            public const string BED_CODE = "BED_CODE";
+            /// <summary>
             /// 病人本次住院标识
             /// </summary>
             public const string VISIT_ID = "VISIT_ID";
