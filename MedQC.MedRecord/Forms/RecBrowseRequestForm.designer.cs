@@ -29,9 +29,9 @@ namespace Heren.MedQC.MedRecord
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecBrowseRequestForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.XPanel1 = new Heren.Common.Forms.XPanel();
             this.cboStatus = new Heren.Common.Forms.XComboBox();
             this.btnReject = new Heren.Common.Forms.XButton();
@@ -46,7 +46,6 @@ namespace Heren.MedQC.MedRecord
             this.XLabel4 = new Heren.Common.Forms.XLabel();
             this.XLabel2 = new Heren.Common.Forms.XLabel();
             this.XDataGrid1 = new Heren.Common.Forms.XDataGrid();
-            this.chkAll = new System.Windows.Forms.CheckBox();
             this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
             this.col_PATIENT_NAME = new Heren.Common.Forms.XTextBoxColumn();
             this.col_PATIENT_ID = new Heren.Common.Forms.XTextBoxColumn();
@@ -59,6 +58,7 @@ namespace Heren.MedQC.MedRecord
             this.col_APPROVAL_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_STATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_REMARK = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chkAll = new System.Windows.Forms.CheckBox();
             this.XPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.XDataGrid1)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +80,7 @@ namespace Heren.MedQC.MedRecord
             this.XPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.XPanel1.Location = new System.Drawing.Point(0, 0);
             this.XPanel1.Name = "XPanel1";
-            this.XPanel1.Size = new System.Drawing.Size(1072, 51);
+            this.XPanel1.Size = new System.Drawing.Size(1020, 51);
             this.XPanel1.TabIndex = 7;
             // 
             // cboStatus
@@ -223,14 +223,14 @@ namespace Heren.MedQC.MedRecord
             this.XDataGrid1.BindingEvents = new Heren.Common.Forms.BindingEvent[] {
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("XDataGrid1.BindingEvents"))),
         ((Heren.Common.Forms.BindingEvent)(resources.GetObject("XDataGrid1.BindingEvents1")))};
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 10.5F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.XDataGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.XDataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.XDataGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_Chk,
@@ -245,41 +245,31 @@ namespace Heren.MedQC.MedRecord
             this.col_APPROVAL_TIME,
             this.col_STATUS,
             this.col_REMARK});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.XDataGrid1.DefaultCellStyle = dataGridViewCellStyle2;
             this.XDataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.XDataGrid1.Location = new System.Drawing.Point(0, 51);
             this.XDataGrid1.Name = "XDataGrid1";
             this.XDataGrid1.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("宋体", 9F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.XDataGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.XDataGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.XDataGrid1.RowHeadersVisible = false;
-            this.XDataGrid1.Size = new System.Drawing.Size(1072, 644);
+            this.XDataGrid1.Size = new System.Drawing.Size(1020, 644);
             this.XDataGrid1.TabIndex = 8;
             this.XDataGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.XDataGrid1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(14, 55);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(15, 14);
-            this.chkAll.TabIndex = 9;
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // col_Chk
             // 
@@ -358,13 +348,23 @@ namespace Heren.MedQC.MedRecord
             this.col_REMARK.Name = "col_REMARK";
             this.col_REMARK.ReadOnly = true;
             // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(14, 55);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 9;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
             // RecBrowseRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1072, 695);
+            this.ClientSize = new System.Drawing.Size(1020, 695);
             this.Controls.Add(this.chkAll);
             this.Controls.Add(this.XDataGrid1);
             this.Controls.Add(this.XPanel1);

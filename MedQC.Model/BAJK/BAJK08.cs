@@ -15,15 +15,15 @@ namespace EMRDBLib.BAJK
     public class BAJK08 : DbTypeBase
     {
         /// <summary>
-        /// 病人序号
+        /// 病人序号[8]
         /// </summary>
         public decimal KEY0801 { get; set; }
         /// <summary>
-        /// 病案号
+        /// 病案号[40]
         /// </summary>
         public string COL0801 { get; set; }
         /// <summary>
-        /// 病人姓名
+        /// 病人姓名[50]
         /// </summary>
         public string COL0802 { get; set; }
         /// <summary>
@@ -55,31 +55,31 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0809 { get; set; }
         /// <summary>
-        /// 身份证号
+        /// 身份证号[18]
         /// </summary>
         public string COL0810 { get; set; }
         /// <summary>
-        /// 工作单位
+        /// 工作单位[200]
         /// </summary>
         public string COL0811 { get; set; }
         /// <summary>
-        /// 单位电话
+        /// 单位电话[26]
         /// </summary>
         public string COL0812 { get; set; }
         /// <summary>
-        /// 单位邮编
+        /// 单位邮编[6]
         /// </summary>
         public string COL0813 { get; set; }
         /// <summary>
-        /// 家庭住址
+        /// 家庭住址[200]
         /// </summary>
         public string COL0814 { get; set; }
         /// <summary>
-        /// 住址邮编
+        /// 住址邮编[6]
         /// </summary>
         public string COL0815 { get; set; }
         /// <summary>
-        /// 关系人姓名
+        /// 关系人姓名[20]
         /// </summary>
         public string COL0816 { get; set; }
         /// <summary>
@@ -87,11 +87,11 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0817 { get; set; }
         /// <summary>
-        /// 关系人住址
+        /// 关系人住址[200]
         /// </summary>
         public string COL0818 { get; set; }
         /// <summary>
-        /// 关系人电话
+        /// 关系人电话[26]
         /// </summary>
         public string COL0819 { get; set; }
         /// <summary>
@@ -115,11 +115,11 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0827 { get; set; }
         /// <summary>
-        /// 质控医师
+        /// 质控医师[8]
         /// </summary>
         public string COL0828 { get; set; }
         /// <summary>
-        /// 质控护士
+        /// 质控护士[8]
         /// </summary>
         public string COL0829 { get; set; }
         /// <summary>
@@ -135,35 +135,35 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0832 { get; set; }
         /// <summary>
-        /// 科主任编号
+        /// 科主任编号[8]
         /// </summary>
         public string COL0834 { get; set; }
         /// <summary>
-        /// 主任医师编号
+        /// 主任医师编号[8]
         /// </summary>
         public string COL0835 { get; set; }
         /// <summary>
-        /// 主治医师编号
+        /// 主治医师编号[8]
         /// </summary>
         public string COL0836 { get; set; }
         /// <summary>
-        /// 住院医师编号
+        /// 住院医师编号[8]
         /// </summary>
         public string COL0837 { get; set; }
         /// <summary>
-        /// 进修医师编号
+        /// 进修医师编号[8]
         /// </summary>
         public string COL0838 { get; set; }
         /// <summary>
-        /// 实习医师编号
+        /// 实习医师编号[8]
         /// </summary>
-        public string COL0839 { get; set; }
+        public string  COL0839 { get; set; }
         /// <summary>
         /// 录入日期
         /// </summary>
         public DateTime COL0841 { get; set; }
         /// <summary>
-        /// 操作员
+        /// 操作员[8]
         /// </summary>
         public string COL0842 { get; set; }
         /// <summary>
@@ -171,7 +171,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0843 { get; set; }
         /// <summary>
-        /// 入院科室
+        /// 入院科室[10]
         /// </summary>
         public string COL0844 { get; set; }
         /// <summary>
@@ -179,7 +179,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public DateTime COL0845 { get; set; }
         /// <summary>
-        /// 出院科室
+        /// 出院科室[10]
         /// </summary>
         public string COL0847 { get; set; }
         /// <summary>
@@ -243,7 +243,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal FLAG { get; set; }
         /// <summary>
-        /// 唯一号
+        /// 唯一号[20]
         /// </summary>
         public string COL0871 { get; set; }
         /// <summary>
@@ -251,11 +251,11 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0873 { get; set; }
         /// <summary>
-        /// 入院病室
+        /// 入院病室[30]
         /// </summary>
         public string COL0882 { get; set; }
         /// <summary>
-        /// 出院病室
+        /// 出院病室[30]
         /// </summary>
         public string COL0883 { get; set; }
         /// <summary>
@@ -267,7 +267,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0885 { get; set; }
         /// <summary>
-        /// 主诊断全称
+        /// 主诊断全称[50]
         /// </summary>
         public string COL0887 { get; set; }
         /// <summary>
@@ -283,7 +283,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0890 { get; set; }
         /// <summary>
-        /// 健康卡号
+        /// 健康卡号[30]
         /// </summary>
         public string COL0891 { get; set; }
         /// <summary>
@@ -299,15 +299,15 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0894 { get; set; }
         /// <summary>
-        /// 现住址
+        /// 现住址[200]
         /// </summary>
         public string COL0895 { get; set; }
         /// <summary>
-        /// 现住址电话
+        /// 现住址电话[26]
         /// </summary>
         public string COL0896 { get; set; }
         /// <summary>
-        /// 现住址邮编
+        /// 现住址邮编[26]
         /// </summary>
         public string COL0897 { get; set; }
         /// <summary>
@@ -319,7 +319,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0899 { get; set; }
         /// <summary>
-        /// 拟接收医疗机构名称1
+        /// 拟接收医疗机构名称1[94]
         /// </summary>
         public string COL0900 { get; set; }
         /// <summary>
@@ -327,15 +327,15 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0902 { get; set; }
         /// <summary>
-        /// 再住院目的
+        /// 再住院目的[94]
         /// </summary>
         public string COL0903 { get; set; }
         /// <summary>
-        /// 入院前昏迷时间
+        /// 入院前昏迷时间[26]
         /// </summary>
         public string COL0904 { get; set; }
         /// <summary>
-        /// 入院后昏迷时间
+        /// 入院后昏迷时间[26]
         /// </summary>
         public string COL0905 { get; set; }
         /// <summary>
@@ -347,7 +347,7 @@ namespace EMRDBLib.BAJK
         /// </summary>
         public decimal COL0907 { get; set; }
         /// <summary>
-        /// 责任护士编号
+        /// 责任护士编号[10]
         /// </summary>
         public string COL0908 { get; set; }
         ///// <summary>

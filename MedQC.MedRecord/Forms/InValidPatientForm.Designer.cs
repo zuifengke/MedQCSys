@@ -33,19 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsBrowseRequest = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cboTimeType = new System.Windows.Forms.ComboBox();
-            this.btnSearch = new Heren.Common.Forms.XButton();
-            this.dtTimeEnd = new Heren.Common.Forms.XDateTime();
-            this.dtTimeBegin = new Heren.Common.Forms.XDateTime();
-            this.txtName = new Heren.Common.Forms.XTextBox();
-            this.xLabel4 = new Heren.Common.Forms.XLabel();
-            this.txtPatientID = new Heren.Common.Forms.XTextBox();
-            this.xLabel3 = new Heren.Common.Forms.XLabel();
-            this.xLabel6 = new Heren.Common.Forms.XLabel();
-            this.btnInValid = new Heren.Common.Forms.XButton();
             this.col_INVALID_PATIENT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_1_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PATIENT_SEX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +45,19 @@
             this.col_1_DEPT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_INCHARGE_DOCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_MR_STATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsBrowseRequest = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cboTimeType = new System.Windows.Forms.ComboBox();
+            this.btnInValid = new Heren.Common.Forms.XButton();
+            this.btnSearch = new Heren.Common.Forms.XButton();
+            this.dtTimeEnd = new Heren.Common.Forms.XDateTime();
+            this.dtTimeBegin = new Heren.Common.Forms.XDateTime();
+            this.txtName = new Heren.Common.Forms.XTextBox();
+            this.xLabel4 = new Heren.Common.Forms.XLabel();
+            this.txtPatientID = new Heren.Common.Forms.XTextBox();
+            this.xLabel3 = new Heren.Common.Forms.XLabel();
+            this.xLabel6 = new Heren.Common.Forms.XLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -114,143 +114,6 @@
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseDoubleClick);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsBrowseRequest});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 26);
-            // 
-            // tsBrowseRequest
-            // 
-            this.tsBrowseRequest.Name = "tsBrowseRequest";
-            this.tsBrowseRequest.Size = new System.Drawing.Size(148, 22);
-            this.tsBrowseRequest.Text = "申请病历浏览";
-            this.tsBrowseRequest.Click += new System.EventHandler(this.tsBrowseRequest_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cboTimeType);
-            this.panel1.Controls.Add(this.btnInValid);
-            this.panel1.Controls.Add(this.btnSearch);
-            this.panel1.Controls.Add(this.dtTimeEnd);
-            this.panel1.Controls.Add(this.dtTimeBegin);
-            this.panel1.Controls.Add(this.txtName);
-            this.panel1.Controls.Add(this.xLabel4);
-            this.panel1.Controls.Add(this.txtPatientID);
-            this.panel1.Controls.Add(this.xLabel3);
-            this.panel1.Controls.Add(this.xLabel6);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(992, 60);
-            this.panel1.TabIndex = 0;
-            // 
-            // cboTimeType
-            // 
-            this.cboTimeType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboTimeType.FormattingEnabled = true;
-            this.cboTimeType.Items.AddRange(new object[] {
-            "出院日期",
-            "入院日期"});
-            this.cboTimeType.Location = new System.Drawing.Point(6, 6);
-            this.cboTimeType.Name = "cboTimeType";
-            this.cboTimeType.Size = new System.Drawing.Size(87, 22);
-            this.cboTimeType.TabIndex = 9;
-            this.cboTimeType.Text = "出院日期";
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(797, 29);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(90, 28);
-            this.btnSearch.TabIndex = 8;
-            this.btnSearch.Text = "查询";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // dtTimeEnd
-            // 
-            this.dtTimeEnd.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtTimeEnd.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtTimeEnd.Location = new System.Drawing.Point(224, 6);
-            this.dtTimeEnd.Name = "dtTimeEnd";
-            this.dtTimeEnd.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
-            this.dtTimeEnd.ShowHour = false;
-            this.dtTimeEnd.ShowMinute = false;
-            this.dtTimeEnd.ShowSecond = false;
-            this.dtTimeEnd.Size = new System.Drawing.Size(106, 21);
-            this.dtTimeEnd.TabIndex = 6;
-            // 
-            // dtTimeBegin
-            // 
-            this.dtTimeBegin.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtTimeBegin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.dtTimeBegin.Location = new System.Drawing.Point(96, 6);
-            this.dtTimeBegin.Name = "dtTimeBegin";
-            this.dtTimeBegin.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
-            this.dtTimeBegin.ShowHour = false;
-            this.dtTimeBegin.ShowMinute = false;
-            this.dtTimeBegin.ShowSecond = false;
-            this.dtTimeBegin.Size = new System.Drawing.Size(106, 21);
-            this.dtTimeBegin.TabIndex = 6;
-            // 
-            // txtName
-            // 
-            this.txtName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtName.Location = new System.Drawing.Point(239, 29);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(90, 23);
-            this.txtName.TabIndex = 5;
-            // 
-            // xLabel4
-            // 
-            this.xLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel4.Location = new System.Drawing.Point(192, 34);
-            this.xLabel4.Name = "xLabel4";
-            this.xLabel4.Size = new System.Drawing.Size(49, 14);
-            this.xLabel4.TabIndex = 4;
-            this.xLabel4.Text = "姓名：";
-            // 
-            // txtPatientID
-            // 
-            this.txtPatientID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtPatientID.Location = new System.Drawing.Point(95, 29);
-            this.txtPatientID.Name = "txtPatientID";
-            this.txtPatientID.Size = new System.Drawing.Size(94, 23);
-            this.txtPatientID.TabIndex = 5;
-            // 
-            // xLabel3
-            // 
-            this.xLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel3.Location = new System.Drawing.Point(13, 35);
-            this.xLabel3.Name = "xLabel3";
-            this.xLabel3.Size = new System.Drawing.Size(77, 14);
-            this.xLabel3.TabIndex = 4;
-            this.xLabel3.Text = "患者ID号：";
-            // 
-            // xLabel6
-            // 
-            this.xLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel6.Location = new System.Drawing.Point(206, 10);
-            this.xLabel6.Name = "xLabel6";
-            this.xLabel6.Size = new System.Drawing.Size(14, 14);
-            this.xLabel6.TabIndex = 2;
-            this.xLabel6.Text = "-";
-            // 
-            // btnInValid
-            // 
-            this.btnInValid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInValid.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnInValid.Location = new System.Drawing.Point(893, 29);
-            this.btnInValid.Name = "btnInValid";
-            this.btnInValid.Size = new System.Drawing.Size(90, 28);
-            this.btnInValid.TabIndex = 8;
-            this.btnInValid.Text = "标记";
-            this.btnInValid.UseVisualStyleBackColor = true;
             // 
             // col_INVALID_PATIENT
             // 
@@ -333,6 +196,141 @@
             this.col_MR_STATUS.HeaderText = "病案状态";
             this.col_MR_STATUS.Name = "col_MR_STATUS";
             this.col_MR_STATUS.ReadOnly = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsBrowseRequest});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 26);
+            // 
+            // tsBrowseRequest
+            // 
+            this.tsBrowseRequest.Name = "tsBrowseRequest";
+            this.tsBrowseRequest.Size = new System.Drawing.Size(148, 22);
+            this.tsBrowseRequest.Text = "申请病历浏览";
+            this.tsBrowseRequest.Click += new System.EventHandler(this.tsBrowseRequest_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cboTimeType);
+            this.panel1.Controls.Add(this.btnInValid);
+            this.panel1.Controls.Add(this.btnSearch);
+            this.panel1.Controls.Add(this.dtTimeEnd);
+            this.panel1.Controls.Add(this.dtTimeBegin);
+            this.panel1.Controls.Add(this.txtName);
+            this.panel1.Controls.Add(this.xLabel4);
+            this.panel1.Controls.Add(this.txtPatientID);
+            this.panel1.Controls.Add(this.xLabel3);
+            this.panel1.Controls.Add(this.xLabel6);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(992, 60);
+            this.panel1.TabIndex = 0;
+            // 
+            // cboTimeType
+            // 
+            this.cboTimeType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboTimeType.FormattingEnabled = true;
+            this.cboTimeType.Items.AddRange(new object[] {
+            "出院日期",
+            "入院日期"});
+            this.cboTimeType.Location = new System.Drawing.Point(6, 6);
+            this.cboTimeType.Name = "cboTimeType";
+            this.cboTimeType.Size = new System.Drawing.Size(87, 22);
+            this.cboTimeType.TabIndex = 9;
+            this.cboTimeType.Text = "出院日期";
+            // 
+            // btnInValid
+            // 
+            this.btnInValid.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnInValid.Location = new System.Drawing.Point(447, 29);
+            this.btnInValid.Name = "btnInValid";
+            this.btnInValid.Size = new System.Drawing.Size(90, 26);
+            this.btnInValid.TabIndex = 8;
+            this.btnInValid.Text = "标记";
+            this.btnInValid.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSearch.Location = new System.Drawing.Point(351, 29);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(90, 26);
+            this.btnSearch.TabIndex = 8;
+            this.btnSearch.Text = "查询";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // dtTimeEnd
+            // 
+            this.dtTimeEnd.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtTimeEnd.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.dtTimeEnd.Location = new System.Drawing.Point(224, 6);
+            this.dtTimeEnd.Name = "dtTimeEnd";
+            this.dtTimeEnd.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
+            this.dtTimeEnd.ShowHour = false;
+            this.dtTimeEnd.ShowMinute = false;
+            this.dtTimeEnd.ShowSecond = false;
+            this.dtTimeEnd.Size = new System.Drawing.Size(106, 21);
+            this.dtTimeEnd.TabIndex = 6;
+            // 
+            // dtTimeBegin
+            // 
+            this.dtTimeBegin.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtTimeBegin.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.dtTimeBegin.Location = new System.Drawing.Point(96, 6);
+            this.dtTimeBegin.Name = "dtTimeBegin";
+            this.dtTimeBegin.NullableValue = new System.DateTime(2017, 1, 18, 0, 0, 0, 0);
+            this.dtTimeBegin.ShowHour = false;
+            this.dtTimeBegin.ShowMinute = false;
+            this.dtTimeBegin.ShowSecond = false;
+            this.dtTimeBegin.Size = new System.Drawing.Size(106, 21);
+            this.dtTimeBegin.TabIndex = 6;
+            // 
+            // txtName
+            // 
+            this.txtName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtName.Location = new System.Drawing.Point(239, 29);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(90, 23);
+            this.txtName.TabIndex = 5;
+            // 
+            // xLabel4
+            // 
+            this.xLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel4.Location = new System.Drawing.Point(192, 34);
+            this.xLabel4.Name = "xLabel4";
+            this.xLabel4.Size = new System.Drawing.Size(49, 14);
+            this.xLabel4.TabIndex = 4;
+            this.xLabel4.Text = "姓名：";
+            // 
+            // txtPatientID
+            // 
+            this.txtPatientID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPatientID.Location = new System.Drawing.Point(95, 29);
+            this.txtPatientID.Name = "txtPatientID";
+            this.txtPatientID.Size = new System.Drawing.Size(94, 23);
+            this.txtPatientID.TabIndex = 5;
+            // 
+            // xLabel3
+            // 
+            this.xLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel3.Location = new System.Drawing.Point(13, 35);
+            this.xLabel3.Name = "xLabel3";
+            this.xLabel3.Size = new System.Drawing.Size(77, 14);
+            this.xLabel3.TabIndex = 4;
+            this.xLabel3.Text = "患者ID号：";
+            // 
+            // xLabel6
+            // 
+            this.xLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel6.Location = new System.Drawing.Point(206, 10);
+            this.xLabel6.Name = "xLabel6";
+            this.xLabel6.Size = new System.Drawing.Size(14, 14);
+            this.xLabel6.TabIndex = 2;
+            this.xLabel6.Text = "-";
             // 
             // InValidPatientForm
             // 

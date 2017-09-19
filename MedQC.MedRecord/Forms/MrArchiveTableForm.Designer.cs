@@ -33,12 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSearch = new Heren.Common.Forms.XButton();
-            this.cboMrStatus = new Heren.Common.Controls.DictInput.FindComboBox();
-            this.xLabel2 = new Heren.Common.Forms.XLabel();
-            this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
-            this.xLabel1 = new Heren.Common.Forms.XLabel();
             this.col_DEPT_ADMISSION_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_1_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PATIENT_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,10 +42,16 @@
             this.col_MR_STATUS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_SUBMIT_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_ARCHIVE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.cboTimeType = new System.Windows.Forms.ComboBox();
             this.dtTimeEnd = new Heren.Common.Forms.XDateTime();
             this.dtTimeBegin = new Heren.Common.Forms.XDateTime();
             this.xLabel6 = new Heren.Common.Forms.XLabel();
+            this.btnSearch = new Heren.Common.Forms.XButton();
+            this.cboMrStatus = new Heren.Common.Controls.DictInput.FindComboBox();
+            this.xLabel2 = new Heren.Common.Forms.XLabel();
+            this.cboDeptName = new Heren.Common.Controls.DictInput.FindComboBox();
+            this.xLabel1 = new Heren.Common.Forms.XLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -99,79 +99,11 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1354, 477);
+            this.dataTableView1.Size = new System.Drawing.Size(1020, 477);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseClick);
             this.dataTableView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseDoubleClick);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cboTimeType);
-            this.panel1.Controls.Add(this.dtTimeEnd);
-            this.panel1.Controls.Add(this.dtTimeBegin);
-            this.panel1.Controls.Add(this.xLabel6);
-            this.panel1.Controls.Add(this.btnSearch);
-            this.panel1.Controls.Add(this.cboMrStatus);
-            this.panel1.Controls.Add(this.xLabel2);
-            this.panel1.Controls.Add(this.cboDeptName);
-            this.panel1.Controls.Add(this.xLabel1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1354, 32);
-            this.panel1.TabIndex = 0;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(735, 5);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(72, 24);
-            this.btnSearch.TabIndex = 8;
-            this.btnSearch.Text = "查询";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // cboMrStatus
-            // 
-            this.cboMrStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboMrStatus.Items.AddRange(new object[] {
-            "全部",
-            "未提交",
-            "已提交",
-            "已归档"});
-            this.cboMrStatus.Location = new System.Drawing.Point(643, 6);
-            this.cboMrStatus.Name = "cboMrStatus";
-            this.cboMrStatus.Size = new System.Drawing.Size(81, 21);
-            this.cboMrStatus.TabIndex = 3;
-            this.cboMrStatus.Text = "全部";
-            // 
-            // xLabel2
-            // 
-            this.xLabel2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel2.Location = new System.Drawing.Point(565, 9);
-            this.xLabel2.Name = "xLabel2";
-            this.xLabel2.Size = new System.Drawing.Size(77, 14);
-            this.xLabel2.TabIndex = 2;
-            this.xLabel2.Text = "病案状态：";
-            // 
-            // cboDeptName
-            // 
-            this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboDeptName.Location = new System.Drawing.Point(76, 6);
-            this.cboDeptName.Name = "cboDeptName";
-            this.cboDeptName.Size = new System.Drawing.Size(150, 21);
-            this.cboDeptName.TabIndex = 3;
-            // 
-            // xLabel1
-            // 
-            this.xLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel1.Location = new System.Drawing.Point(4, 9);
-            this.xLabel1.Name = "xLabel1";
-            this.xLabel1.Size = new System.Drawing.Size(77, 14);
-            this.xLabel1.TabIndex = 2;
-            this.xLabel1.Text = "出院科室：";
             // 
             // col_DEPT_ADMISSION_NAME
             // 
@@ -239,6 +171,23 @@
             this.col_ARCHIVE_TIME.ReadOnly = true;
             this.col_ARCHIVE_TIME.Width = 120;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cboTimeType);
+            this.panel1.Controls.Add(this.dtTimeEnd);
+            this.panel1.Controls.Add(this.dtTimeBegin);
+            this.panel1.Controls.Add(this.xLabel6);
+            this.panel1.Controls.Add(this.btnSearch);
+            this.panel1.Controls.Add(this.cboMrStatus);
+            this.panel1.Controls.Add(this.xLabel2);
+            this.panel1.Controls.Add(this.cboDeptName);
+            this.panel1.Controls.Add(this.xLabel1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1020, 32);
+            this.panel1.TabIndex = 0;
+            // 
             // cboTimeType
             // 
             this.cboTimeType.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -287,12 +236,63 @@
             this.xLabel6.TabIndex = 10;
             this.xLabel6.Text = "-";
             // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSearch.Location = new System.Drawing.Point(735, 5);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(72, 24);
+            this.btnSearch.TabIndex = 8;
+            this.btnSearch.Text = "查询";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // cboMrStatus
+            // 
+            this.cboMrStatus.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboMrStatus.Items.AddRange(new object[] {
+            "全部",
+            "未提交",
+            "已提交",
+            "已归档"});
+            this.cboMrStatus.Location = new System.Drawing.Point(643, 6);
+            this.cboMrStatus.Name = "cboMrStatus";
+            this.cboMrStatus.Size = new System.Drawing.Size(81, 21);
+            this.cboMrStatus.TabIndex = 3;
+            this.cboMrStatus.Text = "全部";
+            // 
+            // xLabel2
+            // 
+            this.xLabel2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel2.Location = new System.Drawing.Point(565, 9);
+            this.xLabel2.Name = "xLabel2";
+            this.xLabel2.Size = new System.Drawing.Size(77, 14);
+            this.xLabel2.TabIndex = 2;
+            this.xLabel2.Text = "病案状态：";
+            // 
+            // cboDeptName
+            // 
+            this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cboDeptName.Location = new System.Drawing.Point(76, 6);
+            this.cboDeptName.Name = "cboDeptName";
+            this.cboDeptName.Size = new System.Drawing.Size(150, 21);
+            this.cboDeptName.TabIndex = 3;
+            // 
+            // xLabel1
+            // 
+            this.xLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel1.Location = new System.Drawing.Point(4, 9);
+            this.xLabel1.Name = "xLabel1";
+            this.xLabel1.Size = new System.Drawing.Size(77, 14);
+            this.xLabel1.TabIndex = 2;
+            this.xLabel1.Text = "出院科室：";
+            // 
             // MrArchiveTableForm
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 509);
+            this.ClientSize = new System.Drawing.Size(1020, 509);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

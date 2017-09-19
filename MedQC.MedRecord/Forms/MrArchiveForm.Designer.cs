@@ -137,7 +137,7 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1354, 449);
+            this.dataTableView1.Size = new System.Drawing.Size(852, 449);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseClick);
@@ -300,7 +300,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1354, 60);
+            this.panel1.Size = new System.Drawing.Size(852, 60);
             this.panel1.TabIndex = 0;
             // 
             // cboTimeType
@@ -330,7 +330,7 @@
             // btnArchive
             // 
             this.btnArchive.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnArchive.Location = new System.Drawing.Point(980, 4);
+            this.btnArchive.Location = new System.Drawing.Point(758, 32);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(72, 24);
             this.btnArchive.TabIndex = 8;
@@ -341,7 +341,7 @@
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(902, 4);
+            this.btnSearch.Location = new System.Drawing.Point(680, 32);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(72, 24);
             this.btnSearch.TabIndex = 8;
@@ -417,7 +417,7 @@
             "未发送",
             "已发送",
             "已接收"});
-            this.findComboBox1.Location = new System.Drawing.Point(814, 5);
+            this.findComboBox1.Location = new System.Drawing.Point(587, 34);
             this.findComboBox1.Name = "findComboBox1";
             this.findComboBox1.Size = new System.Drawing.Size(81, 21);
             this.findComboBox1.TabIndex = 3;
@@ -426,7 +426,7 @@
             // xLabel5
             // 
             this.xLabel5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel5.Location = new System.Drawing.Point(745, 8);
+            this.xLabel5.Location = new System.Drawing.Point(518, 37);
             this.xLabel5.Name = "xLabel5";
             this.xLabel5.Size = new System.Drawing.Size(77, 14);
             this.xLabel5.TabIndex = 2;
@@ -440,7 +440,7 @@
             "未提交",
             "已提交",
             "已归档"});
-            this.cboMrStatus.Location = new System.Drawing.Point(660, 5);
+            this.cboMrStatus.Location = new System.Drawing.Point(433, 34);
             this.cboMrStatus.Name = "cboMrStatus";
             this.cboMrStatus.Size = new System.Drawing.Size(81, 21);
             this.cboMrStatus.TabIndex = 3;
@@ -449,7 +449,7 @@
             // xLabel2
             // 
             this.xLabel2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel2.Location = new System.Drawing.Point(591, 8);
+            this.xLabel2.Location = new System.Drawing.Point(364, 37);
             this.xLabel2.Name = "xLabel2";
             this.xLabel2.Size = new System.Drawing.Size(77, 14);
             this.xLabel2.TabIndex = 2;
@@ -486,7 +486,7 @@
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1354, 509);
+            this.ClientSize = new System.Drawing.Size(852, 509);
             this.Controls.Add(this.chkAll);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.panel1);

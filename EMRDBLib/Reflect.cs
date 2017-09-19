@@ -163,10 +163,20 @@ namespace EMRDBLib
                 {
                     value = converter.ConvertFrom(null, CultureInfo.InvariantCulture, value);
                 }
+                else if(value.GetType().Name=="Int16"
+                    ||value.GetType().Name== "Int32"
+                    ||value.GetType().Name=="Double")
+                {
+                    value = decimal.Parse(value.ToString());
+                }
                 property.SetValue(instance, value, null);
                 return true;
             }
-            catch { return false; }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+                return false;
+            }
         }
 
         /// <summary>
@@ -248,7 +258,7 @@ namespace EMRDBLib
                     Reflect.SetPropertyValue(target, property, instance);
                     continue;
                 }
-               Reflect.SetPropertyValue(target, property, propertyValue);
+                Reflect.SetPropertyValue(target, property, propertyValue);
             }
             return true;
         }

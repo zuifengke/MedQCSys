@@ -34,14 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.xLabel6 = new Heren.Common.Forms.XLabel();
-            this.btnSearch = new Heren.Common.Forms.XButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtTimeBegin = new System.Windows.Forms.DateTimePicker();
-            this.dtTimeEnd = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txt_PATIENT_NAME = new System.Windows.Forms.TextBox();
             this.col_PRINT_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PATIENT_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +45,14 @@
             this.col_REMARKS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_MONEY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_INVOICE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xLabel6 = new Heren.Common.Forms.XLabel();
+            this.btnSearch = new Heren.Common.Forms.XButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txt_PATIENT_NAME = new System.Windows.Forms.TextBox();
+            this.dtTimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.dtTimeBegin = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -102,88 +102,11 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1362, 474);
+            this.dataTableView1.Size = new System.Drawing.Size(1020, 474);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseClick);
             this.dataTableView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseDoubleClick);
-            // 
-            // xLabel6
-            // 
-            this.xLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel6.Location = new System.Drawing.Point(201, 10);
-            this.xLabel6.Name = "xLabel6";
-            this.xLabel6.Size = new System.Drawing.Size(14, 14);
-            this.xLabel6.TabIndex = 2;
-            this.xLabel6.Text = "-";
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(507, 5);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(72, 24);
-            this.btnSearch.TabIndex = 8;
-            this.btnSearch.Text = "查询";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.txt_PATIENT_NAME);
-            this.panel1.Controls.Add(this.dtTimeEnd);
-            this.panel1.Controls.Add(this.dtTimeBegin);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.btnSearch);
-            this.panel1.Controls.Add(this.xLabel6);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1362, 35);
-            this.panel1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(13, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 14);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "复印日期：";
-            // 
-            // dtTimeBegin
-            // 
-            this.dtTimeBegin.Location = new System.Drawing.Point(96, 7);
-            this.dtTimeBegin.Name = "dtTimeBegin";
-            this.dtTimeBegin.Size = new System.Drawing.Size(103, 21);
-            this.dtTimeBegin.TabIndex = 10;
-            // 
-            // dtTimeEnd
-            // 
-            this.dtTimeEnd.Location = new System.Drawing.Point(218, 7);
-            this.dtTimeEnd.Name = "dtTimeEnd";
-            this.dtTimeEnd.Size = new System.Drawing.Size(103, 21);
-            this.dtTimeEnd.TabIndex = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(327, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 14);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "患者姓名：";
-            // 
-            // txt_PATIENT_NAME
-            // 
-            this.txt_PATIENT_NAME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txt_PATIENT_NAME.Location = new System.Drawing.Point(401, 6);
-            this.txt_PATIENT_NAME.Name = "txt_PATIENT_NAME";
-            this.txt_PATIENT_NAME.Size = new System.Drawing.Size(100, 23);
-            this.txt_PATIENT_NAME.TabIndex = 11;
             // 
             // col_PRINT_TIME
             // 
@@ -263,12 +186,89 @@
             this.col_INVOICE.Name = "col_INVOICE";
             this.col_INVOICE.ReadOnly = true;
             // 
+            // xLabel6
+            // 
+            this.xLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xLabel6.Location = new System.Drawing.Point(201, 10);
+            this.xLabel6.Name = "xLabel6";
+            this.xLabel6.Size = new System.Drawing.Size(14, 14);
+            this.xLabel6.TabIndex = 2;
+            this.xLabel6.Text = "-";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSearch.Location = new System.Drawing.Point(507, 5);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(72, 24);
+            this.btnSearch.TabIndex = 8;
+            this.btnSearch.Text = "查询";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txt_PATIENT_NAME);
+            this.panel1.Controls.Add(this.dtTimeEnd);
+            this.panel1.Controls.Add(this.dtTimeBegin);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btnSearch);
+            this.panel1.Controls.Add(this.xLabel6);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1020, 35);
+            this.panel1.TabIndex = 0;
+            // 
+            // txt_PATIENT_NAME
+            // 
+            this.txt_PATIENT_NAME.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_PATIENT_NAME.Location = new System.Drawing.Point(401, 6);
+            this.txt_PATIENT_NAME.Name = "txt_PATIENT_NAME";
+            this.txt_PATIENT_NAME.Size = new System.Drawing.Size(100, 23);
+            this.txt_PATIENT_NAME.TabIndex = 11;
+            // 
+            // dtTimeEnd
+            // 
+            this.dtTimeEnd.Location = new System.Drawing.Point(218, 7);
+            this.dtTimeEnd.Name = "dtTimeEnd";
+            this.dtTimeEnd.Size = new System.Drawing.Size(103, 21);
+            this.dtTimeEnd.TabIndex = 10;
+            // 
+            // dtTimeBegin
+            // 
+            this.dtTimeBegin.Location = new System.Drawing.Point(96, 7);
+            this.dtTimeBegin.Name = "dtTimeBegin";
+            this.dtTimeBegin.Size = new System.Drawing.Size(103, 21);
+            this.dtTimeBegin.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(327, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 14);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "患者姓名：";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(13, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 14);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "复印日期：";
+            // 
             // RecPrintLogSearchForm
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1362, 509);
+            this.ClientSize = new System.Drawing.Size(1020, 509);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

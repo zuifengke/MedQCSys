@@ -123,6 +123,10 @@ namespace Heren.MedQC.Core.Services
         /// </summary>
         private List<RecCodeCompasion> DEPT_DICT = null;
         /// <summary>
+        /// 人员字典
+        /// </summary>
+        private List<RecCodeCompasion> STAFF_DICT = null;
+        /// <summary>
         /// 首页病案费用分类
         /// </summary>
         private List<RecCodeCompasion> MR_FEE_CLASS_DICT = null;
@@ -160,6 +164,7 @@ namespace Heren.MedQC.Core.Services
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DEPT_DICT", ref this.DEPT_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MR_FEE_CLASS_DICT", ref this.MR_FEE_CLASS_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("PAT_ADM_CONDITION_DICT", ref this.PAT_ADM_CONDITION_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("STAFF_DICT", ref this.STAFF_DICT);
             this.m_bInitialized = true;
             return true;
         }
@@ -200,7 +205,7 @@ namespace Heren.MedQC.Core.Services
                 if (inpVisit.TOTAL_COSTS == 0)
                 {
                     szUploadLog = "总费用为0";
-                    return false;
+                    //return false;
                 }
                 #endregion
                 #region 上传患者基本信息
@@ -331,26 +336,60 @@ namespace Heren.MedQC.Core.Services
                 {
                     bajk08.COL0832 = 3;
                 }
-                bajk08.COL0834 = inpVisit.DIRECTOR_ID;
-                bajk08.COL0835 = inpVisit.CHIEF_DOCTOR_ID;
+                if (this.STAFF_DICT != null && !string.IsNullOrEmpty(inpVisit.DIRECTOR_ID))
+                {
+                    var result = this.STAFF_DICT.Where(m => m.CODE_ID == inpVisit.DIRECTOR_ID).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0834 = result.DM;
+                    }
+                }
+                if (this.STAFF_DICT != null && !string.IsNullOrEmpty(inpVisit.CHIEF_DOCTOR_ID))
+                {
+                    var result = this.STAFF_DICT.Where(m => m.CODE_ID == inpVisit.CHIEF_DOCTOR_ID).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0835 = result.DM;
+                    }
+                }
                 if (!string.IsNullOrEmpty(inpVisit.ATTENDING_DOCTOR_ID)
-                    && inpVisit.ATTENDING_DOCTOR_ID.Length <= 8) 
+                    && inpVisit.ATTENDING_DOCTOR_ID.Length <= 8)
                     bajk08.COL0836 = inpVisit.ATTENDING_DOCTOR_ID;
-                if (!string.IsNullOrEmpty(inpVisit.DOCTOR_IN_CHARGE_ID)
-                    && inpVisit.DOCTOR_IN_CHARGE_ID.Length <= 8)
-                    bajk08.COL0837 = inpVisit.DOCTOR_IN_CHARGE_ID;
+                if (this.STAFF_DICT != null && !string.IsNullOrEmpty(inpVisit.DOCTOR_IN_CHARGE_ID))
+                {
+                    var result = this.STAFF_DICT.Where(m => m.CODE_ID == inpVisit.DOCTOR_IN_CHARGE_ID).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0837 = result.DM;
+                    }
+                }
                 //bajk08.COL0838 = inpVisit.ADVANCED_STUDIES_DOCTOR;//进修医师编号未获取
                 //bajk08.COL0839 = inpVisit.PRACTICE_DOCTOR;//实习医师编号未获取
                 if (inpVisit.CATALOG_DATE != inpVisit.DefaultTime2)
                     bajk08.COL0841 = inpVisit.CATALOG_DATE;
                 bajk08.COL0842 = inpVisit.CATALOGER;
-                bajk08.COL0844 = inpVisit.DEPT_ADMISSION_TO;//未对照科室代码
+                if (this.DEPT_DICT != null && !string.IsNullOrEmpty(inpVisit.DEPT_ADMISSION_TO))
+                {
+                    var result = this.DEPT_DICT.Where(m => m.CODE_ID == inpVisit.DEPT_ADMISSION_TO).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0844 = result.DM;//未对照科室代码
+                        bajk08.COL0882 = result.DM;//入院病室
+                    }
+                }
                 if (inpVisit.ADMISSION_DATE_TIME != inpVisit.DefaultTime2)
                     bajk08.COL0845 = inpVisit.ADMISSION_DATE_TIME;
-                bajk08.COL0847 = inpVisit.DEPT_DISCHARGE_FROM;//未对照出院科室代码
+                if (this.DEPT_DICT != null && !string.IsNullOrEmpty(inpVisit.DEPT_DISCHARGE_FROM))
+                {
+                    var result = this.DEPT_DICT.Where(m => m.CODE_ID == inpVisit.DEPT_DISCHARGE_FROM).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0847 = result.DM;//未对照科室代码
+                        bajk08.COL0883 = result.DM;//出院病室
+                    }
+                }
                 if (inpVisit.DISCHARGE_DATE_TIME != inpVisit.DefaultTime2)
                     bajk08.COL0848 = inpVisit.DISCHARGE_DATE_TIME;
-
                 if (inpVisit.DISCHARGE_DATE_TIME != inpVisit.DefaultTime2
                     && inpVisit.ADMISSION_DATE_TIME != inpVisit.DefaultTime2)
                     bajk08.COL0851 = GlobalMethods.SysTime.GetInpDays(inpVisit.ADMISSION_DATE_TIME, inpVisit.DISCHARGE_DATE_TIME);
@@ -388,8 +427,6 @@ namespace Heren.MedQC.Core.Services
                             bajk08.COL0873 = d;
                     }
                 }
-                bajk08.COL0882 = inpVisit.DEPT_ADMISSION_TO;
-                bajk08.COL0883 = inpVisit.DEPT_DISCHARGE_FROM;
 
                 if (this.DIAG_COMP_GROUP_DICT != null && lstDiagComparing != null)
                 {
@@ -482,7 +519,7 @@ namespace Heren.MedQC.Core.Services
                     #endregion
                 }
                 //bajk08.COL0887 主要诊断
-                if (this.DiagnosisTypeDict != null&&lstDiagnosis!=null)
+                if (this.DiagnosisTypeDict != null && lstDiagnosis != null)
                 {
                     var result = this.DiagnosisTypeDict.Where(m => m.CODE_NAME == "主要诊断").FirstOrDefault();
                     if (result != null)
@@ -528,7 +565,7 @@ namespace Heren.MedQC.Core.Services
                 //bajk08.COL0893 新生儿入院体重未获取
                 List<VitalSigns> lstVitalSigns = null;
                 shRet = VitalSignsAccess.Instance.GetList(patientID, visitNo, "体重", ref lstVitalSigns);
-                if (lstVitalSigns != null&&lstVitalSigns.Count>0)
+                if (lstVitalSigns != null && lstVitalSigns.Count > 0)
                 {
                     bajk08.COL0893 = lstVitalSigns[0].VITAL_SIGNS_VALUES;
                 }
@@ -593,6 +630,14 @@ namespace Heren.MedQC.Core.Services
                     bajk08.COL0907 = 1;
                 }
                 //bajk08.COL0908 责任护士编号
+                if (this.STAFF_DICT != null && !string.IsNullOrEmpty(inpVisit.BY_NURSE))
+                {
+                    var result = this.STAFF_DICT.Where(m => m.CODE_ID == inpVisit.BY_NURSE).FirstOrDefault();
+                    if (result != null && !string.IsNullOrEmpty(result.DM))
+                    {
+                        bajk08.COL0908 = result.DM;
+                    }
+                }
                 //bajk08.COL0914
                 //bajk08.COL0915
                 //bajk08.COL0916
@@ -718,7 +763,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.ANAESTHESIA_DICT != null)
                         {
                             var result = this.ANAESTHESIA_DICT.Where(m => m.CODE_NAME == item.ANAESTHESIA_METHOD).FirstOrDefault();
-                            if (result != null&&!string.IsNullOrEmpty(result.DM))
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1104 = decimal.Parse(result.DM);
                             }
@@ -726,7 +771,7 @@ namespace Heren.MedQC.Core.Services
                         if (this.WOUND_GRADE_DICT != null)
                         {
                             var result = this.WOUND_GRADE_DICT.Where(m => m.CODE_NAME == item.WOUND_GRADE).FirstOrDefault();
-                            if (result != null&& !string.IsNullOrEmpty(result.DM))
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1105 = decimal.Parse(result.DM);
                             }
@@ -734,15 +779,43 @@ namespace Heren.MedQC.Core.Services
                         if (this.HEAL_DICT != null)
                         {
                             var result = this.HEAL_DICT.Where(m => m.CODE_NAME == item.HEAL).FirstOrDefault();
-                            if (result != null&&!string.IsNullOrEmpty(result.DM))
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
                             {
                                 bajk11.COL1106 = decimal.Parse(result.DM);
                             }
                         }
-                        bajk11.COL1107 = item.OPERATOR;
-                        bajk11.COL1108 = item.FIRST_ASSISTANT;
-                        bajk11.COL1109 = item.SECOND_ASSISTANT;
-                        bajk11.COL1110 = item.ANESTHESIA_DOCTOR;
+                        if (this.STAFF_DICT != null && !string.IsNullOrEmpty(item.OPERATOR))
+                        {
+                            var result = this.STAFF_DICT.Where(m => m.CODE_NAME == item.OPERATOR).FirstOrDefault();
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
+                            {
+                                bajk11.COL1107 = result.DM;
+                            }
+                        }
+                        if (this.STAFF_DICT != null && !string.IsNullOrEmpty(item.FIRST_ASSISTANT))
+                        {
+                            var result = this.STAFF_DICT.Where(m => m.CODE_NAME == item.FIRST_ASSISTANT).FirstOrDefault();
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
+                            {
+                                bajk11.COL1108 = result.DM;
+                            }
+                        }
+                        if (this.STAFF_DICT != null && !string.IsNullOrEmpty(item.SECOND_ASSISTANT))
+                        {
+                            var result = this.STAFF_DICT.Where(m => m.CODE_NAME == item.SECOND_ASSISTANT).FirstOrDefault();
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
+                            {
+                                bajk11.COL1109 = result.DM;
+                            }
+                        }
+                        if (this.STAFF_DICT != null && !string.IsNullOrEmpty(item.ANESTHESIA_DOCTOR))
+                        {
+                            var result = this.STAFF_DICT.Where(m => m.CODE_NAME == item.ANESTHESIA_DOCTOR).FirstOrDefault();
+                            if (result != null && !string.IsNullOrEmpty(result.DM))
+                            {
+                                bajk11.COL1110 = result.DM;
+                            }
+                        }
                         //bajk11.COL1111=符合标志未获取
                         //bajk11.COL1112 手术组号未获取
                         //bajk11.COL1113
@@ -1015,7 +1088,7 @@ namespace Heren.MedQC.Core.Services
                         shRet = BAJK15Access.Instance.Update(bajk15);
                     }
                 }
-               
+
                 #endregion
 
             }

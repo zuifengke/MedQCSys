@@ -197,7 +197,9 @@ namespace MedQCSys.DockForms
             }
             catch (Exception ex)
             {
+                MessageBoxEx.ShowMessage(ex.ToString());
                 LogManager.Instance.WriteLog(ex.ToString());
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
             }
         }
         private void reportDesigner1_NotifyNextReport(object sender, NotifyNextReportEventArgs e)

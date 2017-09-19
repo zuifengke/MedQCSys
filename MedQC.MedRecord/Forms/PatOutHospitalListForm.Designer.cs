@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
             this.col_1_BED_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_1_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,14 +69,14 @@
             // 
             // dataTableView1
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTableView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTableView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataTableView1.ColumnHeadersHeight = 20;
             this.dataTableView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.dataTableView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -93,28 +93,28 @@
             this.col_INCHARGE_DOCTOR,
             this.col_MR_STATUS});
             this.dataTableView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataTableView1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataTableView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataTableView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataTableView1.Location = new System.Drawing.Point(0, 60);
             this.dataTableView1.Name = "dataTableView1";
             this.dataTableView1.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1185, 449);
+            this.dataTableView1.Size = new System.Drawing.Size(1020, 449);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseDoubleClick);
@@ -236,14 +236,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1185, 60);
+            this.panel1.Size = new System.Drawing.Size(1020, 60);
             this.panel1.TabIndex = 0;
             // 
             // chkDeath
             // 
             this.chkDeath.AutoSize = true;
             this.chkDeath.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chkDeath.Location = new System.Drawing.Point(364, 32);
+            this.chkDeath.Location = new System.Drawing.Point(563, 34);
             this.chkDeath.Name = "chkDeath";
             this.chkDeath.Size = new System.Drawing.Size(54, 18);
             this.chkDeath.TabIndex = 10;
@@ -266,7 +266,7 @@
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(685, 29);
+            this.btnSearch.Location = new System.Drawing.Point(623, 27);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(90, 28);
             this.btnSearch.TabIndex = 8;
@@ -303,7 +303,7 @@
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtName.Location = new System.Drawing.Point(239, 29);
+            this.txtName.Location = new System.Drawing.Point(239, 32);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(90, 23);
             this.txtName.TabIndex = 5;
@@ -311,7 +311,7 @@
             // xLabel4
             // 
             this.xLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel4.Location = new System.Drawing.Point(192, 34);
+            this.xLabel4.Location = new System.Drawing.Point(192, 36);
             this.xLabel4.Name = "xLabel4";
             this.xLabel4.Size = new System.Drawing.Size(49, 14);
             this.xLabel4.TabIndex = 4;
@@ -320,7 +320,7 @@
             // txtPatientID
             // 
             this.txtPatientID.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtPatientID.Location = new System.Drawing.Point(95, 29);
+            this.txtPatientID.Location = new System.Drawing.Point(95, 31);
             this.txtPatientID.Name = "txtPatientID";
             this.txtPatientID.Size = new System.Drawing.Size(94, 23);
             this.txtPatientID.TabIndex = 5;
@@ -328,7 +328,7 @@
             // xLabel3
             // 
             this.xLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel3.Location = new System.Drawing.Point(13, 35);
+            this.xLabel3.Location = new System.Drawing.Point(13, 36);
             this.xLabel3.Name = "xLabel3";
             this.xLabel3.Size = new System.Drawing.Size(77, 14);
             this.xLabel3.TabIndex = 4;
@@ -337,15 +337,15 @@
             // cboUserList
             // 
             this.cboUserList.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboUserList.Location = new System.Drawing.Point(660, 5);
+            this.cboUserList.Location = new System.Drawing.Point(405, 33);
             this.cboUserList.Name = "cboUserList";
-            this.cboUserList.Size = new System.Drawing.Size(116, 21);
+            this.cboUserList.Size = new System.Drawing.Size(150, 21);
             this.cboUserList.TabIndex = 3;
             // 
             // xLabel2
             // 
             this.xLabel2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel2.Location = new System.Drawing.Point(591, 8);
+            this.xLabel2.Location = new System.Drawing.Point(336, 36);
             this.xLabel2.Name = "xLabel2";
             this.xLabel2.Size = new System.Drawing.Size(77, 14);
             this.xLabel2.TabIndex = 2;
@@ -354,7 +354,7 @@
             // cboDeptName
             // 
             this.cboDeptName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cboDeptName.Location = new System.Drawing.Point(433, 5);
+            this.cboDeptName.Location = new System.Drawing.Point(405, 5);
             this.cboDeptName.Name = "cboDeptName";
             this.cboDeptName.Size = new System.Drawing.Size(150, 21);
             this.cboDeptName.TabIndex = 3;
@@ -371,7 +371,7 @@
             // xLabel1
             // 
             this.xLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.xLabel1.Location = new System.Drawing.Point(361, 9);
+            this.xLabel1.Location = new System.Drawing.Point(333, 9);
             this.xLabel1.Name = "xLabel1";
             this.xLabel1.Size = new System.Drawing.Size(77, 14);
             this.xLabel1.TabIndex = 2;
@@ -382,7 +382,7 @@
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 509);
+            this.ClientSize = new System.Drawing.Size(1020, 509);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
