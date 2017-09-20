@@ -269,7 +269,9 @@ namespace Heren.MedQC.Upgrade
 
             //当前版本号
             string currentVersion = SystemConfig.Instance.Get(CURRENT_VERSION, string.Empty);
-          
+            //本地版本号为空，不升级
+            if (currentVersion == string.Empty)
+                return false;
             //如果升级版本同当前当前版本信息不符合就升级
             return !currentVersion.Equals(this.UpgradeVersion);
         }

@@ -212,13 +212,16 @@ namespace MedQCSys.DockForms
             {
                 var result = lstPatVisitLogs.Skip(i * 100).Take(100).ToList();
                 //查询质控结果状态
-                MedQCAccess.Instance.GetQCResultStatus(SystemParam.Instance.LocalConfigOption.GradingLow,ref result);
+                MedQCAccess.Instance.GetQCResultStatus(SystemParam.Instance.LocalConfigOption.GradingLow, ref result);
                 //查询病历得分
                 MedQCAccess.Instance.GetPatQCScore(ref result);
                 //查询是否手术
                 MedQCAccess.Instance.GetPatOperation(ref result);
-                //查询患者是否输血
-                MedQCAccess.Instance.GetPatBloodTransfusion(ref result);
+                if (SystemParam.Instance.LocalConfigOption.IsDrawingPatientIdentification)
+                {
+                    //查询患者是否输血
+                    MedQCAccess.Instance.GetPatBloodTransfusion(ref result);
+                }
             }
             e.Result = lstPatVisitLogs;
         }
@@ -605,7 +608,8 @@ namespace MedQCSys.DockForms
                 {
                     szSelectDeptCode = deptInfo.DEPT_CODE;
                 }
-                else {
+                else
+                {
                     if (MessageBoxEx.ShowConfirm("您正在查询全院患者，时间可能较长，是否继续？") != DialogResult.OK)
                     {
                         this.ShowStatusMessage(null);

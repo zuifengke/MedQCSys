@@ -418,6 +418,9 @@ namespace EMRDBLib
             set { this.m_IsScoreRightShow = value; }
         }
         private bool m_IsDrawingPatientIdentification = false;
+        /// <summary>
+        /// 患者列表绘制新术血军
+        /// </summary>
         public bool IsDrawingPatientIdentification
         {
             get { return this.m_IsDrawingPatientIdentification; }
