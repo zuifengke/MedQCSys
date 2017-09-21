@@ -234,27 +234,27 @@ namespace Heren.MedQC.Search
             }
             #endregion
             #region 重新绑定费用
-            //PatVisitAccess.Instance.GetPatConstInfo(ref lstPatVisitLog);
-            //if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
-            //{
-            //    GlobalMethods.UI.SetCursor(this, Cursors.Default);
-            //    MessageBoxEx.Show("费用信息查询失败！", MessageBoxIcon.Information);
-            //    return;
-            //}
-            //for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
-            //{
-            //    DataGridViewRow row = this.dataGridView1.Rows[index];
-            //    EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
-            //    if (patVisitLog == null)
-            //        continue;
-            //    EMRDBLib.PatVisitInfo findPatVisitLog = lstPatVisitLog.Find(
-            //        delegate (EMRDBLib.PatVisitInfo p)
-            //        {
-            //            return p.PATIENT_ID == patVisitLog.PATIENT_ID && p.VISIT_ID == patVisitLog.VISIT_ID;
-            //        });
-            //    if (findPatVisitLog != null)
-            //        row.Cells[this.colCost.Index].Value = Math.Round(findPatVisitLog.TOTAL_COSTS, 2).ToString();
-            //}
+            PatVisitAccess.Instance.GetPatConstInfo(ref lstPatVisitLog);
+            if (lstPatVisitLog == null || lstPatVisitLog.Count <= 0)
+            {
+                GlobalMethods.UI.SetCursor(this, Cursors.Default);
+                MessageBoxEx.Show("费用信息查询失败！", MessageBoxIcon.Information);
+                return;
+            }
+            for (int index = 0; index < this.dataGridView1.Rows.Count; index++)
+            {
+                DataGridViewRow row = this.dataGridView1.Rows[index];
+                EMRDBLib.PatVisitInfo patVisitLog = row.Tag as EMRDBLib.PatVisitInfo;
+                if (patVisitLog == null)
+                    continue;
+                EMRDBLib.PatVisitInfo findPatVisitLog = lstPatVisitLog.Find(
+                    delegate (EMRDBLib.PatVisitInfo p)
+                    {
+                        return p.PATIENT_ID == patVisitLog.PATIENT_ID && p.VISIT_ID == patVisitLog.VISIT_ID;
+                    });
+                if (findPatVisitLog != null)
+                    row.Cells[this.colCost.Index].Value = Math.Round(findPatVisitLog.TOTAL_COSTS, 2).ToString();
+            }
             #endregion
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);

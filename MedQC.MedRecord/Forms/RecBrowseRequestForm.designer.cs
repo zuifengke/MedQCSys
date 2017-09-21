@@ -80,7 +80,7 @@ namespace Heren.MedQC.MedRecord
             this.XPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.XPanel1.Location = new System.Drawing.Point(0, 0);
             this.XPanel1.Name = "XPanel1";
-            this.XPanel1.Size = new System.Drawing.Size(1020, 51);
+            this.XPanel1.Size = new System.Drawing.Size(796, 51);
             this.XPanel1.TabIndex = 7;
             // 
             // cboStatus
@@ -266,7 +266,7 @@ namespace Heren.MedQC.MedRecord
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.XDataGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.XDataGrid1.RowHeadersVisible = false;
-            this.XDataGrid1.Size = new System.Drawing.Size(1020, 644);
+            this.XDataGrid1.Size = new System.Drawing.Size(796, 522);
             this.XDataGrid1.TabIndex = 8;
             this.XDataGrid1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.XDataGrid1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
@@ -364,7 +364,7 @@ namespace Heren.MedQC.MedRecord
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1020, 695);
+            this.ClientSize = new System.Drawing.Size(796, 573);
             this.Controls.Add(this.chkAll);
             this.Controls.Add(this.XDataGrid1);
             this.Controls.Add(this.XPanel1);

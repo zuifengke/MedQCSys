@@ -32,17 +32,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataTableView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.col_ORDER_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_1_BED_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_1_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_PATIENT_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_PATIENT_SEX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_AGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_CHARGE_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_VISIT_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_TRANSFER_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_1_MEDICAL_GROUP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_1_DEPT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSearch = new Heren.Common.Forms.XButton();
             this.txtName = new Heren.Common.Forms.XTextBox();
@@ -56,6 +45,17 @@
             this.lblInPatientCount = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.col_ORDER_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_1_BED_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_1_PATIENT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PATIENT_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PATIENT_SEX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_AGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_CHARGE_TYPE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_VISIT_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_TRANSFER_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_1_MEDICAL_GROUP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_1_DEPT_NAME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataTableView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -110,83 +110,6 @@
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseDoubleClick);
-            // 
-            // col_ORDER_NO
-            // 
-            this.col_ORDER_NO.HeaderText = "序";
-            this.col_ORDER_NO.Name = "col_ORDER_NO";
-            this.col_ORDER_NO.ReadOnly = true;
-            this.col_ORDER_NO.Width = 30;
-            // 
-            // col_1_BED_NO
-            // 
-            this.col_1_BED_NO.FillWeight = 85.46564F;
-            this.col_1_BED_NO.HeaderText = "床号";
-            this.col_1_BED_NO.Name = "col_1_BED_NO";
-            this.col_1_BED_NO.ReadOnly = true;
-            this.col_1_BED_NO.Width = 40;
-            // 
-            // col_1_PATIENT_NAME
-            // 
-            this.col_1_PATIENT_NAME.HeaderText = "姓名";
-            this.col_1_PATIENT_NAME.Name = "col_1_PATIENT_NAME";
-            this.col_1_PATIENT_NAME.ReadOnly = true;
-            // 
-            // col_PATIENT_ID
-            // 
-            this.col_PATIENT_ID.FillWeight = 102.1956F;
-            this.col_PATIENT_ID.HeaderText = "患者ID";
-            this.col_PATIENT_ID.Name = "col_PATIENT_ID";
-            this.col_PATIENT_ID.ReadOnly = true;
-            // 
-            // col_PATIENT_SEX
-            // 
-            this.col_PATIENT_SEX.FillWeight = 93.80241F;
-            this.col_PATIENT_SEX.HeaderText = "性别";
-            this.col_PATIENT_SEX.Name = "col_PATIENT_SEX";
-            this.col_PATIENT_SEX.ReadOnly = true;
-            this.col_PATIENT_SEX.Width = 60;
-            // 
-            // col_AGE
-            // 
-            this.col_AGE.HeaderText = "年龄";
-            this.col_AGE.Name = "col_AGE";
-            this.col_AGE.ReadOnly = true;
-            this.col_AGE.Width = 60;
-            // 
-            // col_CHARGE_TYPE
-            // 
-            this.col_CHARGE_TYPE.HeaderText = "费用类别";
-            this.col_CHARGE_TYPE.Name = "col_CHARGE_TYPE";
-            this.col_CHARGE_TYPE.ReadOnly = true;
-            // 
-            // col_VISIT_TIME
-            // 
-            this.col_VISIT_TIME.FillWeight = 117.631F;
-            this.col_VISIT_TIME.HeaderText = "入院时间";
-            this.col_VISIT_TIME.Name = "col_VISIT_TIME";
-            this.col_VISIT_TIME.ReadOnly = true;
-            this.col_VISIT_TIME.Width = 120;
-            // 
-            // col_TRANSFER_TIME
-            // 
-            this.col_TRANSFER_TIME.HeaderText = "转科时间";
-            this.col_TRANSFER_TIME.Name = "col_TRANSFER_TIME";
-            this.col_TRANSFER_TIME.ReadOnly = true;
-            this.col_TRANSFER_TIME.Width = 120;
-            // 
-            // col_1_MEDICAL_GROUP
-            // 
-            this.col_1_MEDICAL_GROUP.FillWeight = 144.596F;
-            this.col_1_MEDICAL_GROUP.HeaderText = "所属医疗组";
-            this.col_1_MEDICAL_GROUP.Name = "col_1_MEDICAL_GROUP";
-            this.col_1_MEDICAL_GROUP.ReadOnly = true;
-            // 
-            // col_1_DEPT_NAME
-            // 
-            this.col_1_DEPT_NAME.HeaderText = "所属专科";
-            this.col_1_DEPT_NAME.Name = "col_1_DEPT_NAME";
-            this.col_1_DEPT_NAME.ReadOnly = true;
             // 
             // panel1
             // 
@@ -316,6 +239,84 @@
             this.label4.Size = new System.Drawing.Size(77, 14);
             this.label4.TabIndex = 3;
             this.label4.Text = "留院人次：";
+            // 
+            // col_ORDER_NO
+            // 
+            this.col_ORDER_NO.HeaderText = "序";
+            this.col_ORDER_NO.Name = "col_ORDER_NO";
+            this.col_ORDER_NO.ReadOnly = true;
+            this.col_ORDER_NO.Width = 30;
+            // 
+            // col_1_BED_NO
+            // 
+            this.col_1_BED_NO.FillWeight = 85.46564F;
+            this.col_1_BED_NO.HeaderText = "床号";
+            this.col_1_BED_NO.Name = "col_1_BED_NO";
+            this.col_1_BED_NO.ReadOnly = true;
+            this.col_1_BED_NO.Width = 40;
+            // 
+            // col_1_PATIENT_NAME
+            // 
+            this.col_1_PATIENT_NAME.HeaderText = "姓名";
+            this.col_1_PATIENT_NAME.Name = "col_1_PATIENT_NAME";
+            this.col_1_PATIENT_NAME.ReadOnly = true;
+            // 
+            // col_PATIENT_ID
+            // 
+            this.col_PATIENT_ID.FillWeight = 102.1956F;
+            this.col_PATIENT_ID.HeaderText = "患者ID";
+            this.col_PATIENT_ID.Name = "col_PATIENT_ID";
+            this.col_PATIENT_ID.ReadOnly = true;
+            // 
+            // col_PATIENT_SEX
+            // 
+            this.col_PATIENT_SEX.FillWeight = 93.80241F;
+            this.col_PATIENT_SEX.HeaderText = "性别";
+            this.col_PATIENT_SEX.Name = "col_PATIENT_SEX";
+            this.col_PATIENT_SEX.ReadOnly = true;
+            this.col_PATIENT_SEX.Width = 60;
+            // 
+            // col_AGE
+            // 
+            this.col_AGE.HeaderText = "年龄";
+            this.col_AGE.Name = "col_AGE";
+            this.col_AGE.ReadOnly = true;
+            this.col_AGE.Width = 60;
+            // 
+            // col_CHARGE_TYPE
+            // 
+            this.col_CHARGE_TYPE.HeaderText = "费用类别";
+            this.col_CHARGE_TYPE.Name = "col_CHARGE_TYPE";
+            this.col_CHARGE_TYPE.ReadOnly = true;
+            // 
+            // col_VISIT_TIME
+            // 
+            this.col_VISIT_TIME.FillWeight = 117.631F;
+            this.col_VISIT_TIME.HeaderText = "入院时间";
+            this.col_VISIT_TIME.Name = "col_VISIT_TIME";
+            this.col_VISIT_TIME.ReadOnly = true;
+            this.col_VISIT_TIME.Width = 120;
+            // 
+            // col_TRANSFER_TIME
+            // 
+            this.col_TRANSFER_TIME.HeaderText = "转科时间";
+            this.col_TRANSFER_TIME.Name = "col_TRANSFER_TIME";
+            this.col_TRANSFER_TIME.ReadOnly = true;
+            this.col_TRANSFER_TIME.Width = 120;
+            // 
+            // col_1_MEDICAL_GROUP
+            // 
+            this.col_1_MEDICAL_GROUP.FillWeight = 144.596F;
+            this.col_1_MEDICAL_GROUP.HeaderText = "所属医疗组";
+            this.col_1_MEDICAL_GROUP.Name = "col_1_MEDICAL_GROUP";
+            this.col_1_MEDICAL_GROUP.ReadOnly = true;
+            // 
+            // col_1_DEPT_NAME
+            // 
+            this.col_1_DEPT_NAME.HeaderText = "所属专科";
+            this.col_1_DEPT_NAME.Name = "col_1_DEPT_NAME";
+            this.col_1_DEPT_NAME.ReadOnly = true;
+            this.col_1_DEPT_NAME.Width = 150;
             // 
             // InPatientStatisticForm
             // 

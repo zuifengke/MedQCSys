@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Heren.Common.Libraries;
+using EMRDBLib;
 namespace Designers
 {
     static class Program
@@ -21,6 +22,7 @@ namespace Designers
             {
                 szFile = args[0];
             }
+            SystemParam.Instance.LocalConfigOption.IsMainProgram = false;
             Application.Run(new DesignForm() {FilePath= szFile });
         }
     }

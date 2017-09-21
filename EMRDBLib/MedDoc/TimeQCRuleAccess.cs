@@ -34,14 +34,13 @@ namespace EMRDBLib.DbAccess
             if (base.MeddocAccess == null)
                 return SystemData.ReturnValue.PARAM_ERROR;
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}"
                 , SystemData.TimeRuleTable.RULE_ID, SystemData.TimeRuleTable.EVENT_ID
                 , SystemData.TimeRuleTable.DOCTYPE_ID, SystemData.TimeRuleTable.DOCTYPE_NAME
                 , SystemData.TimeRuleTable.DOCTYPE_ALIAS, SystemData.TimeRuleTable.WRITTEN_PERIOD
                 , SystemData.TimeRuleTable.IS_REPEAT, SystemData.TimeRuleTable.IS_VALID
                 , SystemData.TimeRuleTable.QC_SCORE, SystemData.TimeRuleTable.ORDER_VALUE
-                , SystemData.TimeRuleTable.RULE_DESC
-                , SystemData.TimeRuleTable.Is_VETO);
+                , SystemData.TimeRuleTable.RULE_DESC);
 
             string szSQL = string.Format(SystemData.SQL.SELECT_ORDER_ASC
                     , szField, SystemData.DataTable.TIME_RULE, SystemData.TimeRuleTable.ORDER_VALUE);
@@ -80,8 +79,6 @@ namespace EMRDBLib.DbAccess
                         timeQCRule.OrderValue = int.Parse(dataReader.GetValue(9).ToString());
                     if (!dataReader.IsDBNull(10))
                         timeQCRule.RuleDesc = dataReader.GetString(10);
-                    if (!dataReader.IsDBNull(11))
-                        timeQCRule.IsVeto = dataReader.GetValue(11).ToString() == "1";
                     lstTimeQCRules.Add(timeQCRule);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

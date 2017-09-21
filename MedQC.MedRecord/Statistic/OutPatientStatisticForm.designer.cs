@@ -232,8 +232,10 @@ namespace Heren.MedQC.MedRecord
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.btnExportExcel);
             this.panel1.Controls.Add(this.dtpStatTimeBegin);
             this.panel1.Controls.Add(this.dtpStatTimeEnd);
+            this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -298,7 +300,7 @@ namespace Heren.MedQC.MedRecord
             // btnWarningArchive
             // 
             this.btnWarningArchive.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnWarningArchive.Location = new System.Drawing.Point(725, 1);
+            this.btnWarningArchive.Location = new System.Drawing.Point(570, 1);
             this.btnWarningArchive.Name = "btnWarningArchive";
             this.btnWarningArchive.Size = new System.Drawing.Size(65, 28);
             this.btnWarningArchive.TabIndex = 7;
@@ -309,7 +311,7 @@ namespace Heren.MedQC.MedRecord
             // btnArchiveTime
             // 
             this.btnArchiveTime.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnArchiveTime.Location = new System.Drawing.Point(796, 1);
+            this.btnArchiveTime.Location = new System.Drawing.Point(641, 2);
             this.btnArchiveTime.Name = "btnArchiveTime";
             this.btnArchiveTime.Size = new System.Drawing.Size(96, 28);
             this.btnArchiveTime.TabIndex = 7;
@@ -320,7 +322,7 @@ namespace Heren.MedQC.MedRecord
             // btnPrint
             // 
             this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(898, 0);
+            this.btnPrint.Location = new System.Drawing.Point(743, 1);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(65, 28);
             this.btnPrint.TabIndex = 9;
@@ -331,7 +333,7 @@ namespace Heren.MedQC.MedRecord
             // 
             // btnExportExcel
             // 
-            this.btnExportExcel.Location = new System.Drawing.Point(644, 0);
+            this.btnExportExcel.Location = new System.Drawing.Point(641, 7);
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(78, 28);
             this.btnExportExcel.TabIndex = 8;
@@ -342,7 +344,7 @@ namespace Heren.MedQC.MedRecord
             // btnQuery
             // 
             this.btnQuery.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnQuery.Location = new System.Drawing.Point(572, 1);
+            this.btnQuery.Location = new System.Drawing.Point(570, 6);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(65, 28);
             this.btnQuery.TabIndex = 7;
@@ -356,12 +358,10 @@ namespace Heren.MedQC.MedRecord
             this.panel2.Controls.Add(this.xLabel3);
             this.panel2.Controls.Add(this.btnPrint);
             this.panel2.Controls.Add(this.lblTransferCount);
-            this.panel2.Controls.Add(this.btnExportExcel);
             this.panel2.Controls.Add(this.lblOutPatientCount);
             this.panel2.Controls.Add(this.btnWarningArchive);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.btnArchiveTime);
-            this.panel2.Controls.Add(this.btnQuery);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 38);

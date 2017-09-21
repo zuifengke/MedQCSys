@@ -121,6 +121,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\Interop.MedXML2Lib.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="MDSDBLib, Version=3.4.76.1, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Include\MDSDBLib.dll</HintPath>
@@ -628,6 +631,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Resources\LoginIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -673,6 +677,8 @@
     <None Include="Resources\PatientList.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ZoomOut.png" />
+    <None Include="Resources\ZoomIn.png" />
     <None Include="Resources\Male2.png" />
     <None Include="Resources\Female2.png" />
     <None Include="Resources\medical.ico" />
@@ -742,6 +748,7 @@
     <None Include="Resources\FolderOpen.png" />
     <None Include="Resources\NewFolder.png" />
     <None Include="Resources\FolderClose.png" />
+    <None Include="Resources\file_pdf.png" />
     <Content Include="Resources\Warn.png" />
     <None Include="Resources\WordDocIcon.ico" />
   </ItemGroup>

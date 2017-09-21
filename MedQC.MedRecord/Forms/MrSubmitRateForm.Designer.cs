@@ -103,7 +103,7 @@
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTableView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataTableView1.RowHeadersVisible = false;
-            this.dataTableView1.Size = new System.Drawing.Size(1020, 474);
+            this.dataTableView1.Size = new System.Drawing.Size(796, 474);
             this.dataTableView1.TabIndex = 1;
             this.dataTableView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTableView1_CellClick);
             this.dataTableView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataTableView1_CellMouseClick);
@@ -235,7 +235,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1020, 35);
+            this.panel1.Size = new System.Drawing.Size(796, 35);
             this.panel1.TabIndex = 0;
             // 
             // btnExportExcel
@@ -253,7 +253,7 @@
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 509);
+            this.ClientSize = new System.Drawing.Size(796, 509);
             this.Controls.Add(this.dataTableView1);
             this.Controls.Add(this.xPanel2);
             this.Controls.Add(this.panel1);

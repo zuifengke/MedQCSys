@@ -46,6 +46,8 @@ namespace Heren.MedQC.MedRecord
             this.dtpTimeBegin.Value = DateTime.Now.AddMonths(-1);
             this.dtpTimeEnd.Value = DateTime.Now;
             this.dataGridView1.Rows.Clear();
+            //×Ô¶¯»»ÐÐ
+            this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
         }
         /// <summary>

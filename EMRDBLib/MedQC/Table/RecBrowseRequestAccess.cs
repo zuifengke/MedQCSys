@@ -60,7 +60,7 @@ namespace EMRDBLib
                         break;
                     case "DateTime":
                         DateTime dt = DateTime.Parse(value.ToString());
-                        if (dt == model.DefaultTime || dt == model.DefaultTime2)
+                        if (dt == model.DefaultTime || dt == model.DefaultTime2 || dt == model.DefaultTime3)
                             break;
                         sbField.AppendFormat("{0},", name);
                         sbValue.AppendFormat("{0},", base.MedQCAccess.GetSqlTimeFormat(dt));
@@ -121,7 +121,7 @@ namespace EMRDBLib
                         break;
                     case "DateTime":
                         DateTime dt = DateTime.Parse(value.ToString());
-                        if (dt == model.DefaultTime || dt == model.DefaultTime2)
+                        if (dt == model.DefaultTime || dt == model.DefaultTime2 ||dt==model.DefaultTime3)
                             break;
                         sbField.AppendFormat("{0}={1},", name, base.MedQCAccess.GetSqlTimeFormat(dt));
                         break;

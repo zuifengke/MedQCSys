@@ -190,19 +190,13 @@
         "Entry"
         {
         "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
-        "OwnerKey" = "8:_F70D0DBB39E1448996896846EE429E47"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
-        "OwnerKey" = "8:_43301897037A2C370FE8AC276683F69E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
         "OwnerKey" = "8:_F94EEC03C3A74C2C93123F26B71FCF13"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
+        "OwnerKey" = "8:_F70D0DBB39E1448996896846EE429E47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -227,6 +221,12 @@
         {
         "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
         "OwnerKey" = "8:_AD130FDFDD004B0F8DB6F5DC65E7E705"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_03BBEA1664DB8C0FEB7A1D9AE10BDA71"
+        "OwnerKey" = "8:_43301897037A2C370FE8AC276683F69E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -12295,6 +12295,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F8C0CC95764943188DC47244408552B9"
+                    {
+                    "Name" = "8:和仁科技"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_7F23AFA0FCA64A25828CD8D4AA8E1105"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -12436,7 +12447,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1B287164A7C84FF8BACC9FBD27A608DD"
             {
-            "Name" = "8:mrqc"
+            "Name" = "8:病案管理"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -12446,6 +12457,20 @@
             "Folder" = "8:_315AEA6278DB42A5A6732E4ADDB4A30F"
             "WorkingFolder" = "8:_27B6B754FD0C4767BB106221EE3F7E23"
             "Icon" = "8:_DD0B081FC5AA4718A217DD59803FADBF"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CCC5D7A122A047E28A20209C9EEF3CD7"
+            {
+            "Name" = "8:病案管理"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_41785560B3C14B66B72B4BBF49AF1F8E"
+            "Folder" = "8:_F8C0CC95764943188DC47244408552B9"
+            "WorkingFolder" = "8:_27B6B754FD0C4767BB106221EE3F7E23"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }

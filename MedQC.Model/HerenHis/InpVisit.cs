@@ -579,7 +579,10 @@ namespace EMRDBLib.HerenHis
         /// </summary>
         public string CHIEF_DOCTOR_ID { get; set; }
 
-
+        public InpVisit() {
+            //this.ADMISSION_DATE_TIME = base.DefaultTime;
+            //this.DISCHARGE_DATE_TIME = base.DefaultTime;
+        }
 
 
     }

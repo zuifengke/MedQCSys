@@ -512,11 +512,13 @@ namespace EMRDBLib
         /// 是否开启PACS报告连续打印
         /// </summary>
         public bool IsOpenPrintPacs { get; set; }
+        public bool IsMainProgram { get; set; }
 
         public LocalConfigOption()
         {
             this.IsOpenChart = false;
             this.IsOpenHomePage = false;
+            this.IsMainProgram = true;
         }
     }
     public partial class SystemParam

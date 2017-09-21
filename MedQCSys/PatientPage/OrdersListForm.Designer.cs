@@ -30,14 +30,6 @@ namespace MedQCSys.DockForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrdersListForm));
             this.dataGridView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.tbOrderText = new System.Windows.Forms.ToolStripTextBox();
-            this.tsbSearch = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnPrint = new System.Windows.Forms.Button();
-            this.lblOrdersInfo = new System.Windows.Forms.Label();
             this.colBeginTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRepeatIndicator = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +44,17 @@ namespace MedQCSys.DockForms
             this.colStopTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNurse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tbOrderText = new System.Windows.Forms.ToolStripTextBox();
+            this.tsbSearch = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.lblOrdersInfo = new System.Windows.Forms.Label();
+            this.toollblOrdersType = new System.Windows.Forms.ToolStripLabel();
+            this.toolcboOrdersType = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -86,85 +89,6 @@ namespace MedQCSys.DockForms
             this.dataGridView1.Size = new System.Drawing.Size(984, 388);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.tbOrderText,
-            this.tsbSearch});
-            this.toolStrip1.Location = new System.Drawing.Point(4, 4);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(984, 25);
-            this.toolStrip1.TabIndex = 21;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
-            this.toolStripLabel1.Text = "医嘱内容：";
-            // 
-            // tbOrderText
-            // 
-            this.tbOrderText.Name = "tbOrderText";
-            this.tbOrderText.Size = new System.Drawing.Size(200, 25);
-            this.tbOrderText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbOrderText_KeyDown);
-            // 
-            // tsbSearch
-            // 
-            this.tsbSearch.Image = ((System.Drawing.Image)(resources.GetObject("tsbSearch.Image")));
-            this.tsbSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSearch.Name = "tsbSearch";
-            this.tsbSearch.Size = new System.Drawing.Size(52, 22);
-            this.tsbSearch.Text = "检索";
-            this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnExport);
-            this.panel1.Controls.Add(this.btnPrint);
-            this.panel1.Controls.Add(this.lblOrdersInfo);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(4, 417);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(984, 33);
-            this.panel1.TabIndex = 19;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnExport.Location = new System.Drawing.Point(810, 3);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(80, 28);
-            this.btnExport.TabIndex = 18;
-            this.btnExport.Text = "Excel导出";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.btnPrint.Location = new System.Drawing.Point(904, 3);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(80, 28);
-            this.btnPrint.TabIndex = 17;
-            this.btnPrint.Text = "打印(&P)";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
-            // lblOrdersInfo
-            // 
-            this.lblOrdersInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblOrdersInfo.AutoSize = true;
-            this.lblOrdersInfo.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.lblOrdersInfo.Location = new System.Drawing.Point(1, 13);
-            this.lblOrdersInfo.Name = "lblOrdersInfo";
-            this.lblOrdersInfo.Size = new System.Drawing.Size(175, 14);
-            this.lblOrdersInfo.TabIndex = 15;
-            this.lblOrdersInfo.Text = "仍在执行的医嘱数目：0 条";
             // 
             // colBeginTime
             // 
@@ -275,6 +199,114 @@ namespace MedQCSys.DockForms
             this.colNurse.ReadOnly = true;
             this.colNurse.Width = 80;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toollblOrdersType,
+            this.toolcboOrdersType,
+            this.toolStripSeparator1,
+            this.toolStripLabel1,
+            this.tbOrderText,
+            this.tsbSearch});
+            this.toolStrip1.Location = new System.Drawing.Point(4, 4);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(984, 25);
+            this.toolStrip1.TabIndex = 21;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
+            this.toolStripLabel1.Text = "医嘱内容：";
+            // 
+            // tbOrderText
+            // 
+            this.tbOrderText.Name = "tbOrderText";
+            this.tbOrderText.Size = new System.Drawing.Size(200, 25);
+            this.tbOrderText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbOrderText_KeyDown);
+            // 
+            // tsbSearch
+            // 
+            this.tsbSearch.Image = ((System.Drawing.Image)(resources.GetObject("tsbSearch.Image")));
+            this.tsbSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSearch.Name = "tsbSearch";
+            this.tsbSearch.Size = new System.Drawing.Size(52, 22);
+            this.tsbSearch.Text = "检索";
+            this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnExport);
+            this.panel1.Controls.Add(this.btnPrint);
+            this.panel1.Controls.Add(this.lblOrdersInfo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(4, 417);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(984, 33);
+            this.panel1.TabIndex = 19;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.btnExport.Location = new System.Drawing.Point(810, 3);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(80, 28);
+            this.btnExport.TabIndex = 18;
+            this.btnExport.Text = "Excel导出";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrint.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.btnPrint.Location = new System.Drawing.Point(904, 3);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(80, 28);
+            this.btnPrint.TabIndex = 17;
+            this.btnPrint.Text = "打印(&P)";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // lblOrdersInfo
+            // 
+            this.lblOrdersInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblOrdersInfo.AutoSize = true;
+            this.lblOrdersInfo.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lblOrdersInfo.Location = new System.Drawing.Point(1, 13);
+            this.lblOrdersInfo.Name = "lblOrdersInfo";
+            this.lblOrdersInfo.Size = new System.Drawing.Size(175, 14);
+            this.lblOrdersInfo.TabIndex = 15;
+            this.lblOrdersInfo.Text = "仍在执行的医嘱数目：0 条";
+            // 
+            // toollblOrdersType
+            // 
+            this.toollblOrdersType.AutoSize = false;
+            this.toollblOrdersType.Name = "toollblOrdersType";
+            this.toollblOrdersType.Size = new System.Drawing.Size(72, 22);
+            this.toollblOrdersType.Text = " 医嘱类型：";
+            // 
+            // toolcboOrdersType
+            // 
+            this.toolcboOrdersType.AutoCompleteCustomSource.AddRange(new string[] {
+            "长期医嘱",
+            "临时医嘱"});
+            this.toolcboOrdersType.AutoSize = false;
+            this.toolcboOrdersType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolcboOrdersType.Items.AddRange(new object[] {
+            "全部",
+            "长期医嘱",
+            "临时医嘱"});
+            this.toolcboOrdersType.Name = "toolcboOrdersType";
+            this.toolcboOrdersType.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // OrdersListForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -322,5 +354,8 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.DataGridViewTextBoxColumn colStopTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrderStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNurse;
+        private System.Windows.Forms.ToolStripLabel toollblOrdersType;
+        private System.Windows.Forms.ToolStripComboBox toolcboOrdersType;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

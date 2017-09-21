@@ -47,7 +47,6 @@ namespace Heren.MedQC.MedRecord
             this.XLabel4 = new Heren.Common.Forms.XLabel();
             this.XLabel2 = new Heren.Common.Forms.XLabel();
             this.dataGridView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.chkAll = new System.Windows.Forms.CheckBox();
             this.col_Chk = new Heren.Common.Forms.XCheckBoxColumn();
             this.col_UPLOAD = new Heren.Common.Forms.XLinkColumn();
             this.col_UPLOAD_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,6 +59,7 @@ namespace Heren.MedQC.MedRecord
             this.col_DEPT_NAME = new Heren.Common.Forms.XTextBoxColumn();
             this.col_DOCTOR_IN_CHARGE = new Heren.Common.Forms.XTextBoxColumn();
             this.col_UPLOAD_LOG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chkAll = new System.Windows.Forms.CheckBox();
             this.XPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -221,6 +221,7 @@ namespace Heren.MedQC.MedRecord
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("ËÎÌו", 10.5F);
@@ -268,16 +269,6 @@ namespace Heren.MedQC.MedRecord
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseClick);
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.XDataGrid1_CellMouseDoubleClick);
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(4, 65);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(15, 14);
-            this.chkAll.TabIndex = 9;
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // col_Chk
             // 
@@ -358,6 +349,16 @@ namespace Heren.MedQC.MedRecord
             this.col_UPLOAD_LOG.Name = "col_UPLOAD_LOG";
             this.col_UPLOAD_LOG.ReadOnly = true;
             this.col_UPLOAD_LOG.Width = 200;
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(4, 65);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 9;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // RecUploadNewForm
             // 

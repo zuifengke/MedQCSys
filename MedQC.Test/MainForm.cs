@@ -58,7 +58,6 @@ namespace MedQC.Test
             sbsql.Append(" select * from dbo.gy_gydm");
             DataSet ds = null;
             BAJKCommonAccess.Instance.ExecuteQuery(sbsql.ToString(), out ds);
-
         }
 
         private void button4_Click(object sender, EventArgs e)

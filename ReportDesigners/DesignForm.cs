@@ -74,6 +74,9 @@ namespace Designers
             }
             //修改注册表默认打开
             RegisterFileType();
+
+            if (!SystemParam.Instance.LocalConfigOption.IsMainProgram)
+                return;
             this.ShowTempletTreeForm();
             this.ShowReportTreeForm();
         }

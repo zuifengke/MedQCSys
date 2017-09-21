@@ -112,6 +112,8 @@ namespace MedQCSys.DockForms
                 return;
             if (SystemParam.Instance.PatVisitInfo == null)
                 return;
+            bool bIsRepeat = this.toolcboOrdersType.SelectedIndex == 1;
+            String bIsRepeatAll = this.toolcboOrdersType.Text;
             string szOrderText = this.tbOrderText.Text;
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
@@ -138,6 +140,11 @@ namespace MedQCSys.DockForms
             for (int index = lstOrderInfo.Count - 1; index >= 0; index--)
             {
                 MedOrderInfo orderInfo = lstOrderInfo[index];
+                if (bIsRepeatAll != "È«²¿")
+                {
+                    if (orderInfo.IsRepeat != bIsRepeat)
+                        continue;
+                }
                 if (orderInfo != null && orderInfo.OrderSubNO == "1")
                 {
                     nRowIndex = this.dataGridView1.Rows.Add();

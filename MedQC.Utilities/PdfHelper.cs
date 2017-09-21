@@ -49,5 +49,102 @@ namespace Heren.MedQC.Utilities
                 return false;
             }
         }
+        public void ConvertJPG2PDF(string jpgfile, string pdf)
+        {
+            var document = new Document(iTextSharp.text.PageSize.A4, 25, 25, 25, 25);
+            using (var stream = new FileStream(pdf, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                PdfWriter.GetInstance(document, stream);
+                document.Open();
+                using (var imageStream = new FileStream(jpgfile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    var image = iTextSharp.text.Image.GetInstance(imageStream);
+                    if (image.Height > iTextSharp.text.PageSize.A4.Height - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    else if (image.Width > iTextSharp.text.PageSize.A4.Width - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    image.Alignment = iTextSharp.text.Image.ALIGN_MIDDLE;
+                    document.Add(image);
+                }
+
+                document.Close();
+            }
+        }
+        public static void process(string[] files, string newpdf)
+        {
+            iTextSharp.text.Document document = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 25, 25, 25, 25);
+            try
+            {
+                iTextSharp.text.pdf.PdfWriter.GetInstance(document, new FileStream(newpdf, FileMode.Create, FileAccess.ReadWrite));
+                document.Open();
+                iTextSharp.text.Image image;
+                for (int i = 0; i < files.Length; i++)
+                {
+                    if (String.IsNullOrEmpty(files[i])) break;
+
+                    image = iTextSharp.text.Image.GetInstance(files[i]);
+
+                    if (image.Height > iTextSharp.text.PageSize.A4.Height - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    else if (image.Width > iTextSharp.text.PageSize.A4.Width - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    image.Alignment = iTextSharp.text.Image.ALIGN_MIDDLE;
+                    //image.SetDpi(72, 72);
+
+                    document.NewPage();
+                    document.Add(image);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.Instance.WriteLog(ex.ToString());
+            }
+            document.Close();
+        }
+        public static bool process(System.Drawing.Image[] files, string newpdf)
+        {
+            iTextSharp.text.Document document = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 25, 25, 25, 25);
+            try
+            {
+                iTextSharp.text.pdf.PdfWriter.GetInstance(document, new FileStream(newpdf, FileMode.Create, FileAccess.ReadWrite));
+                document.Open();
+                iTextSharp.text.Image image;
+                for (int i = 0; i < files.Length; i++)
+                {
+                    image = iTextSharp.text.Image.GetInstance(files[i], System.Drawing.Imaging.ImageFormat.Bmp);
+
+                    if (image.Height > iTextSharp.text.PageSize.A4.Height - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    else if (image.Width > iTextSharp.text.PageSize.A4.Width - 25)
+                    {
+                        image.ScaleToFit(iTextSharp.text.PageSize.A4.Width - 25, iTextSharp.text.PageSize.A4.Height - 25);
+                    }
+                    image.Alignment = iTextSharp.text.Image.ALIGN_MIDDLE;
+                    //image.SetDpi(72, 72);
+                    document.NewPage();
+                    document.Add(image);
+                }
+
+                document.Close();
+                return true;
+              
+            }
+            catch (Exception ex)
+            {
+                document.Close();
+                LogManager.Instance.WriteLog(ex.ToString());
+                return false;
+            }
+        }
     }
 }

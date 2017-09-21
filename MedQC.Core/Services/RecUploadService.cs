@@ -135,6 +135,10 @@ namespace Heren.MedQC.Core.Services
         /// </summary>
         private List<RecCodeCompasion> PAT_ADM_CONDITION_DICT = null;
         /// <summary>
+        /// 诊断字典
+        /// </summary>
+        private List<RecCodeCompasion> DIAGNOSIS_DICT = null;
+        /// <summary>
         /// 是否已初始化
         /// </summary>
         private bool m_bInitialized = false;
@@ -165,6 +169,7 @@ namespace Heren.MedQC.Core.Services
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("MR_FEE_CLASS_DICT", ref this.MR_FEE_CLASS_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("PAT_ADM_CONDITION_DICT", ref this.PAT_ADM_CONDITION_DICT);
             RecCodeCompasionAccess.Instance.GetRecCodeCompasions("STAFF_DICT", ref this.STAFF_DICT);
+            RecCodeCompasionAccess.Instance.GetRecCodeCompasions("DIAGNOSIS_DICT", ref this.DIAGNOSIS_DICT);
             this.m_bInitialized = true;
             return true;
         }
@@ -267,7 +272,20 @@ namespace Heren.MedQC.Core.Services
                     }
                 }
                 //身份证
-                bajk08.COL0810 = patMasterIndex.ID_NO;
+                if (!string.IsNullOrEmpty(patMasterIndex.ID_NO)
+                    && patMasterIndex.ID_NO.Length <= 18)
+                {
+                    bajk08.COL0810 = patMasterIndex.ID_NO;
+                }
+                else if (string.IsNullOrEmpty(patMasterIndex.ID_NO))
+                {
+                    szUploadLog += " 身份证为空";
+                }
+                else if (patMasterIndex.ID_NO.Length > 18)
+                {
+                    szUploadLog += " 身份证大于18位";
+                }
+
                 bajk08.COL0811 = patMasterIndex.WORKING_ADDRESS;
                 bajk08.COL0812 = patMasterIndex.PHONE_NUMBER_BUSINESS;
                 bajk08.COL0813 = patMasterIndex.WORKING_ADDRESS_ZIPCODE;
@@ -536,11 +554,21 @@ namespace Heren.MedQC.Core.Services
                                     bajk08.COL0906 = d;
                             }
                             //bajk08.COL0854=疾病序号未获取，
-                            BaIcdDM baicdDM = null;
-                            shRet = BaIcdDMAccess.Instance.GetModel(diagnosis.DIAG_CODE, ref baicdDM);
-                            if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                            //BaIcdDM baicdDM = null;
+                            //shRet = BaIcdDMAccess.Instance.GetModel(diagnosis.DIAG_CODE, ref baicdDM);
+                            //if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                            //{
+                            //    bajk08.COL0854 = baicdDM.JBXH;
+                            //}
+                            if (this.DIAGNOSIS_DICT != null && !string.IsNullOrEmpty(diagnosis.DIAG_CODE))
                             {
-                                bajk08.COL0854 = baicdDM.JBXH;
+                                var result1 = this.DIAGNOSIS_DICT.Where(m => m.CODE_ID == diagnosis.DIAG_CODE).FirstOrDefault();
+                                if (result1 != null&&!string.IsNullOrEmpty(result1.DM))
+                                {
+                                    decimal d = 0;
+                                    if (GlobalMethods.Convert.StringToDecimal(result1.DM, ref d))
+                                        bajk08.COL0854 = d;
+                                }
                             }
                             //bajk08.COL0843 手术标志
                             bajk08.COL0843 = diagnosis.OPER_TREAT_INDICATOR;
@@ -554,7 +582,16 @@ namespace Heren.MedQC.Core.Services
                 }
                 //bajk08.COL0888 结帐标识未获取
                 //bajk08.COL0890 自动出院
-                bajk08.COL0891 = inpVisit.SECURITY_NO;
+                if (string.IsNullOrEmpty(inpVisit.SECURITY_NO))
+                {
+                    szUploadLog += " 健康卡号为空";
+                }
+                else if (inpVisit.SECURITY_NO.Length > 30)
+                {
+                    szUploadLog += " 健康卡号多于30位太长无法上传";
+                }
+                else
+                    bajk08.COL0891 = inpVisit.SECURITY_NO;
                 //bajk08.COL0892 新生儿体重未获取
                 BabyJustBornRecord babyJustBornRecord = null;
                 shRet = BabyJustBornRecordAccess.Instance.GetModel(inpVisit.PATIENT_ID, inpVisit.VISIT_NO, ref babyJustBornRecord);
@@ -707,11 +744,21 @@ namespace Heren.MedQC.Core.Services
                             continue;
                         EMRDBLib.BAJK.BAJK09 bajk09 = new EMRDBLib.BAJK.BAJK09();
                         //查询联众疾病代码库疾病序号
-                        BaIcdDM baicdDM = null;
-                        shRet = BaIcdDMAccess.Instance.GetModel(diagnosisDict.DIAGNOSIS_CODE, ref baicdDM);
-                        if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                        //BaIcdDM baicdDM = null;
+                        //shRet = BaIcdDMAccess.Instance.GetModel(diagnosisDict.DIAGNOSIS_CODE, ref baicdDM);
+                        //if (baicdDM != null)//代码库中未找到，则不上传（暂定）
+                        //{
+                        //    bajk09.COL0901 = baicdDM.JBXH;
+                        //}
+                        decimal d = 0;
+                        if (this.DIAGNOSIS_DICT != null && !string.IsNullOrEmpty(item.DIAG_CODE))
                         {
-                            bajk09.COL0901 = baicdDM.JBXH;
+                            var result1 = this.DIAGNOSIS_DICT.Where(m => m.CODE_ID == item.DIAG_CODE).FirstOrDefault();
+                            if (result1 != null && !string.IsNullOrEmpty(result1.DM))
+                            {
+                                if (GlobalMethods.Convert.StringToDecimal(result1.DM, ref d))
+                                    bajk09.COL0901 = d;
+                            }
                         }
                         if (this.TreatingResultDict != null && !string.IsNullOrEmpty(item.TREAT_RESULT))
                         {
@@ -721,10 +768,10 @@ namespace Heren.MedQC.Core.Services
                                 bajk09.COL0902 = decimal.Parse(result.DM);
                             }
                         }
+                        d = 0;
                         //诊断全称
                         bajk09.COL0903 = item.DIAG_DESC;
                         //bajk09.COL0904 入院病情
-                        decimal d = 0;
                         if (!string.IsNullOrEmpty(item.ADMISSION_CONDITION)
                             && GlobalMethods.Convert.StringToDecimal(item.ADMISSION_CONDITION, ref d))
                             bajk09.COL0904 = d;
