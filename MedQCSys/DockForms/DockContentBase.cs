@@ -80,6 +80,7 @@ namespace MedQCSys.DockForms
             this.m_mainForm.FormClosing += new FormClosingEventHandler(this.MainForm_FormClosing);
             this.m_mainForm.PatientScoreChanged += new EventHandler(m_mainForm_PatientScoreChanged);
         }
+       
         private PatPage.PatientPageControl m_patientPageControl = null;
         /// <summary>
         /// 获取或设置患者窗口

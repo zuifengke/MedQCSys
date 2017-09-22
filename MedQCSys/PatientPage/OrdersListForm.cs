@@ -48,6 +48,10 @@ namespace MedQCSys.DockForms
             this.CloseButtonVisible = true;
             this.dataGridView1.Font = new Font("宋体", 10.5f);
         }
+        /// <summary>
+        /// 标识值改变事件是否可用,避免重复执行
+        /// </summary>
+        private bool m_bValueChangedEnabled = true;
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
@@ -56,12 +60,17 @@ namespace MedQCSys.DockForms
                 this.btnExport.Visible = false;
                 this.btnPrint.Visible = false;
             }
+            this.m_bValueChangedEnabled = false;
+            if (this.toolcboOrdersType.Items.Count > 0)
+                this.toolcboOrdersType.SelectedIndex = 0;
+            
             this.dataGridView1.GroupHeight = 0;
             int i = this.dataGridView1.Groups.Add();
             this.dataGridView1.Groups[i].BeginColumn = 3;
             this.dataGridView1.Groups[i].EndColumn = 7;
             this.dataGridView1.Groups[i].Text = "医嘱内容";
             this.dataGridView1.Groups[i].BackColor = Color.White;
+            this.m_bValueChangedEnabled = true;
         }
         public override void OnRefreshView()
         {
@@ -471,6 +480,15 @@ namespace MedQCSys.DockForms
                 }
 
             }
+        }
+
+        private void toolcboOrdersType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.m_bValueChangedEnabled)
+                return;
+            GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
+            this.LoadOrderInfoList(0);
+            GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
     }
 }

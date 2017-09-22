@@ -35,9 +35,18 @@ namespace Designers
 
         public DockContentBase(DesignForm parent)
         {
+            if (parent == null)
+                return;
             this.m_MainForm = parent;
-        }
+            this.m_MainForm.ActiveDocumentChanged +=
+                new EventHandler(this.MainForm_ActiveDocumentChanged);
 
+        }
+        private void MainForm_ActiveDocumentChanged(object sender, EventArgs e)
+        {
+            if (!this.DockHandler.IsHidden)
+                this.OnActiveDocumentChanged();
+        }
         //对于需要记忆位置的停靠窗口,请将控件创建代码放入Load事件内
         //这样当窗口被构造时,就不会加载界面元素,用以提高系统启动速度
         protected override void OnLoad(EventArgs e)

@@ -30,18 +30,18 @@ namespace MedQCSys.DockForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientIndexForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolbtnPdf = new System.Windows.Forms.ToolStripButton();
             this.toolbtnPreview = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toollblZoom = new System.Windows.Forms.ToolStripLabel();
             this.toolcboZoom = new System.Windows.Forms.ToolStripComboBox();
             this.toolbtnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.toolbtnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.toolbtnPdf = new System.Windows.Forms.ToolStripButton();
             this.reportDesigner1 = new Heren.Common.Report.ReportDesigner();
             this.previewControl1 = new Heren.Common.PrintLib.XPreviewControl();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,15 +61,6 @@ namespace MedQCSys.DockForms
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolbtnPdf
-            // 
-            this.toolbtnPdf.Image = global::MedQCSys.Properties.Resources.file_pdf;
-            this.toolbtnPdf.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbtnPdf.Name = "toolbtnPdf";
-            this.toolbtnPdf.Size = new System.Drawing.Size(64, 22);
-            this.toolbtnPdf.Text = "另存为";
-            this.toolbtnPdf.Click += new System.EventHandler(this.toolbtnPdf_Click);
-            // 
             // toolbtnPreview
             // 
             this.toolbtnPreview.Image = global::MedQCSys.Properties.Resources.PrintDoc;
@@ -78,6 +69,11 @@ namespace MedQCSys.DockForms
             this.toolbtnPreview.Size = new System.Drawing.Size(52, 22);
             this.toolbtnPreview.Text = "打印";
             this.toolbtnPreview.Click += new System.EventHandler(this.toolbtnPreview_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toollblZoom
             // 
@@ -120,6 +116,7 @@ namespace MedQCSys.DockForms
             this.toolcboZoom.MaxDropDownItems = 16;
             this.toolcboZoom.Name = "toolcboZoom";
             this.toolcboZoom.Size = new System.Drawing.Size(72, 25);
+            this.toolcboZoom.Text = "100%";
             this.toolcboZoom.SelectedIndexChanged += new System.EventHandler(this.toolcboZoom_SelectedIndexChanged);
             this.toolcboZoom.Leave += new System.EventHandler(this.toolcboZoom_Leave);
             this.toolcboZoom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolcboZoom_KeyDown);
@@ -146,6 +143,15 @@ namespace MedQCSys.DockForms
             this.toolbtnZoomOut.Text = "放大";
             this.toolbtnZoomOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolbtnZoomOut.Click += new System.EventHandler(this.toolbtnZoomOut_Click);
+            // 
+            // toolbtnPdf
+            // 
+            this.toolbtnPdf.Image = global::MedQCSys.Properties.Resources.file_pdf;
+            this.toolbtnPdf.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbtnPdf.Name = "toolbtnPdf";
+            this.toolbtnPdf.Size = new System.Drawing.Size(64, 22);
+            this.toolbtnPdf.Text = "另存为";
+            this.toolbtnPdf.Click += new System.EventHandler(this.toolbtnPdf_Click);
             // 
             // reportDesigner1
             // 
@@ -190,11 +196,6 @@ namespace MedQCSys.DockForms
             // printDialog1
             // 
             this.printDialog1.UseEXDialog = true;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // PatientIndexForm
             // 

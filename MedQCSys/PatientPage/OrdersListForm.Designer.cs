@@ -45,6 +45,9 @@ namespace MedQCSys.DockForms
             this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNurse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toollblOrdersType = new System.Windows.Forms.ToolStripLabel();
+            this.toolcboOrdersType = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tbOrderText = new System.Windows.Forms.ToolStripTextBox();
             this.tsbSearch = new System.Windows.Forms.ToolStripButton();
@@ -52,9 +55,6 @@ namespace MedQCSys.DockForms
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.lblOrdersInfo = new System.Windows.Forms.Label();
-            this.toollblOrdersType = new System.Windows.Forms.ToolStripLabel();
-            this.toolcboOrdersType = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -214,6 +214,33 @@ namespace MedQCSys.DockForms
             this.toolStrip1.TabIndex = 21;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toollblOrdersType
+            // 
+            this.toollblOrdersType.AutoSize = false;
+            this.toollblOrdersType.Name = "toollblOrdersType";
+            this.toollblOrdersType.Size = new System.Drawing.Size(72, 22);
+            this.toollblOrdersType.Text = " 医嘱类型：";
+            // 
+            // toolcboOrdersType
+            // 
+            this.toolcboOrdersType.AutoCompleteCustomSource.AddRange(new string[] {
+            "长期医嘱",
+            "临时医嘱"});
+            this.toolcboOrdersType.AutoSize = false;
+            this.toolcboOrdersType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolcboOrdersType.Items.AddRange(new object[] {
+            "全部",
+            "长期医嘱",
+            "临时医嘱"});
+            this.toolcboOrdersType.Name = "toolcboOrdersType";
+            this.toolcboOrdersType.Size = new System.Drawing.Size(100, 25);
+            this.toolcboOrdersType.SelectedIndexChanged += new System.EventHandler(this.toolcboOrdersType_SelectedIndexChanged);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -280,32 +307,6 @@ namespace MedQCSys.DockForms
             this.lblOrdersInfo.Size = new System.Drawing.Size(175, 14);
             this.lblOrdersInfo.TabIndex = 15;
             this.lblOrdersInfo.Text = "仍在执行的医嘱数目：0 条";
-            // 
-            // toollblOrdersType
-            // 
-            this.toollblOrdersType.AutoSize = false;
-            this.toollblOrdersType.Name = "toollblOrdersType";
-            this.toollblOrdersType.Size = new System.Drawing.Size(72, 22);
-            this.toollblOrdersType.Text = " 医嘱类型：";
-            // 
-            // toolcboOrdersType
-            // 
-            this.toolcboOrdersType.AutoCompleteCustomSource.AddRange(new string[] {
-            "长期医嘱",
-            "临时医嘱"});
-            this.toolcboOrdersType.AutoSize = false;
-            this.toolcboOrdersType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolcboOrdersType.Items.AddRange(new object[] {
-            "全部",
-            "长期医嘱",
-            "临时医嘱"});
-            this.toolcboOrdersType.Name = "toolcboOrdersType";
-            this.toolcboOrdersType.Size = new System.Drawing.Size(100, 25);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // OrdersListForm
             // 

@@ -38,10 +38,10 @@ namespace Designers
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.打开表单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建表单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.表单管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel1 = new Heren.Common.DockSuite.DockPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslblSystemStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.表单管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -118,7 +118,7 @@ namespace Designers
             // 
             this.打开表单ToolStripMenuItem.Image = global::Designers.Properties.Resources.OpenDoc;
             this.打开表单ToolStripMenuItem.Name = "打开表单ToolStripMenuItem";
-            this.打开表单ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.打开表单ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.打开表单ToolStripMenuItem.Text = "打开表单";
             this.打开表单ToolStripMenuItem.Click += new System.EventHandler(this.打开表单ToolStripMenuItem_Click);
             // 
@@ -126,9 +126,16 @@ namespace Designers
             // 
             this.新建表单ToolStripMenuItem.Image = global::Designers.Properties.Resources.Templet;
             this.新建表单ToolStripMenuItem.Name = "新建表单ToolStripMenuItem";
-            this.新建表单ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.新建表单ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.新建表单ToolStripMenuItem.Text = "新建表单";
             this.新建表单ToolStripMenuItem.Click += new System.EventHandler(this.新建表单ToolStripMenuItem_Click);
+            // 
+            // 表单管理ToolStripMenuItem
+            // 
+            this.表单管理ToolStripMenuItem.Name = "表单管理ToolStripMenuItem";
+            this.表单管理ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.表单管理ToolStripMenuItem.Text = "表单管理";
+            this.表单管理ToolStripMenuItem.Click += new System.EventHandler(this.表单管理ToolStripMenuItem_Click);
             // 
             // dockPanel1
             // 
@@ -143,6 +150,7 @@ namespace Designers
             this.dockPanel1.ShowDocumentSubhead = true;
             this.dockPanel1.Size = new System.Drawing.Size(845, 462);
             this.dockPanel1.TabIndex = 1;
+            this.dockPanel1.ActiveDocumentChanged += new System.EventHandler(this.dockPanel1_ActiveDocumentChanged);
             // 
             // statusStrip1
             // 
@@ -161,13 +169,6 @@ namespace Designers
             this.tsslblSystemStatus.Spring = true;
             this.tsslblSystemStatus.Text = "就绪";
             this.tsslblSystemStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // 表单管理ToolStripMenuItem
-            // 
-            this.表单管理ToolStripMenuItem.Name = "表单管理ToolStripMenuItem";
-            this.表单管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.表单管理ToolStripMenuItem.Text = "表单管理";
-            this.表单管理ToolStripMenuItem.Click += new System.EventHandler(this.表单管理ToolStripMenuItem_Click);
             // 
             // DesignForm
             // 

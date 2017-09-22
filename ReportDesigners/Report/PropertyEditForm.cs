@@ -48,7 +48,7 @@ namespace Designers.Report
                 this.MainForm.ActiveDesign.PropertyGrid = this.propertyGrid1;
         }
 
-        protected  void OnActiveDocumentChanged()
+        protected override  void OnActiveDocumentChanged()
         {
             base.OnActiveDocumentChanged();
             this.propertyGrid1.SelectedObject = null;
