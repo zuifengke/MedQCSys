@@ -206,6 +206,10 @@
       <Project>{a000f560-d5b6-4bd9-8566-348376dccd5f}</Project>
       <Name>MedQC.Const</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MedQC.Core\MedQC.Core.csproj">
+      <Project>{1bfc8232-0b92-4928-96ed-c0cb701b9c0b}</Project>
+      <Name>MedQC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MedQC.Model\MedQC.Model.csproj">
       <Project>{b98dabd0-ab92-4876-8eb1-ba5032061cf6}</Project>
       <Name>MedQC.Model</Name>

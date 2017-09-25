@@ -60,7 +60,8 @@ namespace Designers
         {
             if (keyData == (Keys.Control | Keys.S))
             {
-                return this.CommitModify();
+                this.CommitModify();
+                return true;
             }
             return base.ProcessDialogKey(keyData);
         }

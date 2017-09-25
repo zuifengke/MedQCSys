@@ -33,7 +33,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="nOrderFlag">医嘱标识(0-医生下达的医嘱 1-护士转抄的医嘱)</param>
         /// <param name="lstOrderInfo">医嘱信息列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetInpOrderList(string szPatientID, string szVisitID, string szOrderText, int nOrderFlag, ref List<MedOrderInfo> lstOrderInfo)
+        public short GetInpOrderList(string szPatientID, string szVisitID, string szOrderText, int nOrderFlag, ref List<OrderInfo> lstOrderInfo)
         {
             if (GlobalMethods.Misc.IsEmptyString(szPatientID) || GlobalMethods.Misc.IsEmptyString(szVisitID))
             {
@@ -45,11 +45,11 @@ namespace EMRDBLib.DbAccess
                 return SystemData.ReturnValue.PARAM_ERROR;
 
             if (lstOrderInfo == null)
-                lstOrderInfo = new List<MedOrderInfo>();
+                lstOrderInfo = new List<OrderInfo>();
             else
                 lstOrderInfo.Clear();
 
-            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18}"
+            string szField = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22}"
                 , SystemData.OrdersView.ORDER_NO, SystemData.OrdersView.ORDER_SUB_NO
                 , SystemData.OrdersView.REPEAT_INDICATOR, SystemData.OrdersView.ORDER_CLASS
                 , SystemData.OrdersView.ENTER_DATE_TIME, SystemData.OrdersView.ORDER_TEXT
@@ -59,7 +59,11 @@ namespace EMRDBLib.DbAccess
                 , SystemData.OrdersView.END_DATE_TIME, SystemData.OrdersView.PACK_COUNT
                 , SystemData.OrdersView.DOCTOR, SystemData.OrdersView.NURSE
                 , SystemData.OrdersView.START_STOP_INDICATOR, SystemData.OrdersView.ORDER_STATUS
-                , SystemData.OrdersView.START_DATE_TIME);
+                , SystemData.OrdersView.START_DATE_TIME
+                , SystemData.OrdersView.PERFORM_TIME
+                , SystemData.OrdersView.STOP_DOCTOR
+                , SystemData.OrdersView.STOP_NURSE
+                , SystemData.OrdersView.PROCESSING_END_TIME);
             string szTable = SystemData.DataView.ORDERS;
             string szCondition = string.Format("{0}='{1}' AND {2}='{3}'"
                 , SystemData.OrdersView.PATIENT_ID, szPatientID, SystemData.OrdersView.VISIT_ID, szVisitID);
@@ -79,7 +83,7 @@ namespace EMRDBLib.DbAccess
                     return SystemData.ReturnValue.RES_NO_FOUND;
                 do
                 {
-                    MedOrderInfo orderInfo = new MedOrderInfo();
+                    OrderInfo orderInfo = new OrderInfo();
                     if (!dataReader.IsDBNull(0)) orderInfo.OrderNO = dataReader.GetString(0);
                     if (!dataReader.IsDBNull(1)) orderInfo.OrderSubNO = dataReader.GetString(1);
                     if (!dataReader.IsDBNull(2)) orderInfo.IsRepeat = dataReader.GetValue(2).ToString().Equals("1");
@@ -97,8 +101,12 @@ namespace EMRDBLib.DbAccess
                     if (!dataReader.IsDBNull(14)) orderInfo.Doctor = dataReader.GetString(14);
                     if (!dataReader.IsDBNull(15)) orderInfo.Nurse = dataReader.GetString(15);
                     if (!dataReader.IsDBNull(16)) orderInfo.IsStartStop = dataReader.GetValue(16).ToString().Equals("1");
-                    if (!dataReader.IsDBNull(17)) orderInfo.OrderStatus = dataReader.GetString(17);
+                    if (!dataReader.IsDBNull(17)) orderInfo.OrderStatus = dataReader.GetValue(17).ToString();
                     if (!dataReader.IsDBNull(18)) orderInfo.START_DATE_TIME = dataReader.GetDateTime(18);
+                    if (!dataReader.IsDBNull(19)) orderInfo.PERFORM_TIME = dataReader.GetDateTime(19);
+                    if (!dataReader.IsDBNull(20)) orderInfo.STOP_DOCTOR = dataReader.GetValue(20).ToString();
+                    if (!dataReader.IsDBNull(21)) orderInfo.STOP_NURSE = dataReader.GetValue(21).ToString();
+                    if (!dataReader.IsDBNull(22)) orderInfo.PROCESSING_END_TIME = dataReader.GetDateTime(22);
                     lstOrderInfo.Add(orderInfo);
                 } while (dataReader.Read());
                 return SystemData.ReturnValue.OK;

@@ -513,12 +513,17 @@ namespace EMRDBLib
         /// </summary>
         public bool IsOpenPrintPacs { get; set; }
         public bool IsMainProgram { get; set; }
+        /// <summary>
+        /// 新军卫医嘱内容包含剂量频次单位等，医嘱界面只显示医嘱内容即可
+        /// </summary>
+        public bool IsOrderTextAll { get; set; }
 
         public LocalConfigOption()
         {
             this.IsOpenChart = false;
             this.IsOpenHomePage = false;
             this.IsMainProgram = true;
+            this.IsOrderTextAll = false;
         }
     }
     public partial class SystemParam
@@ -561,6 +566,7 @@ namespace EMRDBLib
                 option.IsOpenOperation = true;
                 option.IsLinkHerenHis = true;
                 option.IsNewScore = true;
+                option.IsOrderTextAll = true;
                 option.IsOpenPrintPacs = true;
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "SRM.ico");
             }
@@ -616,6 +622,7 @@ namespace EMRDBLib
                 option.IsShowDocLock = true;
                 option.IsOpenChart = false;
                 option.IsOpenPrintPacs = true;
+                option.IsOrderTextAll = true;
             }
             option.IsCheckPoint = true;
 #endif

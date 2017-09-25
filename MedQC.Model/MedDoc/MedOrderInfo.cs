@@ -11,7 +11,7 @@ namespace EMRDBLib
     /// 医嘱信息类
     /// </summary>
     [System.Serializable]
-    public class MedOrderInfo : DbTypeBase
+    public class OrderInfo : DbTypeBase
     {
         private bool m_bIsRepeat = false;
         /// <summary>
@@ -138,7 +138,7 @@ namespace EMRDBLib
 
         private string m_szFreqDetail = string.Empty;
         /// <summary>
-        /// 获取或设置医生说明
+        /// 获取或设置频次说明
         /// </summary>
         public string FreqDetail
         {
@@ -165,6 +165,14 @@ namespace EMRDBLib
             get { return this.m_szDoctor; }
             set { this.m_szDoctor = value; }
         }
+        /// <summary>
+        /// 停止医嘱签名
+        /// </summary>
+        public string STOP_DOCTOR { get; set; }
+        /// <summary>
+        /// 停医嘱护士
+        /// </summary>
+        public string STOP_NURSE { get; set; }
 
         private string m_szNurse = string.Empty;
         /// <summary>
@@ -175,6 +183,12 @@ namespace EMRDBLib
             get { return this.m_szNurse; }
             set { this.m_szNurse = value; }
         }
+
+        /// <summary>
+        /// 获取或设置医嘱执行时间
+        /// </summary>
+        public DateTime PERFORM_TIME { get; set; }
+
 
         private bool m_bIsStartStop = false;
         /// <summary>
@@ -215,12 +229,19 @@ namespace EMRDBLib
             get { return this.m_szOrderTypeName; }
             set { this.m_szOrderTypeName = value; }
         }
+        /// <summary>
+        /// 停医嘱执行时间
+        /// </summary>
+        public DateTime PROCESSING_END_TIME { get; set; }
 
-        public MedOrderInfo()
+        public OrderInfo()
         {
+            this.STOP_DOCTOR = string.Empty;
             this.m_dtEnterTime = this.DefaultTime;
             this.m_dtStopTime = this.DefaultTime;
             this.START_DATE_TIME = this.DefaultTime;
+            this.PERFORM_TIME = this.DefaultTime;
+            this.PROCESSING_END_TIME = this.DefaultTime;
         }
     }
 

@@ -99,6 +99,22 @@ namespace EMRDBLib
             /// 开始时间
             /// </summary>
             public const string START_DATE_TIME = "START_DATE_TIME";
+            /// <summary>
+            /// 执行时间
+            /// </summary>
+            public const string PERFORM_TIME = "PERFORM_TIME";
+            /// <summary>
+            /// 停止医嘱签名
+            /// </summary>
+            public const string STOP_DOCTOR = "STOP_DOCTOR";
+            /// <summary>
+            /// 停止护士签名
+            /// </summary>
+            public const string STOP_NURSE = "STOP_NURSE";
+            /// <summary>
+            /// 停止执行时间
+            /// </summary>
+            public const string PROCESSING_END_TIME = "PROCESSING_END_TIME";
         }
     }
 }

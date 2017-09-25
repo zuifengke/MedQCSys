@@ -12,32 +12,68 @@ namespace EMRDBLib
         public struct OrderStatus
         {
             /// <summary>
-            /// 新开
+            /// 0开立未提交
             /// </summary>
-            public const string New = "新开";
+            public const string UnSubmit = "0";
             /// <summary>
-            /// 执行
+            /// 1新开
             /// </summary>
-            public const string Process = "执行";
+            public const string New = "1";
             /// <summary>
-            /// 停止
+            /// 2执行
             /// </summary>
-            public const string Stop = "停止";
+            public const string Process = "2";
             /// <summary>
-            /// 作废
+            /// 3停止
             /// </summary>
-            public const string Delete = "作废";
+            public const string Stop = "3";
+            /// <summary>
+            /// 4作废
+            /// </summary>
+            public const string Delete = "4";
+            /// <summary>
+            /// 7审核未通过
+            /// </summary>
+            public const string UnCheck = "7";
+            /// <summary>
+            /// 0开立未提交
+            /// </summary>
+            public const string CnUnSubmit = "开立未提交";
+            /// <summary>
+            /// 1新开
+            /// </summary>
+            public const string CnNew = "新开";
+            /// <summary>
+            /// 2执行
+            /// </summary>
+            public const string CnProcess = "执行";
+            /// <summary>
+            /// 3停止
+            /// </summary>
+            public const string CnStop = "停止";
+            /// <summary>
+            /// 4作废
+            /// </summary>
+            public const string CnDelete = "作废";
+            /// <summary>
+            /// 7审核未通过
+            /// </summary>
+            public const string CnUnCheck = "审核未通过";
 
             public static string GetOrderStatusDesc(string szOrderStatus)
             {
-                if (szOrderStatus == "1")
-                    return OrderStatus.New;
-                else if (szOrderStatus == "2")
-                    return OrderStatus.Process;
-                else if (szOrderStatus == "3")
-                    return OrderStatus.Stop;
-                else if (szOrderStatus == "4")
-                    return OrderStatus.Delete;
+                if (szOrderStatus == OrderStatus.New)
+                    return OrderStatus.CnNew;
+                else if (szOrderStatus == OrderStatus.Process)
+                    return OrderStatus.CnProcess;
+                else if (szOrderStatus == OrderStatus.Stop)
+                    return OrderStatus.CnStop;
+                else if (szOrderStatus == OrderStatus.Delete)
+                    return OrderStatus.CnDelete;
+                else if (szOrderStatus == OrderStatus.UnCheck)
+                    return OrderStatus.CnUnCheck;
+                else if (szOrderStatus == OrderStatus.UnSubmit)
+                    return OrderStatus.CnUnSubmit;
                 else
                     return string.Empty;
             }

@@ -30,20 +30,6 @@ namespace MedQCSys.DockForms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrdersListForm));
             this.dataGridView1 = new Heren.Common.Controls.TableView.DataTableView();
-            this.colBeginTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRepeatIndicator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDosage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colflag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAdministration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_START_DATE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStopDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStopTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNurse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toollblOrdersType = new System.Windows.Forms.ToolStripLabel();
             this.toolcboOrdersType = new System.Windows.Forms.ToolStripComboBox();
@@ -55,6 +41,26 @@ namespace MedQCSys.DockForms
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.lblOrdersInfo = new System.Windows.Forms.Label();
+            this.colEnterTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRepeatIndicator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSubFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDosage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDosageUnits = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAdministration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNurse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_START_DATE_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PERFORM_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStopDoctor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStopNurse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStopTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_PROCESSING_END_TIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOrderSubNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -66,20 +72,26 @@ namespace MedQCSys.DockForms
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colBeginTime,
+            this.colEnterTime,
             this.colRepeatIndicator,
             this.colOrderClass,
-            this.colOrderContent,
+            this.colOrderText,
+            this.colSubFlag,
             this.colDosage,
-            this.colflag,
+            this.colDosageUnits,
             this.colAdministration,
             this.colFrequency,
             this.colOrderDoctor,
+            this.colNurse,
             this.col_START_DATE_TIME,
+            this.col_PERFORM_TIME,
             this.colStopDoctor,
+            this.colStopNurse,
             this.colStopTime,
+            this.col_PROCESSING_END_TIME,
             this.colOrderStatus,
-            this.colNurse});
+            this.colOrderNo,
+            this.colOrderSubNo});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(4, 29);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -89,115 +101,6 @@ namespace MedQCSys.DockForms
             this.dataGridView1.Size = new System.Drawing.Size(984, 388);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
-            // 
-            // colBeginTime
-            // 
-            this.colBeginTime.FillWeight = 130F;
-            this.colBeginTime.HeaderText = "下达时间";
-            this.colBeginTime.Name = "colBeginTime";
-            this.colBeginTime.ReadOnly = true;
-            this.colBeginTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colBeginTime.Width = 130;
-            // 
-            // colRepeatIndicator
-            // 
-            this.colRepeatIndicator.HeaderText = "长/临";
-            this.colRepeatIndicator.Name = "colRepeatIndicator";
-            this.colRepeatIndicator.ReadOnly = true;
-            this.colRepeatIndicator.Width = 70;
-            // 
-            // colOrderClass
-            // 
-            this.colOrderClass.HeaderText = "类型";
-            this.colOrderClass.Name = "colOrderClass";
-            this.colOrderClass.ReadOnly = true;
-            this.colOrderClass.Width = 60;
-            // 
-            // colOrderContent
-            // 
-            this.colOrderContent.FillWeight = 200F;
-            this.colOrderContent.HeaderText = "医嘱内容";
-            this.colOrderContent.Name = "colOrderContent";
-            this.colOrderContent.ReadOnly = true;
-            this.colOrderContent.Width = 250;
-            // 
-            // colDosage
-            // 
-            this.colDosage.FillWeight = 85F;
-            this.colDosage.HeaderText = "剂量";
-            this.colDosage.Name = "colDosage";
-            this.colDosage.ReadOnly = true;
-            this.colDosage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDosage.Width = 65;
-            // 
-            // colflag
-            // 
-            this.colflag.HeaderText = "";
-            this.colflag.Name = "colflag";
-            this.colflag.ReadOnly = true;
-            this.colflag.Width = 25;
-            // 
-            // colAdministration
-            // 
-            this.colAdministration.FillWeight = 85F;
-            this.colAdministration.HeaderText = "途径";
-            this.colAdministration.Name = "colAdministration";
-            this.colAdministration.ReadOnly = true;
-            this.colAdministration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colAdministration.Width = 65;
-            // 
-            // colFrequency
-            // 
-            this.colFrequency.FillWeight = 70F;
-            this.colFrequency.HeaderText = "频次";
-            this.colFrequency.Name = "colFrequency";
-            this.colFrequency.ReadOnly = true;
-            this.colFrequency.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colFrequency.Width = 70;
-            // 
-            // colOrderDoctor
-            // 
-            this.colOrderDoctor.HeaderText = "下达医师";
-            this.colOrderDoctor.Name = "colOrderDoctor";
-            this.colOrderDoctor.ReadOnly = true;
-            this.colOrderDoctor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // col_START_DATE_TIME
-            // 
-            this.col_START_DATE_TIME.HeaderText = "开始时间";
-            this.col_START_DATE_TIME.Name = "col_START_DATE_TIME";
-            this.col_START_DATE_TIME.ReadOnly = true;
-            this.col_START_DATE_TIME.Width = 120;
-            // 
-            // colStopDoctor
-            // 
-            this.colStopDoctor.HeaderText = "停止医师";
-            this.colStopDoctor.Name = "colStopDoctor";
-            this.colStopDoctor.ReadOnly = true;
-            this.colStopDoctor.Visible = false;
-            this.colStopDoctor.Width = 90;
-            // 
-            // colStopTime
-            // 
-            this.colStopTime.FillWeight = 130F;
-            this.colStopTime.HeaderText = "停止时间";
-            this.colStopTime.Name = "colStopTime";
-            this.colStopTime.ReadOnly = true;
-            this.colStopTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colStopTime.Width = 130;
-            // 
-            // colOrderStatus
-            // 
-            this.colOrderStatus.HeaderText = "状态";
-            this.colOrderStatus.Name = "colOrderStatus";
-            this.colOrderStatus.ReadOnly = true;
-            // 
-            // colNurse
-            // 
-            this.colNurse.HeaderText = "护士";
-            this.colNurse.Name = "colNurse";
-            this.colNurse.ReadOnly = true;
-            this.colNurse.Width = 80;
             // 
             // toolStrip1
             // 
@@ -308,6 +211,157 @@ namespace MedQCSys.DockForms
             this.lblOrdersInfo.TabIndex = 15;
             this.lblOrdersInfo.Text = "仍在执行的医嘱数目：0 条";
             // 
+            // colEnterTime
+            // 
+            this.colEnterTime.FillWeight = 130F;
+            this.colEnterTime.HeaderText = "下达时间";
+            this.colEnterTime.Name = "colEnterTime";
+            this.colEnterTime.ReadOnly = true;
+            this.colEnterTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colEnterTime.Width = 130;
+            // 
+            // colRepeatIndicator
+            // 
+            this.colRepeatIndicator.HeaderText = "长/临";
+            this.colRepeatIndicator.Name = "colRepeatIndicator";
+            this.colRepeatIndicator.ReadOnly = true;
+            this.colRepeatIndicator.Width = 70;
+            // 
+            // colOrderClass
+            // 
+            this.colOrderClass.HeaderText = "类型";
+            this.colOrderClass.Name = "colOrderClass";
+            this.colOrderClass.ReadOnly = true;
+            this.colOrderClass.Width = 60;
+            // 
+            // colOrderText
+            // 
+            this.colOrderText.FillWeight = 200F;
+            this.colOrderText.HeaderText = "医嘱内容";
+            this.colOrderText.Name = "colOrderText";
+            this.colOrderText.ReadOnly = true;
+            this.colOrderText.Width = 250;
+            // 
+            // colSubFlag
+            // 
+            this.colSubFlag.HeaderText = "";
+            this.colSubFlag.Name = "colSubFlag";
+            this.colSubFlag.ReadOnly = true;
+            this.colSubFlag.Width = 25;
+            // 
+            // colDosage
+            // 
+            this.colDosage.FillWeight = 85F;
+            this.colDosage.HeaderText = "剂量";
+            this.colDosage.Name = "colDosage";
+            this.colDosage.ReadOnly = true;
+            this.colDosage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDosage.Width = 65;
+            // 
+            // colDosageUnits
+            // 
+            this.colDosageUnits.HeaderText = "单位";
+            this.colDosageUnits.Name = "colDosageUnits";
+            this.colDosageUnits.ReadOnly = true;
+            this.colDosageUnits.Width = 60;
+            // 
+            // colAdministration
+            // 
+            this.colAdministration.FillWeight = 85F;
+            this.colAdministration.HeaderText = "途径";
+            this.colAdministration.Name = "colAdministration";
+            this.colAdministration.ReadOnly = true;
+            this.colAdministration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAdministration.Width = 65;
+            // 
+            // colFrequency
+            // 
+            this.colFrequency.FillWeight = 70F;
+            this.colFrequency.HeaderText = "频次";
+            this.colFrequency.Name = "colFrequency";
+            this.colFrequency.ReadOnly = true;
+            this.colFrequency.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colFrequency.Width = 70;
+            // 
+            // colOrderDoctor
+            // 
+            this.colOrderDoctor.HeaderText = "医生签名";
+            this.colOrderDoctor.Name = "colOrderDoctor";
+            this.colOrderDoctor.ReadOnly = true;
+            this.colOrderDoctor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colOrderDoctor.Width = 120;
+            // 
+            // colNurse
+            // 
+            this.colNurse.HeaderText = "护士签名";
+            this.colNurse.Name = "colNurse";
+            this.colNurse.ReadOnly = true;
+            this.colNurse.Width = 90;
+            // 
+            // col_START_DATE_TIME
+            // 
+            this.col_START_DATE_TIME.HeaderText = "开始时间";
+            this.col_START_DATE_TIME.Name = "col_START_DATE_TIME";
+            this.col_START_DATE_TIME.ReadOnly = true;
+            this.col_START_DATE_TIME.Width = 120;
+            // 
+            // col_PERFORM_TIME
+            // 
+            this.col_PERFORM_TIME.HeaderText = "执行时间";
+            this.col_PERFORM_TIME.Name = "col_PERFORM_TIME";
+            this.col_PERFORM_TIME.ReadOnly = true;
+            this.col_PERFORM_TIME.Width = 120;
+            // 
+            // colStopDoctor
+            // 
+            this.colStopDoctor.HeaderText = "停止医生签名";
+            this.colStopDoctor.Name = "colStopDoctor";
+            this.colStopDoctor.ReadOnly = true;
+            this.colStopDoctor.Width = 120;
+            // 
+            // colStopNurse
+            // 
+            this.colStopNurse.HeaderText = "停止护士签名";
+            this.colStopNurse.Name = "colStopNurse";
+            this.colStopNurse.ReadOnly = true;
+            this.colStopNurse.Width = 120;
+            // 
+            // colStopTime
+            // 
+            this.colStopTime.FillWeight = 130F;
+            this.colStopTime.HeaderText = "停止时间";
+            this.colStopTime.Name = "colStopTime";
+            this.colStopTime.ReadOnly = true;
+            this.colStopTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colStopTime.Width = 130;
+            // 
+            // col_PROCESSING_END_TIME
+            // 
+            this.col_PROCESSING_END_TIME.HeaderText = "停止执行时间";
+            this.col_PROCESSING_END_TIME.Name = "col_PROCESSING_END_TIME";
+            this.col_PROCESSING_END_TIME.ReadOnly = true;
+            this.col_PROCESSING_END_TIME.Width = 150;
+            // 
+            // colOrderStatus
+            // 
+            this.colOrderStatus.HeaderText = "状态";
+            this.colOrderStatus.Name = "colOrderStatus";
+            this.colOrderStatus.ReadOnly = true;
+            // 
+            // colOrderNo
+            // 
+            this.colOrderNo.HeaderText = "医嘱序号";
+            this.colOrderNo.Name = "colOrderNo";
+            this.colOrderNo.ReadOnly = true;
+            this.colOrderNo.Visible = false;
+            // 
+            // colOrderSubNo
+            // 
+            this.colOrderSubNo.HeaderText = "医嘱子序号";
+            this.colOrderSubNo.Name = "colOrderSubNo";
+            this.colOrderSubNo.ReadOnly = true;
+            this.colOrderSubNo.Visible = false;
+            // 
             // OrdersListForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -341,22 +395,28 @@ namespace MedQCSys.DockForms
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox tbOrderText;
         private System.Windows.Forms.ToolStripButton tsbSearch;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBeginTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRepeatIndicator;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderClass;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderContent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDosage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colflag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAdministration;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFrequency;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderDoctor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_START_DATE_TIME;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStopDoctor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStopTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNurse;
         private System.Windows.Forms.ToolStripLabel toollblOrdersType;
         private System.Windows.Forms.ToolStripComboBox toolcboOrdersType;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEnterTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRepeatIndicator;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderClass;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSubFlag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDosage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDosageUnits;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAdministration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFrequency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderDoctor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNurse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_START_DATE_TIME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_PERFORM_TIME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStopDoctor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStopNurse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStopTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_PROCESSING_END_TIME;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrderSubNo;
     }
 }
