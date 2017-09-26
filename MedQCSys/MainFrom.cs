@@ -37,7 +37,7 @@ namespace MedQCSys
         private DocumentTimeForm m_DocumentTimeForm = null;
         private ExamResultListForm m_ExamResultForm = null;
         private DiagnosisListForm m_DiagnosisListForm = null;
-        private TestResultListForm m_TestResultForm = null;
+        private LabResultListForm m_TestResultForm = null;
         private VitalSignsGraphForm m_VitalSignsGraphForm = null;
         private OrdersListForm m_OrdersListForm = null;
         private PatientInfoForm m_PatientInfoForm = null;
@@ -531,11 +531,11 @@ namespace MedQCSys
                     this.m_ExamResultForm = new ExamResultListForm(this);
                 return this.m_ExamResultForm;
             }
-            else if (szPersistString == typeof(TestResultListForm).ToString())
+            else if (szPersistString == typeof(LabResultListForm).ToString())
             {
 
                 if (this.m_TestResultForm == null || this.m_TestResultForm.IsDisposed)
-                    this.m_TestResultForm = new TestResultListForm(this);
+                    this.m_TestResultForm = new LabResultListForm(this);
                 return this.m_TestResultForm;
             }
             else if (szPersistString == typeof(OrdersListForm).ToString())
@@ -872,7 +872,7 @@ namespace MedQCSys
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             if (this.m_TestResultForm == null || this.m_TestResultForm.IsDisposed)
             {
-                this.m_TestResultForm = new TestResultListForm(this);
+                this.m_TestResultForm = new LabResultListForm(this);
                 this.m_TestResultForm.Show(this.dockPanel1);
             }
             else

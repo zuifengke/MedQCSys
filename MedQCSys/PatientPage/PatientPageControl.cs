@@ -165,7 +165,7 @@ namespace MedQCSys.PatPage
             contents.Add(new DiagnosisListForm(this.MainForm, this));
             contents.Add(new OrdersListForm(this.MainForm, this));
             contents.Add(new ExamResultListForm(this.MainForm, this));
-            contents.Add(new TestResultListForm(this.MainForm, this));
+            contents.Add(new LabResultListForm(this.MainForm, this));
             contents.Add(new DocumentTimeForm(this.MainForm, this));
             if (SystemParam.Instance.LocalConfigOption.IsShowVitalSignsGraph)
                 contents.Add(new VitalSignsGraphForm(this.MainForm, this));

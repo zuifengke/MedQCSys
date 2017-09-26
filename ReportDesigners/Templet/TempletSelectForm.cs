@@ -86,7 +86,7 @@ namespace Designers.Templet
         {
             this.InitializeComponent();
 
-            string[] applyEnvs = SystemData.DocTypeApplyEnv.GetApplyEnvNames();
+            string[] applyEnvs = SystemData.TempletTypeApplyEnv.GetApplyEnvNames();
             this.cboApplyEnv.Items.AddRange(applyEnvs);
             this.cboApplyEnv.Items.Add("<所有表单类型>");
         }
@@ -115,7 +115,7 @@ namespace Designers.Templet
             this.SetDefaultSelectedNodes();
 
             this.cboApplyEnv.Text =
-                SystemData.DocTypeApplyEnv.GetApplyEnvName(this.m_szApplyEnv);
+                SystemData.TempletTypeApplyEnv.GetApplyEnvName(this.m_szApplyEnv);
             this.cboApplyEnv.SelectedIndexChanged +=
                 new EventHandler(this.cboApplyEnv_SelectedIndexChanged);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
@@ -308,7 +308,7 @@ namespace Designers.Templet
         private void cboApplyEnv_SelectedIndexChanged(object sender, EventArgs e)
         {
             string szApplyEnv = this.cboApplyEnv.Text;
-            szApplyEnv = SystemData.DocTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
+            szApplyEnv = SystemData.TempletTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
             this.LoadDocTypeList(szApplyEnv);
         }
 

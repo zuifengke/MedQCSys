@@ -20,13 +20,14 @@ using EMRDBLib;
 using Heren.MedQC.Utilities;
 using EMRDBLib.DbAccess;
 using Heren.MedQC.Core;
+using Heren.MedQC.Utilities.Dialogs;
 
 namespace MedQCSys.DockForms
 {
-    public partial class TestResultListForm : DockContentBase
+    public partial class LabResultListForm : DockContentBase
     {
         private List<DataTable> m_lstTestInfo = null;
-        public TestResultListForm(MainForm parent)
+        public LabResultListForm(MainForm parent)
             : base(parent)
         {
             this.InitializeComponent();
@@ -34,11 +35,11 @@ namespace MedQCSys.DockForms
             this.ShowHint = DockState.Document;
             this.DockAreas = DockAreas.Document;
             this.CloseButtonVisible = true;
-            this.ResultList.Font = new Font("宋体", 10.5f);
-            this.LabTestInfoList.Font = new Font("宋体", 10.5f);
+            this.dgvLabResult.Font = new Font("宋体", 10.5f);
+            this.dgvLabMaster.Font = new Font("宋体", 10.5f);
         }
 
-        public TestResultListForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
+        public LabResultListForm(MainForm parent, PatPage.PatientPageControl patientPageControl)
             : base(parent, patientPageControl)
         {
             this.InitializeComponent();
@@ -47,8 +48,8 @@ namespace MedQCSys.DockForms
             this.CloseButtonVisible = true;
             this.DockAreas = DockAreas.Document | DockAreas.DockBottom | DockAreas.DockLeft
                 | DockAreas.DockRight | DockAreas.DockTop;
-            this.ResultList.Font = new Font("宋体", 10.5f);
-            this.LabTestInfoList.Font = new Font("宋体", 10.5f);
+            this.dgvLabResult.Font = new Font("宋体", 10.5f);
+            this.dgvLabMaster.Font = new Font("宋体", 10.5f);
         }
         protected override void OnShown(EventArgs e)
         {
@@ -104,17 +105,17 @@ namespace MedQCSys.DockForms
         /// </summary>
         private void UnselectedAllRows()
         {
-            while (this.LabTestInfoList.SelectedRows.Count > 0)
+            while (this.dgvLabMaster.SelectedRows.Count > 0)
             {
-                this.LabTestInfoList.SelectedRows[0].Selected = false;
+                this.dgvLabMaster.SelectedRows[0].Selected = false;
             }
         }
 
         private void LoadLabTestList()
         {
-            this.LabTestInfoList.SuspendLayout();
-            this.LabTestInfoList.Rows.Clear();
-            this.LabTestInfoList.ResumeLayout();
+            this.dgvLabMaster.SuspendLayout();
+            this.dgvLabMaster.Rows.Clear();
+            this.dgvLabMaster.ResumeLayout();
 
             if (this.MainForm == null || this.MainForm.IsDisposed)
                 return;
@@ -123,41 +124,41 @@ namespace MedQCSys.DockForms
 
             string szPatientID = SystemParam.Instance.PatVisitInfo.PATIENT_ID;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
-            List<LabMaster> lstLabTestInfo = null;
+            List<LabMaster> lstLabMaster = null;
 
             if (GlobalMethods.Misc.IsEmptyString(szPatientID) || GlobalMethods.Misc.IsEmptyString(szVisitID))
             {
                 return;
             }
-            short shRet = LabMasterAccess.Instance.GetInpLabTestList(szPatientID, szVisitID, ref lstLabTestInfo);
+            short shRet = LabMasterAccess.Instance.GetList(szPatientID, szVisitID, ref lstLabMaster);
             if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("检验主记录数据下载失败！");
                 return;
             }
-            if (lstLabTestInfo == null || lstLabTestInfo.Count <= 0)
+            if (lstLabMaster == null || lstLabMaster.Count <= 0)
                 return;
 
-            this.LabTestInfoList.SuspendLayout();
-            for (int index = lstLabTestInfo.Count - 1; index >= 0; index--)
+            this.dgvLabMaster.SuspendLayout();
+            for (int index = lstLabMaster.Count - 1; index >= 0; index--)
             {
-                LabMaster labTestInfo = lstLabTestInfo[index];
-                if (labTestInfo == null)
+                LabMaster labMaster = lstLabMaster[index];
+                if (labMaster == null)
                     continue;
-                int nRowIndex = this.LabTestInfoList.Rows.Add();
-                DataGridViewRow row = this.LabTestInfoList.Rows[nRowIndex];
-                row.Tag = labTestInfo;
-                row.Cells[this.colSpecimen.Index].Value = labTestInfo.SPECIMEN;
-                if (labTestInfo.REQUEST_TIME != labTestInfo.DefaultTime)
-                    row.Cells[this.colRequestTime.Index].Value = labTestInfo.REQUEST_TIME.ToString("yyyy-MM-dd");
-                row.Cells[this.colRequestDoctor.Index].Value = labTestInfo.REQUEST_DOCTOR;
-                row.Cells[this.colResultStatus.Index].Value = labTestInfo.RESULT_STATUS;
-                if (labTestInfo.REPORT_TIME != labTestInfo.DefaultTime)
-                    row.Cells[this.colReportTime.Index].Value = labTestInfo.REPORT_TIME.ToString("yyyy-MM-dd");
-                row.Cells[this.colReportDoctor.Index].Value = labTestInfo.REPORT_DOCTOR;
-                row.Cells[this.colSubject.Index].Value = labTestInfo.SUBJECT;
+                int nRowIndex = this.dgvLabMaster.Rows.Add();
+                DataGridViewRow row = this.dgvLabMaster.Rows[nRowIndex];
+                row.Tag = labMaster;
+                row.Cells[this.colSpecimen.Index].Value = labMaster.SPECIMEN;
+                if (labMaster.REQUEST_TIME != labMaster.DefaultTime)
+                    row.Cells[this.colRequestTime.Index].Value = labMaster.REQUEST_TIME.ToString("yyyy-MM-dd");
+                row.Cells[this.colRequestDoctor.Index].Value = labMaster.REQUEST_DOCTOR;
+                row.Cells[this.colResultStatus.Index].Value = labMaster.RESULT_STATUS;
+                if (labMaster.REPORT_TIME != labMaster.DefaultTime)
+                    row.Cells[this.colReportTime.Index].Value = labMaster.REPORT_TIME.ToString("yyyy-MM-dd");
+                row.Cells[this.colReportDoctor.Index].Value = labMaster.REPORT_DOCTOR;
+                row.Cells[this.colSubject.Index].Value = labMaster.SUBJECT;
                 List<LabResult> lstResultInfo = null;
-                shRet = LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
+                shRet = LabResultAccess.Instance.GetList(labMaster.TEST_ID, ref lstResultInfo);
                 if (shRet != SystemData.ReturnValue.OK
                     && lstResultInfo == null)
                 {
@@ -169,21 +170,21 @@ namespace MedQCSys.DockForms
 
                 for (int index1 = 0; index1 < lstResultInfo.Count; index1++)
                 {
-                    LabResult resultInfo = lstResultInfo[index1];
-                    if (resultInfo == null)
+                    LabResult labResult = lstResultInfo[index1];
+                    if (labResult == null)
                         continue;
 
-                    if (resultInfo.ABNORMAL_INDICATOR.Trim().Contains("危机"))//危机值标红
+                    if (labResult.ABNORMAL_INDICATOR.Trim().Contains("危机"))//危机值标红
                         row.DefaultCellStyle.ForeColor = Color.Red;
-                    if (resultInfo.ABNORMAL_INDICATOR.Trim().Contains("高")
-                        || resultInfo.ABNORMAL_INDICATOR.Contains("低"))
+                    if (labResult.ABNORMAL_INDICATOR.Trim().Contains("高")
+                        || labResult.ABNORMAL_INDICATOR.Contains("低"))
                     {
                         row.Cells[this.colYiChang.Index].Value = "！";
                         row.Cells[this.colYiChang.Index].Style.ForeColor = Color.Red;
                     }
                 }
             }
-            this.LabTestInfoList.ResumeLayout();
+            this.dgvLabMaster.ResumeLayout();
         }
 
         /// <summary>
@@ -191,30 +192,30 @@ namespace MedQCSys.DockForms
         /// </summary>
         private void LoadResultList(string testNo)
         {
-            this.ResultList.SuspendLayout();
-            this.ResultList.Rows.Clear();
-            this.ResultList.ResumeLayout();
+            this.dgvLabResult.SuspendLayout();
+            this.dgvLabResult.Rows.Clear();
+            this.dgvLabResult.ResumeLayout();
 
             if (testNo == string.Empty)
                 return;
-            List<LabResult> lstResultInfo = null;
-            short shRet = LabResultAccess.Instance.GetLabResultList(testNo, ref lstResultInfo);
+            List<LabResult> lstLabResult = null;
+            short shRet = LabResultAccess.Instance.GetList(testNo, ref lstLabResult);
             if (shRet != SystemData.ReturnValue.OK && shRet != SystemData.ReturnValue.RES_NO_FOUND)
             {
                 MessageBoxEx.Show("检验记录数据下载失败！");
                 return;
             }
-            if (lstResultInfo == null || lstResultInfo.Count <= 0)
+            if (lstLabResult == null || lstLabResult.Count <= 0)
                 return;
 
-            this.ResultList.SuspendLayout();
-            for (int index = lstResultInfo.Count - 1; index >= 0; index--)
+            this.dgvLabResult.SuspendLayout();
+            for (int index = lstLabResult.Count - 1; index >= 0; index--)
             {
-                LabResult resultInfo = lstResultInfo[index];
+                LabResult resultInfo = lstLabResult[index];
                 if (resultInfo == null)
                     continue;
-                int nRowIndex = this.ResultList.Rows.Add();
-                DataGridViewRow row = this.ResultList.Rows[nRowIndex];
+                int nRowIndex = this.dgvLabResult.Rows.Add();
+                DataGridViewRow row = this.dgvLabResult.Rows[nRowIndex];
                 row.Cells[this.colItemName.Index].Value = resultInfo.ITEM_NAME;
                 row.Cells[this.colResult.Index].Value = resultInfo.ITEM_RESULT;
                 row.Cells[this.colUnit.Index].Value = resultInfo.ITEM_UNITS;
@@ -235,8 +236,8 @@ namespace MedQCSys.DockForms
                     row.Cells[this.colAbnormal.Index].Style.ForeColor = Color.Red;
                 }
             }
-            this.ResultList.CurrentCell = null;
-            this.ResultList.ResumeLayout();
+            this.dgvLabResult.CurrentCell = null;
+            this.dgvLabResult.ResumeLayout();
         }
 
         private ReportExplorerForm GetReportExplorerForm()
@@ -314,18 +315,18 @@ namespace MedQCSys.DockForms
 
         private void LabTestInfoList_SelectionChanged(object sender, EventArgs e)
         {
-            if (this.LabTestInfoList.SelectedRows.Count <= 0)
+            if (this.dgvLabMaster.SelectedRows.Count <= 0)
             {
-                this.ResultList.SuspendLayout();
-                this.ResultList.Rows.Clear();
-                this.ResultList.ResumeLayout();
+                this.dgvLabResult.SuspendLayout();
+                this.dgvLabResult.Rows.Clear();
+                this.dgvLabResult.ResumeLayout();
                 return;
             }
             this.ShowStatusMessage("正在下载检验记录数据，请稍候...");
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
 
-            this.ResultList.Rows.Clear();
-            LabMaster labTestInfo = (LabMaster)this.LabTestInfoList.SelectedRows[0].Tag;
+            this.dgvLabResult.Rows.Clear();
+            LabMaster labTestInfo = (LabMaster)this.dgvLabMaster.SelectedRows[0].Tag;
             if (labTestInfo != null)
                 this.LoadResultList(labTestInfo.TEST_ID);
 
@@ -335,18 +336,31 @@ namespace MedQCSys.DockForms
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            if (SystemParam.Instance.LocalConfigOption.IsLabPrintNewMethod)
+            {
+                DocumentPrintStyleForm frm = new DocumentPrintStyleForm();
+                TempletType templetType = TempletTypeCache.Instance.GetWardDocType(SystemData.TempletTypeApplyEnv.LAB_REPROT);
+                if (templetType == null)
+                {
+                    MessageBoxEx.ShowMessage("打印表单未制作");
+                }
+                frm.TempletType = templetType;
+                frm.Text = templetType.DocTypeName;
+                frm.ShowDialog();
+                return;
+            }
 
             if (this.m_lstTestInfo == null)
                 this.m_lstTestInfo = new List<DataTable>();
             else
                 this.m_lstTestInfo.Clear();
 
-            if (this.LabTestInfoList.Rows.Count <= 0)
+            if (this.dgvLabMaster.Rows.Count <= 0)
                 return;
 
-            for (int index = 0; index < this.LabTestInfoList.Rows.Count; index++)
+            for (int index = 0; index < this.dgvLabMaster.Rows.Count; index++)
             {
-                DataGridViewRow row = this.LabTestInfoList.Rows[index];
+                DataGridViewRow row = this.dgvLabMaster.Rows[index];
                 LabMaster labTestInfo = row.Tag as LabMaster;
 
                 if (labTestInfo == null)
@@ -359,7 +373,7 @@ namespace MedQCSys.DockForms
                     continue;
 
                 List<LabResult> lstResultInfo = null;
-                short shRet = LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
+                short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
                 if (shRet != SystemData.ReturnValue.OK)
                     continue;
                 if (lstResultInfo == null || lstResultInfo.Count <= 0)
@@ -464,15 +478,15 @@ namespace MedQCSys.DockForms
 
         private void ckbPrintAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.LabTestInfoList.Rows.Count <= 0)
+            if (this.dgvLabMaster.Rows.Count <= 0)
                 return;
 
             bool bIsSelectAll = false;
             if (this.chkPrintAll.Checked)
                 bIsSelectAll = true;
-            for (int index = 0; index < this.LabTestInfoList.Rows.Count; index++)
+            for (int index = 0; index < this.dgvLabMaster.Rows.Count; index++)
             {
-                DataGridViewRow row = this.LabTestInfoList.Rows[index];
+                DataGridViewRow row = this.dgvLabMaster.Rows[index];
                 DataGridViewCell cell = row.Cells[this.colNeedPrint.Index];
                 if (cell == null)
                     continue;
@@ -485,7 +499,7 @@ namespace MedQCSys.DockForms
 
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            if (this.LabTestInfoList.Rows.Count <= 0)
+            if (this.dgvLabMaster.Rows.Count <= 0)
             {
                 MessageBoxEx.Show("当前没有可导出的内容！", MessageBoxIcon.Information);
                 return;
@@ -500,7 +514,7 @@ namespace MedQCSys.DockForms
             string szPatientName = SystemParam.Instance.PatVisitInfo.PATIENT_NAME;
             string szVisitID = SystemParam.Instance.PatVisitInfo.VISIT_ID;
             string szTitle = string.Format("{0}第{1}次就诊的{2}", szPatientName, szVisitID, "检验记录清单");
-            StatExpExcelHelper.Instance.ExportTestResultToExcel(this.LabTestInfoList, this.ResultList, szTitle);
+            StatExpExcelHelper.Instance.ExportTestResultToExcel(this.dgvLabMaster, this.dgvLabResult, szTitle);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
 
@@ -522,13 +536,13 @@ namespace MedQCSys.DockForms
                 return;
             if (!CanPrint(e.RowIndex))
             {
-                this.LabTestInfoList.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = true;
+                this.dgvLabMaster.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = true;
             }
         }
 
         private bool CanPrint(int rowIndex)
         {
-            DataGridViewRow row = this.LabTestInfoList.Rows[rowIndex];
+            DataGridViewRow row = this.dgvLabMaster.Rows[rowIndex];
             LabMaster labTestInfo = row.Tag as LabMaster;
 
             if (labTestInfo == null)
@@ -537,7 +551,7 @@ namespace MedQCSys.DockForms
             if (cell == null)
                 return false;
             List<LabResult> lstResultInfo = null;
-            short shRet = LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
+            short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
             if (shRet != SystemData.ReturnValue.OK)
                 return false;
             if (lstResultInfo == null || lstResultInfo.Count <= 0)

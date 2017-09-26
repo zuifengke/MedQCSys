@@ -1,6 +1,6 @@
 namespace MedQCSys.DockForms
 {
-    partial class TestResultListForm
+    partial class LabResultListForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,8 @@ namespace MedQCSys.DockForms
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.LabTestInfoList = new System.Windows.Forms.DataGridView();
-            this.ResultList = new System.Windows.Forms.DataGridView();
+            this.dgvLabMaster = new System.Windows.Forms.DataGridView();
+            this.dgvLabResult = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnPrint = new System.Windows.Forms.Button();
@@ -50,8 +50,8 @@ namespace MedQCSys.DockForms
             this.colUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colReferContext = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAbnormal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.LabTestInfoList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ResultList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLabMaster)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLabResult)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -59,14 +59,14 @@ namespace MedQCSys.DockForms
             // 
             // LabTestInfoList
             // 
-            this.LabTestInfoList.AllowUserToAddRows = false;
-            this.LabTestInfoList.AllowUserToDeleteRows = false;
-            this.LabTestInfoList.AllowUserToOrderColumns = true;
-            this.LabTestInfoList.AllowUserToResizeRows = false;
-            this.LabTestInfoList.BackgroundColor = System.Drawing.Color.White;
-            this.LabTestInfoList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LabTestInfoList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.LabTestInfoList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvLabMaster.AllowUserToAddRows = false;
+            this.dgvLabMaster.AllowUserToDeleteRows = false;
+            this.dgvLabMaster.AllowUserToOrderColumns = true;
+            this.dgvLabMaster.AllowUserToResizeRows = false;
+            this.dgvLabMaster.BackgroundColor = System.Drawing.Color.White;
+            this.dgvLabMaster.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvLabMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLabMaster.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNeedPrint,
             this.colRequestTime,
             this.colSubject,
@@ -76,44 +76,44 @@ namespace MedQCSys.DockForms
             this.colReportTime,
             this.colReportDoctor,
             this.colYiChang});
-            this.LabTestInfoList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LabTestInfoList.Location = new System.Drawing.Point(0, 0);
-            this.LabTestInfoList.MultiSelect = false;
-            this.LabTestInfoList.Name = "LabTestInfoList";
-            this.LabTestInfoList.RowHeadersVisible = false;
-            this.LabTestInfoList.RowTemplate.Height = 27;
-            this.LabTestInfoList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LabTestInfoList.Size = new System.Drawing.Size(632, 471);
-            this.LabTestInfoList.TabIndex = 3;
-            this.LabTestInfoList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.LabTestInfoList_CellClick);
-            this.LabTestInfoList.SelectionChanged += new System.EventHandler(this.LabTestInfoList_SelectionChanged);
+            this.dgvLabMaster.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvLabMaster.Location = new System.Drawing.Point(0, 0);
+            this.dgvLabMaster.MultiSelect = false;
+            this.dgvLabMaster.Name = "LabTestInfoList";
+            this.dgvLabMaster.RowHeadersVisible = false;
+            this.dgvLabMaster.RowTemplate.Height = 27;
+            this.dgvLabMaster.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvLabMaster.Size = new System.Drawing.Size(632, 471);
+            this.dgvLabMaster.TabIndex = 3;
+            this.dgvLabMaster.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.LabTestInfoList_CellClick);
+            this.dgvLabMaster.SelectionChanged += new System.EventHandler(this.LabTestInfoList_SelectionChanged);
             // 
             // ResultList
             // 
-            this.ResultList.AllowUserToAddRows = false;
-            this.ResultList.AllowUserToDeleteRows = false;
-            this.ResultList.AllowUserToOrderColumns = true;
-            this.ResultList.AllowUserToResizeRows = false;
-            this.ResultList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvLabResult.AllowUserToAddRows = false;
+            this.dgvLabResult.AllowUserToDeleteRows = false;
+            this.dgvLabResult.AllowUserToOrderColumns = true;
+            this.dgvLabResult.AllowUserToResizeRows = false;
+            this.dgvLabResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResultList.BackgroundColor = System.Drawing.Color.White;
-            this.ResultList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ResultList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ResultList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvLabResult.BackgroundColor = System.Drawing.Color.White;
+            this.dgvLabResult.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvLabResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLabResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colItemName,
             this.colResult,
             this.colUnit,
             this.colReferContext,
             this.colAbnormal});
-            this.ResultList.Location = new System.Drawing.Point(1, 21);
-            this.ResultList.Name = "ResultList";
-            this.ResultList.ReadOnly = true;
-            this.ResultList.RowHeadersVisible = false;
-            this.ResultList.RowTemplate.Height = 27;
-            this.ResultList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ResultList.Size = new System.Drawing.Size(449, 447);
-            this.ResultList.TabIndex = 5;
+            this.dgvLabResult.Location = new System.Drawing.Point(1, 21);
+            this.dgvLabResult.Name = "ResultList";
+            this.dgvLabResult.ReadOnly = true;
+            this.dgvLabResult.RowHeadersVisible = false;
+            this.dgvLabResult.RowTemplate.Height = 27;
+            this.dgvLabResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvLabResult.Size = new System.Drawing.Size(449, 447);
+            this.dgvLabResult.TabIndex = 5;
             // 
             // label1
             // 
@@ -134,11 +134,11 @@ namespace MedQCSys.DockForms
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.LabTestInfoList);
+            this.splitContainer1.Panel1.Controls.Add(this.dgvLabMaster);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.ResultList);
+            this.splitContainer1.Panel2.Controls.Add(this.dgvLabResult);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Size = new System.Drawing.Size(1087, 471);
             this.splitContainer1.SplitterDistance = 632;
@@ -301,8 +301,8 @@ namespace MedQCSys.DockForms
             this.Name = "TestResultListForm";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.Text = "¼ìÑé¼ÇÂ¼";
-            ((System.ComponentModel.ISupportInitialize)(this.LabTestInfoList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ResultList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLabMaster)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLabResult)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -314,9 +314,9 @@ namespace MedQCSys.DockForms
 
         #endregion
 
-        private System.Windows.Forms.DataGridView LabTestInfoList;
+        private System.Windows.Forms.DataGridView dgvLabMaster;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView ResultList;
+        private System.Windows.Forms.DataGridView dgvLabResult;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.CheckBox chkPrintAll;

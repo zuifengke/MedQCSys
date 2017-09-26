@@ -386,11 +386,11 @@
     <Compile Include="DockForms\DockContentBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatientPage\TestResultListForm.cs">
+    <Compile Include="PatientPage\LabResultListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatientPage\TestResultListForm.Designer.cs">
-      <DependentUpon>TestResultListForm.cs</DependentUpon>
+    <Compile Include="PatientPage\LabResultListForm.Designer.cs">
+      <DependentUpon>LabResultListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PatientPage\VitalSignsGraphForm.cs">
       <SubType>Form</SubType>
@@ -591,9 +591,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>DockContentBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PatientPage\TestResultListForm.resx">
+    <EmbeddedResource Include="PatientPage\LabResultListForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>TestResultListForm.cs</DependentUpon>
+      <DependentUpon>LabResultListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatientPage\VitalSignsGraphForm.resx">
       <DependentUpon>VitalSignsGraphForm.cs</DependentUpon>

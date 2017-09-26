@@ -9,12 +9,12 @@ namespace EMRDBLib
         /// <summary>
         /// 报告应用环境常量
         /// </summary>
-        public struct DocTypeApplyEnv
+        public struct TempletTypeApplyEnv
         {
             /// <summary>
-            /// 病案上传
+            /// 检验报告
             /// </summary>
-            public const string REC_UPLOAD = "REC_UPLOAD";
+            public const string LAB_REPROT = "LAB_REPROT";
             /// <summary>
             /// 患者信息
             /// </summary>
@@ -148,14 +148,14 @@ namespace EMRDBLib
             {
                 return new string[] {
                     "患者信息",
-                    "病案上传",
+                    "检验报告",
                     "全局功能模块插件"};
             }
 
             public static string GetApplyEnvName(string applyEnvCode)
             {
-                if (applyEnvCode == REC_UPLOAD)
-                    return "病案上传";
+                if (applyEnvCode == LAB_REPROT)
+                    return "检验报告";
                 else if (applyEnvCode == NURSING_DOCUMENT)
                     return "护理文书";
                 else if (applyEnvCode == PATIENT_INFO)
@@ -211,10 +211,10 @@ namespace EMRDBLib
 
             public static string GetApplyEnvCode(string applyEnvName)
             {
-                if (applyEnvName == "病案上传")
-                    return REC_UPLOAD;
-                else if (applyEnvName == "患者信息")
+                if (applyEnvName == "患者信息")
                     return PATIENT_INFO;
+                else if (applyEnvName == "检验报告")
+                    return LAB_REPROT;
                 else if (applyEnvName == "护理评估")
                     return NURSING_ASSESSMENT;
                 else if (applyEnvName == "文书列表1")

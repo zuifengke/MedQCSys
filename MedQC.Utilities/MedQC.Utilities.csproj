@@ -106,6 +106,12 @@
     <Compile Include="Dialogs\DeptSelectDialog.designer.cs">
       <DependentUpon>DeptSelectDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DocumentPrintStyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DocumentPrintStyleForm.Designer.cs">
+      <DependentUpon>DocumentPrintStyleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ImageViewerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     <EmbeddedResource Include="Dialogs\DeptSelectDialog.resx">
       <DependentUpon>DeptSelectDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DocumentPrintStyleForm.resx">
+      <DependentUpon>DocumentPrintStyleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ImageViewerDialog.resx">
       <DependentUpon>ImageViewerDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,6 +178,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\exporttemplet.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Print.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

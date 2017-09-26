@@ -36,7 +36,7 @@ namespace Designers.Templet
             this.UpdateBounds();
             this.Icon = Properties.Resources.FormsIcon;
 
-            string[] szApplyEnvs = SystemData.DocTypeApplyEnv.GetApplyEnvNames();
+            string[] szApplyEnvs = SystemData.TempletTypeApplyEnv.GetApplyEnvNames();
             this.toolcboApplyEnv.Items.AddRange(szApplyEnvs);
             this.toolcboApplyEnv.SelectedIndex = 0;
             this.toolcboApplyEnv.SelectedIndexChanged +=
@@ -49,7 +49,7 @@ namespace Designers.Templet
             this.Update();
 
             string szApplyEnv = this.toolcboApplyEnv.Text;
-            szApplyEnv = SystemData.DocTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
+            szApplyEnv = SystemData.TempletTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
             List<TempletType> lstDocTypeInfos = null;
             short shRet = TempletTypeAccess.Instance.GetTempletTypes(szApplyEnv, ref lstDocTypeInfos);
             if (shRet != SystemData.ReturnValue.OK
@@ -131,7 +131,7 @@ namespace Designers.Templet
             docTypeInfo.DocTypeNo = this.treeView1.Nodes.Count;
 
             string szApplyEnv = this.toolcboApplyEnv.Text;
-            szApplyEnv = SystemData.DocTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
+            szApplyEnv = SystemData.TempletTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
             docTypeInfo.ApplyEnv = szApplyEnv;
 
             TreeNode selectedNode = this.treeView1.SelectedNode;
@@ -455,13 +455,13 @@ namespace Designers.Templet
             if (moveNode == null || moveNode.Index < 0 || moveNode.Tag == null)
                 return;
 
-            DocTypeInfo moveDocTypeInfo = moveNode.Tag as DocTypeInfo;
+            TempletType moveDocTypeInfo = moveNode.Tag as TempletType;
             if (moveDocTypeInfo == null)
                 return;
 
-            DocTypeInfo targetDocTypeInfo = null;
+            TempletType targetDocTypeInfo = null;
             if (targetNode != null)
-                targetDocTypeInfo = targetNode.Tag as DocTypeInfo;
+                targetDocTypeInfo = targetNode.Tag as TempletType;
 
             //把父节点拖放到其下子节点,则取消
             TreeNode parentNode = targetNode;
@@ -567,7 +567,7 @@ namespace Designers.Templet
             frmTempletSelect.Description = "请选择需要导出的病历类型模板：";
 
             string szApplyEnv = this.toolcboApplyEnv.Text;
-            szApplyEnv = SystemData.DocTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
+            szApplyEnv = SystemData.TempletTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
             frmTempletSelect.ApplyEnv = szApplyEnv;
 
             if (frmTempletSelect.ShowDialog() != DialogResult.OK)
@@ -622,7 +622,7 @@ namespace Designers.Templet
             frmTempletSelect.Description = "请选择需要导入的病历类型模板：";
 
             string szApplyEnv = this.toolcboApplyEnv.Text;
-            szApplyEnv = SystemData.DocTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
+            szApplyEnv = SystemData.TempletTypeApplyEnv.GetApplyEnvCode(szApplyEnv);
             frmTempletSelect.ApplyEnv = szApplyEnv;
 
             if (frmTempletSelect.ShowDialog() != DialogResult.OK)

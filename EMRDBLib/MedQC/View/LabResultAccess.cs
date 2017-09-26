@@ -31,7 +31,7 @@ namespace EMRDBLib.DbAccess
         /// <param name="szTestID">申请序号</param>
         /// <param name="lstTestResultInfo">检验结果列表</param>
         /// <returns>SystemData.ReturnValue</returns>
-        public short GetLabResultList(string szTestID, ref List<LabResult> lstTestResultInfo)
+        public short GetList(string szTestID, ref List<LabResult> lstTestResultInfo)
         {
             if (szTestID == null || szTestID.Trim() == "")
             {

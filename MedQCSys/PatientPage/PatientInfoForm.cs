@@ -48,9 +48,6 @@ namespace MedQCSys.DockForms
             this.DockAreas = DockAreas.Document;
             this.editor.ExecuteQuery += Editor_ExecuteQuery;
             this.editor.QueryContext += Editor_QueryContext;
-
-
-
         }
         private TempletType m_docTypeInfo = null;
         protected override bool ProcessDialogKey(Keys keyData)
@@ -67,14 +64,14 @@ namespace MedQCSys.DockForms
                 TempletType docTypeInfo = null;
                 short shRet = TempletTypeAccess.Instance.GetTempletType(szDocTypeID, ref docTypeInfo);
                 // 如果本地与服务器的版本相同,则无需重新加载
-                DateTime dtModifyTime = FormCache.Instance.GetFormModifyTime(docTypeInfo.DocTypeID);
+                DateTime dtModifyTime = TempletTypeCache.Instance.GetFormModifyTime(docTypeInfo.DocTypeID);
                 if (dtModifyTime.CompareTo(docTypeInfo.ModifyTime) == 0)
                 {
                     GlobalMethods.UI.SetCursor(this, Cursors.Default);
                     return true;
                 }
                 byte[] byteTempletData = null;
-                bool result = FormCache.Instance.GetFormTemplet(docTypeInfo, ref byteTempletData);
+                bool result = TempletTypeCache.Instance.GetFormTemplet(docTypeInfo, ref byteTempletData);
                 if (!result)
                 {
                     MessageBoxEx.Show("刷新失败");
@@ -152,12 +149,12 @@ namespace MedQCSys.DockForms
 
             //this.ShowStatusMessage(null);
             List<TempletType> lstTempletTypes = null;
-            short shRet = TempletTypeAccess.Instance.GetTempletTypes(SystemData.DocTypeApplyEnv.PATIENT_INFO, ref lstTempletTypes);
+            short shRet = TempletTypeAccess.Instance.GetTempletTypes(SystemData.TempletTypeApplyEnv.PATIENT_INFO, ref lstTempletTypes);
             if (shRet != SystemData.ReturnValue.OK)
                 return;
             this.m_docTypeInfo = lstTempletTypes[0];
             byte[] byteTempletData = null;
-            bool result = FormCache.Instance.GetFormTemplet(this.m_docTypeInfo.DocTypeID, ref byteTempletData);
+            bool result = TempletTypeCache.Instance.GetFormTemplet(this.m_docTypeInfo.DocTypeID, ref byteTempletData);
             if (result)
                 this.editor.Load(byteTempletData);
         }

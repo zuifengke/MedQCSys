@@ -31,7 +31,7 @@ namespace EMRDBLib.DbAccess
           /// <param name="nVisitID">就诊号</param>
           /// <param name="lstLabTestInfo">检验信息列表</param>
           /// <returns>SystemData.ReturnValue</returns>
-        public short GetInpLabTestList(string szPatientID, string szVisitID, ref List<LabMaster> lstLabTestInfo)
+        public short GetList(string szPatientID, string szVisitID, ref List<LabMaster> lstLabTestInfo)
         {
             if (GlobalMethods.Misc.IsEmptyString(szPatientID) || GlobalMethods.Misc.IsEmptyString(szVisitID))
             {

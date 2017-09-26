@@ -517,6 +517,10 @@ namespace EMRDBLib
         /// 新军卫医嘱内容包含剂量频次单位等，医嘱界面只显示医嘱内容即可
         /// </summary>
         public bool IsOrderTextAll { get; set; }
+        /// <summary>
+        /// 检验单打印新方式，省人民连续打印开启
+        /// </summary>
+        public bool IsLabPrintNewMethod { get; set; }
 
         public LocalConfigOption()
         {
@@ -567,6 +571,7 @@ namespace EMRDBLib
                 option.IsLinkHerenHis = true;
                 option.IsNewScore = true;
                 option.IsOrderTextAll = true;
+                option.IsLabPrintNewMethod = true;
                 option.IsOpenPrintPacs = true;
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "SRM.ico");
             }

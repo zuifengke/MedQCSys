@@ -15,24 +15,24 @@ using EMRDBLib.DbAccess;
 
 namespace Heren.MedQC.Core
 {
-    public class FormCache
+    public class TempletTypeCache
     {
-        private static FormCache m_instance = null;
+        private static TempletTypeCache m_instance = null;
 
         /// <summary>
         /// 获取DocTypeCache实例
         /// </summary>
-        public static FormCache Instance
+        public static TempletTypeCache Instance
         {
             get
             {
                 if (m_instance == null)
-                    m_instance = new FormCache();
+                    m_instance = new TempletTypeCache();
                 return m_instance;
             }
         }
 
-        private FormCache()
+        private TempletTypeCache()
         {
             this.m_szCacheIndexFile = GlobalMethods.Misc.GetWorkingPath()
                 + @"\Templets\Forms.xml";
@@ -67,12 +67,6 @@ namespace Heren.MedQC.Core
         {
             if (GlobalMethods.Misc.IsEmptyString(szApplyEnv))
                 return null;
-            if (this.m_htDocClassTable != null
-                && this.m_htDocClassTable.ContainsKey(szApplyEnv))
-            {
-                return this.m_htDocClassTable[szApplyEnv];
-            }
-
             List<TempletType> lstDocTypeInfos = null;
             short shRet = TempletTypeAccess.Instance.GetTempletTypes(szApplyEnv, ref lstDocTypeInfos);
             if (shRet != SystemData.ReturnValue.OK)
@@ -80,22 +74,6 @@ namespace Heren.MedQC.Core
 
             if (lstDocTypeInfos == null || lstDocTypeInfos.Count <= 0)
                 return new List<TempletType>();
-
-            if (this.m_htDocClassTable == null)
-                this.m_htDocClassTable = new Dictionary<string, List<TempletType>>();
-            this.m_htDocClassTable.Add(szApplyEnv, lstDocTypeInfos);
-
-            if (this.m_htDocTypeTable == null)
-                this.m_htDocTypeTable = new Dictionary<string, TempletType>();
-
-            for (int index = 0; index < lstDocTypeInfos.Count; index++)
-            {
-                TempletType docTypeInfo = lstDocTypeInfos[index];
-                if (docTypeInfo == null || string.IsNullOrEmpty(docTypeInfo.DocTypeID))
-                    continue;
-                if (!this.m_htDocTypeTable.ContainsKey(docTypeInfo.DocTypeID))
-                    this.m_htDocTypeTable.Add(docTypeInfo.DocTypeID, docTypeInfo);
-            }
             return lstDocTypeInfos;
         }
 
@@ -112,15 +90,12 @@ namespace Heren.MedQC.Core
             //如果是子病历类型
             if (this.m_htDocTypeTable == null)
                 this.m_htDocTypeTable = new Dictionary<string, TempletType>();
-            if (this.m_htDocTypeTable.ContainsKey(szDocTypeID))
-                return this.m_htDocTypeTable[szDocTypeID];
-
+            
             //重新查询获取文档类型信息
             TempletType docTypeInfo = null;
             short shRet = TempletTypeAccess.Instance.GetTempletType(szDocTypeID, ref docTypeInfo);
             if (shRet != SystemData.ReturnValue.OK || docTypeInfo == null)
                 return null;
-            this.m_htDocTypeTable.Add(szDocTypeID, docTypeInfo);
             return docTypeInfo;
         }
 
@@ -257,7 +232,7 @@ namespace Heren.MedQC.Core
         /// <returns>是否允许打印</returns>
         public bool IsFormPrintable(string szDocTypeID)
         {
-            TempletType docTypeInfo = FormCache.Instance.GetDocTypeInfo(szDocTypeID);
+            TempletType docTypeInfo = TempletTypeCache.Instance.GetDocTypeInfo(szDocTypeID);
             if (docTypeInfo == null)
                 return false;
             if (docTypeInfo.PrintMode == FormPrintMode.Form || docTypeInfo.PrintMode == FormPrintMode.FormAndList)
@@ -272,7 +247,7 @@ namespace Heren.MedQC.Core
         /// <returns>是否允许打印</returns>
         public bool IsFormListPrintable(string szDocTypeID)
         {
-            TempletType docTypeInfo = FormCache.Instance.GetDocTypeInfo(szDocTypeID);
+            TempletType docTypeInfo = TempletTypeCache.Instance.GetDocTypeInfo(szDocTypeID);
             if (docTypeInfo == null)
                 return false;
             if (docTypeInfo.PrintMode == FormPrintMode.List || docTypeInfo.PrintMode == FormPrintMode.FormAndList)

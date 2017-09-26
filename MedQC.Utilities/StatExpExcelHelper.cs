@@ -125,7 +125,7 @@ namespace Heren.MedQC.Utilities
                         continue;
 
                     List<LabResult> lstResultInfo = null;
-                    short shRet = LabResultAccess.Instance.GetLabResultList(labTestInfo.TEST_ID, ref lstResultInfo);
+                    short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
 
                     if (shRet != SystemData.ReturnValue.OK
                         && shRet != SystemData.ReturnValue.RES_NO_FOUND)
