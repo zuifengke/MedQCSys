@@ -242,18 +242,22 @@ namespace MedQCSys.DockForms
             {
                 row.Cells[this.colRepeatIndicator.Index].Value = orderInfo.IsRepeat ? "³¤ÆÚ" : "ÁÙÊ±";
                 row.Cells[this.colOrderStatus.Index].Value = SystemData.OrderStatus.GetOrderStatusDesc(orderInfo.OrderStatus);
-                if (orderInfo.START_DATE_TIME != orderInfo.DefaultTime)
+                if (orderInfo.START_DATE_TIME != orderInfo.DefaultTime
+                    && orderInfo.StopTime != orderInfo.DefaultTime3)
                     row.Cells[this.col_START_DATE_TIME.Index].Value = orderInfo.START_DATE_TIME.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colEnterTime.Index].Value = orderInfo.EnterTime.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colOrderClass.Index].Value = orderInfo.OrderClass;
-                if (orderInfo.StopTime != orderInfo.DefaultTime)
+                if (orderInfo.StopTime != orderInfo.DefaultTime
+                    && orderInfo.StopTime!=orderInfo.DefaultTime3)
                     row.Cells[this.colStopTime.Index].Value = orderInfo.StopTime.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colOrderDoctor.Index].Value = orderInfo.Doctor;
                 row.Cells[this.colNurse.Index].Value = orderInfo.Nurse;
-                if (orderInfo.PERFORM_TIME != orderInfo.DefaultTime)
+                if (orderInfo.PERFORM_TIME != orderInfo.DefaultTime
+                    && orderInfo.StopTime != orderInfo.DefaultTime3)
                     row.Cells[this.col_PERFORM_TIME.Index].Value = orderInfo.PERFORM_TIME.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colStopDoctor.Index].Value = orderInfo.STOP_DOCTOR;
-                if (orderInfo.PROCESSING_END_TIME != orderInfo.DefaultTime)
+                if (orderInfo.PROCESSING_END_TIME != orderInfo.DefaultTime
+                    && orderInfo.StopTime != orderInfo.DefaultTime3)
                     row.Cells[this.col_PROCESSING_END_TIME.Index].Value = orderInfo.PROCESSING_END_TIME.ToString("yyyy-MM-dd HH:mm");
                 row.Cells[this.colStopNurse.Index].Value = orderInfo.STOP_NURSE;
                 row.Cells[this.colStopDoctor.Index].Value = orderInfo.STOP_DOCTOR;

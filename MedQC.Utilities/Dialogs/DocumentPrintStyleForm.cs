@@ -32,7 +32,7 @@ namespace Heren.MedQC.Utilities.Dialogs
                 this.m_TempletType = value;
             }
         }
-
+        public object Data { get; set; }
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
@@ -45,6 +45,8 @@ namespace Heren.MedQC.Utilities.Dialogs
             bool result = TempletTypeCache.Instance.GetFormTemplet(this.m_TempletType.DocTypeID, ref byteTempletData);
             if (result)
                 this.editor.Load(byteTempletData);
+            this.editor.UpdateFormData("加载数据", this.Data);
+
         }
         protected override bool ProcessDialogKey(Keys keyData)
         {

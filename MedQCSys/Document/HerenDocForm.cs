@@ -519,7 +519,6 @@ namespace MedQCSys.Document
                 else
                 {
                     MessageBoxEx.Show("±£´æ³É¹¦", MessageBoxIcon.Information);
-                    this.textEditor1.ReadOnly = true;
                 }
             }
         }

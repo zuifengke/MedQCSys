@@ -336,19 +336,7 @@ namespace MedQCSys.DockForms
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            if (SystemParam.Instance.LocalConfigOption.IsLabPrintNewMethod)
-            {
-                DocumentPrintStyleForm frm = new DocumentPrintStyleForm();
-                TempletType templetType = TempletTypeCache.Instance.GetWardDocType(SystemData.TempletTypeApplyEnv.LAB_REPROT);
-                if (templetType == null)
-                {
-                    MessageBoxEx.ShowMessage("打印表单未制作");
-                }
-                frm.TempletType = templetType;
-                frm.Text = templetType.DocTypeName;
-                frm.ShowDialog();
-                return;
-            }
+          
 
             if (this.m_lstTestInfo == null)
                 this.m_lstTestInfo = new List<DataTable>();
@@ -388,6 +376,21 @@ namespace MedQCSys.DockForms
                 MessageBoxEx.Show("请勾选需要打印记录左边的复选框！");
                 return;
             }
+            if (SystemParam.Instance.LocalConfigOption.IsLabPrintNewMethod)
+            {
+                DocumentPrintStyleForm frm = new DocumentPrintStyleForm();
+                TempletType templetType = TempletTypeCache.Instance.GetWardDocType(SystemData.TempletTypeApplyEnv.LAB_REPROT);
+                if (templetType == null)
+                {
+                    MessageBoxEx.ShowMessage("打印表单未制作");
+                }
+                frm.TempletType = templetType;
+                frm.Data = m_lstTestInfo;
+                frm.Text = templetType.DocTypeName;
+                frm.ShowDialog();
+                return;
+            }
+
             GlobalMethods.UI.SetCursor(this, Cursors.WaitCursor);
             ReportType reportType = ReportCache.Instance.GetWardReportType(SystemData.ReportTypeApplyEnv.LAB_RESULT, this.Text);
             if (reportType == null)
