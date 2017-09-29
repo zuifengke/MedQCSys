@@ -734,6 +734,7 @@ namespace MedQCSys.Document
             this.textEditorPrint.LoadDocument2(byteDocument);
             //this.textEditorPrint.Design = true;
             this.textEditorPrint.ShowPreviewDialog();
+            
             //this.textEditorPrint.Design = false;
         }
 

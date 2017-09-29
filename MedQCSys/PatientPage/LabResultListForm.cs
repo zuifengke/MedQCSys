@@ -4,6 +4,7 @@
 // Copyright:supconhealth
 // ***********************************************************
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel;
@@ -70,8 +71,7 @@ namespace MedQCSys.DockForms
             this.ShowStatusMessage("正在下载检验主记录，请稍候...");
 
             this.LoadLabTestList();
-            this.UnselectedAllRows();
-
+            this.chkPrintAll.Checked = false;
             this.ShowStatusMessage(null);
             GlobalMethods.UI.SetCursor(this, Cursors.Default);
         }
@@ -99,17 +99,7 @@ namespace MedQCSys.DockForms
             if (this.Pane.ActiveContent == this && this.NeedRefreshView)
                 this.OnRefreshView();
         }
-
-        /// <summary>
-        /// 取消选中所有数据行
-        /// </summary>
-        private void UnselectedAllRows()
-        {
-            while (this.dgvLabMaster.SelectedRows.Count > 0)
-            {
-                this.dgvLabMaster.SelectedRows[0].Selected = false;
-            }
-        }
+        
 
         private void LoadLabTestList()
         {
@@ -138,7 +128,22 @@ namespace MedQCSys.DockForms
             }
             if (lstLabMaster == null || lstLabMaster.Count <= 0)
                 return;
+            string szTestIDs = string.Empty;
 
+            foreach (var item in lstLabMaster)
+            {
+                if (szTestIDs == string.Empty)
+                    szTestIDs = "'" + item.TEST_ID + "'";
+                else
+                    szTestIDs = string.Format("{0},'{1}'", szTestIDs, item.TEST_ID);
+            }
+            List<LabResult> lstResultInfo = null;
+            shRet = LabResultAccess.Instance.GetList2(szTestIDs, ref lstResultInfo);
+            if (shRet != SystemData.ReturnValue.OK
+                && shRet != SystemData.ReturnValue.RES_NO_FOUND)
+            {
+                MessageBoxEx.Show("检验记录数据下载失败！");
+            }
             this.dgvLabMaster.SuspendLayout();
             for (int index = lstLabMaster.Count - 1; index >= 0; index--)
             {
@@ -157,30 +162,26 @@ namespace MedQCSys.DockForms
                     row.Cells[this.colReportTime.Index].Value = labMaster.REPORT_TIME.ToString("yyyy-MM-dd");
                 row.Cells[this.colReportDoctor.Index].Value = labMaster.REPORT_DOCTOR;
                 row.Cells[this.colSubject.Index].Value = labMaster.SUBJECT;
-                List<LabResult> lstResultInfo = null;
-                shRet = LabResultAccess.Instance.GetList(labMaster.TEST_ID, ref lstResultInfo);
-                if (shRet != SystemData.ReturnValue.OK
-                    && lstResultInfo == null)
+                if (lstResultInfo != null)
                 {
-                    MessageBoxEx.Show("检验记录数据下载失败！");
-                    continue;
-                }
-                if (lstResultInfo == null || lstResultInfo.Count <= 0)
-                    continue;
-
-                for (int index1 = 0; index1 < lstResultInfo.Count; index1++)
-                {
-                    LabResult labResult = lstResultInfo[index1];
-                    if (labResult == null)
+                    var result = lstResultInfo.Where(m => m.TEST_ID == labMaster.TEST_ID).ToList();
+                    if (result == null || result.Count <= 0)
                         continue;
-
-                    if (labResult.ABNORMAL_INDICATOR.Trim().Contains("危机"))//危机值标红
-                        row.DefaultCellStyle.ForeColor = Color.Red;
-                    if (labResult.ABNORMAL_INDICATOR.Trim().Contains("高")
-                        || labResult.ABNORMAL_INDICATOR.Contains("低"))
+                    row.Cells[this.colYiChang.Index].Tag = result;
+                    for (int index1 = 0; index1 < result.Count; index1++)
                     {
-                        row.Cells[this.colYiChang.Index].Value = "！";
-                        row.Cells[this.colYiChang.Index].Style.ForeColor = Color.Red;
+                        LabResult labResult = result[index1];
+                        if (labResult == null)
+                            continue;
+
+                        if (labResult.ABNORMAL_INDICATOR.Trim().Contains("危机"))//危机值标红
+                            row.DefaultCellStyle.ForeColor = Color.Red;
+                        if (labResult.ABNORMAL_INDICATOR.Trim().Contains("高")
+                            || labResult.ABNORMAL_INDICATOR.Contains("低"))
+                        {
+                            row.Cells[this.colYiChang.Index].Value = "！";
+                            row.Cells[this.colYiChang.Index].Style.ForeColor = Color.Red;
+                        }
                     }
                 }
             }
@@ -336,8 +337,6 @@ namespace MedQCSys.DockForms
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-          
-
             if (this.m_lstTestInfo == null)
                 this.m_lstTestInfo = new List<DataTable>();
             else
@@ -360,10 +359,10 @@ namespace MedQCSys.DockForms
                 if (objValue == null || !bool.Parse(objValue.ToString()))
                     continue;
 
-                List<LabResult> lstResultInfo = null;
-                short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
-                if (shRet != SystemData.ReturnValue.OK)
-                    continue;
+                List<LabResult> lstResultInfo = row.Cells[this.colYiChang.Index].Tag as List<LabResult>;
+                //short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
+                //if (shRet != SystemData.ReturnValue.OK)
+                //    continue;
                 if (lstResultInfo == null || lstResultInfo.Count <= 0)
                     continue;
 
@@ -383,6 +382,7 @@ namespace MedQCSys.DockForms
                 if (templetType == null)
                 {
                     MessageBoxEx.ShowMessage("打印表单未制作");
+                    return;
                 }
                 frm.TempletType = templetType;
                 frm.Data = m_lstTestInfo;
@@ -461,6 +461,10 @@ namespace MedQCSys.DockForms
             dt.Columns.Add(column);
             column = new DataColumn("参考值");
             dt.Columns.Add(column);
+            column = new DataColumn("单位");
+            dt.Columns.Add(column);
+            column = new DataColumn("异常标记");
+            dt.Columns.Add(column);
             for (int index = lstTestResultInfo.Count - 1; index >= 0; index--)
             {
                 LabResult resultInfo = lstTestResultInfo[index];
@@ -470,10 +474,26 @@ namespace MedQCSys.DockForms
                 DataRow row = dt.NewRow();
                 row["项目"] = resultInfo.ITEM_NAME;
                 row["结果"] = resultInfo.ITEM_RESULT;
-                if (string.IsNullOrEmpty(resultInfo.ABNORMAL_INDICATOR))
-                    row["参考值"] = resultInfo.ITEM_REFER + resultInfo.ITEM_UNITS;
+                row["单位"] = resultInfo.ITEM_UNITS;
+                if (SystemParam.Instance.LocalConfigOption.IsLabPrintNewMethod)
+                {
+                    row["参考值"] = resultInfo.ITEM_REFER;
+                    if (resultInfo.ABNORMAL_INDICATOR.Contains("高"))
+                    {
+                        row["异常标记"] = "↑";
+                    }
+                    if (resultInfo.ABNORMAL_INDICATOR.Contains("低"))
+                    {
+                        row["异常标记"] = "↓";
+                    }
+                }
                 else
-                    row["参考值"] = string.Format("{0} {1}{2}", resultInfo.ABNORMAL_INDICATOR, resultInfo.ITEM_REFER, resultInfo.ITEM_UNITS);
+                {
+                    if (string.IsNullOrEmpty(resultInfo.ABNORMAL_INDICATOR))
+                        row["参考值"] = resultInfo.ITEM_REFER + resultInfo.ITEM_UNITS;
+                    else
+                        row["参考值"] = string.Format("{0} {1}{2}", resultInfo.ABNORMAL_INDICATOR, resultInfo.ITEM_REFER, resultInfo.ITEM_UNITS);
+                }
                 dt.Rows.Add(row);
             }
             return dt;
@@ -483,20 +503,11 @@ namespace MedQCSys.DockForms
         {
             if (this.dgvLabMaster.Rows.Count <= 0)
                 return;
-
-            bool bIsSelectAll = false;
-            if (this.chkPrintAll.Checked)
-                bIsSelectAll = true;
             for (int index = 0; index < this.dgvLabMaster.Rows.Count; index++)
             {
                 DataGridViewRow row = this.dgvLabMaster.Rows[index];
-                DataGridViewCell cell = row.Cells[this.colNeedPrint.Index];
-                if (cell == null)
-                    continue;
                 if (CanPrint(index))
-                    cell.Value = bIsSelectAll;
-                else
-                    cell.Value = false;
+                    row.Cells[this.colNeedPrint.Index].Value = this.chkPrintAll.Checked;
             }
         }
 
@@ -532,34 +543,18 @@ namespace MedQCSys.DockForms
         {
             e.ReportData = this.GetReportFileData(e.ReportName);
         }
-
-        private void LabTestInfoList_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-            if (!CanPrint(e.RowIndex))
-            {
-                this.dgvLabMaster.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = true;
-            }
-        }
-
         private bool CanPrint(int rowIndex)
         {
             DataGridViewRow row = this.dgvLabMaster.Rows[rowIndex];
             LabMaster labTestInfo = row.Tag as LabMaster;
-
             if (labTestInfo == null)
                 return false;
             DataGridViewCell cell = row.Cells[this.colNeedPrint.Index];
             if (cell == null)
                 return false;
-            List<LabResult> lstResultInfo = null;
-            short shRet = LabResultAccess.Instance.GetList(labTestInfo.TEST_ID, ref lstResultInfo);
-            if (shRet != SystemData.ReturnValue.OK)
-                return false;
+            List<LabResult> lstResultInfo = row.Cells[this.colYiChang.Index].Tag as List<LabResult>;
             if (lstResultInfo == null || lstResultInfo.Count <= 0)
                 return false;
-
             return true;
         }
     }

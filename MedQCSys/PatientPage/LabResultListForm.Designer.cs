@@ -85,7 +85,6 @@ namespace MedQCSys.DockForms
             this.dgvLabMaster.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLabMaster.Size = new System.Drawing.Size(632, 471);
             this.dgvLabMaster.TabIndex = 3;
-            this.dgvLabMaster.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.LabTestInfoList_CellClick);
             this.dgvLabMaster.SelectionChanged += new System.EventHandler(this.LabTestInfoList_SelectionChanged);
             // 
             // ResultList

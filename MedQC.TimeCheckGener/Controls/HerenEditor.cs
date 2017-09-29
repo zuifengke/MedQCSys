@@ -47,7 +47,6 @@ namespace Heren.MedQC.TimeCheckGener.Controls
             TextField[] textFileds = this.m_textEditor.GetFields(null, MatchMode.Type);
             if (textFileds == null || textFileds.Length <= 0)
                 return elementBugInfos;
-
             foreach (TextField field in textFileds)
             {
                 string fieldText = string.Empty;
