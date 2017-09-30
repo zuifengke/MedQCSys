@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="gbk"?>
+<Reports>
+  <Templet ID="885652" Name="护理交接班" ModifyTime="2014/2/24 9:05:50" />
+  <Templet ID="568657" Name="护理交接班2" ModifyTime="2014/2/21 13:22:04" />
+  <Templet ID="929406" Name="解放军第五医院体温单" ModifyTime="2014/3/26 8:47:15" />
+  <Templet ID="670600" Name="护理记录单西南" ModifyTime="2014/3/31 15:24:27" />
+  <Templet ID="639890" Name="护理记录单-icu" ModifyTime="2014/3/31 15:40:36" />
+  <Templet ID="513587" Name="健康教育评价单（浙二）" ModifyTime="2013/5/28 21:56:34" />
+  <Templet ID="374566" Name="湘雅护理记录单" ModifyTime="2014/3/19 11:08:08" />
+  <Templet ID="368016" Name="危重患者护理记录单" ModifyTime="2013/9/9 16:57:46" />
+  <Templet ID="240862" Name="护理记录单-肝胆" ModifyTime="2014/4/1 9:49:45" />
+  <Templet ID="636697" Name="通用护理记录单" ModifyTime="2014/4/1 9:51:13" />
+  <Templet ID="869406" Name="一般护理记录单(沈总)" ModifyTime="2014/4/9 9:51:02" />
+</Reports>

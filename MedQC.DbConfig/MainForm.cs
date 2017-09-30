@@ -50,6 +50,15 @@ namespace Heren.MedQC.DbConfig
         /// </summary>
         public const string NDS_CONN_STRING = "NdsDbConnString";
         /// <summary>
+        /// 病历数据库RestFul连接串
+        /// </summary>
+        private const string NRS_CONN_STRING = "NResConnString";
+        /// <summary>
+        /// 护理文书系统连接模式
+        /// </summary>
+        private const string NUR_CONN_MODE = "NurConnMode";
+
+        /// <summary>
         /// HIS数据库类型
         /// </summary>
         public const string HIS_DB_TYPE = "HisDbType";
@@ -195,6 +204,21 @@ namespace Heren.MedQC.DbConfig
 
                 string szConnectionString = SystemConfig.Instance.Get(MainForm.NDS_CONN_STRING, string.Empty);
                 this.cboNdsConnString.Text = GlobalMethods.Security.DecryptText(szConnectionString, CONFIG_ENCRYPT_KEY);
+
+                string szRestConnectionString = SystemConfig.Instance.Get(MainForm.NRS_CONN_STRING, string.Empty);
+                this.tbxRestFulString.Text = GlobalMethods.Security.DecryptText(szRestConnectionString, CONFIG_ENCRYPT_KEY);
+                string szNurConnModeString = SystemConfig.Instance.Get(MainForm.NUR_CONN_MODE, string.Empty);
+                string szNurConnMode = GlobalMethods.Security.DecryptText(szNurConnModeString, NUR_CONN_MODE);
+                if (szNurConnMode == "DB")
+                {
+                    this.rdbDBMode.Checked = true;
+                    this.rdbRestMode.Checked = false;
+                }
+                else if (szNurConnMode == "REST")
+                {
+                    this.rdbDBMode.Checked = false;
+                    this.rdbRestMode.Checked = true;
+                }
             }
             if (this.tp.TabPages.Contains(this.tpHisConfig))
             {
@@ -275,10 +299,18 @@ namespace Heren.MedQC.DbConfig
                 string szDbType = GlobalMethods.Security.EncryptText(this.cboNdsDbType.Text, CONFIG_ENCRYPT_KEY);
                 string szDbDriverType = GlobalMethods.Security.EncryptText(this.cboNdsDbProvider.Text, CONFIG_ENCRYPT_KEY);
                 string szConnectionString = GlobalMethods.Security.EncryptText(this.cboNdsConnString.Text, CONFIG_ENCRYPT_KEY);
-               
+                string szRestConnectionString = GlobalMethods.Security.EncryptText(this.tbxRestFulString.Text, CONFIG_ENCRYPT_KEY);
+                string szNurConnMode = string.Empty;
+                if (this.rdbDBMode.Checked)
+                { szNurConnMode = "DB"; }
+                if (this.rdbRestMode.Checked)
+                { szNurConnMode = "REST"; }
+                string szNurConnModeString = GlobalMethods.Security.EncryptText(szNurConnMode, NUR_CONN_MODE);
                 SystemConfig.Instance.Write(MainForm.NDS_DB_TYPE, szDbType);
                 SystemConfig.Instance.Write(MainForm.NDS_PROVIDER_TYPE, szDbDriverType);
                 SystemConfig.Instance.Write(MainForm.NDS_CONN_STRING, szConnectionString);
+                SystemConfig.Instance.Write(MainForm.NRS_CONN_STRING, szRestConnectionString);
+                SystemConfig.Instance.Write(MainForm.NUR_CONN_MODE, szNurConnModeString);
             }
             if (this.tp.TabPages.Contains(this.tpHisConfig))
             {

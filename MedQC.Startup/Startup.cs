@@ -12,6 +12,8 @@ using MedQCSys.Utility;
 using EMRDBLib;
 using Heren.MedQC.CheckPoint;
 using Heren.MedQC.Core;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace MedQCSys
 {
@@ -37,6 +39,7 @@ namespace MedQCSys
         {
             try
             {
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.EnableVisualStyles();
                 LogManager.Instance.TextLogOnly = true;
@@ -65,6 +68,32 @@ namespace MedQCSys
             {
                 LogManager.Instance.WriteLog("Æô¶¯Ê§°Ü", ex);
             }
+        }
+
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (string.IsNullOrEmpty(args.Name))
+                return null;
+            string assemblyName = args.Name;
+            int index = assemblyName.IndexOf(',');
+            if (index <= 0)
+                assemblyName = assemblyName + ".dll";
+            else
+                assemblyName = assemblyName.Substring(0, index) + ".dll";
+
+            string searchPath = GlobalMethods.Misc.GetWorkingPath();
+            List<string> files = GlobalMethods.IO.SearchDirectory(searchPath, assemblyName);
+            if (files != null && files.Count > 0)
+            {
+                try
+                {
+                    return Assembly.LoadFile(files[0]);
+                }
+                catch(Exception ex) {
+                    LogManager.Instance.WriteLog(ex.ToString());
+                }
+            }
+            return null;
         }
 
         private static void StartNewInstance(string[] args)

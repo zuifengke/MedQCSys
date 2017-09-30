@@ -521,7 +521,10 @@ namespace EMRDBLib
         /// 检验单打印新方式，省人民连续打印开启
         /// </summary>
         public bool IsLabPrintNewMethod { get; set; }
-
+        /// <summary>
+        /// 是否集成护理文书
+        /// </summary>
+        public bool IsIntegrationNurdoc { get; set; }
         public LocalConfigOption()
         {
             this.IsOpenChart = false;
@@ -573,6 +576,7 @@ namespace EMRDBLib
                 option.IsOrderTextAll = true;
                 option.IsLabPrintNewMethod = true;
                 option.IsOpenPrintPacs = true;
+                option.IsIntegrationNurdoc = true;
                 option.HospitalLogo = string.Format("{0}/HospitalLogo/{1}", GlobalMethods.Misc.GetWorkingPath(), "SRM.ico");
             }
             else if (option.HOSPITAL_NAME.IndexOf("浙医健杭州医院") >= 0)
@@ -629,6 +633,7 @@ namespace EMRDBLib
                 option.IsOpenPrintPacs = true;
                 option.IsOrderTextAll = true;
             }
+            option.IsIntegrationNurdoc = true;
             option.IsCheckPoint = true;
 #endif
             return option;

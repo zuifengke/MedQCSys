@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="GBK"?>
 <SystemConfig>
   <key name="MedQCSys.MainForm.Maximized" value="True" />
-  <key name="MedQCSys.MainForm.Left" value="-8" />
-  <key name="MedQCSys.MainForm.Top" value="0" />
-  <key name="MedQCSys.MainForm.Width" value="839" />
+  <key name="MedQCSys.MainForm.Left" value="79" />
+  <key name="MedQCSys.MainForm.Top" value="154" />
+  <key name="MedQCSys.MainForm.Width" value="1241" />
   <key name="MedQCSys.MainForm.Height" value="559" />
   <key name="MedDocumentForm.DisplayByCombin" value="true" />
   <key name="MdsDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
-  <key name="MdsDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
-  <key name="MdsDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJWH6iz1xWUJt/Uz8Mp8Zc7l2GIAh2AXKvgx4tAM/lCpVb0EMyEd/SkmqCIBiLIGn3d" />
+  <key name="MdsDbProvider" value="ZQHId2/4RqzCa8k2+/z5HR7WGWqOhZkq7ayp29wRqq268HsrBZAZnQqMLwsfBi9VTb6DGEsD4WrEykZx4gXlfQ==" />
+  <key name="MdsDbConnString" value="ii8iJ5mwfQxu1vu12pAapPkZML+C74vsnJLfpQ/OHzN8YIFuk1ZZ6xzHd5GtZ+vthTtDNB54Fi+MABO8XSQPzzCRjC1nOa1B/CZE+MXwxz3MiruwViqRdZJODhGIamL3SYNICpYf2JgTJqn58F7EJaY6JlvqlsiVC2EHXYYOmEYa8k5/OQAhxCjVcWdQDJYA" />
   <key name="MedEditorConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJWH6iz1xWUJt/Uz8Mp8Zc7l2GIAh2AXKvgx4tAM/lCpVb0EMyEd/SkmqCIBiLIGn3d" />
   <key name="EmrDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
   <key name="EmrDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
@@ -17,15 +17,15 @@
   <key name="MainForm.ShowPatsDocList" value="false" />
   <key name="SeriousPatListByAdtLog.Enabled" value="false" />
   <key name="HosptailName" value="" />
-  <key value="" name="Current.Version" />
+  <key value="MedQCSys_V3.4.0.7" name="Current.Version" />
   <key name="MedTask.DefaultUserID" value="ZHQS" />
   <key name="Document.ReadOnly" value="true" />
   <key name="LoginForm.DefaultUserID" value="ZHQS" />
-  <key name="Readme.ZHQS" value="20170112130841" />
+  <key name="Readme.ZHQS" value="20170921151808" />
   <key name="PatientList.DeptCode" value="210501" />
   <key name="PatientList.AdmissionTimeBegin" value="1990/1/1 0:00:00" />
-  <key name="PatientList.AdmissionTimeEnd" value="2017/4/21 23:59:59" />
-  <key name="MainForm.ShowToolStrip" value="True" />
+  <key name="PatientList.AdmissionTimeEnd" value="2017/9/30 23:59:59" />
+  <key name="MainForm.ShowToolStrip" value="False" />
   <key name="Designers.MainForm.Maximized" value="True" />
   <key name="Readme.WWX" value="20170112130841" />
   <key name="win8.1-02040847.Baodian.ModifyTime" value="20170112130846" />
@@ -41,15 +41,37 @@
   <key name="XmlDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
   <key name="XmlDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
   <key name="XmlDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="NdsDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="NdsDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="NdsDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="HisDbType" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="HisDbProvider" value="evzz7GJnzSHLrKixgeiYsw==" />
-  <key name="HisDbConnString" value="evzz7GJnzSHLrKixgeiYsw==" />
+  <key name="NdsDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
+  <key name="NdsDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
+  <key name="NdsDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOnOMVnPjAG4tuvzzrD9591OphCItt4Vj21/0WyUaA1ROHmjJPGL/2wEG/kSNcxTkt2k6C1/WpsevTX0ja+josX" />
+  <key name="NResConnString" value="tkl3cJJJciqr9VMJi2rPKVy3hxQz1r5La2XDLV7S1AL2SVc49ozjFUtz4mnaOOKKLG7gmMy6+EgU2vs1nXF7tLp0DhFYkl7hGIVB0EoCtY4=" />
+  <key name="NurConnMode" value="J9q7Jhv0dnVbhbHEjY4AFA==" />
+  <key name="HisDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
+  <key name="HisDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
+  <key name="HisDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zZuptCegYEPj200AO4DWm7IlsJ1NfdzMzf5ze8W93h5zl1wAVTIDhru4m0DOllpnrF34CgBS7tUT+vu/Be1lGEljpVUcmuhaPyFXnD/U89hTI8UEsq2Xjw0sJ8gB3mZ7jUIGNLet/YSVSbfF9NmJXZA==" />
   <key name="QcDbType" value="WLcbv+MQVtU2CkexJrB9BA==" />
-  <key name="QcDbProvider" value="oVRsfhoQBUC1uW4vwmPeXQsUTJnkLt556cRe0+2/OjKqz27woXRQmcRmQQ9HWF+R" />
-  <key name="QcDbConnString" value="hxn/1TnwgWSwAJQ9tUdH9uQ0apMREyCN/poFCBssGxtCsk2p4FHxP6ywC0PcQt1zbRG9d1BPBxsKXO8S2e6JD1byuNRLXq5NnSCXFg7yEIOTe68rfZsGs37PPqHb/ZJW6/trfy6Jy6ycuBWVSd3Iw3neBv/EaU/Ik64lt21rFRSBc27rla7ooovN3DA2wMXL" />
+  <key name="QcDbProvider" value="ZQHId2/4RqzCa8k2+/z5HR7WGWqOhZkq7ayp29wRqq268HsrBZAZnQqMLwsfBi9VTb6DGEsD4WrEykZx4gXlfQ==" />
+  <key name="QcDbConnString" value="ii8iJ5mwfQxu1vu12pAapG0QF7JrhfT1eYi+IZLOxrTJjKusA2aafAafV3oVngX/w+Y2hWqXm90sJlQI8Y0U8Jo5+DnQ8QCcB+b8V/oMzABDWjrF3BDX25rz5mWjU1TlYtOjnWLBGh5TaK1/B2l+1EB7WA8UiMoXdzoMMnULTdA4g5H+ZNi4S3XlpVrDezHB" />
   <key name="Readme.WANGW" value="20170112130841" />
   <key name="Readme.PJJ" value="20170112130841" />
+  <key name="DEFAULT_LOGIN_PRODUCT" value="MedRecord" />
+  <key name="BajkDbType" value="EPllHqPk+42wmS+ykB9GPPi2OEGDjotv4dFut78vzxU=" />
+  <key name="BajkDbProvider" value="oVRsfhoQBUC1uW4vwmPeXfKOnx4xGkQbvFyJ7vuuJgqnm+1hkXrvhT4h4oRtGw20" />
+  <key name="BajkDbConnString" value="geVIbFghkq+yAFFvHrWb2EmxTEXeqGfXXpGVRpGHWKwKVg78wmO+ufcn+7yi/5kXcfAC66Wxi+t0+HvnCFmat3CDPISGFUnRS+bx1Ayq8Ywk4DRJ6REmdkQEaTsWJFLotADKsQOd3lYcSDj7HKsNlBuspP+GQe6T+Opzf6czONA=" />
+  <key name="Heren.MedQC.ScriptEngine.Debugger.DebuggerForm.Left" value="1552" />
+  <key name="Heren.MedQC.ScriptEngine.Debugger.DebuggerForm.Top" value="87" />
+  <key name="Heren.MedQC.ScriptEngine.Debugger.DebuggerForm.Maximized" value="True" />
+  <key name="Heren.MedQC.ScriptEngine.Debugger.DebuggerForm.Width" value="932" />
+  <key name="Heren.MedQC.ScriptEngine.Debugger.DebuggerForm.Height" value="661" />
+  <key name="Readme.administrator" value="20170829103848" />
+  <key name="Readme.160" value="20170829103848" />
+  <key name="Designers.Report.ScriptTestForm.Width" value="900" />
+  <key name="Designers.Report.ScriptTestForm.Height" value="524" />
+  <key name="Designers.Report.ScriptTestForm.Maximized" value="True" />
+  <key name="Readme.119" value="20170829103848" />
+  <key name="Designers.Templet.ScriptTestForm.Maximized" value="True" />
+  <key name="Designers.Templet.ScriptTestForm.Left" value="303" />
+  <key name="Designers.Templet.ScriptTestForm.Top" value="107" />
+  <key name="Designers.Templet.ScriptTestForm.Width" value="760" />
+  <key name="Designers.Templet.ScriptTestForm.Height" value="524" />
 </SystemConfig>

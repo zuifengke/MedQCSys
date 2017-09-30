@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedQC.Frame", "MedQCSys\MedQC.Frame.csproj", "{1281F60E-A8BD-4FEE-9300-E6D90DBC56E8}"
 EndProject
@@ -58,6 +58,8 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "质控系统", "质控系统\质控系统.vdproj", "{75F1D29D-2F46-49D5-A5C5-7D8151463AEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedQC.PDF", "MedQC.PDF\MedQC.PDF.csproj", "{0DA3DE11-D149-4019-89D5-A7CA68149E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedQC.Integration", "MedQC.Integration\MedQC.Integration.csproj", "{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -399,8 +401,23 @@ Global
 		{0DA3DE11-D149-4019-89D5-A7CA68149E3D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{0DA3DE11-D149-4019-89D5-A7CA68149E3D}.Release|x86.ActiveCfg = Release|x86
 		{0DA3DE11-D149-4019-89D5-A7CA68149E3D}.Release|x86.Build.0 = Release|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|x86.ActiveCfg = Debug|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Debug|x86.Build.0 = Debug|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|Mixed Platforms.Build.0 = Release|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|x86.ActiveCfg = Release|x86
+		{A65ABF70-B348-4F0A-AEC3-C259E10CF3F3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B70A1B3-D738-4853-93BA-3D1DCAAC1CDD}
 	EndGlobalSection
 EndGlobal

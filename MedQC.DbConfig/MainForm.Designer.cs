@@ -78,6 +78,12 @@ namespace Heren.MedQC.DbConfig
             this.label20 = new System.Windows.Forms.Label();
             this.cboBAJKDbType = new System.Windows.Forms.ComboBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.tbxRestFulString = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rdbRestMode = new System.Windows.Forms.RadioButton();
+            this.rdbDBMode = new System.Windows.Forms.RadioButton();
+            this.label22 = new System.Windows.Forms.Label();
             this.tp.SuspendLayout();
             this.tpMedQC.SuspendLayout();
             this.tpMdsConfig.SuspendLayout();
@@ -85,6 +91,7 @@ namespace Heren.MedQC.DbConfig
             this.tpNdsConfig.SuspendLayout();
             this.tpHisConfig.SuspendLayout();
             this.tpBAJK.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -448,6 +455,9 @@ namespace Heren.MedQC.DbConfig
             // 
             // tpNdsConfig
             // 
+            this.tpNdsConfig.Controls.Add(this.panel1);
+            this.tpNdsConfig.Controls.Add(this.label21);
+            this.tpNdsConfig.Controls.Add(this.tbxRestFulString);
             this.tpNdsConfig.Controls.Add(this.cboNdsConnString);
             this.tpNdsConfig.Controls.Add(this.label4);
             this.tpNdsConfig.Controls.Add(this.cboNdsDbProvider);
@@ -519,7 +529,7 @@ namespace Heren.MedQC.DbConfig
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(17, 91);
+            this.label8.Location = new System.Drawing.Point(52, 91);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 45;
@@ -735,6 +745,64 @@ namespace Heren.MedQC.DbConfig
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(46, 209);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(83, 12);
+            this.label21.TabIndex = 49;
+            this.label21.Text = "RestFul地址：";
+            // 
+            // tbxRestFulString
+            // 
+            this.tbxRestFulString.Location = new System.Drawing.Point(146, 205);
+            this.tbxRestFulString.Name = "tbxRestFulString";
+            this.tbxRestFulString.Size = new System.Drawing.Size(486, 21);
+            this.tbxRestFulString.TabIndex = 48;
+            this.tbxRestFulString.Text = "localhost:88052/heren/api";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rdbRestMode);
+            this.panel1.Controls.Add(this.rdbDBMode);
+            this.panel1.Controls.Add(this.label22);
+            this.panel1.Location = new System.Drawing.Point(0, 18);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(651, 39);
+            this.panel1.TabIndex = 50;
+            // 
+            // rdbRestMode
+            // 
+            this.rdbRestMode.AutoSize = true;
+            this.rdbRestMode.Location = new System.Drawing.Point(226, 13);
+            this.rdbRestMode.Name = "rdbRestMode";
+            this.rdbRestMode.Size = new System.Drawing.Size(107, 16);
+            this.rdbRestMode.TabIndex = 2;
+            this.rdbRestMode.TabStop = true;
+            this.rdbRestMode.Text = "连接ResFul服务";
+            this.rdbRestMode.UseVisualStyleBackColor = true;
+            // 
+            // rdbDBMode
+            // 
+            this.rdbDBMode.AutoSize = true;
+            this.rdbDBMode.Location = new System.Drawing.Point(91, 11);
+            this.rdbDBMode.Name = "rdbDBMode";
+            this.rdbDBMode.Size = new System.Drawing.Size(119, 16);
+            this.rdbDBMode.TabIndex = 1;
+            this.rdbDBMode.TabStop = true;
+            this.rdbDBMode.Text = "直接连数据库模式";
+            this.rdbDBMode.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(7, 13);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(77, 12);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "使用的连接：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -764,6 +832,8 @@ namespace Heren.MedQC.DbConfig
             this.tpHisConfig.PerformLayout();
             this.tpBAJK.ResumeLayout(false);
             this.tpBAJK.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -821,5 +891,11 @@ namespace Heren.MedQC.DbConfig
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cboBAJKDbType;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox tbxRestFulString;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rdbRestMode;
+        private System.Windows.Forms.RadioButton rdbDBMode;
+        private System.Windows.Forms.Label label22;
     }
 }

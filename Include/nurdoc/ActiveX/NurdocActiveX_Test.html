@@ -1,0 +1,38 @@
+<!Copyright(C) 2014 Heren Health Services.All rights reserved>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>和仁电子病历</title>
+</head>
+<body>
+    <p align="center">
+        <input id="Buttont" name="Buttont" type="button" value="测试" onclick="NurPatContrl.test()" />
+        <input id="Button1" name="Button1" type="button" value="设置用户与病人信息" onclick="SetUserPatientInfo()" />
+        <br />
+        <object id="NurPatContrl" name="NurPatContrl" classid="clsid:{A6C6DB5B-15B8-3D1E-9E8E-43F17A577B8F}"
+                width="1024" height="800"></object>
+        <!--<embed id="NurPatContrl" name="NurPatContrl" clsid="{A6C6DB5B-15B8-3D1E-9E8E-43F17A577B8F}" width="1200"
+                   height="768" type="application/x-itst-activex">
+        </embed>-->
+    </p>
+
+    <script language="javascript" type="text/javascript">
+
+        function SetUserPatientInfo() {
+            var PID = "201209111";
+            var VID = "1";
+            var UserID = "XCJ";
+            document.getElementById("NurPatContrl").SwitchPatient(PID, VID,UserID);
+        }
+
+        //function close() {
+        //    var result = document.getElementById("NurPatContrl").CloseAllDocuments();
+        //    if (result != 0)
+        //        return result;
+        //}
+
+        //window.onbeforeunload = close;
+
+    </script>
+
+</body>
+</html>

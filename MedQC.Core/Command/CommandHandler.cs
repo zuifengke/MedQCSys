@@ -163,6 +163,18 @@ namespace Heren.MedQC.Core
                         this.RegisterCommand(item);
                     }
                 }
+                if (File.Exists(@"MedQC.Integration.dll"))
+                {
+
+                    assembly = Assembly.LoadFrom(@"MedQC.Integration.dll");
+                    if (assembly == null)
+                        return;
+                    types = assembly.GetExportedTypes();
+                    foreach (var item in types)
+                    {
+                        this.RegisterCommand(item);
+                    }
+                }
                 this.m_bIsRead = true;
             }
             catch (Exception ex)

@@ -11,6 +11,7 @@ using EMRDBLib;
 using Heren.Common.Libraries;
 using Heren.Common.DockSuite;
 using MedQCSys.Document;
+using Heren.MedQC.Core;
 
 namespace MedQCSys.PatPage
 {
@@ -20,6 +21,13 @@ namespace MedQCSys.PatPage
         public PatientPageControl()
         {
             InitializeComponent();
+        }
+        public DockPanel DockPanel
+        {
+            get
+            {
+                return this.dockPanel1;
+            }
         }
         protected override void OnLoad(EventArgs e)
         {
@@ -145,6 +153,10 @@ namespace MedQCSys.PatPage
                 content.IsHidden = false;
                 content.Show(this.dockPanel1, false);
             }
+            if (SystemParam.Instance.LocalConfigOption.IsIntegrationNurdoc)
+            {
+                CommandHandler.Instance.SendCommand("护理文书", this,null);
+            }
         }
         /// <summary>
         /// 移除所有已打开的窗口
@@ -262,7 +274,7 @@ namespace MedQCSys.PatPage
             }
             return null;
         }
-        
+
         public void OpenDocument(MedDocInfo docInfo)
         {
             foreach (DockContent item in this.dockPanel1.Contents)
