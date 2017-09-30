@@ -37,8 +37,7 @@ namespace Quartz.Server
             base.OnLoad(e);
             this.button1.Enabled = true;
             this.button4.Enabled = false;
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 10000;
+            this.timer1.Interval = 60000;
             SystemConfig.Instance.ConfigFile = SystemParam.Instance.ConfigFile;
             CommandHandler.Instance.Initialize();
             this.button1_Click(null, null);//自动触发启动
@@ -66,18 +65,20 @@ namespace Quartz.Server
                 case "started":
                     this.button1.Enabled = false;
                     this.button4.Enabled = true;
+                    this.timer1.Enabled = true;
                     break;
 
                 case "stoped":
                     this.button1.Enabled = true;
                     this.button4.Enabled = false;
+                    this.timer1.Enabled = false;
                     break;
                 default:
                     this.button1.Enabled = true;
                     this.button4.Enabled = false;
+                    this.timer1.Enabled = true;
                     break;
             }
-            this.timer1.Enabled = false;
         }
         private void button5_Click(object sender, EventArgs e)
         {
@@ -99,13 +100,17 @@ namespace Quartz.Server
                     //fs.Read(byData, 0, 100); //byData传进来的字节数组,用以接受FileStream对象中的数据,第2个参数是字节数组中开始写入数据的位置,它通常是0,表示从数组的开端文件中向数组写数据,最后一个参数规定从文件读多少字符.
                     //Decoder d = Encoding.Default.GetDecoder();
                     //d.GetChars(byData, 0, byData.Length, charData, 0);
-                    this.richTextBox1.Clear();
+                    //this.richTextBox1.Clear();
                     using (StreamReader sr = new StreamReader(fs, Encoding.Default))
                     {
                         String line;
                         this.richTextBox1.ForeColor = Color.Black;
                         while ((line = sr.ReadLine()) != null)
                         {
+                            if (string.IsNullOrEmpty(line))
+                                continue;
+                            if (this.richTextBox1.Text.IndexOf(line.ToString()) >= 0)
+                                continue;
                             if (line.ToString().IndexOf("失败") >= 0)
                             {
                                 this.richTextBox1.AppendText(line.ToString());
